@@ -32,17 +32,16 @@ class Solution {
                 }
             }
         }
-        for (int row = 0; row < board.length; row += 3) {
-            for (int column = 0; column < board.length; column += 3) {
-                if (!helperInner(row, column, board)) {
+        for (int innerRow = 0; innerRow < board.length; innerRow += 3) {
+            for (int innerColumn = 0; innerColumn < board.length; innerColumn += 3) {
+                if (!dfs(innerRow, innerColumn, board)) {
                     return false;
                 }
             }
         }
         return true;
     }
-    
-    private boolean helperInner(int row, int column, char[][] board) {
+    private boolean dfs(int row, int column, char[][] board) {
         Set<Character> set = new HashSet<>();
         for (int i = row; i < row + 3; i++) {
             for (int j = column; j < column + 3; j++) {
