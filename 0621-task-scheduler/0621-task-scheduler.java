@@ -1,6 +1,8 @@
 /**
 两边互相add的解法
 MAXHEAP add， Queue add. REMEMBER TO DECLEAR maxHeap!
+Queue -> save task and coolingtime <Pair>
+PriorityQueue -> save maximum frequency
 We do not acctually care about the specific character, just their frequency
 1. Since tasks[i] only contains upper-case English Letter, use array to save all letters frequency
 2. Use maxHeap, save all the frequencies
@@ -10,34 +12,36 @@ We do not acctually care about the specific character, just their frequency
 6. If queue is not empty, and time is equal to the curren time, add back frequency to maxHeap
 */
 class Solution {
-   public int leastInterval(char[] tasks, int n) {
-       PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> (b - a));
-       Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
-        int time = 0;
-
-       int[] frequencyArr = new int[26];
+    public int leastInterval(char[] tasks, int n) {
+        
+        int[] frequencyArr = new int[26];
         for (char task : tasks) {
             frequencyArr[task - 'A']++;
         }
-
+        
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a); //{frequency}
         for (int frequency : frequencyArr) {
             if (frequency > 0) {
                 maxHeap.offer(frequency);
             }
         }
-
+        
+        Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>(); //{Pair<Frequency, time + cooling time>}
+        
+        int time = 0;
         while (!maxHeap.isEmpty() || !queue.isEmpty()) {
             time++;
             if (!maxHeap.isEmpty()) {
-                int maxFrequency = maxHeap.poll();
-                maxFrequency--;
-                if (maxFrequency > 0) {
-                    queue.offer(new Pair(maxFrequency, time + n));
+                int mostFrequency = maxHeap.poll();
+                mostFrequency--;
+                if (mostFrequency > 0) {
+                    queue.offer(new Pair(mostFrequency, time + n));
                 }
             }
-
-            if (!queue.isEmpty() && queue.peek().getValue() == time) {
-                maxHeap.offer(queue.poll().getKey());                
+            if (!queue.isEmpty()) {
+                if (queue.peek().getValue() == time) {
+                    maxHeap.offer(queue.poll().getKey());
+                }
             }
         }
         return time;
