@@ -1,15 +1,19 @@
 /*
 Two distinct indices i and j
-Fixed Sliding window, maintain k size
+1. Create a Set, to remove duplicate
+2. Fixed Sliding window, maintain k size, WHEN I > K, remove the i - k - 1 (left-most element)
+3. 
 */
 class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
         Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (i > k) {
-                set.remove(nums[i - k - 1]);
+        int slow = 0;
+        for (int fast = 0; fast < nums.length; fast++) {
+            if (fast - slow > k) {
+                set.remove(nums[slow]);
+                slow++;
             }
-            if (!set.add(nums[i])) {
+            if (!set.add(nums[fast])) {
                 return true;
             }
         }
