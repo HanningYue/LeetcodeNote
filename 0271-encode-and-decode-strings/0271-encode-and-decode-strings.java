@@ -21,12 +21,11 @@ public class Codec {
     public List<String> decode(String s) {
         List<String> result = new ArrayList<>();
         int index = 0;
-        
         while (index < s.length()) {
-            int slash = s.indexOf('/', index);
-            int length = Integer.valueOf(s.substring(index, slash));
-            String str = s.substring(slash + 1, slash + 1 + length);
-            index = slash + 1 + length;
+            int slashIndex = s.indexOf('/', index);
+            int length = Integer.valueOf(s.substring(index, slashIndex));
+            String str = s.substring(slashIndex + 1, slashIndex + 1 + length);
+            index = slashIndex + 1 + length;
             result.add(str);
         }
         return result;
