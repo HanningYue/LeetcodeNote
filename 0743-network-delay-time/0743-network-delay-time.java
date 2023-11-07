@@ -28,8 +28,9 @@ class Solution {
                 if (delay[source - 1] + cost < temp[target - 1]) {
                     temp[target - 1] = delay[source - 1] + cost;
                 }
+                delay = temp;
             }
-            delay = temp;
+            
         }
         int minimumTime = Integer.MIN_VALUE;
         for (int i = 0; i < n; i++) {
