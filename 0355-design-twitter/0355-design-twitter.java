@@ -6,31 +6,31 @@ OOD的设计去解决问题, global variable -> tweetList and userHashMap
 4. For each function, we need to check whether the user itself or follower/followee is created?
 5. getNewsFeed
     We want the last 10 posts, so check TweetList, if the poster are user itself or people user follows, add
+    Tweet class has tweetId, and 'i' is equals to tweetList.size() - 1, we need to use tweetList.get(i) equals each tweet
 */
-class User {
-    int userid;
-    Set<Integer> follows;
-    public User(int userid) {
-        this.userid = userid;
-        follows = new HashSet<>();
+class Tweet {
+    int userId;
+    int tweetId;
+    public Tweet(int userId, int tweetId) {
+        this.userId = userId;
+        this.tweetId = tweetId;
     }
 }
-class Tweet {
-    int userid;
-    int tweetid;
-    public Tweet(int userid, int tweetid) {
-        this.userid = userid;
-        this.tweetid = tweetid;
+class User {
+    int userId;
+    Set<Integer> follows;
+    public User(int userId) {
+        this.userId = userId;
+        follows = new HashSet<>();
     }
 }
 
 class Twitter {
+    Map<Integer, User> userMap;    
     List<Tweet> tweetList;
-    Map<Integer, User> userMap;
-
     public Twitter() {
+        userMap = new HashMap<>();
         tweetList = new ArrayList<>();
-        userMap = new HashMap<>();    
     }
     
     public void postTweet(int userId, int tweetId) {
@@ -44,11 +44,14 @@ class Twitter {
         if (!userMap.containsKey(userId)) {
             userMap.put(userId, new User(userId));
         }
+        
         List<Integer> last10 = new ArrayList<>();
         int i = tweetList.size() - 1;
         while (last10.size() < 10 && i >= 0) {
-            if (tweetList.get(i).userid == userId || userMap.get(userId).follows.contains(tweetList.get(i).userid)) {
-                last10.add(tweetList.get(i).tweetid);
+            if (tweetList.get(i).userId == userId 
+                    || userMap.get(userId).follows.contains(tweetList.get(i).userId)) 
+            {
+                last10.add(tweetList.get(i).tweetId);
             }
             i--;
         }
