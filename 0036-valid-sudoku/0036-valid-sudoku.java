@@ -14,34 +14,36 @@ The logic :
 */
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        for (int row = 0; row < board.length; row++) {
-            Set<Character> rowSet = new HashSet<>();
-            Set<Character> columnSet = new HashSet<>();
-            for (int column = 0; column < board.length; column++) {
-                if (board[row][column] != '.') {
-                    if (rowSet.contains(board[row][column])) {
+        int n = board.length;
+        for (int i = 0; i < n; i++) {
+            Set<Character> row = new HashSet<>();
+            Set<Character> column = new HashSet<>();
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] != '.') {
+                    if (row.contains(board[i][j])) {
                         return false;
                     }
-                    rowSet.add(board[row][column]);
+                    row.add(board[i][j]);
                 }
-                if (board[column][row] != '.') {
-                    if (columnSet.contains(board[column][row])) {
+                if (board[j][i] != '.') {
+                    if (column.contains(board[j][i])) {
                         return false;
                     }
-                    columnSet.add(board[column][row]);
+                    column.add(board[j][i]);
                 }
             }
         }
-        for (int innerRow = 0; innerRow < board.length; innerRow += 3) {
-            for (int innerColumn = 0; innerColumn < board.length; innerColumn += 3) {
-                if (!dfs(innerRow, innerColumn, board)) {
+        for (int i = 0; i < n; i += 3) {
+            for (int j = 0; j < n; j += 3) {
+                if (!helper(i, j, board)) {
                     return false;
                 }
             }
         }
         return true;
     }
-    private boolean dfs(int row, int column, char[][] board) {
+    
+    private boolean helper(int row, int column, char[][] board) {
         Set<Character> set = new HashSet<>();
         for (int i = row; i < row + 3; i++) {
             for (int j = column; j < column + 3; j++) {
