@@ -1,46 +1,51 @@
 /*
-Logic : 
 We iterate two large cycle, the outer cycle and the inner cycle, for outer cycle, increase index by 3, for inner cycle, right-boundary is 3
 1. First for the Bigger grid, 0 to 9 row, 0 to 9 column
     board[i][j] -> board[j][i] if not '.' Check set duplicate, if so return false
-    if not, add to set
+    if not, add to set //We need to declear Set inside OUTER loop
 2. Second for the smaller grid, 0 to 9 row, but increase every 3 steps each
-3. We need a helper function which 0 to 3, increase 1 each step
+    We need a helper function which 0 to 3, increase 1 each step
+The logic :
+1 1 1 1 1 1     1 1 1 1 1 1     1 1 1 1 1 1
+1               1 1 1 1 1 1     1 1 1 1 1 1
+1               1 1             1 1 1 1 1 1 
+1               1 1             1 1 1
+1               1 1             1 1 1
 */
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        for (int i = 0; i < 9; i++) {
+        for (int row = 0; row < board.length; row++) {
             Set<Character> rowSet = new HashSet<>();
-            Set<Character> colSet = new HashSet<>();
-            for (int j = 0; j < 9; j++) {
-                if (board[i][j] != '.') {
-                    if (rowSet.contains(board[i][j])) {
+            Set<Character> columnSet = new HashSet<>();
+            for (int column = 0; column < board.length; column++) {
+                if (board[row][column] != '.') {
+                    if (rowSet.contains(board[row][column])) {
                         return false;
                     }
-                    rowSet.add(board[i][j]);
+                    rowSet.add(board[row][column]);
                 }
-                if (board[j][i] != '.') {
-                    if (colSet.contains(board[j][i])) {
+                if (board[column][row] != '.') {
+                    if (columnSet.contains(board[column][row])) {
                         return false;
                     }
-                    colSet.add(board[j][i]);
+                    columnSet.add(board[column][row]);
                 }
             }
         }
-
-        for (int i = 0; i < 9; i += 3) {
-            for (int j = 0; j < 9; j += 3) {
-                if (!helper(i, j, board)) {
+        for (int row = 0; row < board.length; row += 3) {
+            for (int column = 0; column < board.length; column += 3) {
+                if (!helperInner(row, column, board)) {
                     return false;
                 }
             }
         }
         return true;
     }
-    private boolean helper(int rowIndex, int colIndex, char[][] board) {
+    
+    private boolean helperInner(int row, int column, char[][] board) {
         Set<Character> set = new HashSet<>();
-        for (int i = rowIndex; i < rowIndex + 3; i++) {
-            for (int j = colIndex; j < colIndex + 3; j++) {
+        for (int i = row; i < row + 3; i++) {
+            for (int j = column; j < column + 3; j++) {
                 if (board[i][j] != '.') {
                     if (set.contains(board[i][j])) {
                         return false;
