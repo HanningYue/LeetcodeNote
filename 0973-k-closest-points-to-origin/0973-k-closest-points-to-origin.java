@@ -6,7 +6,7 @@ class Solution {
             public int compare (int[] p1, int[] p2) {
                 return distance(p2) - distance(p1);
             }
-            private int distance (int[] p) {
+            public int distance (int[] p) {
                return p[0] * p[0] + p[1] * p[1];
            }
         });
