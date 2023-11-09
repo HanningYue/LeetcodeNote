@@ -13,29 +13,28 @@ We do not acctually care about the specific character, just their frequency
 */
 class Solution {
     public int leastInterval(char[] tasks, int n) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> (b - a));
+        Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
         
-        int[] frequencyArr = new int[26];
+        char[] frequencyArr = new char[26];
         for (char task : tasks) {
             frequencyArr[task - 'A']++;
         }
         
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a); //{frequency}
-        for (int frequency : frequencyArr) {
+        for (char frequency : frequencyArr) {
             if (frequency > 0) {
-                maxHeap.offer(frequency);
+                maxHeap.offer((int)frequency);   
             }
         }
-        
-        Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>(); //{Pair<Frequency, time + cooling time>}
         
         int time = 0;
         while (!maxHeap.isEmpty() || !queue.isEmpty()) {
             time++;
             if (!maxHeap.isEmpty()) {
-                int mostFrequency = maxHeap.poll();
-                mostFrequency--;
-                if (mostFrequency > 0) {
-                    queue.offer(new Pair(mostFrequency, time + n));
+                int mostFrequent = maxHeap.poll();
+                mostFrequent--;
+                if (mostFrequent > 0) {
+                    queue.add(new Pair<Integer, Integer>(mostFrequent, time + n));
                 }
             }
             if (!queue.isEmpty()) {
