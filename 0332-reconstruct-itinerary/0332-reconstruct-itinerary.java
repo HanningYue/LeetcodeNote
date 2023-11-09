@@ -1,9 +1,9 @@
 /**
-Graph, run DFS
+Graph, run DFS, We can use Collections.reverse() or LinkedList addFirst
 1. Create adjacency list, which needs to be SORTED! 
     -> Map<String, PriorityQueue<String>> //minHeap by default, natural ordering
     The priorityQueue here stores the LEXICOGRAPHICALLY smallest character
-2. We want to print out the itinerary as a string List, use a Stack (LIFO) to help us construct travel path
+2. We want to print out the itinerary as a string List, use a Stack (LIFO) to help us construct travel path, the LAST IN CITY IS THE NEXT DEPART
 3. We are running DFS on the graph, so the order should be reversed, We are given List<List<String>> tickets
     use LinkedList<String> to store travel path
 4. If we reach a DEAD END, we need to BACKTRACK, 
@@ -14,21 +14,20 @@ Return itinerary
 */
 class Solution {
     public List<String> findItinerary(List<List<String>> tickets) {
-        List<String> itinerary = new ArrayList<>();
         Map<String, PriorityQueue<String>> graph = new HashMap<>();
+        List<String> itinerary = new ArrayList<>();
         Stack<String> stack = new Stack<>();
-        stack.push("JFK");
         
         for (List<String> ticket : tickets) {
             String departCity = ticket.get(0);
             String arriveCity = ticket.get(1);
-            graph.putIfAbsent(departCity, new PriorityQueue<String>());
+            graph.putIfAbsent(departCity, new PriorityQueue<>());
             graph.get(departCity).add(arriveCity);
         }
         
+        stack.push("JFK");
         while (!stack.isEmpty()) {
             String nextCity = stack.peek();
-            
             if (!graph.getOrDefault(nextCity, new PriorityQueue<>()).isEmpty()) {
                 stack.push(graph.get(nextCity).poll());
             } else {
