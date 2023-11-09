@@ -1,22 +1,21 @@
 /**
 Graph, run DFS, We can use Collections.reverse() or LinkedList addFirst
 1. Create adjacency list, which needs to be SORTED! 
-    -> Map<String, PriorityQueue<String>> //minHeap by default, natural ordering
+    双层数据结构 -> Map<String, PriorityQueue<String>> //minHeap by default, natural ordering
     The priorityQueue here stores the LEXICOGRAPHICALLY smallest character
-2. We want to print out the itinerary as a string List, use a Stack (LIFO) to help us construct travel path, the LAST IN CITY IS THE NEXT DEPART
-3. We are running DFS on the graph, so the order should be reversed, We are given List<List<String>> tickets
-    use LinkedList<String> to store travel path
+2. We want to print out the itinerary as a string List, use a Stack (LIFO) to help us construct travel path, the LAST IN CITY IS THE NEXT DEPART.
+3. If we have city in the minHeap, push to stack
 4. If we reach a DEAD END, we need to BACKTRACK, 
-    the condition to backtrack is when graph has no element -> graph.isEmpty() OR if (!graph.isEmpty) else
-    When backtracking, add stack.pop to the Head of itinerary
-5. When backtracking decision, declear next City as PEEK()!, when dead-end, add to head of itinerary use POP()!
+    The condition to backtrack is when graph has no element -> graph.isEmpty() OR if (!graph.isEmpty) else
+    When backtracking decision, declear next City as PEEK()!, when dead-end, add to itinerary use POP()!
+5. We are running DFS, so the order should be reversed
 Return itinerary
 */
 class Solution {
     public List<String> findItinerary(List<List<String>> tickets) {
-        Map<String, PriorityQueue<String>> graph = new HashMap<>();
-        List<String> itinerary = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         Stack<String> stack = new Stack<>();
+        Map<String, PriorityQueue<String>> graph = new HashMap<>();
         
         for (List<String> ticket : tickets) {
             String departCity = ticket.get(0);
@@ -31,10 +30,10 @@ class Solution {
             if (!graph.getOrDefault(nextCity, new PriorityQueue<>()).isEmpty()) {
                 stack.push(graph.get(nextCity).poll());
             } else {
-                itinerary.add(stack.pop());
+                result.add(stack.pop());
             }
         }
-        Collections.reverse(itinerary);
-        return itinerary;
+        Collections.reverse(result);
+        return result;
     }
 }
