@@ -11,27 +11,29 @@ Step three: Return the sb.reverse() of stringbuilder because nature of DFS
 */
 class Solution {
     public String alienOrder(String[] words) {
-        StringBuilder sb = new StringBuilder();
         Map<Character, Set<Character>> map = buildMap(words);
         Set<Character> visiting = new HashSet<>();
         Set<Character> visited = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
         
-        for (char c : map.keySet())
-            if (!dfs(visiting, visited, map, sb, c))
+        for (char c : map.keySet()) {
+            if (!dfs(map, visiting, visited, c, sb)) {
                 return "";
-        
+            }
+        }
         return sb.reverse().toString();
     }
-    private boolean dfs(Set<Character> visiting, Set<Character> visited, 
-                       Map<Character, Set<Character>> map, StringBuilder sb, char c) 
+    
+    private boolean dfs(Map<Character, Set<Character>> map, Set<Character> visiting, 
+                       Set<Character> visited, char c, StringBuilder sb) 
     {
         if (visiting.contains(c))
-            return false;    
+            return false;
         if (visited.contains(c))
             return true;
         visiting.add(c);
         for (char neighbor : map.get(c)) {
-            if (!dfs(visiting, visited, map, sb, neighbor)) {
+            if (!dfs(map, visiting, visited, neighbor, sb)) {
                 return false;
             }
         }
@@ -40,7 +42,8 @@ class Solution {
         sb.append(c);
         return true;
     }
-    private Map<Character, Set<Character>> buildMap (String[] words) {
+    
+    private Map<Character, Set<Character>> buildMap(String[] words) {
         Map<Character, Set<Character>> map = new HashMap<>();
         for (String word : words) {
             for (char c : word.toCharArray()) {
@@ -52,7 +55,7 @@ class Solution {
             String currentWord = words[i];
             String nextWord = words[i + 1];
             
-            if (currentWord.length() > nextWord.length() && currentWord.startsWith(nextWord)) {
+            if (currentWord.length () > nextWord.length() && currentWord.startsWith(nextWord)) {
                 map.clear();
                 return map;
             }
@@ -60,7 +63,6 @@ class Solution {
             for (int j = 0; j < Math.min(currentWord.length(), nextWord.length()); j++) {
                 char currentChar = currentWord.charAt(j);
                 char nextChar = nextWord.charAt(j);
-                
                 if (currentChar != nextChar) {
                     map.get(currentChar).add(nextChar);
                     break;
