@@ -21,9 +21,9 @@ class Solution {
             frequencyArr[task - 'A']++;
         }
         
-        for (char frequency : frequencyArr) {
+        for (int frequency : frequencyArr) {
             if (frequency > 0) {
-                maxHeap.offer((int)frequency);   
+                maxHeap.offer(frequency);   
             }
         }
         
