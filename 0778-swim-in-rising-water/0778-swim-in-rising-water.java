@@ -19,7 +19,7 @@ class Solution {
         while (lowTime < highTime) {
             int midTime = lowTime + (highTime - lowTime) / 2;
             boolean[][] visited = new boolean[n][n];
-            if (dfs(grid, 0, 0, midTime, visited)) {
+            if (dfs(grid, visited, midTime, 0, 0)) {
                 highTime = midTime;
             } else {
                 lowTime = midTime + 1;
@@ -27,21 +27,20 @@ class Solution {
         }
         return lowTime;
     }
-    private boolean dfs(int[][]grid, int row, int column, int time, boolean[][] visited) {
+    private boolean dfs(int[][] grid, boolean[][] visited, int time, int row, int column) {
         int n = grid.length;
-        if (row < 0 || row >= n || column < 0 || column >= n || time < grid[row][column]
-                    || visited[row][column])
+        if (row < 0 || row >= n || column < 0 || column >= n 
+            || visited[row][column] || time < grid[row][column])
         {
             return false;
         }
-        
         visited[row][column] = true;
         if (row == n - 1 && column == n - 1) {
             return true;
         }
-        return dfs(grid, row + 1, column, time, visited)
-            || dfs(grid, row - 1, column, time, visited)
-            || dfs(grid, row, column + 1, time, visited)
-            || dfs(grid, row, column - 1, time, visited);
+        return dfs(grid, visited, time, row + 1, column)
+            || dfs(grid, visited, time, row - 1, column)
+            || dfs(grid, visited, time, row, column + 1)
+            || dfs(grid, visited, time, row, column - 1); 
     }
 }
