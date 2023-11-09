@@ -9,23 +9,41 @@ Step three: Return the .reverse of stringbuilder because nature of DFS
 class Solution {
     public String alienOrder(String[] words) {
         StringBuilder sb = new StringBuilder();
+        Map<Character, Set<Character>> map = buildMap(words);
         Set<Character> visiting = new HashSet<>();
         Set<Character> visited = new HashSet<>();
-        Map<Character, Set<Character>> map = buildMap(words);
-        for (Character c : map.keySet()) {
-            if (!dfs(map, visiting, visited, c, sb)) {
+        
+        for (char c : map.keySet()) {
+            if (!dfs(visiting, visited, c, map, sb)) {
                 return "";
-            }    
+            }
         }
         return sb.reverse().toString();
     }
     
-    private Map<Character, Set<Character>> buildMap (String[] words) {
-        Map<Character, Set<Character>> map = new HashMap<>();
+    private boolean dfs(Set<Character> visiting, Set<Character> visited, char c, 
+                        Map<Character, Set<Character>> map, StringBuilder sb) 
+    {
+        if (visiting.contains(c)) return false;
+        if (visited.contains(c)) return true;
         
+        visiting.add(c);
+        for (char neighbor : map.get(c)) {
+            if (!dfs(visiting, visited, neighbor, map, sb)) {
+                return false;
+            }
+        }
+        visiting.remove(c);
+        visited.add(c);
+        sb.append(c);
+        return true;
+    }
+    
+    private Map<Character, Set<Character>> buildMap(String[] words) {
+        Map<Character, Set<Character>> map = new HashMap<>();
         for (String word : words) {
             for (char c : word.toCharArray()) {
-                map.putIfAbsent(c, new HashSet<>());
+                map.putIfAbsent(c, new HashSet<Character>());
             }
         }
         
@@ -37,32 +55,15 @@ class Solution {
                 return map;
             }
             for (int j = 0; j < Math.min(currentWord.length(), nextWord.length()); j++) {
-                char currentC = currentWord.charAt(j);
-                char nextC = nextWord.charAt(j);
-                if (currentC != nextC) {
-                    map.get(currentC).add(nextC);
+                char currentChar = currentWord.charAt(j);
+                char nextChar = nextWord.charAt(j);
+                
+                if (currentChar != nextChar) {
+                    map.get(currentChar).add(nextChar);
                     break;
                 }
             }
         }
         return map;
-    }
-    
-    private boolean dfs (Map<Character, Set<Character>> map, Set<Character> visiting, 
-                         Set<Character> visited, char c, StringBuilder sb)
-    {
-        if (visiting.contains(c)) return false;
-        if (visited.contains(c)) return true;
-        
-        visiting.add(c);
-        for (char neighbor : map.get(c)) {
-            if (!dfs(map, visiting, visited, neighbor, sb)){
-                return false;   
-            }
-        }
-        visiting.remove(c);
-        visited.add(c);
-        sb.append(c);
-        return true;
     }
 }
