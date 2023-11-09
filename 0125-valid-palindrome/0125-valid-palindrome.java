@@ -1,8 +1,9 @@
-/*
+/* Character.toLowerCase(), Character.isLetterOrDigit()
 Want to return a boolean value, check whether String s is a palindrome
 Use two pointer technique, leftPointer to right and rightPointer to left
     In while loop, if leftChar == rightChar, we keep going, if not return false
         ATTENTION, when encounter 'space' or 'punctuation', continue and keep moving pointer
+WE NEED TO MOVE LEFT AND RIGHT POINTER IF THEY ARE THE SAME
 If all case passes, return true, if another character is not the same, return false
 */
 class Solution {
