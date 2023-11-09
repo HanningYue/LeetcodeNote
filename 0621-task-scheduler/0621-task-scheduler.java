@@ -34,7 +34,7 @@ class Solution {
                 int mostFrequent = maxHeap.poll();
                 mostFrequent--;
                 if (mostFrequent > 0) {
-                    queue.add(new Pair<Integer, Integer>(mostFrequent, time + n));
+                    queue.add(new Pair<>(mostFrequent, time + n));
                 }
             }
             if (!queue.isEmpty()) {
