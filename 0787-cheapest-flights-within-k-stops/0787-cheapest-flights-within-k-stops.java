@@ -24,6 +24,7 @@ class Solution {
                 int cost = flights[j][2];
                 
                 if (prices[departCity] == Integer.MAX_VALUE) continue;
+                
                 if (prices[departCity] + cost < temp[arriveCity]) {
                     temp[arriveCity] = prices[departCity] + cost;
                 }
