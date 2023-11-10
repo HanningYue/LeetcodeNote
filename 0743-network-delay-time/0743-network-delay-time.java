@@ -25,11 +25,12 @@ class Solution {
                 
                 if (temp[source - 1] == Integer.MAX_VALUE) continue;
                 
-                if (temp[source - 1] + cost < temp[target - 1]) {
-                    temp[target - 1] = temp[source - 1] + cost;
+                if (delay[source - 1] + cost < temp[target - 1]) {
+                    temp[target - 1] = delay[source - 1] + cost;
                 }
+                delay = temp; //Need to iterate the whole graph, if more than n time, can not reach 
+                              //all nodes. So inside j-loop, update dealy[] each time.
             }
-            delay = temp;
         }
         
         int minimumTime = Integer.MIN_VALUE;
