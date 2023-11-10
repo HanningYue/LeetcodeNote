@@ -11,7 +11,7 @@ The question is 1-indexed, "a network of n nodes, labeled from 1 to n" This appl
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
         int[] delay = new int[n];
-        Arrays.fill(delay, Integer.MAX_VALUE);
+        Arrays.fill(delay, Integer.MAX_VALUE);        
         delay[k - 1] = 0;
         
         for (int i = 0; i < n; i++) {
@@ -22,16 +22,16 @@ class Solution {
                 int source = times[j][0];
                 int target = times[j][1];
                 int cost = times[j][2];
-
-                if (delay[source - 1] == Integer.MAX_VALUE) continue;
+                
+                if (temp[source - 1] == Integer.MAX_VALUE) continue;
                 
                 if (delay[source - 1] + cost < temp[target - 1]) {
                     temp[target - 1] = delay[source - 1] + cost;
                 }
                 delay = temp;
             }
-            
         }
+        
         int minimumTime = Integer.MIN_VALUE;
         for (int i = 0; i < n; i++) {
             if (delay[i] == Integer.MAX_VALUE) {
