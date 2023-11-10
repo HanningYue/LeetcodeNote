@@ -20,7 +20,7 @@ class Solution {
         for (List<String> ticket : tickets) {
             String departCity = ticket.get(0);
             String arriveCity = ticket.get(1);
-            graph.putIfAbsent(departCity, new PriorityQueue<>());
+            graph.putIfAbsent(departCity, new PriorityQueue<String>());
             graph.get(departCity).add(arriveCity);
         }
         
