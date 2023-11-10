@@ -1,4 +1,5 @@
 /**
+ATTENTION!! Any updates to temp are immediately available for subsequent edge relaxations. when temp, temp
 Refer to question 787
 The question is 1-indexed, "a network of n nodes, labeled from 1 to n" This applies to target - 1 and source - 1
 判定条件相同 ==Integer.MAX_VALUE, SKIP 我们要找到source node
@@ -24,11 +25,11 @@ class Solution {
                 
                 if (temp[source - 1] == Integer.MAX_VALUE) continue;
                 
-                if (temp[source - 1] + cost < temp[target - 1]) {
-                    temp[target - 1] = temp[source - 1] + cost;
+                if (delay[source - 1] + cost < temp[target - 1]) {
+                    temp[target - 1] = delay[source - 1] + cost;
                 }
+                delay = temp;
             }
-            delay = temp;
         }
         
         int minimumTime = Integer.MIN_VALUE;
