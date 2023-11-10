@@ -29,9 +29,11 @@ class Solution {
             cost += currentWeight;
             
             for (int nextNode = 0; nextNode < points.length; nextNode++) {
-                int nextWeight = Math.abs(points[nextNode][0] - points[currentNode][0])
-                                +Math.abs(points[nextNode][1] - points[currentNode][1]);
-                minHeap.offer(new int[] {nextWeight, nextNode});
+                if (!visited.contains(nextNode)) {
+                    int nextWeight = Math.abs(points[nextNode][0] - points[currentNode][0])
+                                    +Math.abs(points[nextNode][1] - points[currentNode][1]);
+                    minHeap.offer(new int[] {nextWeight, nextNode});   
+                }
             }
         }
         return cost;
