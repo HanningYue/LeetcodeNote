@@ -25,11 +25,11 @@ class Solution {
                 
                 if (temp[source - 1] == Integer.MAX_VALUE) continue;
                 
-                if (delay[source - 1] + cost < temp[target - 1]) {
-                    temp[target - 1] = delay[source - 1] + cost;
+                if (temp[source - 1] + cost < temp[target - 1]) {
+                    temp[target - 1] = temp[source - 1] + cost;
                 }
-                delay = temp;
             }
+            delay = temp;
         }
         
         int minimumTime = Integer.MIN_VALUE;
