@@ -7,7 +7,6 @@ The question is 1-indexed, "a network of n nodes, labeled from 1 to n" This appl
 2. 我们需要把所有的node都走完 所以for loop < n
 3. 在最后 for i=0，i<n, 只有n-1条边 n-1个edge
 */
-
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
         int[] delay = new int[n];
@@ -25,11 +24,11 @@ class Solution {
                 
                 if (temp[source - 1] == Integer.MAX_VALUE) continue;
                 
-                if (delay[source - 1] + cost < temp[target - 1]) {
-                    temp[target - 1] = delay[source - 1] + cost;
+                if (temp[source - 1] + cost < temp[target - 1]) {
+                    temp[target - 1] = temp[source - 1] + cost;
                 }
-                delay = temp;
             }
+            delay = temp;
         }
         
         int minimumTime = Integer.MIN_VALUE;
