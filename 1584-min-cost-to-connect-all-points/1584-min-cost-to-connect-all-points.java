@@ -1,7 +1,6 @@
 /*
 想要找到最短的cost链接所有的point in a 2D ARRAY
-We can start at any point, for each point, BFS all the rest points, take the minimum edge, go to the minimum edge point, repeat the process. Until reach end of the 
-int[][] points
+We can start at any point, for each point, BFS all the rest points, take the minimum edge, go to the minimum edge point, repeat the process. Until reach end of the  int[][] points
 PriorityQueue<> //{weight, node}, initialize with {0, 0}
 Set<> //Check duplicate
 MST(minimum spanning tree) - Prim's Algorithm
@@ -15,28 +14,24 @@ Apply Prim's Algo  O(n^2logn)
 // new int[] {minimum weight at each point, the point index in points array}
 class Solution {
     public int minCostConnectPoints(int[][] points) {
+        int cost = 0;
         PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
         minHeap.offer(new int[] {0, 0});
         Set<Integer> visited = new HashSet<>();
-        int cost = 0;
         
-        while (visited.size() < points.length){
-            int[] custom = minHeap.poll();
-            int currentNode = custom[1];
-            int currentWeight = custom[0];
+        while (visited.size() < points.length) {
+            int[] point = minHeap.poll();
+            int currentWeight = point[0];
+            int currentNode = point[1];
             
-            if (visited.contains(currentNode)) {
-                continue;
-            }
-            cost += currentWeight;    
+            if (visited.contains(currentNode)) continue;
             visited.add(currentNode);
+            cost += currentWeight;
             
             for (int nextNode = 0; nextNode < points.length; nextNode++) {
-                if (!visited.contains(nextNode)) {
-                    int nextWeight = Math.abs(points[nextNode][0] - points[currentNode][0])
-                                    +Math.abs(points[nextNode][1] - points[currentNode][1]);
-                    minHeap.offer(new int[]{nextWeight, nextNode});
-                }
+                int nextWeight = Math.abs(points[nextNode][0] - points[currentNode][0])
+                                +Math.abs(points[nextNode][1] - points[currentNode][1]);
+                minHeap.offer(new int[] {nextWeight, nextNode});
             }
         }
         return cost;
