@@ -14,9 +14,9 @@ Apply Prim's Algo  O(n^2logn)
 // new int[] {minimum weight at each point, the point index in points array}
 class Solution {
     public int minCostConnectPoints(int[][] points) {
-        int cost = 0;
         PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
         minHeap.offer(new int[] {0, 0});
+        int cost = 0;
         Set<Integer> visited = new HashSet<>();
         
         while (visited.size() < points.length) {
@@ -32,7 +32,7 @@ class Solution {
                 if (!visited.contains(nextNode)) {
                     int nextWeight = Math.abs(points[nextNode][0] - points[currentNode][0])
                                     +Math.abs(points[nextNode][1] - points[currentNode][1]);
-                    minHeap.offer(new int[] {nextWeight, nextNode});   
+                    minHeap.offer(new int[] {nextWeight, nextNode});
                 }
             }
         }
