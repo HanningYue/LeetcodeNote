@@ -22,8 +22,7 @@ class TimeMap {
     public String get(String key, int timestamp) {
         if (!map.containsKey(key)) {
             return "";
-        }
-
+        }    
         List<Pair<String, Integer>> list = map.get(key);
         return binarySearch(list, timestamp);
     }
@@ -31,12 +30,11 @@ class TimeMap {
         int low = 0, high = list.size() - 1;
         while (low <= high) {
             int mid = low + (high - low) / 2;
-            
             if (list.get(mid).getValue() == timestamp) {
                 return list.get(mid).getKey();
             } else if (list.get(mid).getValue() < timestamp) {
                 low = mid + 1;
-            } else if (list.get(mid).getValue() > timestamp) {
+            } else {
                 high = mid - 1;
             }
         }
