@@ -26,6 +26,7 @@ class TimeMap {
         List<Pair<String, Integer>> list = map.get(key);
         return binarySearch(list, timestamp);
     }
+    
     private String binarySearch(List<Pair<String, Integer>> list, int timestamp) {
         int low = 0, high = list.size() - 1;
         while (low <= high) {
