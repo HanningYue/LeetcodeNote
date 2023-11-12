@@ -9,18 +9,18 @@ In this proble, we starts at TOP-RIGHT, let row = 0 and column = matrix[0].lengt
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int row = 0;
-        int col = matrix[0].length - 1;
-
-        while (row < matrix.length && col >= 0) {
-            if (matrix[row][col] == target) {
-                return true;
-            } else if (matrix[row][col] < target) {
+        int column = matrix[0].length - 1;
+        
+        while (row < matrix.length && column >= 0) {
+            int currentNumber = matrix[row][column];
+            if (currentNumber > target) {
+                column--;
+            } else if (currentNumber < target) {
                 row++;
             } else {
-                col--;
+                return true;
             }
         }
-
         return false;
     }
 }
