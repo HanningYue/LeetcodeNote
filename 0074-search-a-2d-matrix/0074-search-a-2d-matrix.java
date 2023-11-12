@@ -1,27 +1,26 @@
 /*
-
+In Binary Search, the low and high are usually index-boundary, not value boundary
+In this proble, we starts at TOP-RIGHT, let row = 0 and column = matrix[0].length - 1
+    Condition is while row in matrix.length boundary and column >= 0
+    For each value, START at top-right
+        if smaller than target -> increase row number
+        if bigger than target -> decrease column number
 */
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        int numRows = matrix.length;
-        int numCols = matrix[0].length;
-        
-        int low = 0;
-        int high = numRows * numCols - 1;
-        
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
-            int midValue = matrix[mid / numCols][mid % numCols];
-            
-            if (midValue == target) {
+        int row = 0;
+        int col = matrix[0].length - 1;
+
+        while (row < matrix.length && col >= 0) {
+            if (matrix[row][col] == target) {
                 return true;
-            } else if (midValue < target) {
-                low = mid + 1;
+            } else if (matrix[row][col] < target) {
+                row++;
             } else {
-                high = mid - 1;
+                col--;
             }
         }
-        
+
         return false;
     }
 }
