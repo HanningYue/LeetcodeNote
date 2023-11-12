@@ -11,7 +11,7 @@ Mid will be the RATE of eating MEADIAN number of bananas, calculate by low + (hi
 */
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int low = 1; // start from 1, as speed cannot be 0
+        int low = 0;
         int high = 0;
         for (int pile : piles) {
             high = Math.max(pile, high);
