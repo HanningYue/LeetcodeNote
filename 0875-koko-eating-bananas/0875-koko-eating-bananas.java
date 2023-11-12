@@ -16,7 +16,7 @@ class Solution {
         
         while (low < high) {
             int rate = low + (high - low) / 2;
-            double time = 0;
+            double time = 0.0;
             for (int pile : piles) {
                 time += Math.ceil((double) pile / rate);
             }
