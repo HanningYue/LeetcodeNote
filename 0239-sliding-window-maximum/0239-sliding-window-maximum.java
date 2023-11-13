@@ -15,7 +15,7 @@ class Solution {
                 dq.pollLast();
             }
             dq.offerLast(i);
-            while (!dq.isEmpty() && i - k >= dq.peekFirst()) {
+            while (i - k >= dq.peekFirst()) {
                 dq.pollFirst();
             }
             if (i - k + 1 >= 0) {
