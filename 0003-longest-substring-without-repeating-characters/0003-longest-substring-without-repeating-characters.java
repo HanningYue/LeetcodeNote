@@ -8,17 +8,17 @@ Update max length at each iteration of fast, compare Math.max(fast - slow + 1, m
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         Set<Character> set = new HashSet<>();
-        int slow = 0;
-        int maxLength = 0;
         
+        int length = 0;
+        int slow = 0;
         for (int fast = 0; fast < s.length(); fast++) {
             while (set.contains(s.charAt(fast))) {
                 set.remove(s.charAt(slow));
                 slow++;
             }
+            length = Math.max(length, fast - slow + 1);
             set.add(s.charAt(fast));
-            maxLength = Math.max(maxLength, fast - slow + 1);
         }
-        return maxLength;
+        return length;
     }
 }
