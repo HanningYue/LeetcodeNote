@@ -10,8 +10,8 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        ListNode current = head;
         ListNode previous = null;
+        ListNode current = head;
         ListNode next = null;
         
         while (current != null) {
@@ -21,5 +21,5 @@ class Solution {
             current = next;
         }
         return previous;
-    } 
+    }
 }
