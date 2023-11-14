@@ -11,6 +11,7 @@ class Solution {
         int length = 0;
         int[] frequency = new int[26];
         int maxFrequency = 0;
+        
         int slow = 0;
         for (int fast = 0; fast < s.length(); fast++) {
             frequency[s.charAt(fast) - 'A']++;
