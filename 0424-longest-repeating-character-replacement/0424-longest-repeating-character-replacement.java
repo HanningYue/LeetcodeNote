@@ -8,19 +8,19 @@ Since we want to know the frequency of each character in the window, we can use 
 */
 class Solution {
     public int characterReplacement(String s, int k) {
+        int length = 0;
         int[] frequency = new int[26];
-        int maxLength = 0, maxFrequency = 0;
+        int maxFrequency = 0;
         int slow = 0;
-        
         for (int fast = 0; fast < s.length(); fast++) {
             frequency[s.charAt(fast) - 'A']++;
             maxFrequency = Math.max(maxFrequency, frequency[s.charAt(fast) - 'A']);
-            while (fast - slow + 1 - maxFrequency > k) {
+            while (fast - slow - maxFrequency + 1 > k) {
                 frequency[s.charAt(slow) - 'A']--;
                 slow++;
             }
-            maxLength = Math.max(maxLength, fast - slow + 1);
+            length = Math.max(length, fast - slow + 1);
         }
-        return maxLength;
+        return length;
     }
 }
