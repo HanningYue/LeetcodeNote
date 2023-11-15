@@ -22,6 +22,6 @@ class Solution {
         }
         while (slow != newHead);
         
-        return newHead;
+        return slow;
     }
 }
