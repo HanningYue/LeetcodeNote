@@ -9,7 +9,7 @@
     with the most recently used key
 4. In get(), if containsKey, delete first, then add again (to update recently), 
     return the Node value
-5. In put(), if 
+5. In put(), if containsKey, declare with new value, delete and add, 
 
 */
 class LRUCache {
@@ -58,8 +58,8 @@ class LRUCache {
     
     public void put(int key, int value) {
         if (map.containsKey(key)) {
-            Node node = new Node(key, value);
             delete(map.get(key));
+            Node node = new Node(key, value);
             add(node);
             map.put(key, node);
         } else {
