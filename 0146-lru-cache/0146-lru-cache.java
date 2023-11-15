@@ -42,9 +42,9 @@ class LRUCache {
     
     private void add(Node node) {
         node.next = head.next;
+        node.prev = head;
         head.next.prev = node;
         head.next = node;
-        node.prev = head;
     }
     
     private void delete(Node node) {
@@ -65,6 +65,7 @@ class LRUCache {
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             delete(map.get(key));
+            
             Node node = new Node(key, value);
             map.put(key, node);
             add(node);
@@ -76,8 +77,8 @@ class LRUCache {
                 delete(tail.prev);
             }
             Node node = new Node(key, value);
-            add(node);
             map.put(key, node);
+            add(node);
         }
     }
 }
