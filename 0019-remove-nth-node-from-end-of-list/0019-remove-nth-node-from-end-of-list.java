@@ -13,6 +13,9 @@ class Solution {
             fast = fast.next;
             n--;
         }
+        if (fast == null) {
+            return head;
+        }
         
         ListNode slow = dummy;
         while (fast.next != null) {
