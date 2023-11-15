@@ -1,4 +1,15 @@
 /*
+1.delete(), add(), get(), put()
+2. Create a Node class, use a linkedlist node. 
+    Which contains key, value, prev and next pointer Node
+    Use map to store {key, node}. A capacity and count to keep track of size of linkedlist
+    And head and tail Node to declare linkedlist
+3. Construct linkedlist in LRUCache(), implement delete and add function
+    When adding, make sure to add node to the next of head. Because we need to keep up 
+    with the most recently used key
+4. In get(), if containsKey, delete first, then add again (to update recently), 
+    return the Node value
+5. In put(), if 
 
 */
 class LRUCache {
@@ -47,8 +58,8 @@ class LRUCache {
     
     public void put(int key, int value) {
         if (map.containsKey(key)) {
-            delete(map.get(key));
             Node node = new Node(key, value);
+            delete(map.get(key));
             map.put(key, node);
             add(node);
         } else {
