@@ -60,8 +60,8 @@ class LRUCache {
         if (map.containsKey(key)) {
             Node node = new Node(key, value);
             delete(map.get(key));
-            map.put(key, node);
             add(node);
+            map.put(key, node);
         } else {
             if (count < capacity) {
                 count++;
