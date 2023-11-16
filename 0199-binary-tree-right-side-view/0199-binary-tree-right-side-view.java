@@ -9,16 +9,16 @@ class Solution {
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
-                TreeNode rightMost = queue.poll();
+                TreeNode current = queue.poll();
                 if (i == size - 1) {
-                    result.add(rightMost.val);
+                    result.add(current.val);
                 }
-                if (rightMost.left != null) {
-                    queue.offer(rightMost.left);
+                if (current.left != null) {
+                    queue.offer(current.left);
                 }
-                if (rightMost.right != null) {
-                    queue.offer(rightMost.right);
-                } 
+                if (current.right != null) {
+                    queue.offer(current.right);
+                }
             }
         }
         return result;
