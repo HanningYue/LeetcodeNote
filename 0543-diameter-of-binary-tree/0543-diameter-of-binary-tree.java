@@ -1,7 +1,7 @@
-/*
-1. 向右边要最大的diameter 向左边要最大的diameter
-2. 本层比较左右两边的diameter 加上自己的level +1
-3. 返回本层加1后的level到上一层
+/* Declare private int diameter
+1. 向右边要右边的高度 向左边要左边的高度 本层加上+1(本层的高度) 返还给上一层
+2. Diameter 每一层比较左右两边加起来 和之前的diameter
+3. 主方程call dfs 然后返回diameter
 */
 class Solution {
     private int diameter;
