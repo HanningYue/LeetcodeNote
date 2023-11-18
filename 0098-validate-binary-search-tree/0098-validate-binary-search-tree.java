@@ -1,40 +1,21 @@
 /*
 1. Return boolean, we need to check whether 
     The subtree is BST itself
-    The current node is greater than left child node and smaller than right child node
+    The current node is greater than the MAXIMUM
 2. Need to return multiple values, define a new class TYPE
 */
 class Solution {
-    class Type {
-        boolean isBST;
-        long min;
-        long max;
-        public Type(boolean isBST, long min, long max) {
-            this.isBST = isBST;
-            this.min = min;
-            this.max = max;
-        }        
-    }
-    
     public boolean isValidBST(TreeNode root) {
-        return dfs(root).isBST;       
+        return dfs(root, null, null);
     }
     
-    private Type dfs(TreeNode root) {
+    public boolean dfs(TreeNode root, Integer leftMaximum, Integer rightMinimum) {
         if (root == null) {
-            return new Type(true, Long.MAX_VALUE, Long.MIN_VALUE);
+            return true;
         }
-
-        Type left = dfs(root.left);
-        Type right = dfs(root.right);
-
-        if (!left.isBST || !right.isBST || root.val <= left.max || root.val >= right.min) {
-            return new Type(false, 0, 0);
+        if ((leftMaximum != null && root.val <= leftMaximum) || (rightMinimum != null && root.val >= rightMinimum)) {
+            return false;
         }
-        
-        long min = root.left != null ? left.min : root.val;
-        long max = root.right != null ? right.max : root.val;
-
-        return new Type(true, min, max);
+        return dfs(root.left, leftMaximum, root.val) && dfs(root.right, root.val, rightMinimum);
     }
 }
