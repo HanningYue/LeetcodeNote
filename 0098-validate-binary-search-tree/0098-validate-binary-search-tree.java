@@ -5,15 +5,14 @@
 2. Need to return multiple values, define a new class TYPE
 */
 class Solution {
-    class ResultType {
+    class Type {
         boolean isBST;
-        long minValue;
-        long maxValue;
-
-        public ResultType(boolean isBST, long minValue, long maxValue) {
+        long min;
+        long max;
+        public Type(boolean isBST, long min, long max) {
             this.isBST = isBST;
-            this.minValue = minValue;
-            this.maxValue = maxValue;
+            this.min = min;
+            this.max = max;
         }        
     }
     
@@ -21,24 +20,21 @@ class Solution {
         return dfs(root).isBST;       
     }
     
-    private ResultType dfs(TreeNode root) {
+    private Type dfs(TreeNode root) {
         if (root == null) {
-            // Using Long.MIN_VALUE and Long.MAX_VALUE to handle edge cases
-            return new ResultType(true, Long.MAX_VALUE, Long.MIN_VALUE);
+            return new Type(true, Long.MAX_VALUE, Long.MIN_VALUE);
         }
 
-        ResultType left = dfs(root.left);
-        ResultType right = dfs(root.right);
+        Type left = dfs(root.left);
+        Type right = dfs(root.right);
 
-        // Check if both left and right subtrees are BST and their values are within valid range
-        if (!left.isBST || !right.isBST || root.val <= left.maxValue || root.val >= right.minValue) {
-            return new ResultType(false, 0, 0); // Not a BST
+        if (!left.isBST || !right.isBST || root.val <= left.max || root.val >= right.min) {
+            return new Type(false, 0, 0);
         }
         
-        // Calculate the new min and max values for the current subtree
-        long minValue = root.left != null ? left.minValue : root.val;
-        long maxValue = root.right != null ? right.maxValue : root.val;
+        long min = root.left != null ? left.min : root.val;
+        long max = root.right != null ? right.max : root.val;
 
-        return new ResultType(true, minValue, maxValue);
+        return new Type(true, min, max);
     }
 }
