@@ -1,16 +1,22 @@
+/*
+1. DFS, any nodes prior to current node should be smaller or equal to the current node's value
+2. Maintain a path maximum, DFS to the leaf node, if node val is greater than path maximum, increase the 
+   count of Good Nodes and update path maximuim
+3. Initialize the DFS function with Integer.MIN_VALUE;
+*/
 class Solution {
+    int goodNodes = 0;
     public int goodNodes(TreeNode root) {
-        int[] count = {0};
-        dfs(root, Integer.MIN_VALUE, count);
-        return count[0];
+        dfs(root, Integer.MIN_VALUE);
+        return goodNodes;
     }
-    private void dfs(TreeNode root, int pathMax, int[] count) {
+    private void dfs (TreeNode root, int pathMaximum) {
         if (root == null) return;
-        if (root.val >= pathMax) {
-            count[0]++;
-            pathMax = root.val;
+        if (root.val >= pathMaximum) {
+            pathMaximum = root.val;
+            goodNodes++;
         }
-        dfs(root.left, pathMax, count);
-        dfs(root.right, pathMax, count);
+        dfs(root.left, pathMaximum);
+        dfs(root.right, pathMaximum);
     }
 }
