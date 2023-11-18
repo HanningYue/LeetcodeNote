@@ -16,6 +16,8 @@ class Solution {
         if ((leftMaximum != null && root.val <= leftMaximum) || (rightMinimum != null && root.val >= rightMinimum)) {
             return false;
         }
-        return dfs(root.left, leftMaximum, root.val) && dfs(root.right, root.val, rightMinimum);
+        boolean leftIsBst = dfs(root.left, leftMaximum, root.val);
+        boolean rightIsBst = dfs(root.right, root.val, rightMinimum);
+        return leftIsBst && rightIsBst;
     }
 }
