@@ -15,12 +15,11 @@
  */
 class Solution {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if (root == null || subRoot == null) {
-            return false;
-        } 
-        
         if (sameTree(root, subRoot)) {
             return true;
+        }
+        if (root == null || subRoot == null) {
+            return false;
         }
         boolean subLeft = isSubtree(root.left, subRoot);
         boolean subRight = isSubtree(root.right, subRoot);
