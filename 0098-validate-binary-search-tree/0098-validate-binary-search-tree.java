@@ -1,24 +1,27 @@
 /*
-1. Return boolean, we need to check whether 
-    The subtree is BST itself
-    The current node is greater than the MAXIMUM
-2. Need to return multiple values, define a new class TYPE
+    Integer _, Integer _
+1. Return boolean, we need to check
+    The current node is greater than the MAXIMUM of left subtree, 
+                     is less than the MINIMUM of right subtree
+2. When checking left and right subtree is also BST, left root.val be 
+    the rightMinimum when checking left-subtree
+    the leftMaximum when checking right-subtree
 */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        return dfs(root, null, null);
+        return isBST(root, null, null);
     }
-    
-    public boolean dfs(TreeNode root, Integer leftMaximum, Integer rightMinimum) {
-        if (root == null) {
-            return true;
-        }
-        if ((leftMaximum != null && root.val <= leftMaximum) 
-            || (rightMinimum != null && root.val >= rightMinimum)) {
+    private boolean isBST (TreeNode root, Integer leftMax, Integer rightMin) {
+        if (root == null) return true;
+        
+        if (leftMax != null && root.val <= leftMax
+          ||rightMin != null && root.val >= rightMin)
+        {
             return false;
         }
-        boolean leftIsBst = dfs(root.left, leftMaximum, root.val);
-        boolean rightIsBst = dfs(root.right, root.val, rightMinimum);
-        return leftIsBst && rightIsBst;
+        
+        boolean leftBST = isBST(root.left, leftMax, root.val);
+        boolean rightBST = isBST(root.right, root.val, rightMin);
+        return leftBST && rightBST;
     }
 }
