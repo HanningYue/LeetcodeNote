@@ -13,7 +13,8 @@ class Solution {
         if (root == null) {
             return true;
         }
-        if ((leftMaximum != null && root.val <= leftMaximum) || (rightMinimum != null && root.val >= rightMinimum)) {
+        if ((leftMaximum != null && root.val <= leftMaximum) 
+            || (rightMinimum != null && root.val >= rightMinimum)) {
             return false;
         }
         boolean leftIsBst = dfs(root.left, leftMaximum, root.val);
