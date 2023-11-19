@@ -1,16 +1,16 @@
 class Trie {
     class TrieNode {
         boolean isWord;
-        TrieNode[] children;
         String word;
-        public TrieNode () {
-            children = new TrieNode[26];    
+        TrieNode[] children;
+        public TrieNode() {
+            children = new TrieNode[26];
             isWord = false;
             word = "";
         }
     }
-    private TrieNode root;
     
+    private TrieNode root;
     public Trie() {
         root = new TrieNode();
     }
