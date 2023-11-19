@@ -16,7 +16,7 @@ class Trie {
     public void insert(String word) {
         TrieNode node = root;
         for (int i = 0; i < word.length(); i++) {
-            int index = word.charAt(i) - 'a';
+            int index= word.charAt(i) - 'a';
             if (node.children[index] == null) {
                 node.children[index] = new TrieNode();
             }
