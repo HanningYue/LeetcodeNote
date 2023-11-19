@@ -8,8 +8,8 @@
  * }
  */
 public class Codec {
+    String endMarker = "#";
     String spliter = ",";
-    String marker = "#";
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
@@ -18,7 +18,7 @@ public class Codec {
     }
     private void se(TreeNode root, StringBuilder sb) {
         if (root == null) {
-            sb.append(marker).append(spliter);
+            sb.append(endMarker).append(spliter);
             return;
         }
         sb.append(root.val).append(spliter);
@@ -33,7 +33,9 @@ public class Codec {
         return de(tree);
     }
     private TreeNode de(String[] tree) {
-        if (index == tree.length) return null;
+        if (index == tree.length) {
+            return null;
+        }
         if (tree[index].equals("#")) {
             index++;
             return null;
