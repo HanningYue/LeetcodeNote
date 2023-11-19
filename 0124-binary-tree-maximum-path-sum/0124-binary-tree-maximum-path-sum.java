@@ -20,13 +20,14 @@ class Solution {
         return maxSum;
     }
     private int dfs(TreeNode root) {
-        if (root == null) return 0;
+        if (root == null) {
+            return 0;
+        }
         
-        int leftSum = Math.max(0, dfs(root.left));
-        int rightSum = Math.max(0, dfs(root.right));
-        int currentSum = leftSum + rightSum + root.val;
-        maxSum = Math.max(maxSum, currentSum);
+        int left = Math.max(0, dfs(root.left));
+        int right = Math.max(0, dfs(root.right));
+        maxSum = Math.max(maxSum, root.val + left + right);
         
-        return root.val + Math.max(leftSum, rightSum);
+        return root.val + Math.max(left, right);
     }
 }
