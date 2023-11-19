@@ -9,8 +9,8 @@ class Trie {
             word = "";
         }
     }
-    
     private TrieNode root;
+    
     public Trie() {
         root = new TrieNode();
     }
