@@ -10,10 +10,10 @@ class Solution {
         dfs(root, result);
         return result.get(k - 1);
     }
-    
     private void dfs(TreeNode root, List<Integer> result) {
-        if (root == null) return;
-        
+        if (root == null) {
+            return;
+        }
         dfs(root.left, result);
         result.add(root.val);
         dfs(root.right, result);
