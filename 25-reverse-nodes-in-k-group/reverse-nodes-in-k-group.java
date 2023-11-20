@@ -1,19 +1,17 @@
 /* Need a reverse helper function, divide the lists in to k-lists, reverse and connect them one-by-one
-1. First we let node current reach to k-th place. If current becomes null, it means list length 
-   is less than k, return head
-2. Record the next node of current k-th place node.断开 Let current next point to null, declare newhead 
-   be the reverse function head. 
-3. Recursive call, Link the current head with the next k group newHead. head.next = reverseKGroup(next, k);
-   Return newHead;
+先让current 走到kth， 先把第一个group reverse （with helper function）
+记录current的next， 断开current 和 next
+reverse当前的group，declare头node作为reverse后的头node
+original的head node 现在是reverse后的最后一个node
+让head.next等于之前记录的下一个group （recursion call 当前function， 当前function返回 reverse过后的头node）
 */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode current = head;
         int count = 1;
-
-        while (current != null && count < k) {
-            current = current.next;
+        while (count < k && current != null) {
             count++;
+            current = current.next;
         }
         if (current == null) {
             return head;
@@ -21,11 +19,10 @@ class Solution {
         ListNode nextGroupHead = current.next;
         current.next = null;
 
-        ListNode reverseHead = reverse(head);
-        head.next = reverseKGroup(nextGroupHead, k);
+        ListNode reverseHead = reverse(head); //The kth node after reverse
+        head.next = reverseKGroup(nextGroupHead, k); //Head is still original head, right now at the kth place
         return reverseHead;
     }
-
     private ListNode reverse(ListNode head) {
         ListNode prev = null;
         while (head != null) {
