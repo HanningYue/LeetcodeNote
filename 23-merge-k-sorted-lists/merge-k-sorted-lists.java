@@ -14,7 +14,7 @@ class Solution {
             return null;
         }
         if (low == high) {
-            return lists[high];
+            return lists[low];
         }
         int mid = low + (high - low) / 2;
         ListNode left = divide(lists, low, mid);
