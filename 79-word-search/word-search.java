@@ -8,30 +8,30 @@ for each dfs iteration, we need to mark current board[row][column] as visited,
 class Solution {
     public boolean exist(char[][] board, String word) {
         boolean[][] visited = new boolean[board.length][board[0].length];
-
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (dfs(board, word, visited, 0, i, j)) {
+                if (dfs(board, word, 0, i, j, visited)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    private boolean dfs(char[][] board, String word, boolean[][] visited, int index, int row, int column) {
+    private boolean dfs(char[][] board, String word, int index, int row, int column, boolean[][] visited) 
+    {
         if (index == word.length()) {
             return true;
         }
-        if (row < 0 || row >= board.length || column < 0 || column >= board[0].length 
-            || visited[row][column] || board[row][column] != word.charAt(index)) 
+        if (row < 0 || row >= board.length || column < 0 || column >= board[0].length
+            || visited[row][column] || board[row][column] != word.charAt(index))
         {
             return false;
         }
         visited[row][column] = true;
-        boolean result = dfs(board, word, visited, index + 1, row + 1, column) 
-        || dfs(board, word, visited, index + 1, row - 1, column) 
-        || dfs(board, word, visited, index + 1, row, column + 1) 
-        || dfs(board, word, visited, index + 1, row, column - 1);
+        boolean result = dfs(board, word, index + 1, row + 1, column, visited)
+                    || dfs(board, word, index + 1, row - 1, column, visited)
+                    || dfs(board, word, index + 1, row, column + 1, visited)
+                    || dfs(board, word, index + 1, row, column - 1, visited);
         visited[row][column] = false;
         return result;
     }
