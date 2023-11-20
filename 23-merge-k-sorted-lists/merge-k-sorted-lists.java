@@ -8,7 +8,6 @@ class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         return divide(lists, 0, lists.length - 1);
     }
-
     private ListNode divide(ListNode[] lists, int low, int high) {
         if (low > high) {
             return null;
@@ -21,11 +20,9 @@ class Solution {
         ListNode right = divide(lists, mid + 1, high);
         return merge(left, right);
     }
-
     private ListNode merge(ListNode n1, ListNode n2) {
         ListNode dummy = new ListNode(-1);
         ListNode current = dummy;
-
         while (n1 != null && n2 != null) {
             if (n1.val > n2.val) {
                 current.next = n2;
@@ -36,7 +33,7 @@ class Solution {
             }
             current = current.next;
         }
-        current.next = n1 == null ? n2 : n1;
-        return dummy.next;
+        current.next = (n1 == null) ? n2 : n1;
+        return dummy.next; 
     }
 }
