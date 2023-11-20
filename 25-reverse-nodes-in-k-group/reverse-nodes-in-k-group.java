@@ -8,9 +8,6 @@
 */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null || head.next == null) {
-            return head;
-        }
         ListNode current = head;
         int count = 1;
         while (count < k && current != null) {
