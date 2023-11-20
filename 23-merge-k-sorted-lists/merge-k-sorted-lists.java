@@ -1,13 +1,14 @@
 /**
 Divide and conquer
-Use recursive call and binary search
-Merge left part and right part
+1. Divide the lists array into sub-array until each array contain only one list
+    Base case is when low == high, return the smallest element in each sub-array
+2. Compare the ListNode of each array and merge them together
 */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         return divide(lists, 0, lists.length - 1);
     }
-    
+
     private ListNode divide(ListNode[] lists, int low, int high) {
         if (low > high) {
             return null;
@@ -24,6 +25,7 @@ class Solution {
     private ListNode merge(ListNode n1, ListNode n2) {
         ListNode dummy = new ListNode(-1);
         ListNode current = dummy;
+
         while (n1 != null && n2 != null) {
             if (n1.val > n2.val) {
                 current.next = n2;
