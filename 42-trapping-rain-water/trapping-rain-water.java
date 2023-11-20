@@ -12,17 +12,16 @@ The amount of water that can be trapped at any given position is determined by t
 */
 class Solution {
     public int trap(int[] height) {
+        int result = 0;
         int maxLeft = 0, maxRight = 0;
         int leftPointer = 0, rightPointer = height.length - 1;
-        int result = 0;
-
         while (leftPointer < rightPointer) {
             if (height[leftPointer] < height[rightPointer]) {
                 maxLeft = Math.max(maxLeft, height[leftPointer]);
                 if (maxLeft > height[leftPointer]) {
-                    result += maxLeft - height[leftPointer];            
-                }
-                leftPointer++;
+                    result += maxLeft - height[leftPointer];
+                }              
+                leftPointer++;  
             } else {
                 maxRight = Math.max(maxRight, height[rightPointer]);
                 if (maxRight > height[rightPointer]) {
