@@ -9,13 +9,13 @@ Mid will be the 'rate' of eating x-# of bananas, calculate by low + (high - low)
 */
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
+        
         int low = 0, high = 0;
 
         for (int pile : piles) {
             high = Math.max(high, pile);
         }
-        
-        
+
         while (low < high) {
             int rate = low + (high - low) / 2;
             double totalTime = 0.0;
