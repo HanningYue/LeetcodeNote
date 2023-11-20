@@ -12,9 +12,9 @@ class Solution {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        int slow = 0;
-        int match = 0;
         int length = Integer.MAX_VALUE;
+        int match = 0;
+        int slow = 0;
         String result = "";
         for (int fast = 0; fast < s.length(); fast++) {
             char c = s.charAt(fast);
