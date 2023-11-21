@@ -18,17 +18,17 @@ class Solution {
 
         int totalLength = m + n;
         int halfLength = (totalLength + 1) / 2;
-        int low = 0, high = m;
 
+        int low = 0, high = m;
         while (low <= high) {
             int mid1 = low + (high - low) / 2;
             int mid2 = halfLength - mid1;
 
-            int mid1Left = (mid1 > 0) ? nums1[mid1 - 1] : Integer.MIN_VALUE;
-            int mid1Right = (mid1 < m) ? nums1[mid1] : Integer.MAX_VALUE;
+            int mid1Left = mid1 > 0 ? nums1[mid1 - 1] : Integer.MIN_VALUE;
+            int mid1Right = mid1 < m ? nums1[mid1] : Integer.MAX_VALUE;
 
-            int mid2Left = (mid2 > 0) ? nums2[mid2 - 1] : Integer.MIN_VALUE;
-            int mid2Right = (mid2 < n) ? nums2[mid2] : Integer.MAX_VALUE;
+            int mid2Left = mid2 > 0 ? nums2[mid2 - 1] : Integer.MIN_VALUE;
+            int mid2Right = mid2 < n ? nums2[mid2] : Integer.MAX_VALUE;
 
             if (mid1Left <= mid2Right && mid1Right >= mid2Left) {
                 if (totalLength % 2 == 0) {
@@ -38,7 +38,7 @@ class Solution {
                 }
             } else if (mid1Left > mid2Right) {
                 high = mid1 - 1;
-            } else if (mid2Left > mid1Right){
+            } else {
                 low = mid1 + 1;
             }
         }
