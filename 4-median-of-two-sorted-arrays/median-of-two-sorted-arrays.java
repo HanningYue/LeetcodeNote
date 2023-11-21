@@ -42,6 +42,6 @@ class Solution {
                 low = mid1 + 1;
             }
         }
-        return 0.0;
+        return -1.0;
     }
 }
