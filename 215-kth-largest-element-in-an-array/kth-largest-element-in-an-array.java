@@ -1,30 +1,46 @@
 /**
-1. want to find the SORTED kth largest element in the num array
-2. maxHeap or minHeap, poll maxHeap and minus k while k is greater than 1
-3. return the kth largest element
+minHeap or Quick Select
 */
 class Solution {
-    private void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
-    }
-    private int quick_select(int[] nums, int lo, int hi, int k) {
-        int lt = lo, gt = hi;
-        int v = nums[hi];
-        int i = hi - 1;
-        while (i >= lt) {
-            int cmp = nums[i] - v;
-            if      (cmp < 0) swap(nums, lt++, i);
-            else if (cmp > 0) swap(nums, i--, gt--);
-            else              i--;
-        }
-        if (k < lt) return quick_select(nums, lo, lt - 1, k);
-        else if (k > gt) return quick_select(nums, gt + 1, hi, k);
-        else return v;
-    }
     public int findKthLargest(int[] nums, int k) {
-        k = nums.length - k;
-        return quick_select(nums, 0, nums.length - 1, k);
+        int low = 0, high = nums.length - 1;
+        
+        while (low <= high) {
+            int pos = position(nums, low, high);
+            if (pos + 1 == k) {
+                return nums[pos];
+            } else if (pos + 1 > k) {
+                high = pos - 1;
+            } else {
+                low = pos + 1;
+            }
+        }
+        return -1;
+    }
+    private int position(int[] nums, int low, int high) {
+        int pivot = nums[low];
+        int leftPointer = low + 1;
+        int rightPointer = high;
+
+        while (leftPointer <= rightPointer) {
+            if (nums[leftPointer] < pivot && nums[rightPointer] > pivot) {
+                swap(nums, leftPointer, rightPointer);
+                leftPointer++;
+                rightPointer--;
+            }
+            if (nums[leftPointer] >= pivot) {
+                leftPointer++;
+            }
+            if (nums[rightPointer] <= pivot) {
+                rightPointer--;
+            }
+        }
+        swap(nums, low, rightPointer);
+        return rightPointer;
+    }
+    private void swap(int[] nums, int a, int b) {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
     }
 }
