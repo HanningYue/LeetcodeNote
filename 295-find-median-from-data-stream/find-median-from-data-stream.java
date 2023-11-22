@@ -33,11 +33,11 @@ class MedianFinder {
     public double findMedian() {
         int size = minHeap.size() + maxHeap.size();
         if (size % 2 == 0) {
-            return (double)(minHeap.peek() + maxHeap.peek()) / 2.0;
+            return (minHeap.peek() + maxHeap.peek()) / 2.0;
         } else if (minHeap.size() > maxHeap.size()) {
-            return (double)minHeap.peek();
+            return minHeap.peek();
         } else {
-            return (double)maxHeap.peek();
+            return maxHeap.peek();
         }
     }
 }
