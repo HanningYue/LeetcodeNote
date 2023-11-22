@@ -31,13 +31,13 @@ class Solution {
         while (!maxHeap.isEmpty() || !queue.isEmpty()) {
             time++;
             if (!maxHeap.isEmpty()) {
-                int mostFreq = maxHeap.poll();
-                mostFreq--;
-                if (mostFreq > 0) {
-                    queue.offer(new Pair(mostFreq, time + n));
+                int maxFreq = maxHeap.poll();
+                maxFreq--;
+                if (maxFreq > 0) {
+                    queue.offer(new Pair(maxFreq, time + n));
                 }
             }
-            if (!queue.isEmpty() && time == queue.peek().getValue()) {
+            if (!queue.isEmpty() && queue.peek().getValue() == time) {
                 maxHeap.offer(queue.poll().getKey());
             }
         }
