@@ -9,16 +9,17 @@ Use two pointer to find the range and swap helper function to quick sort
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         int low = 0, high = nums.length - 1;
+        
         while (low <= high) {
-            int pos = position(nums, low, high);
-            if (pos + 1 == k) {
-                return nums[pos];
-            } else if (pos + 1 < k) {
-                low = pos + 1;
-            } else if (pos + 1 > k) {
-                high = pos - 1;
+            int mid = position(nums, low, high);
+            if (mid + 1 == k) {
+                return nums[mid];
+            } else if (mid + 1 < k) {
+                low = mid + 1;
+            } else if (mid + 1 > k) {
+                high = mid - 1;
             }
-        }    
+        }
         return -1;
     }
     
@@ -26,15 +27,16 @@ class Solution {
         int pivot = nums[low];
         int leftPointer = low + 1;
         int rightPointer = high;
+
         while (leftPointer <= rightPointer) {
             if (nums[leftPointer] < pivot && nums[rightPointer] > pivot) {
                 swap(nums, leftPointer, rightPointer);
                 leftPointer++;
                 rightPointer--;
-            }
+            } 
             if (nums[leftPointer] >= pivot) {
                 leftPointer++;
-            }
+            } 
             if (nums[rightPointer] <= pivot) {
                 rightPointer--;
             }
