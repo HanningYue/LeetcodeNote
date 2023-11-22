@@ -48,8 +48,8 @@ class Twitter {
 
         int i = tweetList.size() - 1;
         while (last10.size() < 10 && i >= 0) {
-            if (tweetList.get(i).userId == userId 
-                    || map.get(userId).follows.contains(tweetList.get(i).userId)) 
+            int postedId = tweetList.get(i).userId;
+            if (postedId == userId || map.get(userId).follows.contains(postedId)) 
             {
                 last10.add(tweetList.get(i).tweetId);
             }
