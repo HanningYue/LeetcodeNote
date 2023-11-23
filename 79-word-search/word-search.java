@@ -8,30 +8,33 @@ for each dfs iteration, we need to mark current board[row][column] as visited,
 class Solution {
     public boolean exist(char[][] board, String word) {
         boolean[][] visited = new boolean[board.length][board[0].length];
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                if (dfs(board, word, 0, i, j, visited)) {
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[0].length; column++) {
+                if (backTracking(board, word, visited, row, column, 0)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    private boolean dfs(char[][] board, String word, int index, int row, int column, boolean[][] visited) 
+    private boolean backTracking(char[][] board, String word, boolean[][] visited, int row,
+    int column, int iteration)
     {
-        if (index == word.length()) {
+        if (iteration == word.length()) {
             return true;
         }
-        if (row < 0 || row >= board.length || column < 0 || column >= board[0].length
-            || visited[row][column] || board[row][column] != word.charAt(index))
+
+        if (row < 0 || row >= board.length || column < 0 || column >= board[0].length 
+        || board[row][column] != word.charAt(iteration) || visited[row][column]) 
         {
             return false;
         }
+
         visited[row][column] = true;
-        boolean result = dfs(board, word, index + 1, row + 1, column, visited)
-                    || dfs(board, word, index + 1, row - 1, column, visited)
-                    || dfs(board, word, index + 1, row, column + 1, visited)
-                    || dfs(board, word, index + 1, row, column - 1, visited);
+        boolean result = backTracking(board, word, visited, row + 1, column, iteration + 1)
+        || backTracking(board, word, visited, row - 1, column, iteration + 1)
+        || backTracking(board, word, visited, row, column + 1, iteration + 1)
+        || backTracking(board, word, visited, row, column - 1, iteration + 1);
         visited[row][column] = false;
         return result;
     }
