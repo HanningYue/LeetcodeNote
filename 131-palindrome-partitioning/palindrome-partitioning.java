@@ -4,27 +4,36 @@
 public class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> result = new ArrayList<>();
-        if (s.equals("")) {
-            result.add(new ArrayList<String>());
-            return result;
-        }
-        
-        for (int i = 0; i < s.length(); i++) {
-            if (isPalindrome(s, i + 1)) {
-                for (List<String> list : partition(s.substring(i + 1))) {
-                    list.add(0, s.substring(0, i + 1));
-                    result.add(list);
-                }
-            }
-        }
+        List<String> list = new ArrayList<>();
+        backTracking(result, s, list, 0);
         return result;
     }
 
-    public boolean isPalindrome(String s, int n) {
-        for (int i = 0; i < n / 2; i++) {
-            if (s.charAt(i) != s.charAt(n - i - 1)) {
+    private void backTracking(List<List<String>> result, String s, 
+    List<String> list, int startIndex)
+    {
+        if (startIndex == s.length()) {
+            result.add(new ArrayList(list));
+            return;
+        }
+
+        for (int i = startIndex + 1; i <= s.length(); i++) {
+            if (valid(s.substring(startIndex, i))) {
+                list.add(s.substring(startIndex, i));
+                backTracking(result, s, list, i);
+                list.remove(list.size() - 1);
+            }
+        }
+    }
+
+    private boolean valid(String s) {
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
                 return false;
             }
+            left++;
+            right--;
         }
         return true;
     }
