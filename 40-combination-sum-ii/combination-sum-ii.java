@@ -3,14 +3,14 @@ Based on the Combination Sum I, we only need to change i to i + 1, because we on
 */
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        Arrays.sort(candidates); 
+        Arrays.sort(candidates);
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        backTracking(candidates, target, 0, result, list);
+        backTracking(candidates, target, result, list, 0);
         return result;
     }
-    private void backTracking(int[] candidates, int target, int startIndex, 
-    List<List<Integer>> result, List<Integer> list)
+    private void backTracking(int[] candidates, int target, List<List<Integer>> result,
+    List<Integer> list, int startIndex)
     {
         if (target < 0) {
             return;
@@ -24,7 +24,7 @@ class Solution {
                 continue;
             }
             list.add(candidates[i]);
-            backTracking(candidates, target - candidates[i], i + 1, result, list);
+            backTracking(candidates, target - candidates[i], result, list, i + 1);
             list.remove(list.size() - 1);
         }
     }
