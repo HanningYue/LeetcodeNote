@@ -3,25 +3,29 @@ Based on the Combination Sum I, we only need to change i to i + 1, because we on
 */
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        Arrays.sort(candidates);
+        Arrays.sort(candidates); 
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        backtrack(candidates, target, result, list, 0);
+        backTracking(candidates, target, 0, result, list);
         return result;
     }
-    private void backtrack(int[] nums, int target, List<List<Integer>> result, List<Integer> list, int startIndex) {
-        if (target < 0) return;
-
-        if (target == 0) {
-            result.add(new ArrayList<>(list));
+    private void backTracking(int[] candidates, int target, int startIndex, 
+    List<List<Integer>> result, List<Integer> list)
+    {
+        if (target < 0) {
+            return;
         }
-        for (int i = startIndex; i < nums.length; i++) {
-            if (i > startIndex && nums[i] == nums[i - 1]) {
+        if (target == 0) {
+            result.add(new ArrayList(list));
+            return;
+        }
+
+        for (int i = startIndex; i < candidates.length; i++) {
+            if (i > startIndex && candidates[i] == candidates[i - 1]) {
                 continue;
             }
-            
-            list.add(nums[i]);
-            backtrack(nums, target - nums[i], result, list, i + 1);
+            list.add(candidates[i]);
+            backTracking(candidates, target - candidates[i], i + 1, result, list);
             list.remove(list.size() - 1);
         }
     }
