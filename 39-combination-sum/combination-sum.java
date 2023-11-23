@@ -17,7 +17,7 @@ class Solution {
         }
 
         if (target == 0) {
-            result.add(new ArrayList<Integer>(list));   
+            result.add(new ArrayList(list));
         }
         for (int i = startIndex; i < candidates.length; i++) {
             list.add(candidates[i]);
