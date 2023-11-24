@@ -26,24 +26,19 @@ class Solution {
             return result;
         
     }
-    public static void backTracking(String digits, int i, HashMap<Character,String> map, 
-        StringBuilder st, List<String> result){
-        
-        if(i == digits.length()){
-            result.add(st.toString());
+    public static void backTracking(String digits, int startIndex, HashMap<Character,String> map, 
+        StringBuilder sb, List<String> result)
+        {
+        if (startIndex == digits.length()){
+            result.add(sb.toString());
             return;
         }
         
-        String curr = map.get(digits.charAt(i));
-        
-        for (int k=0;k<curr.length();k++){
-            st.append(curr.charAt(k));
-            backTracking(digits, i+1, map, st, result);
-            st.deleteCharAt(st.length()-1);
+        String current = map.get(digits.charAt(startIndex));
+        for (int i = 0; i < current.length(); i++){
+            sb.append(current.charAt(i));
+            backTracking(digits, startIndex + 1, map, sb, result);
+            sb.deleteCharAt(sb.length() - 1);
         }
-        
-        
-        
     }
-    
 }
