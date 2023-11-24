@@ -15,30 +15,30 @@ class Solution {
         return result;
     }
 
-    private void backTracking(char[][] board, int r, List<int[]> queens) {
+    private void backTracking(char[][] board, int row, List<int[]> queens) {
         if (queens.size() == board.length) {
             List<String> rows = new ArrayList<>();
-            for (char[] row : board) {
-                rows.add(new String(row));
+            for (char[] rowIndex : board) {
+                rows.add(new String(rowIndex));
             }
             result.add(rows);
         }
 
-        for (int c = 0; c < board.length; c++) {
-            if (isQueen(r, c, queens)) {
-                board[r][c] = 'Q';
-                queens.add(new int[]{r, c});
-                backTracking(board, r + 1, queens);
-                board[r][c] = '.';
+        for (int column = 0; column < board.length; column++) {
+            if (isQueen(row, column, queens)) {
+                board[row][column] = 'Q';
+                queens.add(new int[]{row, column});
+                backTracking(board, row + 1, queens);
+                board[row][column] = '.';
                 queens.remove(queens.size() - 1);
             }
         }
     }
 
-    private boolean isQueen(int r, int c, List<int[]> queens) {
+    private boolean isQueen(int row, int column, List<int[]> queens) {
         for (int[] queen : queens) {
-            int dx = Math.abs(r - queen[0]);
-            int dy = Math.abs(c - queen[1]);
+            int dx = Math.abs(row - queen[0]);
+            int dy = Math.abs(column - queen[1]);
             if (dx == 0 || dy == 0 || dx == dy) {
                 return false;
             }
