@@ -1,17 +1,7 @@
-/**
-1. Use String array save all corresponding digits and letters
-2. Use String letters to save 3/4 current startIndex digits - '0'
-3. for each letter in letters, backTracking, update String with each letter
-*/
 
 class Solution {
     public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>(); 
-        if (digits.length() == 0){
-            return result;
-        }
-    
-        HashMap<Character,String> map = new HashMap<>();
+        Map<Character, String> map = new HashMap<>();
         map.put('2', "abc");
         map.put('3', "def");
         map.put('4', "ghi");
@@ -20,24 +10,28 @@ class Solution {
         map.put('7', "pqrs");
         map.put('8', "tuv");
         map.put('9', "wxyz");
-        
-        StringBuilder sb = new StringBuilder();
-        backTracking(digits, 0, map, sb, result);
+
+        List<String> result = new ArrayList<>();
+        if (digits == null || digits.length() == 0) {
             return result;
-        
+        }
+
+        StringBuilder sb = new StringBuilder();
+        backTracking(digits, result, sb, 0, map);
+        return result;
     }
-    public static void backTracking(String digits, int startIndex, HashMap<Character,String> map, 
-        StringBuilder sb, List<String> result)
-        {
-        if (startIndex == digits.length()){
-            result.add(sb.toString());
+    private void backTracking(String digits, List<String> result, StringBuilder sb, int startIndex, 
+        Map<Character, String> map)
+    {
+        if (startIndex == digits.length()) {
+            result.add(new String(sb.toString()));
             return;
         }
-        
-        String current = map.get(digits.charAt(startIndex));
-        for (int i = 0; i < current.length(); i++){
-            sb.append(current.charAt(i));
-            backTracking(digits, startIndex + 1, map, sb, result);
+
+        String digitChar = map.get(digits.charAt(startIndex));
+        for (int i = 0; i < digitChar.length(); i++) {
+            sb.append(digitChar.charAt(i));
+            backTracking(digits, result, sb, startIndex + 1, map);
             sb.deleteCharAt(sb.length() - 1);
         }
     }
