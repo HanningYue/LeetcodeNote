@@ -13,16 +13,15 @@ inside (left, right) window
 */
 class Solution {
     public int jump(int[] nums) {
-        int leftPointer = 0, rightPointer = 0;
-        int step = 0;
+        int left = 0, right = 0;
+        int furthest = 0, step = 0;
 
-        while (rightPointer < nums.length - 1) {
-            int furthest = 0;
-            for (int i = leftPointer; i <= rightPointer; i++) {
+        while (right < nums.length - 1) {
+            for (int i = left; i <= right; i++) {
                 furthest = Math.max(furthest, nums[i] + i);
             }
-            leftPointer = rightPointer + 1;
-            rightPointer = furthest;
+            left = right + 1;
+            right = furthest;
             step++;
         }
         return step;
