@@ -24,7 +24,7 @@ class Solution {
         Map<Character, String> map)
     {
         if (startIndex == digits.length()) {
-            result.add(new String(sb.toString()));
+            result.add(sb.toString());
             return;
         }
 
