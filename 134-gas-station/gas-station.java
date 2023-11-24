@@ -8,17 +8,16 @@ Iterate the array, since the answer is unique, add total gas to a variable and r
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int totalGas = 0, totalCost = 0;
-        int result = 0, total = 0;
-        
         for (int i = 0; i < gas.length; i++) {
             totalGas += gas[i];
             totalCost += cost[i];
         }
-        if (totalGas - totalCost < 0) {
+        if (totalCost > totalGas) {
             return -1;
         }
 
-        //At this point, there is guaranteed a result
+        //Guaranteed to have a result
+        int total = 0, result = 0;
         for (int i = 0; i < gas.length; i++) {
             total += gas[i] - cost[i];
             if (total < 0) {
