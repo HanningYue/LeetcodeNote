@@ -6,39 +6,39 @@
 
 class Solution {
     public List<String> letterCombinations(String digits) {
-        List<String> ans = new ArrayList<>(); 
-        if(digits.length() == 0){
-            return ans;
+        List<String> result = new ArrayList<>(); 
+        if (digits.length() == 0){
+            return result;
         }
     
-        HashMap<Character,String> hm = new HashMap<>();
-        hm.put('2', "abc");
-        hm.put('3', "def");
-        hm.put('4', "ghi");
-        hm.put('5', "jkl");
-        hm.put('6', "mno");
-        hm.put('7', "pqrs");
-        hm.put('8', "tuv");
-        hm.put('9', "wxyz");
+        HashMap<Character,String> map = new HashMap<>();
+        map.put('2', "abc");
+        map.put('3', "def");
+        map.put('4', "ghi");
+        map.put('5', "jkl");
+        map.put('6', "mno");
+        map.put('7', "pqrs");
+        map.put('8', "tuv");
+        map.put('9', "wxyz");
         
-        
-        Findcombinations(digits,0,hm, new StringBuilder(), ans);
-            return ans;
+        StringBuilder sb = new StringBuilder();
+        backTracking(digits, 0, map, sb, result);
+            return result;
         
     }
-    public static void Findcombinations(String digits, int i, HashMap<Character,String> hm, 
-        StringBuilder st, List<String> ans){
+    public static void backTracking(String digits, int i, HashMap<Character,String> map, 
+        StringBuilder st, List<String> result){
         
         if(i == digits.length()){
-            ans.add(st.toString());
+            result.add(st.toString());
             return;
         }
         
-        String curr = hm.get(digits.charAt(i));
+        String curr = map.get(digits.charAt(i));
         
         for (int k=0;k<curr.length();k++){
             st.append(curr.charAt(k));
-            Findcombinations(digits, i+1, hm, st, ans);
+            backTracking(digits, i+1, map, st, result);
             st.deleteCharAt(st.length()-1);
         }
         
