@@ -1,9 +1,7 @@
 class Solution {
-    List<List<String>> result;
     public List<List<String>> solveNQueens(int n) {
-        result = new ArrayList<>();
+        List<List<String>> result = new ArrayList<>();
         char[][] board = new char[n][n];
-
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 board[i][j] = '.';
@@ -11,26 +9,27 @@ class Solution {
         }
 
         List<int[]> queens = new ArrayList<>();
-        backTracking(board, 0, queens);
+        backTracking(result, board, queens, 0);
         return result;
     }
 
-    private void backTracking(char[][] board, int row, List<int[]> queens) {
+    private void backTracking(List<List<String>> result, char[][] board, List<int[]> queens, int row) {
+        
         if (queens.size() == board.length) {
-            List<String> rows = new ArrayList<>();
-            for (char[] rowIndex : board) {
-                rows.add(new String(rowIndex));
+            List<String> list = new ArrayList<>();
+            for (char[] rows : board) {
+                list.add(new String(rows));
             }
-            result.add(rows);
+            result.add(list);
         }
 
-        for (int column = 0; column < board.length; column++) {
+        for (int column = 0; column < board[0].length; column++) {
             if (isQueen(row, column, queens)) {
                 board[row][column] = 'Q';
                 queens.add(new int[]{row, column});
-                backTracking(board, row + 1, queens);
-                board[row][column] = '.';
+                backTracking(result, board, queens, row + 1);
                 queens.remove(queens.size() - 1);
+                board[row][column] = '.';
             }
         }
     }
