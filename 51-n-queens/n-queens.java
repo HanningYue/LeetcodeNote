@@ -1,3 +1,8 @@
+/**
+1. Fill char[][]board with '.'
+2. If difference between dx and dy is 0 or Diagonally, the dx == dy, return false
+3. When filling final result, declare new List<String> for each iteration (fill new list with char[] rows)
+*/
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> result = new ArrayList<>();
@@ -7,40 +12,39 @@ class Solution {
                 board[i][j] = '.';
             }
         }
-
         List<int[]> queens = new ArrayList<>();
-        backTracking(result, board, queens, 0);
+        backTracking(result, queens, 0, board);
         return result;
     }
-
-    private void backTracking(List<List<String>> result, char[][] board, List<int[]> queens, int row) {
-        
+    
+    private void backTracking(List<List<String>> result, List<int[]> queens, int row, char[][] board) {
         if (queens.size() == board.length) {
             List<String> list = new ArrayList<>();
-            for (char[] rows : board) {
-                list.add(new String(rows));
+            for (char[] r : board) {
+                list.add(new String(r));
             }
             result.add(list);
+            return;
         }
 
         for (int column = 0; column < board[0].length; column++) {
-            if (isQueen(row, column, queens)) {
+            if (isQueen(queens, row, column)) {
                 board[row][column] = 'Q';
                 queens.add(new int[]{row, column});
-                backTracking(result, board, queens, row + 1);
+                backTracking(result, queens, row + 1, board);
                 queens.remove(queens.size() - 1);
                 board[row][column] = '.';
             }
         }
     }
 
-    private boolean isQueen(int row, int column, List<int[]> queens) {
+    private boolean isQueen(List<int[]> queens, int row, int column) {
         for (int[] queen : queens) {
-            int dx = Math.abs(row - queen[0]);
-            int dy = Math.abs(column - queen[1]);
-            if (dx == 0 || dy == 0 || dx == dy) {
-                return false;
-            }
+           int dx = Math.abs(row - queen[0]);
+           int dy = Math.abs(column - queen[1]);
+           if (dx == 0 || dy == 0 || dx == dy) {
+               return false;
+           }
         }
         return true;
     }
