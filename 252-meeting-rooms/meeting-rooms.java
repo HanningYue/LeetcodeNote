@@ -7,9 +7,8 @@ We need to check if there are any overlaps between intervals
 */
 class Solution {
     public boolean canAttendMeetings(int[][] intervals) {
-        
-
         int n = intervals.length;
+
         int[] starts = new int[n];
         int[] ends = new int[n];
         for (int i = 0; i < n; i++) {
@@ -18,7 +17,7 @@ class Solution {
         }
         Arrays.sort(starts);
         Arrays.sort(ends);
-        
+
         for (int current = 0; current < n - 1; current++) {
             if (starts[current + 1] < ends[current]) {
                 return false;
