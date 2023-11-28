@@ -15,27 +15,27 @@ At any time, ( needs to be greater than )
 */
 class Solution {
     public boolean checkValidString(String s) {
-        int minLeft = 0, maxLeft = 0;
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '(') {
-                minLeft++;
-                maxLeft++;
-            } else if (s.charAt(i) == ')') {
-                if (minLeft > 0) {
-                    minLeft--;
+        int maximumLeftBracket = 0;
+        int minimumLeftBracket = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                maximumLeftBracket++;
+                minimumLeftBracket++;
+            } else if (c == ')') {
+                if (minimumLeftBracket > 0) {
+                    minimumLeftBracket--;
                 }
-                maxLeft--;
-            } else if (s.charAt(i) == '*'){
-                if (minLeft > 0) {
-                    minLeft--;
+                maximumLeftBracket--;
+            } else if (c == '*') {
+                if (minimumLeftBracket > 0) {
+                    minimumLeftBracket--;
                 }
-                maxLeft++;
+                maximumLeftBracket++;
             }
-            
-            if (maxLeft < 0) {
+            if (maximumLeftBracket < 0) {
                 return false;
             }
         }
-        return minLeft == 0;
+        return minimumLeftBracket == 0;
     }
 }
