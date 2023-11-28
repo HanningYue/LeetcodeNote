@@ -1,8 +1,7 @@
 /**
-Use a List<int[]> and return .toArray(new int[])
-    iterate the intervals, compare the next interval start with the current interval ends
-    if greater, add the [Last Visited starts(previous), current ends] to the List<int[]>
-    Edge case: at the Last Index, add the last interval automatically since it is sorted
+1. int[][], sort starts and ends in seperate arrays int[] starts and int[] ends
+2. Traverse int[][], fill starts and ends
+3. Sort both arrays,
 */
 class Solution {
     public int[][] merge(int[][] intervals) {
@@ -21,10 +20,10 @@ class Solution {
 
         List<int[]> result = new ArrayList<>();
         int previous = 0;
-        for (int i = 0; i < intervals.length; i++) {
-            if (i == intervals.length - 1 || starts[i + 1] > ends[i]) {
-                result.add(new int[]{starts[previous], ends[i]});
-                previous = i + 1;
+        for (int current = 0; current < intervals.length; current++) {
+            if (current == intervals.length - 1 || starts[current + 1] > ends[current]) {
+                result.add(new int[]{starts[previous], ends[current]});
+                previous = current + 1;
             }
         }
         return result.toArray(new int[result.size()][]);
