@@ -5,23 +5,23 @@ EXTRA step, add the new interval at the end of starts and ends array
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
         int n = intervals.length + 1;
+        int[] start = new int[n];
+        int[] end = new int[n];
 
-        int[] starts = new int[n];
-        int[] ends = new int[n];
         for (int i = 0; i < intervals.length; i++) {
-            starts[i] = intervals[i][0];
-            ends[i] = intervals[i][1];
+            start[i] = intervals[i][0];
+            end[i] = intervals[i][1];
         }
-        starts[intervals.length] = newInterval[0];
-        ends[intervals.length] = newInterval[1];
-        Arrays.sort(starts);
-        Arrays.sort(ends);
-        
+        start[intervals.length] = newInterval[0];
+        end[intervals.length] = newInterval[1];
+        Arrays.sort(start);
+        Arrays.sort(end);
+
         int previousStart = 0;
         List<int[]> result = new ArrayList<>();
         for (int current = 0; current < n; current++) {
-            if (current == n - 1 || starts[current + 1] > ends[current]) {
-                result.add(new int[]{starts[previousStart], ends[current]});
+            if (current == n - 1 || start[current + 1] > end[current]) {
+                result.add(new int[]{start[previousStart], end[current]});
                 previousStart = current + 1;
             }
         }
