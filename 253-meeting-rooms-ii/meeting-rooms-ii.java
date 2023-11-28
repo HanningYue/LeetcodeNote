@@ -17,12 +17,12 @@ class Solution {
         Arrays.sort(starts);
         Arrays.sort(ends);
         
-        int previousStart = 0, rooms = 0;
+        int previousEnd = 0, rooms = 0;
         for (int current = 0; current < n; current++) {
-            if (starts[current] < ends[previousStart]) {
+            if (starts[current] < ends[previousEnd]) {
                 rooms++;
             } else {
-                previousStart++;
+                previousEnd++;
             }
         }
         return rooms;
