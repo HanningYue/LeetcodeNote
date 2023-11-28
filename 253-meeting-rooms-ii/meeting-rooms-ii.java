@@ -10,14 +10,14 @@ class Solution {
 
         int[] starts = new int[n];
         int[] ends = new int[n];
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < intervals.length; i++) {
             starts[i] = intervals[i][0];
             ends[i] = intervals[i][1];
         }
         Arrays.sort(starts);
         Arrays.sort(ends);
         
-        int rooms = 0, previousStart = 0;
+        int previousStart = 0, rooms = 0;
         for (int current = 0; current < n; current++) {
             if (starts[current] < ends[previousStart]) {
                 rooms++;
