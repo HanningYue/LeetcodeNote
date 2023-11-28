@@ -9,16 +9,15 @@
 */
 class Solution {
     public int eraseOverlapIntervals(int[][] intervals) {
-        int independentCount = 1;
         Arrays.sort(intervals, (a, b) -> (a[1] - b[1]));
-
-        int[] previousStart = intervals[0];
+        
+        int previousEnd = 0, independent = 1;
         for (int current = 1; current < intervals.length; current++) {
-            if (intervals[current][0] >= previousStart[1]) {
-                independentCount++;
-                previousStart = intervals[current];
+            if (intervals[current][0] >= intervals[previousEnd][1]) {
+                independent++;
+                previousEnd = current;
             }
         }
-        return intervals.length - independentCount;
+        return intervals.length - independent;
     }
 }
