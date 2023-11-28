@@ -1,14 +1,13 @@
 /**
-Refer to 56, same merge process, need to add up the newInterval in the edge case and adjust index in merging
+Refer to 56, same merge process
+EXTRA step, add the new interval at the end of starts and ends array
 */
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        if (intervals.length == 0 || intervals == null) {
-            return new int[][] {newInterval};
-        }
+        int n = intervals.length + 1;
 
-        int[] starts = new int[intervals.length + 1];
-        int[] ends = new int[intervals.length + 1];
+        int[] starts = new int[n];
+        int[] ends = new int[n];
         for (int i = 0; i < intervals.length; i++) {
             starts[i] = intervals[i][0];
             ends[i] = intervals[i][1];
@@ -17,13 +16,13 @@ class Solution {
         ends[intervals.length] = newInterval[1];
         Arrays.sort(starts);
         Arrays.sort(ends);
-
+        
+        int previousStart = 0;
         List<int[]> result = new ArrayList<>();
-        int previous = 0;
-        for (int current = 0; current < intervals.length + 1; current++) {
-            if (current == intervals.length || starts[current + 1] > ends[current]) {
-                result.add(new int[]{starts[previous], ends[current]});
-                previous = current + 1;
+        for (int current = 0; current < n; current++) {
+            if (current == n - 1 || starts[current + 1] > ends[current]) {
+                result.add(new int[]{starts[previousStart], ends[current]});
+                previousStart = current + 1;
             }
         }
         return result.toArray(new int[result.size()][]);
