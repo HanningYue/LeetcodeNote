@@ -1,6 +1,7 @@
 /**
-1. 当前层对比左右 如果小于0 取0
-2. 当前max 
+1. 需要左边的max和0对比 需要右边的max和0对比
+2. 本层返回本层node加上 左右两边更大的呢一边
+3. globalMax需要每一层都更新 和本层加左加右对比
 */
 class Solution {
     int globalMax = Integer.MIN_VALUE;
@@ -14,7 +15,9 @@ class Solution {
         }
         int leftMax = Math.max(0, dfs(root.left));
         int rightMax = Math.max(0, dfs(root.right));
+
         globalMax = Math.max(globalMax, root.val + leftMax + rightMax);
+
         return root.val + Math.max(leftMax, rightMax);
     }
 }
