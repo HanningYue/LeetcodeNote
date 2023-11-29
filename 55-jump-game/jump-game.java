@@ -1,17 +1,16 @@
 /**
 To reach last index, we need to start from back, check each index forward can be reached
 (READ THE ABOVE LINE AGAIN)
-Use greedy, to 
+Use greedy, if each index is reachable(>=) by previous index + nums[index], update index
 */
 class Solution {
     public boolean canJump(int[] nums) {
-        int endIndex = nums.length - 1;
-
+        int furthest = nums.length - 1;
         for (int i = nums.length - 2; i >= 0; i--) {
-            if (nums[i] + i >= endIndex) {
-                endIndex = i;
+            if (nums[i] + i >= furthest) {
+                furthest = i;
             }
         }
-        return endIndex == 0;
+        return furthest == 0;
     }
 }
