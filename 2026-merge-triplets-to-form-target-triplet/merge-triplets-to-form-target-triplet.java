@@ -1,13 +1,15 @@
 /**
-We need to check greater condition first, because if it is greater, we can break and check 
-next number. In the second iteration, if greater, we skip the number because already 
-checked. Finally, we check the equal condition, return result[] which 3 indices are 
-all marked true
+To be true, 合适的triplets里面 3个element必须小于等于 target triplets 里3个element
+如果有任意一个element大于，不合适
+1. 先查看boolean greater
+2. 如果greater，跳过当前triplet
+3. 查看每一个element是否相等
+    如果相等 result当前index mark true
+返回result三个index都为true的情况
 */
 class Solution {
     public boolean mergeTriplets(int[][] triplets, int[] target) {
         boolean[] result = new boolean[3];
-
         for (int[] triplet : triplets) {
             boolean greater = false;
             for (int i = 0; i < 3; i++) {
@@ -16,9 +18,9 @@ class Solution {
                     break;
                 }
             }
-            
-            if (greater) continue;
-            
+            if (greater) {
+                continue;
+            }
             for (int i = 0; i < 3; i++) {
                 if (triplet[i] == target[i]) {
                     result[i] = true;
