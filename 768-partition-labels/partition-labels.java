@@ -9,18 +9,17 @@ Form a window, we want to return the window size to a List<Integer>
 class Solution {
     public List<Integer> partitionLabels(String s) {
         List<Integer> result = new ArrayList<>();
-
         Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
             map.put(s.charAt(i), i);
         }
-        int left = 0, rightMost = 0;
-        
+
+        int left = 0, right = 0;
         while (left < s.length()) {
             int size = 0;
-            rightMost = Math.max(rightMost, map.get(s.charAt(left)));
-            while (left <= rightMost) {
-                rightMost = Math.max(rightMost, map.get(s.charAt(left)));
+            right = Math.max(right, map.get(s.charAt(left)));
+            while (left <= right) {
+                right = Math.max(right, map.get(s.charAt(left)));
                 left++;
                 size++;
             }
