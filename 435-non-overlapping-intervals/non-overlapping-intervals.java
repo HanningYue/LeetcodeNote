@@ -12,7 +12,7 @@ class Solution {
         Arrays.sort(intervals, (a, b) -> (a[1] - b[1]));
         
         int previousEnd = 0, independent = 1;
-        for (int current = 0; current < intervals.length; current++) {
+        for (int current = 1; current < intervals.length; current++) {
             if (intervals[current][0] >= intervals[previousEnd][1]) {
                 independent++;
                 previousEnd = current;
