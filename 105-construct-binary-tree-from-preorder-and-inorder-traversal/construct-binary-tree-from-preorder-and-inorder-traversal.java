@@ -6,21 +6,22 @@
 5. Be careful with the boundary while writing the recursion, the side with root node index*/
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> inOrderMap = new HashMap<>();
+        Map<Integer, Integer> inMap = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
-            inOrderMap.put(inorder[i], i);
+            inMap.put(inorder[i], i);
         }
-        return helper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inOrderMap);
+        return dfs(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inMap);
     }
-    private TreeNode helper(int[] preorder, int preleft, int preright, int[] inorder, int inleft, int inright, 
-    Map<Integer, Integer> inOrderMap) {
+    private TreeNode dfs(int[] preorder, int preleft, int preright, int[] inorder, int inleft, int inright, 
+    Map<Integer, Integer> inMap)
+    {
         if (preleft > preright) {
             return null;
         }
         TreeNode root = new TreeNode(preorder[preleft]);
-        int mid = inOrderMap.get(root.val);
-        root.left = helper(preorder, preleft + 1, preleft + mid - inleft, inorder, inleft, mid - 1, inOrderMap);
-        root.right = helper(preorder, preleft + mid - inleft + 1, preright, inorder, mid + 1, inright, inOrderMap);
+        int mid = inMap.get(root.val);
+        root.left = dfs(preorder, preleft + 1, preleft + mid - inleft, inorder, inleft, mid - 1, inMap);
+        root.right = dfs(preorder, preleft + mid - inleft + 1, preright, inorder, mid + 1, inright, inMap);
         return root;
     }
 }
