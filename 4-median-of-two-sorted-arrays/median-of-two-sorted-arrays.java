@@ -18,28 +18,28 @@ class Solution {
 
         int totalLength = m + n;
         int halfLength = (totalLength + 1) / 2;
-
+        
         int low = 0, high = m;
         while (low <= high) {
-            int mid1 = low + (high - low) / 2;
-            int mid2 = halfLength - mid1;
+            int nums1MidIndex = low + (high - low) / 2;
+            int nums2MidIndex = halfLength - nums1MidIndex;
 
-            int mid1Left = mid1 > 0 ? nums1[mid1 - 1] : Integer.MIN_VALUE;
-            int mid1Right = mid1 < m ? nums1[mid1] : Integer.MAX_VALUE;
+            int nums1Left = (nums1MidIndex > 0) ? nums1[nums1MidIndex - 1] : Integer.MIN_VALUE;
+            int nums1Right = (nums1MidIndex < m) ? nums1[nums1MidIndex] : Integer.MAX_VALUE;
 
-            int mid2Left = mid2 > 0 ? nums2[mid2 - 1] : Integer.MIN_VALUE;
-            int mid2Right = mid2 < n ? nums2[mid2] : Integer.MAX_VALUE;
+            int nums2Left = (nums2MidIndex > 0) ? nums2[nums2MidIndex - 1] : Integer.MIN_VALUE;
+            int nums2Right = (nums2MidIndex < n) ? nums2[nums2MidIndex] : Integer.MAX_VALUE;
 
-            if (mid1Left <= mid2Right && mid1Right >= mid2Left) {
+            if (nums1Left <= nums2Right && nums1Right >= nums2Left) {
                 if (totalLength % 2 == 0) {
-                    return (Math.max(mid1Left, mid2Left) + Math.min(mid1Right, mid2Right)) / 2.0;
+                    return (Math.max(nums1Left, nums2Left) + Math.min(nums1Right, nums2Right)) / 2.0;
                 } else {
-                    return Math.max(mid1Left, mid2Left);
+                    return (double)Math.max(nums1Left, nums2Left);
                 }
-            } else if (mid1Left > mid2Right) {
-                high = mid1 - 1;
+            } else if (nums1Left > nums2Right) {
+                high = nums1MidIndex - 1;
             } else {
-                low = mid1 + 1;
+                low = nums1MidIndex + 1;
             }
         }
         return -1;
