@@ -22,10 +22,10 @@ class MedianFinder {
     
     public void addNum(int num) {
         maxHeap.offer(num);
-        while (maxHeap.size() > minHeap.size() + 1 || !minHeap.isEmpty() && maxHeap.peek() > minHeap.peek()) {
+        if (maxHeap.size() > minHeap.size() + 1 || !minHeap.isEmpty() && maxHeap.peek() > minHeap.peek()) {
             minHeap.offer(maxHeap.poll());
         }
-        while (minHeap.size() > maxHeap.size() + 1) {
+        if (minHeap.size() > maxHeap.size() + 1) {
             maxHeap.offer(minHeap.poll());
         }
     }
