@@ -22,22 +22,21 @@ class MedianFinder {
     
     public void addNum(int num) {
         maxHeap.offer(num);
-        if (maxHeap.size() > minHeap.size() + 1 || !minHeap.isEmpty() && maxHeap.peek() > minHeap.peek()) {
+        while (maxHeap.size() > minHeap.size() + 1 || !minHeap.isEmpty() && maxHeap.peek() > minHeap.peek()) {
             minHeap.offer(maxHeap.poll());
         }
-        if (minHeap.size() > maxHeap.size() + 1) {
+        while (minHeap.size() > maxHeap.size() + 1) {
             maxHeap.offer(minHeap.poll());
         }
     }
     
     public double findMedian() {
-        int size = minHeap.size() + maxHeap.size();
-        if (size % 2 == 0) {
-            return (minHeap.peek() + maxHeap.peek()) / 2.0;
-        } else if (minHeap.size() > maxHeap.size()) {
-            return minHeap.peek();
-        } else {
+        if ((maxHeap.size() + minHeap.size()) % 2 == 0) {
+            return (double)(maxHeap.peek() + minHeap.peek()) / 2.0;
+        } else if (maxHeap.size() > minHeap.size()){
             return maxHeap.peek();
+        } else {
+            return minHeap.peek();
         }
     }
 }
