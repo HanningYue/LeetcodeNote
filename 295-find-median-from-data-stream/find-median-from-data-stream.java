@@ -31,12 +31,13 @@ class MedianFinder {
     }
     
     public double findMedian() {
-        if ((maxHeap.size() + minHeap.size()) % 2 == 0) {
-            return (double)(maxHeap.peek() + minHeap.peek()) / 2.0;
-        } else if (maxHeap.size() > minHeap.size()){
-            return maxHeap.peek();
+        int size = minHeap.size() + maxHeap.size();
+        if (size % 2 == 0) {
+            return (double)(minHeap.peek() + maxHeap.peek()) / 2.0;
+        } else if (minHeap.size() > maxHeap.size()) {
+            return (double)minHeap.peek();
         } else {
-            return minHeap.peek();
+            return (double)maxHeap.peek();
         }
     }
 }
