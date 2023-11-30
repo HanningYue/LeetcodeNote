@@ -9,9 +9,8 @@ Use two pointer to find the range and swap helper function to quick sort
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         int low = 0, high = nums.length - 1;
-        
         while (low <= high) {
-            int mid = position(nums, low, high);
+            int mid = partition(nums, low, high);
             if (mid + 1 == k) {
                 return nums[mid];
             } else if (mid + 1 < k) {
@@ -22,27 +21,26 @@ class Solution {
         }
         return -1;
     }
-    
-    private int position(int[] nums, int low, int high) {
-        int pivot = nums[low];
-        int leftPointer = low + 1;
-        int rightPointer = high;
 
-        while (leftPointer <= rightPointer) {
-            if (nums[leftPointer] < pivot && nums[rightPointer] > pivot) {
-                swap(nums, leftPointer, rightPointer);
-                leftPointer++;
-                rightPointer--;
+    private int partition(int[] nums, int low, int high) {
+        int pivot = nums[low];
+        int left = low + 1;
+        int right = high;
+        while (left <= right) {
+            if (nums[left] < pivot && nums[right] > pivot) {
+                swap(nums, left, right);
+                left++;
+                right--;
             } 
-            if (nums[leftPointer] >= pivot) {
-                leftPointer++;
-            } 
-            if (nums[rightPointer] <= pivot) {
-                rightPointer--;
+            if (nums[left] >= pivot) {
+                left++;
+            }
+            if (nums[right] <= pivot){
+                right--;
             }
         }
-        swap(nums, low, rightPointer);
-        return rightPointer;
+        swap(nums, low, right);
+        return right;
     }
 
     private void swap(int[] nums, int a, int b) {
