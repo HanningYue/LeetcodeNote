@@ -31,7 +31,7 @@ class Solution {
                 swap(nums, left, right);
                 left++;
                 right--;
-            } 
+            }
             if (nums[left] >= pivot) {
                 left++;
             }
