@@ -1,6 +1,6 @@
-/**
-For each num in nums, add to set. 
-For each num, if set does not contain num - 1, we start from current num, look for num + 1, update length
+/** 
+所有num加入set
+在set内 保持当前num不变 从每一个sequence最小数算起(!set.contains(num - 1)), 如果set包含当前num + 当前length， 更新maxlength
 Update maxLength for each num - 1
 return maxLength
 */
