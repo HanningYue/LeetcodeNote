@@ -13,7 +13,7 @@ class Solution {
             while (!deque.isEmpty() && nums[i] >= nums[deque.peekLast()]) {
                 deque.pollLast();
             }
-            deque.offer(i);
+            deque.offerLast(i);
             while (i - k >= deque.peekFirst()) {
                 deque.pollFirst();
             }
