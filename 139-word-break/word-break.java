@@ -8,6 +8,7 @@ class Solution {
             for (int j = 0; j < i; j++) { 
                 if (dp[j] && set.contains(s.substring(j, i))) {
                     dp[i] = true;
+                    break;
                 }
             }
         }
