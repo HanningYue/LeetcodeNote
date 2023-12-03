@@ -8,11 +8,12 @@ class Solution {
     boolean[] visited, onPath;
     boolean cycle = false;
     List<Integer> postOrder = new ArrayList<>();
+
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         List<Integer>[] graph = buildGraph(numCourses, prerequisites);
         onPath = new boolean[numCourses];
         visited = new boolean[numCourses];
-
+        
         for (int i = 0; i < numCourses; i++) {
             traverse(graph, i);
         }
@@ -22,7 +23,7 @@ class Solution {
 
         Collections.reverse(postOrder);
         int[] result = new int[numCourses];
-        for (int i = 0; i < numCourses; i++) {
+        for (int i = 0; i < postOrder.size(); i++) {
             result[i] = postOrder.get(i);
         }
         return result;
@@ -34,9 +35,8 @@ class Solution {
         if (visited[vertex] || cycle) {
             return;
         }
-
-        visited[vertex] = true;
         onPath[vertex] = true;
+        visited[vertex] = true;
         for (int neighbor : graph[vertex]) {
             traverse(graph, neighbor);
         }
@@ -49,8 +49,8 @@ class Solution {
             graph[i] = new LinkedList<>();
         }
         for (int[] edge : prerequisites) {
-            int to = edge[0];
             int from = edge[1];
+            int to = edge[0];
             graph[from].add(to);
         }
         return graph;
