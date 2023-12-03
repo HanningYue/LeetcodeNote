@@ -7,7 +7,9 @@ class Solution {
         visited = new boolean[n + 1];
         color = new boolean[n + 1];
         for (int i = 1; i <= n; i++) {
-            traverse(graph, i);
+            if (!visited[i]) {
+                traverse(graph, i);
+            }
         }
         return isBipartite;
     }
