@@ -25,6 +25,7 @@ class Solution {
         if (visited[vertex] || cycle) {
             return;
         }
+
         visited[vertex] = true;
         onPath[vertex] = true;
         for (int neighbor : graph[vertex]) {
