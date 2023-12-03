@@ -1,10 +1,11 @@
 class Solution {
-    boolean[] color, visited;
+    boolean[] visited, color;
     boolean isBipartite = true;
 
     public boolean isBipartite(int[][] graph) {
-        color = new boolean[graph.length];
         visited = new boolean[graph.length];
+        color = new boolean[graph.length];
+
         for (int i = 0; i < graph.length; i++) {
             traverse(graph, i);
         }
@@ -14,6 +15,7 @@ class Solution {
         if (!isBipartite) {
             return;
         }
+        
         visited[vertex] = true;
         for (int neighbor : graph[vertex]) {
             if (!visited[neighbor]) {
@@ -22,7 +24,6 @@ class Solution {
             } else {
                 if (color[neighbor] == color[vertex]) {
                     isBipartite = false;
-                    return;
                 }
             }
         }
