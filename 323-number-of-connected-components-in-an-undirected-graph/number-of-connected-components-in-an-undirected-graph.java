@@ -7,7 +7,7 @@ class Solution {
         return uf.count();
     }
 }
-class UF {
+class UF{
     int[] parent;
     int count;
     public UF(int n) {
@@ -18,12 +18,12 @@ class UF {
         }
     }
     public void union(int p, int q) {
-        int rootQ = find(q);
         int rootP = find(p);
-        if (rootQ == rootP) {
+        int rootQ = find(q);
+        if (rootP == rootQ) {
             return;
         }
-        parent[rootQ] = rootP;
+        parent[rootP] = rootQ;
         count--;
     }
     public int find(int x) {
