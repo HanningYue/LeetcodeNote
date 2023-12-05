@@ -6,17 +6,17 @@ Prim: Use optimized sorting data structure, such as PriorityQueue
 class Solution {
     public int minCostConnectPoints(int[][] points) {
         List<int[]> edges = new ArrayList<>();
-        int mst = 0;
         for (int i = 0; i < points.length; i++) {
             for (int j = i + 1; j < points.length; j++) {
                 int xi = points[i][0], yi = points[i][1];
                 int xj = points[j][0], yj = points[j][1];
-                edges.add(new int[]{i, j, Math.abs(xi - xj) + Math.abs(yi - yj)});
+                edges.add(new int[]{i, j, Math.abs(xj - xi) + Math.abs(yj - yi)});
             }
         }
         Collections.sort(edges, (a, b) -> {
             return a[2] - b[2];
         });
+        int mst = 0;
         UF uf = new UF(points.length);
         for (int[] edge : edges) {
             int vertexOne = edge[0];
