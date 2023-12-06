@@ -10,7 +10,7 @@ class Solution {
             for (int j = i + 1; j < points.length; j++) {
                 int xi = points[i][0], yi = points[i][1];
                 int xj = points[j][0], yj = points[j][1];
-                edges.add(new int[]{i, j, Math.abs(xj - xi) + Math.abs(yj - yi)});
+                edges.add(new int[]{i, j, Math.abs(xi - xj) + Math.abs(yi - yj)});
             }
         }
         Collections.sort(edges, (a, b) -> {
@@ -25,19 +25,19 @@ class Solution {
             if (uf.connected(vertexOne, vertexTwo)) {
                 continue;
             }
-            mst += weight;
             uf.union(vertexOne, vertexTwo);
+            mst += weight;
         }
         return mst;
     }
 }
-class UF{
+class UF {
     int count;
     int[] parent;
-    public UF(int n) {
-        parent = new int[n];
-        this.count = n;
-        for (int i = 0; i < n; i++) {
+    public UF(int x) {
+        this.count = x;
+        parent = new int[x];
+        for (int i = 0; i < x; i++) {
             parent[i] = i;
         }
     }
@@ -47,19 +47,18 @@ class UF{
         }
         return parent[x];
     }
-    public void union(int q, int p) {
-        int rootQ = find(q);
+    public void union(int p, int q) {
         int rootP = find(p);
-        if (rootQ == rootP) {
+        int rootQ = find(q);
+        if (rootP == rootQ) {
             return;
         }
         parent[rootP] = rootQ;
-        count--;
     }
-    public boolean connected(int q, int p) {
-        int rootQ = find(q);
+    public boolean connected(int p, int q) {
         int rootP = find(p);
-        return rootQ == rootP;
+        int rootQ = find(q);
+        return rootP == rootQ;
     }
     public int count() {
         return count;
