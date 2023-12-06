@@ -6,19 +6,19 @@ Prim: Use optimized sorting data structure, such as PriorityQueue
 class Solution {
     public int minCostConnectPoints(int[][] points) {
         int n = points.length;
-        List<int[]>[] graph = buildGraph(n, points);
-        return new Prime(graph).weightSum();
+        List<int[]>[] graph = buildGraph(points);
+        return new Prim(graph).weightSum();
     }
-    public List<int[]>[] buildGraph(int n, int[][] points) {
-        List<int[]>[] graph = new LinkedList[n];
-        for (int i = 0; i < n; i++) {
+    private List<int[]>[] buildGraph(int[][] points) {
+        List<int[]>[] graph = new LinkedList[points.length];
+        for (int i = 0; i < points.length; i++) {
             graph[i] = new LinkedList<>();
         }
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
+        for (int i = 0; i < points.length; i++) {
+            for (int j = i + 1; j < points.length; j++) {
                 int xi = points[i][0], yi = points[i][1];
                 int xj = points[j][0], yj = points[j][1];
-                int weight = Math.abs(xi - xj) + Math.abs(yi - yj);
+                int weight = Math.abs(xj - xi) + Math.abs(yj - yi);
                 graph[i].add(new int[]{i, j, weight});
                 graph[j].add(new int[]{j, i, weight});
             }
@@ -26,18 +26,17 @@ class Solution {
         return graph;
     }
 }
-class Prime {
-    PriorityQueue<int[]> pq;
+class Prim {
     boolean[] inMST;
-    List<int[]>[] graph;
     int weightSum = 0;
-
-    public Prime(List<int[]>[] graph) {
-        this.graph = graph;
-        this.pq = new PriorityQueue<>((a, b) -> {
+    PriorityQueue<int[]> pq;
+    List<int[]>[] graph;
+    public Prim(List<int[]>[] graph) {
+        this.inMST = new boolean[graph.length];
+        pq = new PriorityQueue<>((a, b) -> {
             return a[2] - b[2];
         });
-        this.inMST = new boolean[graph.length];
+        this.graph = graph;
         inMST[0] = true;
         cut(0);
         while (!pq.isEmpty()) {
@@ -50,15 +49,16 @@ class Prime {
             weightSum += weight;
             inMST[to] = true;
             cut(to);
+
         }
     }
-    private void cut(int vertex) {
-        for (int[] edge : graph[vertex]) {
-            int to = edge[1];
+    public void cut(int vertex) {
+        for (int[] neighbor : graph[vertex]) {
+            int to = neighbor[1];
             if (inMST[to]) {
                 continue;
             }
-            pq.offer(edge);
+            pq.offer(neighbor);
         }
     }
     public int weightSum() {
