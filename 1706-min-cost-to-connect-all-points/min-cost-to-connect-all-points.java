@@ -3,40 +3,18 @@ Kruskal or Prim
 Kruskal: Sorted First, use Union-find to find MST
 Prim: Use optimized sorting data structure, such as PriorityQueue
 */
-class Solution {
-    public int minCostConnectPoints(int[][] points) {
-        int n = points.length;
-        List<int[]>[] graph = buildGraph(points);
-        return new Prim(graph).weightSum();
-    }
-    private List<int[]>[] buildGraph(int[][] points) {
-        List<int[]>[] graph = new LinkedList[points.length];
-        for (int i = 0; i < points.length; i++) {
-            graph[i] = new LinkedList<>();
-        }
-        for (int i = 0; i < points.length; i++) {
-            for (int j = i + 1; j < points.length; j++) {
-                int xi = points[i][0], yi = points[i][1];
-                int xj = points[j][0], yj = points[j][1];
-                int weight = Math.abs(xj - xi) + Math.abs(yj - yi);
-                graph[i].add(new int[]{i, j, weight});
-                graph[j].add(new int[]{j, i, weight});
-            }
-        }
-        return graph;
-    }
-}
 class Prim {
     boolean[] inMST;
     int weightSum = 0;
-    PriorityQueue<int[]> pq;
     List<int[]>[] graph;
-    public Prim(List<int[]>[] graph) {
+    PriorityQueue<int[]> pq;
+    public Prim (List<int[]>[] graph) {
+        this.graph = graph;
         this.inMST = new boolean[graph.length];
-        pq = new PriorityQueue<>((a, b) -> {
+        this.pq = new PriorityQueue<>((a, b) -> {
             return a[2] - b[2];
         });
-        this.graph = graph;
+        
         inMST[0] = true;
         cut(0);
         while (!pq.isEmpty()) {
@@ -46,10 +24,9 @@ class Prim {
             if (inMST[to]) {
                 continue;
             }
-            weightSum += weight;
             inMST[to] = true;
+            weightSum += weight;
             cut(to);
-
         }
     }
     public void cut(int vertex) {
@@ -64,12 +41,35 @@ class Prim {
     public int weightSum() {
         return weightSum;
     }
-    public boolean connected() {
+    public boolean allConnected() {
         for (int i = 0; i < inMST.length; i++) {
             if (!inMST[i]) {
                 return false;
             }
         }
         return true;
+    }
+}
+class Solution {
+    public int minCostConnectPoints(int[][] points) {
+        List<int[]>[] graph = buildGraph(points.length, points);
+        Prim prim = new Prim(graph);
+        return prim.weightSum();
+    }
+    private List<int[]>[] buildGraph(int n, int[][] points) {
+        List<int[]>[] graph = new LinkedList[n];
+        for (int i = 0; i < n; i++) {
+            graph[i] = new LinkedList<>();
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int ix = points[i][0], iy = points[i][1];
+                int jx = points[j][0], jy = points[j][1];
+                int weight = Math.abs(ix - jx) + Math.abs(iy - jy);
+                graph[i].add(new int[]{i, j, weight});
+                graph[j].add(new int[]{j, i, weight});
+            }
+        }
+        return graph;
     }
 }
