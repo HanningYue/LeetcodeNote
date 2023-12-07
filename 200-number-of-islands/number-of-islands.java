@@ -3,11 +3,6 @@
 2. Two for loops go over the grid
 3. Call dfs on the i + 1, j + 1, i - 1, j - 1
 */
-/**
-1. Create a boolean[] to mark the visited island
-2. Two for loops go over the grid
-3. Call dfs on the i + 1, j + 1, i - 1, j - 1
-*/
 class Solution {
     public int numIslands(char[][] grid) {
         int count = 0;
@@ -23,13 +18,14 @@ class Solution {
         return count;
     }
     private void dfs(char[][] grid, int i, int j, boolean[][] visited) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[i].length || visited[i][j] || grid[i][j] == '0') {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[i].length 
+        || visited[i][j] || grid[i][j] == '0') {
             return;
         }
         visited[i][j] = true;
         dfs(grid, i + 1, j, visited);
         dfs(grid, i - 1, j, visited);
-        dfs(grid, i, j - 1, visited);
         dfs(grid, i, j + 1, visited);
+        dfs(grid, i, j - 1, visited);
     }
 }
