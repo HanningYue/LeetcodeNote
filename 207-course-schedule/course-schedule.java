@@ -1,18 +1,15 @@
 /**
-DFS2, need to detect cycle in the graph
-VISITING VS. VISITED
-1. Dfs2,  we need to detect cycle in the given questions 构图
-2. Given an int[][], we need to convert it to a HashMap first, {course, Set(all its prerequisites)}
-3. When dfs traversing, return a boolean value to keep track of the current state of cycle detection, if there is a cycle, return false
+Directional Graph, build graph first, then check for cycle, if no cycle, return true. Otherwise, false
+Since directional, build single directional graph
+无向图可以当作双向图来build
 */
 class Solution {
-    boolean[] onPath;
-    boolean[] visited;
+    boolean[] visited, onPath;
     boolean cycle = false;
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<Integer>[] graph = buildGraph(numCourses, prerequisites);
         visited = new boolean[numCourses];
         onPath = new boolean[numCourses];
+        List<Integer>[] graph = buildGraph(numCourses, prerequisites);
         for (int i = 0; i < numCourses; i++) {
             traverse(graph, i);
         }
@@ -22,10 +19,9 @@ class Solution {
         if (onPath[vertex]) {
             cycle = true;
         }
-        if (visited[vertex] || cycle) {
+        if (cycle || visited[vertex]) {
             return;
         }
-
         visited[vertex] = true;
         onPath[vertex] = true;
         for (int neighbor : graph[vertex]) {
@@ -38,11 +34,11 @@ class Solution {
         for (int i = 0; i < numCourses; i++) {
             graph[i] = new LinkedList<>();
         }
-        for (int[] edge : prerequisites) {
-            int from = edge[1];
-            int to = edge[0];
+        for (int[] pre : prerequisites) {
+            int from = pre[1];
+            int to = pre[0];
             graph[from].add(to);
         }
         return graph;
-    }
+    } 
 }
