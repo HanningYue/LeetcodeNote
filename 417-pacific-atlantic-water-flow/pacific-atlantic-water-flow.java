@@ -6,19 +6,19 @@ class Solution {
     public List<List<Integer>> pacificAtlantic(int[][] heights) {
         List<List<Integer>> result = new ArrayList<>();
         int rows = heights.length, cols = heights[0].length;
-        boolean[][] Pacific = new boolean[heights.length][heights[0].length];
-        boolean[][] Atlantic = new boolean[heights.length][heights[0].length];
-
+        boolean[][] Pacific = new boolean[rows][cols];
+        boolean[][] Atlantic = new boolean[rows][cols];
+    
         for (int i = 0; i < rows; i++) {
-            dfs(heights, Pacific, i, 0, heights[i][0]);
-            dfs(heights, Atlantic, i, cols - 1, heights[i][cols - 1]);
+            dfs(heights, i, 0, heights[i][0], Pacific);
+            dfs(heights, i, cols - 1, heights[i][cols - 1], Atlantic);
         }
         for (int i = 0; i < cols; i++) {
-            dfs(heights, Pacific, 0, i, heights[0][i]);
-            dfs(heights, Atlantic, rows - 1, i, heights[rows - 1][i]);
+            dfs(heights, 0, i, heights[0][i], Pacific);
+            dfs(heights, rows - 1, i, heights[rows - 1][i], Atlantic);
         }
-        for (int i = 0; i < heights.length; i++) {
-            for (int j = 0; j < heights[0].length; j++) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 if (Pacific[i][j] && Atlantic[i][j]) {
                     result.add(Arrays.asList(i, j));
                 }
@@ -26,15 +26,15 @@ class Solution {
         }
         return result;
     }
-    public void dfs(int[][] heights, boolean[][] visited, int row, int col, int previous) {
+    private void dfs(int[][] heights, int row, int col, int previous, boolean[][] visited) {
         if (row < 0 || row >= heights.length || col < 0 || col >= heights[0].length 
-        || visited[row][col] || heights[row][col] < previous) {
+        || heights[row][col] < previous || visited[row][col]) {
             return;
         }
         visited[row][col] = true;
-        dfs(heights, visited, row + 1, col, heights[row][col]);
-        dfs(heights, visited, row - 1, col, heights[row][col]);
-        dfs(heights, visited, row, col + 1, heights[row][col]);
-        dfs(heights, visited, row, col - 1, heights[row][col]);
+        dfs(heights, row + 1, col, heights[row][col], visited);
+        dfs(heights, row - 1, col, heights[row][col], visited);
+        dfs(heights, row, col + 1, heights[row][col], visited);
+        dfs(heights, row, col - 1, heights[row][col], visited);
     }
 }
