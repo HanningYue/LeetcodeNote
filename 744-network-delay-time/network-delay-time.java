@@ -2,18 +2,10 @@
 加权有向图，没有负权重边，OK，可以用 Dijkstra 算法计算最短路径。
 求从起始点k到距离最远的vertex的最短路径
 */
-class State {
-    int id;
-    int distFromStart;
-    public State(int id, int distFromStart) {
-        this.id = id;
-        this.distFromStart = distFromStart;
-    }
-}
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
         List<int[]>[] graph = new LinkedList[n + 1];
-        for (int i = 0; i <= n; i++) {
+        for (int i = 1; i <= n; i++) {
             graph[i] = new LinkedList<>();
         }
         for (int[] time : times) {
@@ -22,9 +14,8 @@ class Solution {
             int weight = time[2];
             graph[from].add(new int[]{to, weight});
         }
-
-        int[] distTo = dijkstra(k, graph);
         int result = 0;
+        int[] distTo = dijkstra(k, graph);
         for (int i = 1; i < distTo.length; i++) {
             if (distTo[i] == Integer.MAX_VALUE) {
                 return -1;
@@ -33,25 +24,26 @@ class Solution {
         }
         return result;
     }
-    private int[] dijkstra(int start, List<int[]>[] graph) {
+    public int[] dijkstra(int start, List<int[]>[] graph) {
         int[] distTo = new int[graph.length];
         Arrays.fill(distTo, Integer.MAX_VALUE);
         distTo[start] = 0;
+
         PriorityQueue<State> pq = new PriorityQueue<>((a, b) -> {
             return a.distFromStart - b.distFromStart;
         });
         pq.offer(new State(start, 0));
 
         while (!pq.isEmpty()) {
-            State currentState = pq.poll();
-            int currentNode = currentState.id;
-            int currentDist = currentState.distFromStart;
+            State current = pq.poll();
+            int currentNode = current.id;
+            int currentDist = current.distFromStart;
             if (currentDist > distTo[currentNode]) {
                 continue;
             }
             for (int[] neighbor : graph[currentNode]) {
                 int nextNode = neighbor[0];
-                int nextDist = distTo[currentNode] + neighbor[1];
+                int nextDist = neighbor[1] + distTo[currentNode];
                 if (distTo[nextNode] > nextDist) {
                     distTo[nextNode] = nextDist;
                     pq.offer(new State(nextNode, nextDist));
@@ -59,5 +51,13 @@ class Solution {
             }
         }
         return distTo;
+    }
+}
+class State {
+    int id;
+    int distFromStart;
+    public State(int id, int distFromStart) {
+        this.id = id;
+        this.distFromStart = distFromStart;
     }
 }
