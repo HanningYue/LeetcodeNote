@@ -14,8 +14,9 @@ class Solution {
             int weight = time[2];
             graph[from].add(new int[]{to, weight});
         }
+
         int result = 0;
-        int[] distTo = dijkstra(k, graph);
+        int[] distTo = dijkstra(graph, k);
         for (int i = 1; i < distTo.length; i++) {
             if (distTo[i] == Integer.MAX_VALUE) {
                 return -1;
@@ -24,26 +25,25 @@ class Solution {
         }
         return result;
     }
-    public int[] dijkstra(int start, List<int[]>[] graph) {
+    public int[] dijkstra(List<int[]>[] graph, int start) {
         int[] distTo = new int[graph.length];
         Arrays.fill(distTo, Integer.MAX_VALUE);
         distTo[start] = 0;
-
         PriorityQueue<State> pq = new PriorityQueue<>((a, b) -> {
             return a.distFromStart - b.distFromStart;
         });
         pq.offer(new State(start, 0));
-
+        
         while (!pq.isEmpty()) {
-            State current = pq.poll();
-            int currentNode = current.id;
-            int currentDist = current.distFromStart;
+            State state = pq.poll();
+            int currentNode = state.id;
+            int currentDist = state.distFromStart;
             if (currentDist > distTo[currentNode]) {
                 continue;
             }
             for (int[] neighbor : graph[currentNode]) {
                 int nextNode = neighbor[0];
-                int nextDist = neighbor[1] + distTo[currentNode];
+                int nextDist = currentDist + neighbor[1];
                 if (distTo[nextNode] > nextDist) {
                     distTo[nextNode] = nextDist;
                     pq.offer(new State(nextNode, nextDist));
