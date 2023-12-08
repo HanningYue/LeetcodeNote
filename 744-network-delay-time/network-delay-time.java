@@ -2,8 +2,30 @@
 加权有向图，没有负权重边，OK，可以用 Dijkstra 算法计算最短路径。
 求从起始点k到距离最远的vertex的最短路径
 */
+class State {
+    int id;
+    int distFromStart;
+    public State(int id, int distFromStart) {
+        this.id = id;
+        this.distFromStart = distFromStart;
+    }
+}
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
+        int result = 0;
+        List<int[]>[] graph = buildGraph(times, n);
+        int[] distTo = dijkstra(graph, k);
+        
+        for (int i = 1; i < distTo.length; i++) {
+            if (distTo[i] == Integer.MAX_VALUE) {
+                return -1;
+            }
+            result = Math.max(result, distTo[i]);
+        }
+        return result;
+    }
+
+    public List<int[]>[] buildGraph(int[][] times, int n) {
         List<int[]>[] graph = new LinkedList[n + 1];
         for (int i = 1; i <= n; i++) {
             graph[i] = new LinkedList<>();
@@ -14,17 +36,9 @@ class Solution {
             int weight = time[2];
             graph[from].add(new int[]{to, weight});
         }
-
-        int result = 0;
-        int[] distTo = dijkstra(graph, k);
-        for (int i = 1; i < distTo.length; i++) {
-            if (distTo[i] == Integer.MAX_VALUE) {
-                return -1;
-            }
-            result = Math.max(result, distTo[i]);
-        }
-        return result;
+        return graph;
     }
+
     public int[] dijkstra(List<int[]>[] graph, int start) {
         int[] distTo = new int[graph.length];
         Arrays.fill(distTo, Integer.MAX_VALUE);
@@ -41,6 +55,7 @@ class Solution {
             if (currentDist > distTo[currentNode]) {
                 continue;
             }
+            
             for (int[] neighbor : graph[currentNode]) {
                 int nextNode = neighbor[0];
                 int nextDist = currentDist + neighbor[1];
@@ -51,13 +66,5 @@ class Solution {
             }
         }
         return distTo;
-    }
-}
-class State {
-    int id;
-    int distFromStart;
-    public State(int id, int distFromStart) {
-        this.id = id;
-        this.distFromStart = distFromStart;
     }
 }
