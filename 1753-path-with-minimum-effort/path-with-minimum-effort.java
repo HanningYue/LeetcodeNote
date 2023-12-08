@@ -10,17 +10,15 @@ class State {
 class Solution {
     public int minimumEffortPath(int[][] heights) {
         int[][] distTo = new int[heights.length][heights[0].length];
-        for (int i = 0; i < heights.length; i++) {
-            Arrays.fill(distTo[i], Integer.MAX_VALUE);
-        }
-        distTo[0][0] = 0;
-
         dijkstra(heights, distTo);
-
         return distTo[heights.length - 1][heights[0].length - 1];
     }
 
     private void dijkstra(int[][] heights, int[][] distTo) {
+        for (int i = 0; i < heights.length; i++) {
+            Arrays.fill(distTo[i], Integer.MAX_VALUE);
+        }
+        distTo[0][0] = 0;
         PriorityQueue<State> pq = new PriorityQueue<>((a, b) -> {
             return a.effortFromStart - b.effortFromStart;
         });
