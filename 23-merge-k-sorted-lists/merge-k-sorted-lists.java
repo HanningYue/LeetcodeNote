@@ -14,7 +14,7 @@ class Solution {
 
         ListNode dummy = new ListNode(-1);
         ListNode current = dummy;
-        PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length, ((a, b) -> (a.val - b.val)));
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(lists.length, (a, b) -> (a.val - b.val));
 
         for (ListNode head : lists) {
             if (head != null) {
