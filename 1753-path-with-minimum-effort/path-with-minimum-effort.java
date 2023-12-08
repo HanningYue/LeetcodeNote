@@ -1,3 +1,12 @@
+class State {
+    int x, y;
+    int effortFromStart;
+    public State(int x, int y, int effortFromStart) {
+        this.x = x;
+        this.y = y;
+        this.effortFromStart = effortFromStart;
+    }
+}
 class Solution {
     public int minimumEffortPath(int[][] heights) {
         int[][] distTo = new int[heights.length][heights[0].length];
@@ -22,7 +31,6 @@ class Solution {
             int currentX = state.x;
             int currentY = state.y;
             int currentEffort = state.effortFromStart;
-
             if (currentEffort > distTo[currentX][currentY]) {
                 continue;
             }
@@ -52,15 +60,5 @@ class Solution {
             }
         }
         return graph;
-    }
-}
-
-class State {
-    int x, y;
-    int effortFromStart;
-    public State(int x, int y, int effortFromStart) {
-        this.x = x;
-        this.y = y;
-        this.effortFromStart = effortFromStart;
     }
 }
