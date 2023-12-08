@@ -2,8 +2,8 @@ class Solution {
     public int[] findRedundantConnection(int[][] edges) {
         UF uf = new UF(edges.length + 1);
         for (int[] edge : edges) {
-            int vertexOne = edge[0];
-            int vertexTwo = edge[1];
+            int vertexOne = edge[0] - 1;
+            int vertexTwo = edge[1] - 1;
             if (uf.connected(vertexOne, vertexTwo)) {
                 return edge;
             }
