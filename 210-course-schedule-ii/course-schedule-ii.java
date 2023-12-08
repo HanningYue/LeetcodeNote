@@ -1,30 +1,25 @@
 /**
-VISITING VS. VISITED
-1. Based on Course Schedule I, this question requires an int[] as return, 构图 as usual
-2. We need an extra List<Integer> to keep track of the current order in dfs2
-3. ATTENTION : check non-connected node and visted seperately, unlike Course Schedule I which checked jointly, because adding non-connected node in the list can be any order
+在第一题的基础上加入一个list来存拓扑序
+要reverse因为我们构图的方式是从前到后
 */
 class Solution {
-    boolean[] visited, onPath;
+    boolean[] onPath, visited;
     boolean cycle = false;
-    List<Integer> postOrder = new ArrayList<>();
-
+    List<Integer> order = new ArrayList<>();
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         List<Integer>[] graph = buildGraph(numCourses, prerequisites);
         onPath = new boolean[numCourses];
         visited = new boolean[numCourses];
-        
         for (int i = 0; i < numCourses; i++) {
             traverse(graph, i);
         }
         if (cycle) {
             return new int[]{};
         }
-
-        Collections.reverse(postOrder);
+        Collections.reverse(order);
         int[] result = new int[numCourses];
-        for (int i = 0; i < postOrder.size(); i++) {
-            result[i] = postOrder.get(i);
+        for (int i = 0; i < numCourses; i++) {
+            result[i] = order.get(i);
         }
         return result;
     }
@@ -32,15 +27,15 @@ class Solution {
         if (onPath[vertex]) {
             cycle = true;
         }
-        if (visited[vertex] || cycle) {
+        if (cycle || visited[vertex]) {
             return;
         }
-        onPath[vertex] = true;
         visited[vertex] = true;
+        onPath[vertex] = true;
         for (int neighbor : graph[vertex]) {
             traverse(graph, neighbor);
         }
-        postOrder.add(vertex);
+        order.add(vertex);
         onPath[vertex] = false;
     }
     private List<Integer>[] buildGraph(int numCourses, int[][] prerequisites) {
@@ -48,9 +43,9 @@ class Solution {
         for (int i = 0; i < numCourses; i++) {
             graph[i] = new LinkedList<>();
         }
-        for (int[] edge : prerequisites) {
-            int from = edge[1];
-            int to = edge[0];
+        for (int[] pre : prerequisites) {
+            int from = pre[1];
+            int to = pre[0];
             graph[from].add(to);
         }
         return graph;
