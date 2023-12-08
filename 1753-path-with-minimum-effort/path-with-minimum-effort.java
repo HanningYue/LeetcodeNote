@@ -1,58 +1,49 @@
-class State {
-    int x, y;
-    int effortFromStart;
-    public State(int x, int y, int effortFromStart) {
-        this.x = x;
-        this.y = y;
-        this.effortFromStart = effortFromStart;
-    }
-}
 class Solution {
-    int[][] dirs = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    int minimumEffortPath(int[][] heights) {
-        int m = heights.length, n = heights[0].length;
-        int[][] effortTo = new int[m][n];
-        for (int i = 0; i < m; i++) {
-            Arrays.fill(effortTo[i], Integer.MAX_VALUE);
+    public int minimumEffortPath(int[][] heights) {
+        int[][] distTo = new int[heights.length][heights[0].length];
+        for (int i = 0; i < heights.length; i++) {
+            Arrays.fill(distTo[i], Integer.MAX_VALUE);
         }
-        effortTo[0][0] = 0;
+        distTo[0][0] = 0;
 
-        Queue<State> pq = new PriorityQueue<>((a, b) -> {
+        dijkstra(heights, distTo);
+
+        return distTo[heights.length - 1][heights[0].length - 1];
+    }
+
+    private void dijkstra(int[][] heights, int[][] distTo) {
+        PriorityQueue<State> pq = new PriorityQueue<>((a, b) -> {
             return a.effortFromStart - b.effortFromStart;
         });
-        
         pq.offer(new State(0, 0, 0));
 
         while (!pq.isEmpty()) {
-            State curState = pq.poll();
-            int curX = curState.x;
-            int curY = curState.y;
-            int curEffortFromStart = curState.effortFromStart;
-            
-            if (curX == m - 1 && curY == n - 1) {
-                return curEffortFromStart;
-            }
-            
-            if (curEffortFromStart > effortTo[curX][curY]) {
+            State state = pq.poll();
+            int currentX = state.x;
+            int currentY = state.y;
+            int currentEffort = state.effortFromStart;
+
+            if (currentEffort > distTo[currentX][currentY]) {
                 continue;
             }
-            for (int[] neighbor : buildGraph(heights, curX, curY)) {
+
+            for (int[] neighbor : buildGraph(heights, currentX, currentY)) {
                 int nextX = neighbor[0];
                 int nextY = neighbor[1];
-                int effortToNextNode = Math.max(
-                    effortTo[curX][curY], 
-                    Math.abs(heights[curX][curY] - heights[nextX][nextY])
-                );
-                if (effortTo[nextX][nextY] > effortToNextNode) {
-                    effortTo[nextX][nextY] = effortToNextNode;
-                    pq.offer(new State(nextX, nextY, effortToNextNode));
+                int nextEffort = Math.max(currentEffort, 
+                    Math.abs(heights[currentX][currentY] - heights[nextX][nextY]));
+                
+                if (distTo[nextX][nextY] > nextEffort) {
+                    distTo[nextX][nextY] = nextEffort;
+                    pq.offer(new State(nextX, nextY, nextEffort));
                 }
             }
         }
-        return -1;
     }
-    public List<int[]> buildGraph(int[][] heights, int row, int col) {
+
+    private List<int[]> buildGraph(int[][] heights, int row, int col) {
         List<int[]> graph = new ArrayList<>();
+        int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         for (int[] dir : dirs) {
             int x = row + dir[0];
             int y = col + dir[1];
@@ -61,5 +52,15 @@ class Solution {
             }
         }
         return graph;
+    }
+}
+
+class State {
+    int x, y;
+    int effortFromStart;
+    public State(int x, int y, int effortFromStart) {
+        this.x = x;
+        this.y = y;
+        this.effortFromStart = effortFromStart;
     }
 }
