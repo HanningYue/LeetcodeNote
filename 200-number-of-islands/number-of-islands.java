@@ -10,7 +10,7 @@ class Solution {
         boolean[][] visited = new boolean[m][n];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                if (!visited[i][j] && grid[i][j] == '1') {
+                if (!visited[i][j] && grid[i][j] != '0') {
                     dfs(grid, i, j, visited);
                     count++;
                 }
