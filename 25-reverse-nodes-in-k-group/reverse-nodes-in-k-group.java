@@ -1,35 +1,27 @@
-/* Need a reverse helper function, divide the lists in to k-lists, reverse and connect them one-by-one
-先让current 走到kth， 先把第一个group reverse （with helper function）
-记录current的next， 断开current 和 next
-reverse当前的group，declare头node作为reverse后的头node
-original的head node 现在是reverse后的最后一个node
-让head.next等于之前记录的下一个group （recursion call 当前function， 当前function返回 reverse过后的头node）
+/**
+1.先写一个iterative翻转range[left，right]的helper方程
+2.recursive call主方程
 */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode current = head;
-        int count = 1;
-        while (count < k && current != null) {
-            count++;
-            current = current.next;
+        ListNode slow = head, fast = head;
+        for (int i = 0; i < k; i++) {
+            if (fast == null) {
+                return head;
+            }
+            fast = fast.next;
         }
-        if (current == null) {
-            return head;
-        }
-        ListNode nextGroupHead = current.next;
-        current.next = null;
-
-        ListNode reverseHead = reverse(head); //The kth node after reverse
-        head.next = reverseKGroup(nextGroupHead, k); //Head is still original head, right now at the kth place
-        return reverseHead;
+        ListNode newHead = reverseRange(head, slow, fast);
+        slow.next = reverseKGroup(fast, k);
+        return newHead;
     }
-    private ListNode reverse(ListNode head) {
-        ListNode prev = null;
-        while (head != null) {
-            ListNode next = head.next;
-            head.next = prev;
-            prev = head;
-            head = next;
+    private ListNode reverseRange(ListNode head, ListNode left, ListNode right) {
+        ListNode prev = null, current = left;
+        while (current != right) {
+            ListNode next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
         }
         return prev;
     }
