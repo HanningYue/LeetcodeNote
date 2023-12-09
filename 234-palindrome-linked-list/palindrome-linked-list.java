@@ -18,19 +18,18 @@ class Solution {
         if (fast != null) {
             slow = slow.next;
         }
-        
-        ListNode left = head, right = reverse(slow);
-        while (right != null) {
-            if (left.val != right.val) {
+        ListNode secondHalf = reverse(slow);
+        while (secondHalf != null) {
+            if (head.val != secondHalf.val) {
                 return false;
             }
-            left = left.next;
-            right = right.next;
+            head = head.next;
+            secondHalf = secondHalf.next;
         }
         return true;
     }
     private ListNode reverse(ListNode head) {
-        ListNode prev = null,current = head;
+        ListNode prev = null, current = head;
         while (current != null) {
             ListNode next = current.next;
             current.next = prev;
