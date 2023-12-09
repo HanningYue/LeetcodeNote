@@ -17,7 +17,7 @@ class Solution {
         return head;
     }
     ListNode successor = null;
-    public ListNode reverseN(ListNode head, int n) {
+    private ListNode reverseN (ListNode head, int n) {
         if (n == 1) {
             successor = head.next;
             return head;
