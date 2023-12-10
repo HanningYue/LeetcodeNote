@@ -1,12 +1,8 @@
 class Solution {
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {
-        if (maze == null || maze.length == 0 || maze[0].length == 0) {
-            return false;
-        }
         boolean[][] visited = new boolean[maze.length][maze[0].length];
         return dfs(maze, start, destination, visited);
     }
-
     private boolean dfs(int[][] maze, int[] start, int[] destination, boolean[][] visited) {
         if (visited[start[0]][start[1]]) {
             return false;
@@ -15,11 +11,11 @@ class Solution {
             return true;
         }
         visited[start[0]][start[1]] = true;
-        int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         for (int[] dir : dirs) {
             int x = start[0];
             int y = start[1];
-            while (canMove(maze, x + dir[0], y + dir[1])) {
+            while (rolling(maze, x + dir[0], y + dir[1])) {
                 x += dir[0];
                 y += dir[1];
             }
@@ -29,8 +25,10 @@ class Solution {
         }
         return false;
     }
-
-    private boolean canMove(int[][] maze, int x, int y) {
-        return x >= 0 && y >= 0 && x < maze.length && y < maze[0].length && maze[x][y] == 0;
+    private boolean rolling(int[][] maze, int x, int y) {
+        if (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] == 0) {
+            return true;
+        }
+        return false;
     }
 }
