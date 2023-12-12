@@ -13,22 +13,21 @@ class Solution {
         visited[start[0]][start[1]] = true;
         int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         for (int[] dir : dirs) {
-            int x = start[0];
-            int y = start[1];
-            while (rolling(maze, x + dir[0], y + dir[1])) {
-                x += dir[0];
-                y += dir[1];
+            int row = start[0], col = start[1];
+            while (canMove(maze, row + dir[0], col + dir[1])) {
+                row += dir[0];
+                col += dir[1];
             }
-            if (dfs(maze, new int[]{x, y}, destination, visited)) {
+            if (dfs(maze, new int[]{row, col}, destination, visited)) {
                 return true;
             }
         }
         return false;
     }
-    private boolean rolling(int[][] maze, int x, int y) {
-        if (x >= 0 && x < maze.length && y >= 0 && y < maze[0].length && maze[x][y] == 0) {
-            return true;
+    private boolean canMove(int[][] maze, int x, int y) {
+        if (x < 0 || x >= maze.length || y < 0 || y >= maze[0].length || maze[x][y] != 0) {
+            return false;
         }
-        return false;
+        return true;
     }
 }
