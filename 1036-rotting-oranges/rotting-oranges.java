@@ -8,33 +8,37 @@ class Solution {
         int fresh = 0;
         Queue<int[]> queue = new LinkedList<>();
         for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+            for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] == 2) {
                     queue.offer(new int[]{i, j});
                 } else if (grid[i][j] == 1) {
                     fresh++;
                 }
-            }
+            } 
         }
 
-        int minute = 0;
-        int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int min = 0;
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        int[][] dirs = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
         while (!queue.isEmpty() && fresh != 0) {
-            minute++;
             int size = queue.size();
+            min++;
             for (int i = 0; i < size; i++) {
                 int[] rotten = queue.poll();
-                for (int[] dir : directions) {
+                for (int[] dir : dirs) {
                     int x = rotten[0] + dir[0];
                     int y = rotten[1] + dir[1];
-                    if (x >= 0 && x < grid.length && y >= 0 && y < grid[0].length && grid[x][y] == 1) {
-                        grid[x][y] = 2;
-                        queue.offer(new int[]{x, y});
-                        fresh--;
+                    if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length 
+                    || grid[x][y] != 1 || visited[x][y]) {
+                        continue;
                     }
+                    grid[x][y] = 2;
+                    visited[x][y] = true;
+                    fresh--;
+                    queue.offer(new int[]{x, y});
                 }
             }
         }
-        return fresh == 0 ? minute : -1;
+        return fresh == 0 ? min : -1;
     }
 }
