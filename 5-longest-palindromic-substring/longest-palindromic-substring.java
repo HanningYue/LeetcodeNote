@@ -5,10 +5,10 @@ class Solution {
     public String longestPalindrome(String s) {
         String result = "";
         for (int i = 0; i < s.length(); i++) {
-            String s1 = palindrome(s, i, i);
-            String s2 = palindrome(s, i, i + 1);
-            result = result.length() > s1.length() ? result : s1;
-            result = result.length() > s2.length() ? result : s2;
+            String evenCase = palindrome(s, i, i + 1);
+            String oddCase = palindrome(s, i, i);
+            result = evenCase.length() > result.length() ? evenCase : result;
+            result = oddCase.length() > result.length() ? oddCase : result;
         }
         return result;
     }
