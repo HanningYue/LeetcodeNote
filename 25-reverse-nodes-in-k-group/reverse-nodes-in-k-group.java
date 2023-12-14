@@ -4,20 +4,21 @@
 */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode slow = head, fast = head;
+        if (head == null) return null;
+        ListNode a = head, b = head;
         for (int i = 0; i < k; i++) {
-            if (fast == null) {
+            if (b == null) {
                 return head;
             }
-            fast = fast.next;
+            b = b.next;
         }
-        ListNode newHead = reverseRange(head, slow, fast);
-        slow.next = reverseKGroup(fast, k);
-        return newHead;
+        ListNode reverseHead = reverse(a, b);
+        a.next = reverseKGroup(b, k);
+        return reverseHead;
     }
-    private ListNode reverseRange(ListNode head, ListNode left, ListNode right) {
-        ListNode prev = null, current = left;
-        while (current != right) {
+    private ListNode reverse(ListNode a, ListNode b) {
+        ListNode prev = null, current = a;
+        while (current != b) {
             ListNode next = current.next;
             current.next = prev;
             prev = current;
