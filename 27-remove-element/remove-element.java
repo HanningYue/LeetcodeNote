@@ -11,6 +11,6 @@ class Solution {
             }
             fast++;
         }
-        return slow;           
+        return slow;
     }
 }
