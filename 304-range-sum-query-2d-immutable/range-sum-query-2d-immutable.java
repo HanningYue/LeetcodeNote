@@ -1,10 +1,10 @@
 class NumMatrix {
-    private int[][] preSum;   
+    private int[][] preSum;
     public NumMatrix(int[][] matrix) {
         preSum = new int[matrix.length + 1][matrix[0].length + 1];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                preSum[i + 1][j + 1] = preSum[i][j + 1] + preSum[i + 1][j] + matrix[i][j] - preSum[i][j];
+                preSum[i + 1][j + 1] = preSum[i + 1][j] + preSum[i][j + 1] - preSum[i][j] + matrix[i][j];
             }
         }
     }
