@@ -16,7 +16,6 @@ class Solution {
         head.next = reverseBetween(head.next, left - 1, right - 1);
         return head;
     }
-
     private ListNode successor = null;
     private ListNode reverseN(ListNode head, int n) {
         if (n == 1) {
