@@ -11,18 +11,19 @@
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
         if (left == 1) {
-            return reverseNnode(head, right);
+            return reverseN(head, right);
         }
         head.next = reverseBetween(head.next, left - 1, right - 1);
         return head;
     }
-    ListNode successor = null;
-    private ListNode reverseNnode(ListNode head, int n) {
+
+    private ListNode successor = null;
+    private ListNode reverseN(ListNode head, int n) {
         if (n == 1) {
             successor = head.next;
             return head;
         }
-        ListNode last = reverseNnode(head.next, n - 1);
+        ListNode last = reverseN(head.next, n - 1);
         head.next.next = head;
         head.next = successor;
         return last;
