@@ -17,13 +17,13 @@ class Solution {
         return dummy.next;
     }
     private ListNode nthFromEnd(ListNode head, int n) {
-        ListNode fast = head, slow = head;
+        ListNode slow = head, fast = head;
         for (int i = 0; i < n; i++) {
             fast = fast.next;
         }
         while (fast != null) {
-            fast = fast.next;
             slow = slow.next;
+            fast = fast.next;
         }
         return slow;
     }
