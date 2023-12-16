@@ -22,11 +22,11 @@ public class Solution {
         if (fast == null || fast.next == null) {
             return null;
         }
-        ListNode current = head;
-        while (current != slow) {
-            current = current.next;
+        ListNode start = head;
+        while (start != slow) {
+            start = start.next;
             slow = slow.next;
         }
-        return current;
+        return start;
     }
 }
