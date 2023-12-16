@@ -5,24 +5,20 @@
 */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null) {
-            return null;
-        }
-
-        ListNode fast = head, slow = head;
+        if (head == null) return null;
+        ListNode slow = head, fast = head;
         for (int i = 0; i < k; i++) {
             if (fast == null) {
                 return head;
             }
             fast = fast.next;
         }
-
         ListNode newHead = reverse(slow, fast);
-        slow.next = reverseKGroup(fast, k);
+        head.next = reverseKGroup(fast, k);
         return newHead;
     }
     private ListNode reverse(ListNode left, ListNode right) {
-        ListNode current = left, prev = null;
+        ListNode prev = null, current = left;
         while (current != right) {
             ListNode next = current.next;
             current.next = prev;
