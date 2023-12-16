@@ -1,24 +1,29 @@
 /**
-1.先写一个iterative翻转range[left，right]的helper方程
-2.recursive call主方程
+快慢指针 每次先让快指针走到k个要反转的地方
+再写一个iterative翻转range[left，right]的helper reverse方程
+翻转，连接listnode和recursive call主方程
 */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null) return null;
-        ListNode a = head, b = head;
+        if (head == null) {
+            return null;
+        }
+
+        ListNode fast = head, slow = head;
         for (int i = 0; i < k; i++) {
-            if (b == null) {
+            if (fast == null) {
                 return head;
             }
-            b = b.next;
+            fast = fast.next;
         }
-        ListNode reverseHead = reverse(a, b);
-        a.next = reverseKGroup(b, k);
-        return reverseHead;
+
+        ListNode newHead = reverse(slow, fast);
+        slow.next = reverseKGroup(fast, k);
+        return newHead;
     }
-    private ListNode reverse(ListNode a, ListNode b) {
-        ListNode prev = null, current = a;
-        while (current != b) {
+    private ListNode reverse(ListNode left, ListNode right) {
+        ListNode current = left, prev = null;
+        while (current != right) {
             ListNode next = current.next;
             current.next = prev;
             prev = current;
