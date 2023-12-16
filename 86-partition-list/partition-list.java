@@ -10,22 +10,23 @@
  */
 class Solution {
     public ListNode partition(ListNode head, int x) {
-        ListNode smallerDummy = new ListNode(-1);
         ListNode biggerDummy = new ListNode(-1);
-        ListNode smaller = smallerDummy;
+        ListNode smallerDummy = new ListNode(-1);
         ListNode bigger = biggerDummy;
-        ListNode p = head;
-        while (p != null) {
-            if (p.val >= x) {
-                bigger.next = p;
+        ListNode smaller = smallerDummy;
+        
+        ListNode current = head;
+        while (current != null) {
+            if (current.val >= x) {
+                bigger.next = current;
                 bigger = bigger.next;
-            } else {
-                smaller.next = p;
+            } else if (current.val < x) {
+                smaller.next = current;
                 smaller = smaller.next;
             }
-            ListNode temp = p.next;
-            p.next = null;
-            p = temp;
+            ListNode temp = current.next;
+            current.next = null;
+            current = temp;
         }
         smaller.next = biggerDummy.next;
         return smallerDummy.next;
