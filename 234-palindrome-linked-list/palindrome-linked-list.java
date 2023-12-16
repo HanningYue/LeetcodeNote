@@ -9,17 +9,17 @@ class Solution {
             fast = fast.next.next;
             slow = slow.next;
         }
-        if (fast != null) { //Even Case
+        if (fast != null) {
             slow = slow.next;
         }
-        ListNode reversed = reverse(slow);
-        while (reversed != null) {
-            if (head.val != reversed.val) {
+        ListNode reverseHalf = reverse(slow);
+        while (reverseHalf != null) {
+            if (head.val != reverseHalf.val) {
                 return false;
             }
+            reverseHalf = reverseHalf.next;
             head = head.next;
-            reversed = reversed.next;
-        }
+        }        
         return true;
     }
     private ListNode reverse(ListNode head) {
