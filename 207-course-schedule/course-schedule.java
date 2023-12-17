@@ -5,9 +5,9 @@ Since directional, build single directional graph
 */
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        Map<Integer, List<Integer>> graph = new HashMap<>();
         for (int[] pre : prerequisites) {
-            graph.putIfAbsent(pre[0], new HashSet<>());
+            graph.putIfAbsent(pre[0], new ArrayList<>());
             graph.get(pre[0]).add(pre[1]);
         }
         boolean[] visiting = new boolean[numCourses];
@@ -20,7 +20,7 @@ class Solution {
         }
         return true;
     }
-    private boolean dfs(Map<Integer, Set<Integer>> graph, boolean[] visiting, 
+    private boolean dfs(Map<Integer, List<Integer>> graph, boolean[] visiting, 
     boolean[] visited, int vertex) {
         if (!graph.containsKey(vertex) || visited[vertex]) {
             return true;
