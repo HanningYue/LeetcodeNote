@@ -12,27 +12,25 @@ class Solution {
         }
         boolean[] visiting = new boolean[numCourses];
         boolean[] visited = new boolean[numCourses];
-        boolean cycle = false;
 
         for (int i = 0; i < numCourses; i++) {
-            if (!dfs(graph, visiting, visited, cycle, i)) {
+            if (!dfs(graph, visiting, visited, i)) {
                 return false;
             }
         }
         return true;
     }
     private boolean dfs(Map<Integer, Set<Integer>> graph, boolean[] visiting, 
-    boolean[] visited, boolean cycle, int vertex) {
+    boolean[] visited, int vertex) {
         if (!graph.containsKey(vertex) || visited[vertex]) {
             return true;
         }
         if (visiting[vertex]) {
-            cycle = true;
             return false;
         }
         visiting[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
-            if (!dfs(graph, visiting, visited, cycle, neighbor)) {
+            if (!dfs(graph, visiting, visited, neighbor)) {
                 return false;
             }
         }
