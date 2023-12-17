@@ -4,41 +4,40 @@ Since directional, build single directional graph
 无向图可以当作双向图来build
 */
 class Solution {
-    boolean[] visited, onPath;
-    boolean cycle = false;
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        visited = new boolean[numCourses];
-        onPath = new boolean[numCourses];
-        List<Integer>[] graph = buildGraph(numCourses, prerequisites);
-        for (int i = 0; i < numCourses; i++) {
-            traverse(graph, i);
-        }
-        return !cycle;
-    }
-    private void traverse(List<Integer>[] graph, int vertex) {
-        if (onPath[vertex]) {
-            cycle = true;
-        }
-        if (cycle || visited[vertex]) {
-            return;
-        }
-        visited[vertex] = true;
-        onPath[vertex] = true;
-        for (int neighbor : graph[vertex]) {
-            traverse(graph, neighbor);
-        }
-        onPath[vertex] = false;
-    }
-    private List<Integer>[] buildGraph(int numCourses, int[][] prerequisites) {
-        List<Integer>[] graph = new LinkedList[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            graph[i] = new LinkedList<>();
-        }
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int[] pre : prerequisites) {
-            int from = pre[1];
-            int to = pre[0];
-            graph[from].add(to);
+            graph.putIfAbsent(pre[0], new HashSet<>());
+            graph.get(pre[0]).add(pre[1]);
         }
-        return graph;
-    } 
+        boolean[] visiting = new boolean[numCourses];
+        boolean[] visited = new boolean[numCourses];
+        boolean cycle = false;
+
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(graph, visiting, visited, cycle, i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean dfs(Map<Integer, Set<Integer>> graph, boolean[] visiting, 
+    boolean[] visited, boolean cycle, int vertex) {
+        if (!graph.containsKey(vertex) || visited[vertex]) {
+            return true;
+        }
+        if (cycle || visiting[vertex]) {
+            cycle = true;
+            return false;
+        }
+        visiting[vertex] = true;
+        for (int neighbor : graph.get(vertex)) {
+            if (!dfs(graph, visiting, visited, cycle, neighbor)) {
+                return false;
+            }
+        }
+        visiting[vertex] = false;
+        visited[vertex] = true;
+        return true;
+    }
 }
