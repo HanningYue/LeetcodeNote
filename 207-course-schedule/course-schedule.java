@@ -26,7 +26,7 @@ class Solution {
         if (!graph.containsKey(vertex) || visited[vertex]) {
             return true;
         }
-        if (cycle || visiting[vertex]) {
+        if (visiting[vertex]) {
             cycle = true;
             return false;
         }
