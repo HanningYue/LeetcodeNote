@@ -1,5 +1,5 @@
 class NumMatrix {
-    private int[][] preSum;
+    int[][] preSum;
     public NumMatrix(int[][] matrix) {
         preSum = new int[matrix.length + 1][matrix[0].length + 1];
         for (int i = 0; i < matrix.length; i++) {
