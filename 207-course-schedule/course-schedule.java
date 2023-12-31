@@ -5,32 +5,35 @@ Since directional, build single directional graph
 */
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-        for (int[] pre : prerequisites) {
-            graph.putIfAbsent(pre[0], new ArrayList<>());
-            graph.get(pre[0]).add(pre[1]);
-        }
         boolean[] visiting = new boolean[numCourses];
         boolean[] visited = new boolean[numCourses];
-
+        List<Integer>[] graph = new LinkedList[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            if (!dfs(graph, visiting, visited, i)) {
+            graph[i] = new LinkedList<>();
+        }
+        for (int[] pre : prerequisites) {
+            int to = pre[0];
+            int from = pre[1];
+            graph[from].add(to);
+        }
+        for (int i = 0; i < numCourses; i++) {
+            if (!traverse(i, visiting, visited, graph)) {
                 return false;
             }
         }
         return true;
     }
-    private boolean dfs(Map<Integer, List<Integer>> graph, boolean[] visiting, 
-    boolean[] visited, int vertex) {
-        if (!graph.containsKey(vertex) || visited[vertex]) {
-            return true;
-        }
+    private boolean traverse(int vertex, boolean[] visiting, boolean[] visited,
+    List<Integer>[] graph) {
         if (visiting[vertex]) {
             return false;
         }
+        if (visited[vertex]) {
+            return true;
+        }
         visiting[vertex] = true;
-        for (int neighbor : graph.get(vertex)) {
-            if (!dfs(graph, visiting, visited, neighbor)) {
+        for (int neighbor : graph[vertex]) {
+            if (!traverse(neighbor, visiting, visited, graph)) {
                 return false;
             }
         }
