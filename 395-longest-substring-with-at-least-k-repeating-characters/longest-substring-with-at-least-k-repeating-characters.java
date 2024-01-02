@@ -6,9 +6,9 @@ class Solution {
         }
         return result;
     }
-    private int helper(String s, int k, int count) {
-        int validChar = 0, uniqueChar = 0;
+    private int helper(String s, int k, int N) {
         int slow = 0, fast = 0, length = 0;
+        int uniqueChar = 0, validChar = 0;
         int[] freq = new int[26];
 
         while (fast < s.length()) {
@@ -21,7 +21,7 @@ class Solution {
                 validChar++;
             }
 
-            while (uniqueChar > count) {
+            while (uniqueChar > N) {
                 char delete = s.charAt(slow);
                 if (freq[delete - 'a'] == k) {
                     validChar--;
@@ -32,8 +32,8 @@ class Solution {
                 }
                 slow++;
             }
-            
-            if (validChar == count) {
+
+            if (validChar == N) {
                 length = Math.max(length, fast - slow + 1);
             }
             fast++;
