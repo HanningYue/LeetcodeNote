@@ -1,47 +1,43 @@
-/**
-Map, character and frequency
-Fast and slow pointer,
-While the char frequency is less than k,  */
 class Solution {
     public int longestSubstring(String s, int k) {
-        int len = 0;
+        int result = 0;
         for (int i = 1; i <= 26; i++) {
-            len = Math.max(len, helper(s, k, i));
+            result = Math.max(result, helper(s, k, i));
         }
-        return len;
+        return result;
     }
     private int helper(String s, int k, int count) {
-        int result = 0, slow = 0, fast = 0;
-        int[] windowSize = new int[26];
-        int uniqueCount = 0, validCount = 0;
+        int validChar = 0, uniqueChar = 0;
+        int slow = 0, fast = 0, length = 0;
+        int[] freq = new int[26];
 
         while (fast < s.length()) {
-            char c = s.charAt(fast);
-            if (windowSize[c - 'a'] == 0) {
-                uniqueCount++;
+            char current = s.charAt(fast);
+            if (freq[current - 'a'] == 0) {
+                uniqueChar++;
             }
-            windowSize[c - 'a']++;
-            if (windowSize[c - 'a'] == k) {
-                validCount++;
+            freq[current - 'a']++;
+            if (freq[current - 'a'] == k) {
+                validChar++;
             }
-            fast++;
 
-            while (uniqueCount > count) {
+            while (uniqueChar > count) {
                 char delete = s.charAt(slow);
-                if (windowSize[delete - 'a'] == k) {
-                    validCount--;
+                if (freq[delete - 'a'] == k) {
+                    validChar--;
                 }
-                windowSize[delete - 'a']--;
-                if (windowSize[delete - 'a'] == 0) {
-                    uniqueCount--;
+                freq[delete - 'a']--;
+                if (freq[delete - 'a'] == 0) {
+                    uniqueChar--;
                 }
                 slow++;
             }
-
-            if (validCount == count) {
-                result = Math.max(result, fast - slow);
+            
+            if (validChar == count) {
+                length = Math.max(length, fast - slow + 1);
             }
+            fast++;
         }
-        return result;
+        return length;
     }
 }
