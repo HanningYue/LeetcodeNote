@@ -1,18 +1,17 @@
-class Solution {
-    public String removeDuplicates(String s) {
+public class Solution {
+    public String removeDuplicates(String str) {
         Stack<Character> stack = new Stack<>();
-        for (char c : s.toCharArray()) {
-            if (!stack.isEmpty() && c == stack.peek()) {
+        for (char c : str.toCharArray()) {
+            if (!stack.isEmpty() && stack.peek() == c) {
                 stack.pop();
             } else {
                 stack.push(c);
             }
         }
         StringBuilder sb = new StringBuilder();
-        while (!stack.isEmpty()) {
-            sb.append(stack.pop());
+        for (char c : stack) {
+            sb.append(c);
         }
-        sb.reverse();
         return sb.toString();
     }
 }
