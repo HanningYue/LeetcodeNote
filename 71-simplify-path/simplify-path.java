@@ -6,14 +6,14 @@ class Solution {
                 if (!stack.isEmpty()) {
                     stack.pop();
                 }
-            } else if (!p.equals(".") && (!p.isEmpty())) {
+            } else if (!p.isEmpty() && !p.equals(".")) {
                 stack.push(p);
             }
         }
         StringBuilder sb = new StringBuilder();
-        for (String dir : stack) {
+        for (String s : stack) {
             sb.append("/");
-            sb.append(dir);
+            sb.append(s);
         }
         return sb.length() == 0 ? "/" : sb.toString();
     }
