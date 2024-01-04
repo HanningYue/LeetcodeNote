@@ -10,21 +10,24 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        if (left == 1) {
-            return helper(head, right);
+        if (head == null) {
+            return null;
         }
-        head.next = reverseBetween(head.next, left - 1, right - 1);
-        return head;
-    }
-    ListNode successor = null;
-    private ListNode helper(ListNode head, int n) {
-        if (n == 1) {
-            successor = head.next;
-            return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode previous = dummy;
+
+        for (int i = 0; i < left - 1; i++) {
+            previous = previous.next;
         }
-        ListNode last = helper(head.next, n - 1);
-        head.next.next = head;
-        head.next = successor;
-        return last;
+        ListNode start = previous.next;
+        ListNode then = start.next;
+        for (int i = 0; i < right - left; i++) {
+            start.next = then.next;
+            then.next = previous.next;
+            previous.next = then;
+            then = start.next;
+        }
+        return dummy.next;
     }
 }
