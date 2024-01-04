@@ -14,25 +14,29 @@
  * }
  */
 class Solution {
-    class Type {
-        int height;
-        boolean isBalanced;
-        public Type(int height, boolean isBalanced) {
-            this.height = height;
-            this.isBalanced = isBalanced;
-        }
-    }
     public boolean isBalanced(TreeNode root) {
-        return dfs(root).isBalanced;
-    }
-    private Type dfs(TreeNode root) {
-        if (root == null) {
-            return new Type(0, true);
+        if (depth(root) == -1) {
+            return false;
         }
-        Type left = dfs(root.left);
-        Type right = dfs(root.right);
-        int height = Math.max(left.height, right.height) + 1;
-        boolean isBalanced = left.isBalanced && right.isBalanced && (Math.abs(left.height - right.height) <= 1);
-        return new Type(height, isBalanced);
+        return true;
+    }
+    private int depth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+
+        int left = depth(root.left);
+        if (left == -1) {
+            return -1;
+        }
+        int right = depth(root.right);
+        if (right == -1) {
+            return -1;
+        }
+
+        if (Math.abs(left - right) > 1) {
+            return -1;
+        }
+        return Math.max(left, right) + 1;
     }
 }
