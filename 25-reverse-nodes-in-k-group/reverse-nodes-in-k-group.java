@@ -1,20 +1,24 @@
 /**
-快慢指针 每次先让快指针走到k个要反转的地方
-再写一个iterative翻转range[left，right]的helper reverse方程
-翻转，连接listnode和recursive call主方程
-*/
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null) return null;
-        ListNode slow = head, fast = head;
+        ListNode kth = head, current = head;
         for (int i = 0; i < k; i++) {
-            if (fast == null) {
+            if (kth == null) {
                 return head;
             }
-            fast = fast.next;
+            kth = kth.next;
         }
-        ListNode newHead = reverse(slow, fast);
-        head.next = reverseKGroup(fast, k);
+        ListNode newHead = reverse(current, kth);
+        current.next = reverseKGroup(kth, k);
         return newHead;
     }
     private ListNode reverse(ListNode left, ListNode right) {
