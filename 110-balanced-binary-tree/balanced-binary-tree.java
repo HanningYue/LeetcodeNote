@@ -1,10 +1,18 @@
 /**
-1. Multiple return value, we need to return
-    - whether the tree is balanced (boolean)
-    - the height of the tree (int) 
-2. Create a seperate class
-3. Perform a bottom-up dfs, with ReturnType as return
-*/
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
     class Type {
         int height;
@@ -21,10 +29,8 @@ class Solution {
         if (root == null) {
             return new Type(0, true);
         }
-
         Type left = dfs(root.left);
         Type right = dfs(root.right);
-        
         int height = Math.max(left.height, right.height) + 1;
         boolean isBalanced = left.isBalanced && right.isBalanced && (Math.abs(left.height - right.height) <= 1);
         return new Type(height, isBalanced);
