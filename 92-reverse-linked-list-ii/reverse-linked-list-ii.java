@@ -10,13 +10,9 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        if (head == null) {
-            return null;
-        }
-        ListNode dummy = new ListNode(0);
+        ListNode dummy = new ListNode(-1);
         dummy.next = head;
         ListNode previous = dummy;
-
         for (int i = 0; i < left - 1; i++) {
             previous = previous.next;
         }
