@@ -10,19 +10,20 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode left = head, right = head;
+        ListNode current = head, kth = head;
         for (int i = 0; i < k; i++) {
-            if (right == null) {
+            if (kth == null) {
                 return head;
             }
-            right = right.next;
+            kth = kth.next;
         }
-        ListNode newHead = reverse(left, right);
-        left.next = reverseKGroup(right, k);
-        return newHead;
+        ListNode reverseHead = reverse(current, kth);
+        head.next = reverseKGroup(kth, k);
+        return reverseHead;
     }
     private ListNode reverse(ListNode start, ListNode end) {
-        ListNode prev = null, current = start;
+        ListNode current = start;
+        ListNode prev = null;
         while (current != end) {
             ListNode next = current.next;
             current.next = prev;
