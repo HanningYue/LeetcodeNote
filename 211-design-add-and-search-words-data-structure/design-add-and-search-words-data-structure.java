@@ -8,8 +8,7 @@ class TrieNode {
     }
 }
 class WordDictionary {
-    TrieNode root;
-
+    private TrieNode root;
     public WordDictionary() {
         root = new TrieNode();
     }
@@ -38,7 +37,8 @@ class WordDictionary {
                     }
                 }
                 return false;
-            } else {
+            }
+            else {
                 if (node.children[c - 'a'] == null) {
                     return false;
                 }
