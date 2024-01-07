@@ -1,73 +1,57 @@
+class TrieNode {
+    TrieNode[] children = new TrieNode[26];
+    boolean isEnd = false;
+    public TrieNode() {
+        for (int i = 0; i < 26; i++) {
+            children[i] = null;
+        }
+    }
+}
+class WordDictionary {
+    TrieNode root;
+
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+    
+    public void addWord(String word) {
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            if (node.children[c - 'a'] == null) {
+                node.children[c - 'a'] = new TrieNode();
+            }
+            node = node.children[c - 'a'];
+        }
+        node.isEnd = true;
+    }
+    
+    public boolean search(String word) {
+        return searchHelper(word, root);
+    }
+    private boolean searchHelper(String word, TrieNode node) {
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (c == '.') {
+                for (TrieNode child : node.children) {
+                    if (child != null && searchHelper(word.substring(i + 1), child)) {
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                if (node.children[c - 'a'] == null) {
+                    return false;
+                }
+                node = node.children[c - 'a'];
+            }
+        }
+        return node.isEnd;
+    }
+}
+
 /**
  * Your WordDictionary object will be instantiated and called as such:
  * WordDictionary obj = new WordDictionary();
  * obj.addWord(word);
  * boolean param_2 = obj.search(word);
  */
-
-class WordDictionary {
-
-    Node root;
-
-    private class Node {
-
-        char value;
-        boolean isWord;
-        Node[] children;
-
-        public Node(char value) {
-            this.value = value;
-            isWord = false;
-            children = new Node[26];
-        }
-    }
-
-    public WordDictionary() {
-        root = new Node('\0');
-    }
-
-    public void addWord(String word) {
-        Node curr = root;
-
-        for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-
-            if (curr.children[ch - 'a'] == null) {
-                curr.children[ch - 'a'] = new Node(ch);
-            }
-
-            curr = curr.children[ch - 'a'];
-        }
-
-        curr.isWord = true;
-    }
-
-    // TC O(m^2)
-    public boolean search(String word) {
-        return searchHelper(word, root, 0);
-    }
-
-    private boolean searchHelper(String word, Node curr, int index) {
-        for (int i = index; i < word.length(); i++) {
-            char ch = word.charAt(i);
-
-            if (ch == '.') {
-                for (Node temp : curr.children) {
-                    if (temp != null && searchHelper(word, temp, i + 1)) {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-
-            if (curr.children[ch - 'a'] == null) {
-                return false;
-            }
-
-            curr = curr.children[ch - 'a'];
-        }
-
-        return curr.isWord;
-    }
-}
