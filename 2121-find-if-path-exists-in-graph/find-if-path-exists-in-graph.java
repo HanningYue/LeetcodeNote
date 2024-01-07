@@ -11,11 +11,10 @@ class Solution {
             graph.get(from).add(to);
             graph.get(to).add(from);
         }
-        return dfs(graph, visited, source, destination);
+        return dfs(graph, source, destination, visited);
     }
-
-    private boolean dfs(List<List<Integer>> graph, boolean[] visited, 
-    int vertex, int target) {
+    private boolean dfs(List<List<Integer>> graph, int vertex, int target, 
+    boolean[] visited) {
         if (vertex == target) {
             return true;
         }
@@ -24,7 +23,7 @@ class Solution {
         }
         visited[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
-            if (dfs(graph, visited, neighbor, target)) {
+            if (dfs(graph, neighbor, target, visited)) {
                 return true;
             }
         }
