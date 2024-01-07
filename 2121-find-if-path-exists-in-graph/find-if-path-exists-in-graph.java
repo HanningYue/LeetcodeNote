@@ -16,9 +16,12 @@ class Solution {
         if (vertex == target) {
             return true;
         }
+        if (visited[vertex]) {
+            return false;
+        }
         visited[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
-            if (!visited[neighbor] && dfs(graph, neighbor, target)) {
+            if (dfs(graph, neighbor, target)) {
                 return true;
             }
         }
