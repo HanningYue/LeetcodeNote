@@ -17,7 +17,7 @@ class Solution {
         int distance = Math.abs(minIndex - maxIndex);
         int fromLeft = Math.max(minIndex, maxIndex) + 1;
         int fromRight = n - Math.min(minIndex, maxIndex);
-        int fromBothSide = n - Math.max(minIndex, maxIndex) + Math.min(minIndex, maxIndex) + 1;
+        int fromBothSide = n - distance + 1;
         return Math.min(fromBothSide, Math.min(fromLeft, fromRight));
     }
 }
