@@ -1,32 +1,32 @@
 class Solution {
+    private boolean[] visiting;
+    private boolean[] visited;
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        boolean[] visiting = new boolean[numCourses];
-        boolean[] visited = new boolean[numCourses];
-        List<Integer>[] graph = new LinkedList[numCourses];
+        visiting = new boolean[numCourses];
+        visited = new boolean[numCourses];
+        List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < numCourses; i++) {
-            graph[i] = new LinkedList<>();
-        }       
+            graph.add(new ArrayList<>());
+        }
         for (int[] pre : prerequisites) {
             int from = pre[1];
             int to = pre[0];
-            graph[from].add(to);
+            graph.get(from).add(to);
         }
-
         List<Integer> order = new ArrayList<>();
+        int[] result = new int[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            if (!traverse(i, visiting, visited, order, graph)) {
+            if (!dfs(graph, i, order)) {
                 return new int[]{};
             }
         }
-        int[] result = new int[numCourses];
         Collections.reverse(order);
         for (int i = 0; i < order.size(); i++) {
             result[i] = order.get(i);
         }
         return result;
     }
-    private boolean traverse(int vertex, boolean[] visiting, boolean[] visited, 
-    List<Integer> order, List<Integer>[] graph) {
+    private boolean dfs(List<List<Integer>> graph, int vertex, List<Integer> order) {
         if (visiting[vertex]) {
             return false;
         }
@@ -34,8 +34,8 @@ class Solution {
             return true;
         }
         visiting[vertex] = true;
-        for (int neighbor : graph[vertex]) {
-            if (!traverse(neighbor, visiting, visited, order, graph)) {
+        for (int neighbor : graph.get(vertex)) {
+            if (!dfs(graph, neighbor, order)) {
                 return false;
             }
         }
