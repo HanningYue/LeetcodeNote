@@ -1,39 +1,35 @@
-/**
-Directional Graph, build graph first, then check for cycle, if no cycle, return true. Otherwise, false
-Since directional, build single directional graph
-无向图可以当作双向图来build
-*/
 class Solution {
+    private boolean[] visited;
+    private boolean[] visiting;
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        boolean[] visiting = new boolean[numCourses];
-        boolean[] visited = new boolean[numCourses];
-        List<Integer>[] graph = new LinkedList[numCourses];
+        List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < numCourses; i++) {
-            graph[i] = new LinkedList<>();
+            graph.add(new ArrayList<>());
         }
+        visited = new boolean[numCourses];
+        visiting = new boolean[numCourses];
         for (int[] pre : prerequisites) {
-            int to = pre[0];
             int from = pre[1];
-            graph[from].add(to);
+            int to = pre[0];
+            graph.get(from).add(to);
         }
         for (int i = 0; i < numCourses; i++) {
-            if (!traverse(i, visiting, visited, graph)) {
+            if (!dfs(graph, i)) {
                 return false;
             }
         }
         return true;
     }
-    private boolean traverse(int vertex, boolean[] visiting, boolean[] visited,
-    List<Integer>[] graph) {
-        if (visiting[vertex]) {
-            return false;
-        }
+    private boolean dfs(List<List<Integer>> graph, int vertex) {
         if (visited[vertex]) {
             return true;
         }
+        if (visiting[vertex]) {
+            return false;
+        }
         visiting[vertex] = true;
-        for (int neighbor : graph[vertex]) {
-            if (!traverse(neighbor, visiting, visited, graph)) {
+        for (int neighbor : graph.get(vertex)) {
+            if (!dfs(graph, neighbor)) {
                 return false;
             }
         }
