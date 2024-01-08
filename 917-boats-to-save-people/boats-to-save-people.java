@@ -5,10 +5,13 @@ class Solution {
         int boat = 0;
         while (left < right) {
             if (people[left] + people[right] <= limit) {
+                boat++;
                 left++;
+                right--;
+            } else {
+                right--;
+                boat++;
             }
-            right--;
-            boat++;
         }
         if (left == right) {
             boat++;
