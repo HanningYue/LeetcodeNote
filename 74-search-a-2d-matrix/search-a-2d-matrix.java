@@ -16,7 +16,8 @@ class Solution {
     }
     private int oneDToTwoD (int[][] matrix, int index) {
         int m = matrix.length, n = matrix[0].length;
-        int row = index / n, col = index % n;
-        return matrix[row][col];
+        int twoDrow = index / n;
+        int twoDcol = index % n;
+        return matrix[twoDrow][twoDcol];
     }
 }
