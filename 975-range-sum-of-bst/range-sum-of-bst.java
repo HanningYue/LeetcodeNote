@@ -19,7 +19,6 @@ class Solution {
         if (root == null) {
             return 0;
         }
-        
         if (root.val >= low && root.val <= high) {
             result += root.val;
             rangeSumBST(root.right, low, high);
