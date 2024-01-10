@@ -5,19 +5,19 @@ class Solution {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        int result = 0;
+        int finalLength = 0;
         boolean odd = false;
-        for (int frequency : map.values()) {
-            if (frequency % 2 == 0) {
-                result += frequency;
+        for (int value : map.values()) {
+            if (value % 2 == 0) {
+                finalLength += value;
             } else {
-                result += frequency - 1;
+                finalLength += value - 1;
                 odd = true;
             }
         }
         if (odd) {
-            result += 1;
+            finalLength += 1;
         }
-        return result;
+        return finalLength;
     }
 }
