@@ -22,9 +22,9 @@ class Solution {
         int mid = low + (high - low) / 2;
         ListNode left = divide(lists, low, mid);
         ListNode right = divide(lists, mid + 1, high);
-        return merge(left, right);
+        return conquer(left, right);
     }
-    private ListNode merge(ListNode n1, ListNode n2) {
+    private ListNode conquer(ListNode n1, ListNode n2) {
         ListNode dummy = new ListNode(-1);
         ListNode current = dummy;
         while (n1 != null && n2 != null) {
