@@ -17,25 +17,13 @@ class Solution {
             previous = previous.next;
         }
         ListNode start = previous.next;
-        ListNode end = start;
-        for (int i = left; i < right; i++) {
-            end = end.next;
+        ListNode then = previous.next.next;
+        for (int i = 0; i < right - left; i++) {
+            start.next = then.next;
+            then.next = previous.next;
+            previous.next = then;
+            then = start.next;
         }
-        ListNode startOfLatterHalf = end.next;
-        end.next = null;
-        previous.next = reverse(start);
-        start.next = startOfLatterHalf;
         return dummy.next;
-    }
-    private ListNode reverse(ListNode head) {
-        ListNode previous = null;
-        ListNode current = head;
-        while (current != null) {
-            ListNode next = current.next;
-            current.next = previous;
-            previous = current;
-            current = next;
-        }
-        return previous;
     }
 }
