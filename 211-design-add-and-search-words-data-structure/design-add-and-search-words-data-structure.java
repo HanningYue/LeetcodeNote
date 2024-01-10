@@ -8,7 +8,7 @@ class TrieNode {
     }
 }
 class WordDictionary {
-    private TrieNode root;
+    TrieNode root;
     public WordDictionary() {
         root = new TrieNode();
     }
@@ -27,25 +27,25 @@ class WordDictionary {
     public boolean search(String word) {
         return searchHelper(word, root);
     }
-    private boolean searchHelper(String word, TrieNode node) {
+    private boolean searchHelper(String word, TrieNode root) {
+        TrieNode node = root;
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             if (c == '.') {
-                for (TrieNode child : node.children) {
+                for (TrieNode child : root.children) {
                     if (child != null && searchHelper(word.substring(i + 1), child)) {
                         return true;
                     }
                 }
                 return false;
-            }
-            else {
-                if (node.children[c - 'a'] == null) {
+            } else {
+                if (root.children[c - 'a'] == null) {
                     return false;
                 }
-                node = node.children[c - 'a'];
+                root = root.children[c - 'a'];
             }
         }
-        return node.isEnd;
+        return root.isEnd;
     }
 }
 
