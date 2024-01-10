@@ -10,9 +10,6 @@ class Solution {
         int mid = left + (right - left) / 2;
         int leftHalf = divide(nums, left, mid);
         int rightHalf = divide(nums, mid + 1, right);
-        if (leftHalf == rightHalf) {
-            return leftHalf;
-        }
         int leftCount = conquer(nums, leftHalf, left, right);
         int rightCount = conquer(nums, rightHalf, left, right);
         return leftCount > rightCount ? leftHalf : rightHalf;
