@@ -1,6 +1,6 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        return divide(nums, 0, nums.length - 1);        
+        return divide(nums, 0, nums.length - 1);
     }
     private int divide(int[] nums, int left, int right) {
         if (left == right) {
@@ -11,7 +11,6 @@ class Solution {
         int rightHalf = divide(nums, mid + 1, right);
         int leftCount = conquer(nums, leftHalf, left, right);
         int rightCount = conquer(nums, rightHalf, left, right);
-
         return leftCount > rightCount ? leftHalf : rightHalf;
     }
     private int conquer(int[] nums, int target, int left, int right) {
