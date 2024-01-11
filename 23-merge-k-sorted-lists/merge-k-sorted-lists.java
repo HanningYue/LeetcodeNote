@@ -20,9 +20,10 @@ class Solution {
             return lists[left];
         }
         int mid = left + (right - left) / 2;
-        ListNode leftHalf = divide(lists, left, mid);
-        ListNode rightHalf = divide(lists, mid + 1, right);
-        return conquer(leftHalf, rightHalf);
+        ListNode leftPart = divide(lists, left, mid);
+        ListNode rightPart = divide(lists, mid + 1, right);
+        ListNode mergedList = conquer(leftPart, rightPart);
+        return mergedList;
     }
     private ListNode conquer(ListNode p1, ListNode p2) {
         ListNode dummy = new ListNode(-1);
