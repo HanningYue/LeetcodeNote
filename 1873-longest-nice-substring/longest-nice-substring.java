@@ -1,34 +1,21 @@
 class Solution {
     public String longestNiceSubstring(String s) {
-        if (s == null || s.length() <= 1) {
+        if (s.length() < 2) {
             return "";
         }
-        if (isNice(s)) {
-            return s;
+        Set<Character> set = new HashSet<>();
+        for (char c : s.toCharArray()) {
+            set.add(c);
         }
-        String longest = "";
         for (int i = 0; i < s.length(); i++) {
-            for (int j = i + 1; j <= s.length(); j++) {
-                String substring = s.substring(i, j);
-                if (isNice(substring) && substring.length() > longest.length()) {
-                    longest = substring;
-                }
+            char c = s.charAt(i);
+            if (set.contains(Character.toUpperCase(c)) && set.contains(Character.toLowerCase(c))) {
+                continue;
             }
+            String left = longestNiceSubstring(s.substring(0, i));
+            String right = longestNiceSubstring(s.substring(i + 1));
+            return left.length() >= right.length() ? left : right;
         }
-        return longest;
-    }
-
-    private boolean isNice(String s) {
-        int[] charMap = new int[128];
-        for (char c : s.toCharArray()) {
-            charMap[c]++;
-        }
-        for (char c : s.toCharArray()) {
-            if (Character.isLowerCase(c) && charMap[Character.toUpperCase(c)] == 0
-                || Character.isUpperCase(c) && charMap[Character.toLowerCase(c)] == 0) {
-                return false;
-            }
-        }
-        return true;
+        return s;
     }
 }
