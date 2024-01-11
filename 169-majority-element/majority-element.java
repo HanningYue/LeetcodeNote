@@ -1,16 +1,26 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        int target = 0, count = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if (count == 0) {
-                target = nums[i];
-                count = 1;
-            } else if (nums[i] == target) {
+        return divide(nums, 0, nums.length - 1);        
+    }
+    private int divide(int[] nums, int left, int right) {
+        if (left == right) {
+            return nums[left];
+        }
+        int mid = left + (right - left) / 2;
+        int leftHalf = divide(nums, left, mid);
+        int rightHalf = divide(nums, mid + 1, right);
+        int leftCount = conquer(nums, leftHalf, left, right);
+        int rightCount = conquer(nums, rightHalf, left, right);
+
+        return leftCount > rightCount ? leftHalf : rightHalf;
+    }
+    private int conquer(int[] nums, int target, int left, int right) {
+        int count = 0;
+        for (int i = left; i <= right; i++) {
+            if (nums[i] == target) {
                 count++;
-            } else {
-                count--;
             }
         }
-        return target;
+        return count;
     }
 }
