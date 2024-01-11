@@ -12,32 +12,32 @@ class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         return divide(lists, 0, lists.length - 1);
     }
-    private ListNode divide(ListNode[] lists, int low, int high) {
-        if (low > high) {
+    private ListNode divide(ListNode[] lists, int left, int right) {
+        if (left > right) {
             return null;
         }
-        if (low == high) {
-            return lists[high];
+        if (left == right) {
+            return lists[left];
         }
-        int mid = low + (high - low) / 2;
-        ListNode left = divide(lists, low, mid);
-        ListNode right = divide(lists, mid + 1, high);
-        return conquer(left, right);
+        int mid = left + (right - left) / 2;
+        ListNode leftHalf = divide(lists, left, mid);
+        ListNode rightHalf = divide(lists, mid + 1, right);
+        return conquer(leftHalf, rightHalf);
     }
-    private ListNode conquer(ListNode n1, ListNode n2) {
+    private ListNode conquer(ListNode p1, ListNode p2) {
         ListNode dummy = new ListNode(-1);
         ListNode current = dummy;
-        while (n1 != null && n2 != null) {
-            if (n1.val > n2.val) {
-                current.next = n2;
-                n2 = n2.next;
+        while (p1 != null && p2 != null) {
+            if (p1.val > p2.val) {
+                current.next = p2;
+                p2 = p2.next;
             } else {
-                current.next = n1;
-                n1 = n1.next;
+                current.next = p1;
+                p1 = p1.next;
             }
             current = current.next;
         }
-        current.next = (n1 == null) ? n2 : n1;
+        current.next = p1 == null ? p2 : p1;
         return dummy.next;
     }
 }
