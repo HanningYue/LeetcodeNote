@@ -25,27 +25,26 @@ class WordDictionary {
     }
     
     public boolean search(String word) {
-        return searchHelper(word, root);
+        return helper(word, root);
     }
-    private boolean searchHelper(String word, TrieNode root) {
-        TrieNode node = root;
+    public boolean helper(String word, TrieNode node) {
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             if (c == '.') {
-                for (TrieNode child : root.children) {
-                    if (child != null && searchHelper(word.substring(i + 1), child)) {
+                for (TrieNode child : node.children) {
+                    if (child != null && helper(word.substring(i + 1), child)) {
                         return true;
                     }
                 }
                 return false;
             } else {
-                if (root.children[c - 'a'] == null) {
+                if (node.children[c - 'a'] == null) {
                     return false;
                 }
-                root = root.children[c - 'a'];
+                node = node.children[c - 'a'];
             }
         }
-        return root.isEnd;
+        return node.isEnd;
     }
 }
 
