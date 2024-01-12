@@ -5,7 +5,7 @@ class Solution {
             alphabet[c - 'a'] = true;
         }
         for (boolean value : alphabet) {
-            if (!value) {
+            if (value == false) {
                 return false;
             }
         }
