@@ -1,34 +1,18 @@
 class Solution {
     public int[] beautifulArray(int n) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        
-        ans.add(1);
-        
-        while (ans.size() < n) {
-            ArrayList<Integer> temp = new ArrayList<>();
-            // odd
-            for (int i = 0; i < ans.size(); i++) {
-                 if (ans.get(i) * 2 - 1 <= n) {
-                     temp.add(ans.get(i) * 2 - 1);
-                 }
-            } 
-               
-            // even
-            for (int i = 0; i < ans.size(); i++) {
-                 if (ans.get(i) * 2 <= n) {
-                     temp.add(ans.get(i) * 2);
-                 } 
-            }
-            ans = temp;
+        if (n == 1) {
+            return new int[]{1};
         }
-        
-        int len = ans.size();
-        int []result = new int[len];
-        
-        for (int i = 0; i < len; i++) {
-            result[i] = ans.get(i);
+        int[] odd = beautifulArray((n + 1) / 2);
+        int[] even = beautifulArray(n / 2);
+        int[] result = new int[n];
+
+        for (int i = 0; i < odd.length; i++) {
+            result[i] = 2 * odd[i] - 1;
         }
-        
+        for (int i = 0; i < even.length; i++) {
+            result[i + odd.length] = 2 * even[i];
+        }
         return result;
     }
 }
