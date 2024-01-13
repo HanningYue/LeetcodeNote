@@ -7,12 +7,11 @@ class Node {
     }
 }
 class LRUCache {
-    Map<Integer, Node> map;
     Node head, tail;
-    int capacity, count;
+    int count, capacity;
+    Map<Integer, Node> map;
     public LRUCache(int capacity) {
         map = new HashMap<>();
-        this.capacity = capacity;
         head = new Node(0, 0);
         tail = new Node(0, 0);
         head.next = tail;
@@ -20,12 +19,12 @@ class LRUCache {
         tail.prev = head;
         head.prev = null;
         count = 0;
+        this.capacity = capacity;
     }
-    
     public void add(Node node) {
         node.next = head.next;
-        node.prev = head;
         head.next.prev = node;
+        node.prev = head;
         head.next = node;
     }
     public void delete(Node node) {
