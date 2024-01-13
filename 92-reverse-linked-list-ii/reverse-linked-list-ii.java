@@ -10,10 +10,11 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        if (head == null || head.next == null) {
+        if (head.next == null) {
             return head;
         }
-        ListNode dummy = new ListNode(-1);
+
+        ListNode dummy = new ListNode(0);
         dummy.next = head;
         ListNode previous = dummy;
         for (int i = 0; i < left - 1; i++) {
@@ -24,11 +25,10 @@ class Solution {
         for (int i = 0; i < right - left; i++) {
             end = end.next;
         }
-
-        ListNode secondHalfStart = end.next;
+        ListNode secondHalfHead = end.next;
         end.next = null;
         previous.next = reverse(start);
-        start.next = secondHalfStart;
+        start.next = secondHalfHead;
         return dummy.next;
     }
     private ListNode reverse(ListNode head) {
