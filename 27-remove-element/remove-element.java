@@ -1,16 +1,14 @@
-/**
-快慢指针，遇到val就跳过
-*/
 class Solution {
     public int removeElement(int[] nums, int val) {
-        int slow = 0, fast = 0;
-        while (fast < nums.length) {
-            if (nums[fast] != val) {
-                nums[slow] = nums[fast];
-                slow++;
+        int left = 0;
+        int right = 0;
+        while (right < nums.length) {
+            if (nums[right] != val) {
+                nums[left] = nums[right];
+                left++;
             }
-            fast++;
+            right++;
         }
-        return slow;
+        return left;
     }
 }
