@@ -15,9 +15,6 @@ class Solution {
                     closest = sum;
                 }
                 if (sum < target) {
-                    while (i + 1 < j && nums[i] == nums[i + 1]) {
-                        i++;
-                    }
                     i++;
                 } else if (sum > target) {
                     j--;
