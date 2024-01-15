@@ -3,9 +3,6 @@ class Solution {
         int result = Integer.MAX_VALUE;
         Arrays.sort(nums);
         for (int k = 2; k < nums.length; k++) {
-            if (k + 1 < nums.length && nums[k + 1] == nums[k]) {
-                continue;
-            }
             int i = 0, j = k - 1;
             while (i < j) {
                 int sum = nums[i] + nums[j] + nums[k];
