@@ -1,43 +1,21 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
-        int sskip = 0, tskip = 0;
-        int i = s.length() - 1, j = t.length() - 1;
-
-        while (i >= 0 || j >= 0) {
-            while (i >= 0) {
-                if (s.charAt(i) == '#') {
-                    sskip++;
-                    i--;
-                } else if (sskip > 0) {
-                    sskip--;
-                    i--;
-                } else {
-                    break;
-                }
+        StringBuilder sbOne = new StringBuilder();
+        StringBuilder sbTwo = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (c == '#' && sbOne.length() != 0) {
+                sbOne.deleteCharAt(sbOne.length() - 1);
+            } else if (c != '#') {
+                sbOne.append(c);
             }
-            while (j >= 0) {
-                if (t.charAt(j) == '#') {
-                    tskip++;
-                    j--;
-                } else if (tskip > 0) {
-                    tskip--;
-                    j--;
-                } else {
-                    break;
-                }
-            }
-
-            if (i >= 0 && j >= 0 && s.charAt(i) != t.charAt(j)) {
-                return false;
-            }
-            
-            if ((i >= 0) != (j >= 0)) {
-                return false;
-            }
-
-            i--;
-            j--;
         }
-        return true;
+        for (char c : t.toCharArray()) {
+            if (c == '#' && sbTwo.length() != 0) {
+                sbTwo.deleteCharAt(sbTwo.length() - 1);
+            } else if (c != '#') {
+                sbTwo.append(c);
+            }
+        }
+        return sbOne.toString().equals(sbTwo.toString());
     }
 }
