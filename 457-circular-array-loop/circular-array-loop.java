@@ -1,32 +1,31 @@
 class Solution {
     public boolean circularArrayLoop(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
-            boolean forward = nums[i] >= 0;
-            int slow = i, fast = i;
-
-            do {
-                slow = findNext(nums, forward, slow);
-                fast = findNext(nums, forward, fast);
-                if (fast != -1)
-                    fast = findNext(nums, forward, fast);
-            } while (slow != -1 && fast != -1 && slow != fast);
-
-            if (slow != -1 && slow == fast) 
-                return true;
-        }        
+            if (nums[i] == 0) continue;
+            int slow = i;
+            int fast = findNext(nums, i);
+            while (nums[slow] * nums[fast] > 0) {
+                if (slow == fast) {
+                    if (slow == findNext(nums, slow)) {
+                        break;
+                    }
+                    return true;
+                }
+                if (nums[fast] * nums[findNext(nums, fast)] < 0) {
+                    break;
+                }
+                slow = findNext(nums, slow);
+                fast = findNext(nums, findNext(nums, fast));
+            }
+        }
         return false;
     }
-    private int findNext(int[] nums, boolean forward, int currentIdx) {
-        boolean direction = nums[currentIdx] >= 0;
-        if (direction != forward)
-            return -1;
-
+    private int findNext(int[] nums, int currentIdx) {
         int nextIdx = (currentIdx + nums[currentIdx]) % nums.length;
-        if (nextIdx < 0) 
-            nextIdx += nums.length;
-        if (nextIdx == currentIdx)
-            nextIdx = -1;
-
-        return nextIdx;
+        if (nextIdx >= 0) {
+            return nextIdx;
+        } else {
+            return nextIdx + nums.length;
+        }
     }
 }
