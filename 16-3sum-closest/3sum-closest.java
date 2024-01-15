@@ -1,6 +1,5 @@
 class Solution {
     public int threeSumClosest(int[] nums, int target) {
-        int sum = nums[0] + nums[1] + nums[2];
         int result = Integer.MAX_VALUE;
         Arrays.sort(nums);
         for (int k = 2; k < nums.length; k++) {
@@ -9,7 +8,7 @@ class Solution {
             }
             int i = 0, j = k - 1;
             while (i < j) {
-                sum = nums[i] + nums[j] + nums[k];
+                int sum = nums[i] + nums[j] + nums[k];
                 if (Math.abs(target - sum) < Math.abs(target - result)) {
                     result = sum;
                 }
