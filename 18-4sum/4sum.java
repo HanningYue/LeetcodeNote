@@ -1,40 +1,28 @@
-import java.util.*;
-
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        long longTarget = (long) target;
-        Arrays.sort(nums);
-        return nSumTarget(nums, 4, 0, longTarget);
-    }
-
-    private List<List<Integer>> nSumTarget(int[] nums, int n, int start, long target) {
-        int size = nums.length;
         List<List<Integer>> result = new ArrayList<>();
-        if (n < 2 || size < n) return result;
+        Arrays.sort(nums);
+        for (int l = 0; l < nums.length - 3; l++) {
+            if (l > 0 && nums[l] == nums[l - 1]) continue;
 
-        if (n == 2) {
-            int low = start, high = size - 1;
-            while (low < high) {
-                long sum = (long) nums[low] + (long) nums[high];
-                int left = nums[low], right = nums[high];
-                if (sum < target) {
-                    while (low < high && nums[low] == left) low++;
-                } else if (sum > target) {
-                    while (low < high && nums[high] == right) high--;
-                } else {
-                    result.add(new ArrayList<>(Arrays.asList(left, right)));
-                    while (low < high && nums[low] == left) low++;
-                    while (low < high && nums[high] == right) high--;
+            for (int k = l + 1; k < nums.length - 2; k++) {
+                if (k > l + 1 && nums[k] == nums[k - 1]) continue;
+
+                int i = k + 1, j = nums.length - 1;
+                while (i < j) {
+                    long sum = (long)nums[i] + nums[j] + nums[k] + nums[l];
+                    if (sum == target) {
+                        result.add(Arrays.asList(nums[l], nums[k], nums[i], nums[j]));
+                        while (i < j && nums[i] == nums[i + 1]) i++;
+                        while (i < j && nums[j] == nums[j - 1]) j--;
+                        i++;
+                        j--;
+                    } else if (sum < target) {
+                        i++;
+                    } else {
+                        j--;
+                    }
                 }
-            }
-        } else {
-            for (int i = start; i < size; i++) {
-                List<List<Integer>> sub = nSumTarget(nums, n - 1, i + 1, target - nums[i]);
-                for (List<Integer> arr : sub) {
-                    arr.add(nums[i]);
-                    result.add(arr);
-                }
-                while (i < size - 1 && nums[i] == nums[i + 1]) i++;
             }
         }
         return result;
