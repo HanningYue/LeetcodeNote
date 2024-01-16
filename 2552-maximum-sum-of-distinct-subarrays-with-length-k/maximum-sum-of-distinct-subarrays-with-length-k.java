@@ -4,29 +4,18 @@ class Solution {
         Set<Integer> set = new HashSet<>();
         int slow = 0, fast = 0;
         long runningSum = 0;
-
         while (fast < nums.length) {
-            if (set.add(nums[fast])) {
-                runningSum += nums[fast];
-                fast++;
-            } else if (!set.add(nums[fast])){
-                while (nums[slow] != nums[fast]) {
-                    runningSum -= nums[slow];
-                    set.remove(nums[slow]);
-                    slow++;
-                }
-                slow++;
-                fast++;
-            }
-            
-            while (fast - slow >= k) {
-                if (fast - slow == k) {
-                    result = Math.max(result, runningSum);
-                }
+            while (set.contains(nums[fast]) || (fast - slow + 1 > k) && slow < fast) {
                 runningSum -= nums[slow];
                 set.remove(nums[slow]);
                 slow++;
             }
+            runningSum += nums[fast];
+            set.add(nums[fast]);
+            if (fast - slow + 1 == k) {
+                result = Math.max(result, runningSum);
+            }
+            fast++;
         }
         return result;
     }
