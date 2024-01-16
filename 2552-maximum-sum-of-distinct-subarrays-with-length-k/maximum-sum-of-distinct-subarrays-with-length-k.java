@@ -5,7 +5,7 @@ class Solution {
         int slow = 0, fast = 0;
         long runningSum = 0;
         while (fast < nums.length) {
-            while (set.contains(nums[fast]) || (fast - slow + 1 > k) && slow < fast) {
+            while (set.contains(nums[fast]) || (fast - slow + 1 > k)) {
                 runningSum -= nums[slow];
                 set.remove(nums[slow]);
                 slow++;
