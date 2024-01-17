@@ -9,7 +9,7 @@ class Solution {
             if (num == 1) {
                 oneFreq = map.get(num);
             }
-            while (fast - slow + 1 - oneFreq > k) {
+            if (fast - slow + 1 - oneFreq > k) {
                 num = nums[slow];
                 map.put(num, map.get(num) - 1);
                 slow++;
