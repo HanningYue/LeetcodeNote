@@ -7,7 +7,7 @@ class Solution {
             int right = booking[1] - 1;
             int val = booking[2];
             increment(diff, left, right, val);
-        }
+        }                
         result[0] = diff[0];
         for (int i = 1; i < diff.length; i++) {
             result[i] = result[i - 1] + diff[i];
@@ -16,8 +16,9 @@ class Solution {
     }
     private int[] Diff(int[] nums) {
         int[] diff = new int[nums.length];
-        for (int i = 0; i < nums.length - 1; i++) {
-            diff[i] = nums[i + 1] - nums[i];
+        diff[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            diff[i] = nums[i] - nums[i - 1];
         }
         return diff;
     }
