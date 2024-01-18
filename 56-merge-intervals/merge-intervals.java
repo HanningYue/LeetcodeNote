@@ -5,14 +5,12 @@ class Solution {
         int start = intervals[0][0];
         int end = intervals[0][1];
         for (int i = 0; i < intervals.length; i++) {
-            int currentStart = intervals[i][0];
-            int currentEnd = intervals[i][1];
-            if (currentStart <= end) {
-                end = Math.max(end, currentEnd);
+            if (end >= intervals[i][0]) {
+                end = Math.max(intervals[i][1], end);
             } else {
                 result.add(new int[]{start, end});
-                start = currentStart;
-                end = currentEnd;
+                start = intervals[i][0];
+                end = intervals[i][1];
             }
         }
         result.add(new int[]{start, end});
