@@ -4,10 +4,9 @@ class Solution {
         List<int[]> result = new ArrayList<>();
         int start = intervals[0][0];
         int end = intervals[0][1];
-        for (int i = 1; i < intervals.length; i++) {
-            int[] currentInterval = intervals[i];
-            int currentStart = currentInterval[0];
-            int currentEnd = currentInterval[1];
+        for (int i = 0; i < intervals.length; i++) {
+            int currentStart = intervals[i][0];
+            int currentEnd = intervals[i][1];
             if (currentStart <= end) {
                 end = Math.max(end, currentEnd);
             } else {
