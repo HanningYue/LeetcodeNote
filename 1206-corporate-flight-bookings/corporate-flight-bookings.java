@@ -1,31 +1,21 @@
 class Solution {
     public int[] corpFlightBookings(int[][] bookings, int n) {
         int[] result = new int[n];
-        int[] diff = Diff(new int[n]);
         for (int[] booking : bookings) {
-            int left = booking[0] - 1;
-            int right = booking[1] - 1;
+            int from = booking[0] - 1;
+            int to = booking[1] - 1;
             int val = booking[2];
-            increment(diff, left, right, val);
-        }                
-        result[0] = diff[0];
-        for (int i = 1; i < diff.length; i++) {
-            result[i] = result[i - 1] + diff[i];
+            increase(result, from, to, val);
+        }
+        for (int i = 1; i < result.length; i++) {
+            result[i] += result[i - 1];
         }
         return result;
     }
-    private int[] Diff(int[] nums) {
-        int[] diff = new int[nums.length];
-        diff[0] = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            diff[i] = nums[i] - nums[i - 1];
-        }
-        return diff;
-    }
-    private void increment(int[] diff, int left, int right, int val) {
-        diff[left] += val;
-        if (right + 1 < diff.length) {
-            diff[right + 1] -= val;
+    private void increase(int[] result, int left, int right, int val) {
+        result[left] += val;
+        if (right + 1 < result.length) {
+            result[right + 1] -= val;
         }
     }
 }
