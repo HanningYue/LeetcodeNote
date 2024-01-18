@@ -4,8 +4,8 @@ class Solution {
         int i = 0, j = 0;
         while (i < firstList.length && j < secondList.length) {
             int[] one = firstList[i];
-            int[] two = secondList[j];
             int oneStart = one[0], oneEnd = one[1];
+            int[] two = secondList[j];
             int twoStart = two[0], twoEnd = two[1];
             if (oneEnd >= twoStart && oneStart <= twoEnd) {
                 int start = Math.max(oneStart, twoStart);
