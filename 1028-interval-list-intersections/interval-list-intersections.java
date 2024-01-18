@@ -4,18 +4,19 @@ class Solution {
         int i = 0, j = 0;
         while (i < firstList.length && j < secondList.length) {
             int[] one = firstList[i];
-            int oneStart = one[0], oneEnd = one[1];
             int[] two = secondList[j];
+            int oneStart = one[0], oneEnd = one[1];
             int twoStart = two[0], twoEnd = two[1];
-            if (oneEnd >= twoStart && twoEnd >= oneStart) {
-                int newStart = Math.max(oneStart, twoStart);
-                int newEnd = Math.min(oneEnd, twoEnd);
-                result.add(new int[]{newStart, newEnd});
+            if (oneEnd >= twoStart && oneStart <= twoEnd) {
+                int start = Math.max(oneStart, twoStart);
+                int end = Math.min(oneEnd, twoEnd);
+                result.add(new int[]{start, end});
             }
-            if (oneEnd < twoEnd)
+            if (oneEnd < twoEnd) {
                 i++;
-            else 
+            } else {
                 j++;
+            }
         }
         return result.toArray(new int[result.size()][]);
     }
