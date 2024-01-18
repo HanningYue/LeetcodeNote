@@ -1,29 +1,24 @@
 class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
-        Map<String, Integer> wordFrequencyMap = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         for (String word : words)
-            wordFrequencyMap.put(word, wordFrequencyMap.getOrDefault(word, 0) + 1);
+            map.put(word, map.getOrDefault(word, 0) + 1);
 
         List<Integer> resultIndices = new ArrayList<Integer>();
-        int wordsCount = words.length, wordLength = words[0].length();
+        int wordsCount = words.length;
+        int wordLength = words[0].length();
 
         for (int i = 0; i <= s.length() - wordsCount * wordLength; i++) {
-            Map<String, Integer> wordsSeen = new HashMap<>();
+            Map<String, Integer> localMap = new HashMap<>();
             for (int j = 0; j < wordsCount; j++) {
                 int nextWordIndex = i + j * wordLength;
-                // get the next word from the string
                 String word = s.substring(nextWordIndex, nextWordIndex + wordLength);
-                if (!wordFrequencyMap.containsKey(word)) // break if we don't need this word
+                if (!map.containsKey(word))
                     break;
-
-                // add the word to the 'wordsSeen' map
-                wordsSeen.put(word, wordsSeen.getOrDefault(word, 0) + 1);
-
-                // no need to process further if the word has higher frequency than required
-                if (wordsSeen.get(word) > wordFrequencyMap.getOrDefault(word, 0))
+                localMap.put(word, localMap.getOrDefault(word, 0) + 1);
+                if (localMap.get(word) > map.getOrDefault(word, 0))
                     break;
-
-                if (j + 1 == wordsCount) // store index if we have found all the words
+                if (j + 1 == wordsCount)
                     resultIndices.add(i);
             }
         }
