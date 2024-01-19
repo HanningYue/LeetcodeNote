@@ -11,11 +11,9 @@ class Solution {
                 i++;
             }
         }
-        int ans = 0;
         for (int j = 0; j < nums.length; j++) {
             if (nums[j] != j) {
-                ans = j;
-                return ans;
+                return j;
             }
         }
         return nums.length;
