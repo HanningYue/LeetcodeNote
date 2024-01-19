@@ -1,14 +1,14 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        int i = 0;
-        while (i < nums.length) {
-            int supposeIdx = nums[i];
-            if (nums[i] < nums.length && nums[i] != nums[supposeIdx]) {
-                int temp = nums[i];
-                nums[i] = nums[supposeIdx];
+        int currentIdx = 0;
+        while (currentIdx < nums.length) {
+            int supposeIdx = nums[currentIdx];
+            if (supposeIdx < nums.length && nums[currentIdx] != nums[supposeIdx]) {
+                int temp = nums[currentIdx];
+                nums[currentIdx] = nums[supposeIdx];
                 nums[supposeIdx] = temp;
             } else {
-                i++;
+                currentIdx++;
             }
         }
         for (int j = 0; j < nums.length; j++) {
