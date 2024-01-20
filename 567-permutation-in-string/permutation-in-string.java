@@ -4,30 +4,30 @@ class Solution {
         for (char c : s1.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
-        int slow = 0, fast = 0;
+        int slow = 0, fast = 0, match = 0;
         while (fast < s2.length()) {
-            char c = s2.charAt(fast);
-            if (map.containsKey(c)) 
-                map.put(c, map.get(c) - 1);
-            if (allZero(map)) 
-                return true;
-
-            while (fast - slow + 1 == s1.length()) {
-                c = s2.charAt(slow);
-                if (map.containsKey(c))
-                    map.put(c, map.get(c) + 1);
+            char fastChar = s2.charAt(fast);
+            if (map.containsKey(fastChar)) {
+                map.put(fastChar, map.get(fastChar) - 1);
+                if (map.get(fastChar) >= 0) {
+                    match++;
+                }
+            }
+            while (fast - slow + 1 >= s1.length()) {
+                if (match == s1.length()) {
+                    return true;
+                }
+                char slowChar = s2.charAt(slow);
+                if (map.containsKey(slowChar)) {
+                    map.put(slowChar, map.get(slowChar) + 1);
+                    if (map.get(slowChar) > 0) {
+                        match--;
+                    }
+                }
                 slow++;
             }
             fast++;
         }
         return false;
-    }
-    private boolean allZero(Map<Character, Integer> map) {
-        for (int value : map.values()) {
-            if (value != 0) {
-                return false;
-            }
-        }
-        return true;
     }
 }
