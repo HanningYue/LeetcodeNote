@@ -3,16 +3,16 @@ class Solution {
         List<int[]> result = new ArrayList<>();
         int i = 0, j = 0;
         while (i < firstList.length && j < secondList.length) {
-            int[] one = firstList[i];
-            int oneStart = one[0], oneEnd = one[1];
-            int[] two = secondList[j];
-            int twoStart = two[0], twoEnd = two[1];
-            if (oneEnd >= twoStart && oneStart <= twoEnd) {
-                int start = Math.max(oneStart, twoStart);
-                int end = Math.min(oneEnd, twoEnd);
-                result.add(new int[]{start, end});
+            int[] first = firstList[i];
+            int firstStart = first[0], firstEnd = first[1];
+            int[] second = secondList[j];
+            int secondStart = second[0], secondEnd = second[1];
+            if (firstStart <= secondEnd && firstEnd >= secondStart) {
+                int newStart = Math.max(firstStart, secondStart);
+                int newEnd = Math.min(firstEnd, secondEnd);
+                result.add(new int[]{newStart, newEnd});
             }
-            if (oneEnd < twoEnd) {
+            if (firstEnd < secondEnd) {
                 i++;
             } else {
                 j++;
