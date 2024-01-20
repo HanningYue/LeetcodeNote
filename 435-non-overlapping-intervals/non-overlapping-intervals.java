@@ -4,12 +4,11 @@ class Solution {
         int result = 0;
         int[] previous = intervals[0];
         for (int i = 1; i < intervals.length; i++) {
-            int[] current = intervals[i];
-            if (previous[1] > current[0]) {
+            if (previous[1] > intervals[i][0]) {
+                previous[1] = Math.min(previous[1], intervals[i][1]);
                 result++;
-                previous[1] = Math.min(previous[1], current[1]);
             } else {
-                previous = current;
+                previous = intervals[i];
             }
         }
         return result;
