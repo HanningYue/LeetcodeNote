@@ -12,13 +12,13 @@ class Solution {
         }
     }
     private void reverse(int[] nums) {
-        int i = 0, j = nums.length - 1;
-        while (i < j) {
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
-            i++;
-            j--;
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
         }
     }
 }
