@@ -7,10 +7,12 @@ class Solution {
             int to = trip[2] - 1;
             increase(result, from, to, val);
         }
-        int runningCapacity = 0;
-        for (int i = 0; i < result.length; i++) {
-            runningCapacity += result[i];
-            if (runningCapacity > capacity) {
+        if (result[0] > capacity) {
+            return false;
+        }
+        for (int i = 1; i < result.length; i++) {
+            result[i] += result[i - 1];
+            if (result[i] > capacity) {
                 return false;
             }
         }
