@@ -12,10 +12,10 @@ class Solution {
         }
         return result;
     }
-    private void increase(int[] result, int left, int right, int val) {
-        result[left] += val;
-        if (right + 1 < result.length) {
-            result[right + 1] -= val;
+    private void increase(int[] nums, int left, int right, int val) {
+        nums[left] += val;
+        if (right + 1 < nums.length) {
+            nums[right + 1] -= val;
         }
     }
 }
