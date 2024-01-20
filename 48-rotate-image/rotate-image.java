@@ -14,9 +14,9 @@ class Solution {
     private void reverse(int[] nums) {
         int left = 0, right = nums.length - 1;
         while (left < right) {
-            int temp = nums[left];
-            nums[left] = nums[right];
-            nums[right] = temp;
+            int temp = nums[right];
+            nums[right] = nums[left];
+            nums[left] = temp;
             left++;
             right--;
         }
