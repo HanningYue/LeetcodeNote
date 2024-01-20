@@ -4,7 +4,7 @@ class Solution {
         int i = 0;
         while (i < nums.length) {
             int suppose = nums[i] - 1;
-            if (nums[suppose] != nums[i]) {
+            if (nums[suppose] != suppose + 1) {
                 int temp = nums[suppose];
                 nums[suppose] = nums[i];
                 nums[i] = temp;
