@@ -14,10 +14,11 @@ class Solution {
         while (current != null) {
             ListNode check = current;
             int count = 0;
-            for (int i = 0; i < k - 1 && check != null; i++) {
+            for (int i = 0; i < k && check != null; i++) {
                 check = check.next;
+                count++;
             }
-            if (check == null) {
+            if (count < k) {
                 break;
             }
             ListNode previousOfSublist = previous;
