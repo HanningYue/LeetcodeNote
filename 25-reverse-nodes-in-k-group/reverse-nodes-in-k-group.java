@@ -1,38 +1,44 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null || head.next == null) {
+        if (head == null || k <= 1) {
             return head;
         }
-        ListNode nextGroupStart = head;
-        ListNode current = head;
-        for (int i = 0; i < k; i++) {
-            if (nextGroupStart == null) {
-                return head;
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode previousBeforeSublist = dummy, current = head;
+
+        while (current != null) {
+            ListNode lastNodeOfSubList = current;
+            int count = 0;
+            while (current != null && count < k) {
+                current = current.next;
+                count++;
             }
-            nextGroupStart = nextGroupStart.next;
+
+            if (count == k) {
+                // Reverse k nodes
+                ListNode reversedHead = reverse(lastNodeOfSubList, k);
+                previousBeforeSublist.next = reversedHead;
+                previousBeforeSublist = lastNodeOfSubList;
+            } else {
+                // If there are fewer than k nodes left, do not reverse them
+                previousBeforeSublist.next = lastNodeOfSubList;
+                break;
+            }
         }
-        ListNode reverseHead = reverse(current, nextGroupStart);
-        current.next = reverseKGroup(nextGroupStart, k);
-        return reverseHead;
+
+        return dummy.next;
     }
-    private ListNode reverse(ListNode start, ListNode end) {
-        ListNode previous = null;
-        ListNode current = start;
-        while (current != end) {
+
+    private ListNode reverse(ListNode head, int k) {
+        ListNode previous = null, current = head;
+        while (k > 0 && current != null) {
             ListNode next = current.next;
             current.next = previous;
             previous = current;
             current = next;
+            k--;
         }
         return previous;
     }
