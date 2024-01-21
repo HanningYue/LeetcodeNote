@@ -13,8 +13,9 @@ class Solution {
         if (head == null || head.next == null) {
             return head;
         }
-        ListNode first = head, second = head.next;
-        ListNode others = head.next.next;
+        ListNode first = head;
+        ListNode second = first.next;
+        ListNode others = second.next;
         second.next = first;
         first.next = swapPairs(others);
         return second;
