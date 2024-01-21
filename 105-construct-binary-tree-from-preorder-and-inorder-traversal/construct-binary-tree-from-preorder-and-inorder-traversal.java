@@ -1,27 +1,35 @@
 /**
-1. Map {Index value of inorder, index of inorder}, traverse inorder array, fill inOrderMap
-2. construct helper method, recursion call the root.left and root.right
-3. The exit rule if the index inleft is > inright
-4. int mid is the corresponding inorder array root index
-5. Be careful with the boundary while writing the recursion, the side with root node index*/
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> inMap = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
-            inMap.put(inorder[i], i);
+            map.put(inorder[i], i);
         }
-        return dfs(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, inMap);
+        return dfs(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
     }
-    private TreeNode dfs(int[] preorder, int preleft, int preright, int[] inorder, int inleft, int inright, 
-    Map<Integer, Integer> inMap)
-    {
+    private TreeNode dfs(int[] preorder, int preleft, int preright, 
+    int[] inorder, int inleft, int inright, Map<Integer, Integer> map) {
         if (preleft > preright) {
             return null;
         }
-        TreeNode root = new TreeNode(preorder[preleft]);
-        int mid = inMap.get(root.val);
-        root.left = dfs(preorder, preleft + 1, preleft + mid - inleft, inorder, inleft, mid - 1, inMap);
-        root.right = dfs(preorder, preleft + mid - inleft + 1, preright, inorder, mid + 1, inright, inMap);
-        return root;
+        TreeNode newHead = new TreeNode(preorder[preleft]);
+        int mid = map.get(newHead.val);
+        newHead.left = dfs(preorder, preleft + 1, preleft + mid - inleft, inorder, inleft, mid - 1, map);
+        newHead.right = dfs(preorder, preleft + mid - inleft + 1, preright, inorder, mid + 1, inright, map);
+        return newHead;
     }
 }
