@@ -11,7 +11,7 @@
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
         ListNode current = head, previous = null;
-        for (int i = 0; i < left - 1 && current != null; i++) {
+        for (int i = 0; i < left - 1; i++) {
             previous = current;
             current = current.next;
         }
