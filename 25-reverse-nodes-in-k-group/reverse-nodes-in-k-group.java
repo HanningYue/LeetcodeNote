@@ -13,15 +13,16 @@ class Solution {
         if (head == null || head.next == null) {
             return head;
         }
-        ListNode current = head, kth = head;
+        ListNode nextGroupStart = head;
+        ListNode current = head;
         for (int i = 0; i < k; i++) {
-            if (kth == null) {
+            if (nextGroupStart == null) {
                 return head;
             }
-            kth = kth.next;
+            nextGroupStart = nextGroupStart.next;
         }
-        ListNode reverseHead = reverse(current, kth);
-        current.next = reverseKGroup(kth, k);
+        ListNode reverseHead = reverse(current, nextGroupStart);
+        current.next = reverseKGroup(nextGroupStart, k);
         return reverseHead;
     }
     private ListNode reverse(ListNode start, ListNode end) {
