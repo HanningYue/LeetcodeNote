@@ -14,7 +14,7 @@ class Solution {
 
             ListNode previousOfSublist = previous;
             ListNode endOfSublist = current;
-            for (int i = 0; i < k; i++) {
+            for (int i = 0; i < k && current != null; i++) {
                 ListNode next = current.next;
                 current.next = previous;
                 previous = current;
