@@ -11,14 +11,14 @@
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
         ListNode current = head, previous = null;
-        for (int i = 0; i < left - 1; i++) {
+        for (int i = 0; i < left - 1 && current != null; i++) {
             previous = current;
             current = current.next;
         }
 
         ListNode oneBeforeSublist = previous;
         ListNode endOfSublist = current;
-        for (int i = 0; i < right - left + 1; i++) {
+        for (int i = 0; i < right - left + 1 && current != null; i++) {
             ListNode next = current.next;
             current.next = previous;
             previous = current;
