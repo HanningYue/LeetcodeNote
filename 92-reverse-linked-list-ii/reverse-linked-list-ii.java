@@ -10,35 +10,29 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        if (head.next == null) {
+        if (left == right) {
             return head;
         }
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode previous = dummy;
-        for (int i = 0; i < left - 1; i++) {
-            previous = previous.next;
+        ListNode current = head, previous = null;
+        for (int i = 0; current != null && i < left - 1; i++) {
+            previous = current;
+            current = current.next;
         }
-        ListNode start = previous.next;
-        ListNode end = start;
-        for (int i = left; i < right; i++) {
-            end = end.next;
-        }
-        ListNode secondHead = end.next;
-        end.next = null;
-        previous.next = reverse(start);
-        start.next = secondHead;
-        return dummy.next;
-    }
-    private ListNode reverse(ListNode head) {
-        ListNode previous = null;
-        ListNode current = head;
-        while (current != null) {
+        ListNode previousBeforeSublist = previous;
+        ListNode endOfSublist = current;
+        for (int i = 0; current != null && i < right - left + 1; i++) {
             ListNode next = current.next;
             current.next = previous;
             previous = current;
             current = next;
         }
-        return previous;
+
+        if (previousBeforeSublist != null) {
+            previousBeforeSublist.next = previous;
+        } else {
+            head = previous;
+        }
+        endOfSublist.next = current;
+        return head;
     }
 }
