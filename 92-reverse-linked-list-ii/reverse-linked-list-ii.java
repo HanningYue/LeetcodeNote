@@ -21,13 +21,13 @@ class Solution {
         }
         ListNode start = previous.next;
         ListNode end = start;
-        for (int i = 0; i < right - left; i++) {
+        for (int i = left; i < right; i++) {
             end = end.next;
         }
-        ListNode secondHalfHead = end.next;
+        ListNode secondHead = end.next;
         end.next = null;
         previous.next = reverse(start);
-        start.next = secondHalfHead;
+        start.next = secondHead;
         return dummy.next;
     }
     private ListNode reverse(ListNode head) {
