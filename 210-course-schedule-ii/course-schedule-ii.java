@@ -26,11 +26,11 @@ class Solution {
     }
     private boolean dfs(int vertex, Map<Integer, List<Integer>> graph, 
     boolean[] visiting, boolean[] visited, List<Integer> order) {
-        if (visiting[vertex]) {
-            return false;
-        }
         if (visited[vertex]) {
             return true;
+        }
+        if (visiting[vertex]) {
+            return false;
         }
         visiting[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
