@@ -1,35 +1,34 @@
 class Solution {
-    private boolean[] visited;
-    private boolean[] visiting;
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> graph = new ArrayList<>();
+        Map<Integer, List<Integer>> graph = new HashMap<>();
         for (int i = 0; i < numCourses; i++) {
-            graph.add(new ArrayList<>());
+            graph.put(i, new ArrayList<>());
         }
-        visited = new boolean[numCourses];
-        visiting = new boolean[numCourses];
         for (int[] pre : prerequisites) {
             int from = pre[1];
             int to = pre[0];
             graph.get(from).add(to);
         }
+        boolean[] visiting = new boolean[numCourses];
+        boolean[] visited = new boolean[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            if (!dfs(graph, i)) {
+            if (!dfs(graph, i, visiting, visited)) {
                 return false;
             }
         }
         return true;
     }
-    private boolean dfs(List<List<Integer>> graph, int vertex) {
-        if (visited[vertex]) {
-            return true;
-        }
+    private boolean dfs(Map<Integer, List<Integer>> graph, int vertex, boolean[] visiting, 
+    boolean[] visited) {
         if (visiting[vertex]) {
             return false;
         }
+        if (visited[vertex]) {
+            return true;
+        }
         visiting[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
-            if (!dfs(graph, neighbor)) {
+            if (!dfs(graph, neighbor, visiting, visited)) {
                 return false;
             }
         }
