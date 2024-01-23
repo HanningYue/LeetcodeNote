@@ -4,7 +4,6 @@ class Solution {
         for (char c : s.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
-
         int finalLength = 0;
         boolean odd = false;
         for (int value : map.values()) {
