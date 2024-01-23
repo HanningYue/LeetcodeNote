@@ -1,8 +1,8 @@
-public class Solution {
-    public String removeDuplicates(String str) {
+class Solution {
+    public String removeDuplicates(String s) {
         Stack<Character> stack = new Stack<>();
-        for (char c : str.toCharArray()) {
-            if (!stack.isEmpty() && stack.peek() == c) {
+        for (char c : s.toCharArray()) {
+            if (!stack.isEmpty() && c == stack.peek()) {
                 stack.pop();
             } else {
                 stack.push(c);
