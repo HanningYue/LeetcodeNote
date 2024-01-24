@@ -18,11 +18,20 @@ class Solution {
         if (root == null) {
             return 0;
         }
-        int left = minDepth(root.left);
-        int right = minDepth(root.right);
-        if (root.left == null || root.right == null) {
-            return Math.max(left, right) + 1;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int height = 0;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            height++;
+            for (int i = 0; i < size; i++) {
+                TreeNode current = queue.poll();
+                if (current.left != null) queue.offer(current.left);
+                if (current.right != null) queue.offer(current.right);
+
+                if (current.left == null && current.right == null) return height;                
+            }
         }
-        return Math.min(left, right) + 1;
+        return height;
     }
 }
