@@ -19,27 +19,27 @@ class Solution {
         if (root == null) {
             return result;
         }
-        boolean odd = true;
-        Deque<TreeNode> deque = new LinkedList<>();
+        Deque<TreeNode> deque = new ArrayDeque<>();
         deque.offerLast(root);
+        boolean even = true;
         while (!deque.isEmpty()) {
             int size = deque.size();
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < size; i++) {
-                if (odd) {
+                if (even) {
                     TreeNode current = deque.pollLast();
+                    list.add(current.val);
                     if (current.left != null) deque.offerFirst(current.left);
                     if (current.right != null) deque.offerFirst(current.right);
-                    list.add(current.val);
                 }
-                if (!odd) {
+                if (!even) {
                     TreeNode current = deque.pollFirst();
+                    list.add(current.val);
                     if (current.right != null) deque.offerLast(current.right);
                     if (current.left != null) deque.offerLast(current.left);
-                    list.add(current.val);
                 }
             }
-            odd = !odd;
+            even = !even;
             result.add(list);
         }
         return result;
