@@ -1,43 +1,27 @@
-/*
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
-        if (root == null) return result;
-        Deque<TreeNode> deque = new ArrayDeque<>();
-        int level = 0;
-        deque.offerLast(root);
-
-        while (!deque.isEmpty()) {
-            int size = deque.size();
-            List<Integer> currentLevel = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                if (level == 0) {
-                    TreeNode current = deque.pollLast();
-                    currentLevel.add(current.val);
-                    if (current.left != null) deque.offerFirst(current.left);
-                    if (current.right != null) deque.offerFirst(current.right);
-                } else {
-                    TreeNode current = deque.pollFirst();
-                    currentLevel.add(current.val);
-                    if (current.right != null) deque.offerLast(current.right);
-                    if (current.left != null) deque.offerLast(current.left);
-                }
-            }
-            level = 1 - level;
-            result.add(currentLevel);
+        if (root == null) {
+            return result;
         }
-        return result;
-    }
-}
-*/
-class Solution {
-	public List<List<Integer>> zigzagLevelOrder (TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (root == null) return result;
-        Deque<TreeNode> deque = new ArrayDeque<>();
-        deque.offerLast(root);
         int level = 0;
-
+        Deque<TreeNode> deque = new LinkedList<>();
+        deque.offerLast(root);
         while (!deque.isEmpty()) {
             int size = deque.size();
             List<Integer> list = new ArrayList<>();
