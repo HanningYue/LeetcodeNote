@@ -16,14 +16,13 @@
 class Solution {
     public int pathSum(TreeNode root, int targetSum) {
         Map<Long, Integer> map = new HashMap<>();
-        return dfs(root, targetSum, 0l, map);
+        return dfs(root, targetSum, map, 0l);
     }
-    private int dfs(TreeNode root, int targetSum, Long pathSum, Map<Long, Integer> map) {
+    private int dfs(TreeNode root, int targetSum, Map<Long, Integer> map, Long pathSum) {
         if (root == null) {
             return 0;
         }
         int count = 0;
-        
         pathSum += root.val;
         if (pathSum == targetSum) {
             count++;
@@ -31,11 +30,10 @@ class Solution {
         count += map.getOrDefault(pathSum - targetSum, 0);
         map.put(pathSum, map.getOrDefault(pathSum, 0) + 1);
 
-        count += dfs(root.left, targetSum, pathSum, map);
-        count += dfs(root.right, targetSum, pathSum, map);
+        count += dfs(root.left, targetSum, map, pathSum);
+        count += dfs(root.right, targetSum, map, pathSum);
 
         map.put(pathSum, map.getOrDefault(pathSum, 1) - 1);
-
         return count;
     }
 }
