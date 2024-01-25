@@ -19,8 +19,8 @@ class Solution {
             return false;
         }
 
-        if (root.left == null && root.right == null) {
-            return targetSum == root.val;
+        if (root.left == null && root.right == null && targetSum == root.val) {
+            return true;
         }
         boolean left = hasPathSum(root.left, targetSum - root.val);
         boolean right = hasPathSum(root.right, targetSum - root.val);
