@@ -1,8 +1,8 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        Map<Integer, List<Integer>> graph = new HashMap<>();
+        List<List<Integer>> graph = new ArrayList<>();
         for (int i = 0; i < numCourses; i++) {
-            graph.put(i, new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
         for (int[] pre : prerequisites) {
             int from = pre[1];
@@ -24,8 +24,8 @@ class Solution {
         }
         return result;
     }
-    private boolean dfs(int vertex, Map<Integer, List<Integer>> graph, 
-    boolean[] visiting, boolean[] visited, List<Integer> order) {
+    private boolean dfs(int vertex, List<List<Integer>> graph,boolean[] visiting, 
+    boolean[] visited, List<Integer> order) {
         if (visiting[vertex]) {
             return false;
         }
