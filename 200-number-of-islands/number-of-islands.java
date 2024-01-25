@@ -1,32 +1,29 @@
-/** DFS
-1. Create a boolean[] to mark the visited island
-2. Two for loops go over the grid
-3. Call dfs on the i + 1, j + 1, i - 1, j - 1
-*/
 class Solution {
-    public int numIslands(char[][] grid) {
+    public int numIslands(char[][] matrix) {
+        if (matrix.length == 0) {
+            return 0;
+        }
         int count = 0;
-        int m = grid.length, n = grid[0].length;
-        boolean[][] visited = new boolean[m][n];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (!visited[i][j] && grid[i][j] != '0') {
-                    dfs(grid, i, j, visited);
+        boolean[][] visited = new boolean[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (!visited[i][j] && matrix[i][j] == '1') {
                     count++;
+                    dfs(matrix, i, j, visited);
                 }
             }
         }
         return count;
     }
-    private void dfs(char[][] grid, int i, int j, boolean[][] visited) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || visited[i][j] 
-        || grid[i][j] != '1') {
+    private void dfs(char[][] matrix, int row, int col, boolean[][] visited) {
+        if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length 
+        || visited[row][col] || matrix[row][col] != '1') {
             return;
         }
-        visited[i][j] = true;
-        dfs(grid, i + 1, j, visited);
-        dfs(grid, i - 1, j, visited);
-        dfs(grid, i, j + 1, visited);
-        dfs(grid, i, j - 1, visited);
+        visited[row][col] = true;
+        int[][] direction = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        for (int[] dir : direction) {
+            dfs(matrix, row + dir[0], col + dir[1], visited);
+        }
     }
 }
