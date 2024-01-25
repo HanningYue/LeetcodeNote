@@ -1,7 +1,8 @@
 class Solution {
     public List<String> findRepeatedDnaSequences(String s) {
+        List<String> result = new ArrayList<>();
         int[] nums = new int[s.length()];
-        for (int i = 0; i < nums.length; i++) {
+        for (int i = 0; i < s.length(); i++) {
             switch(s.charAt(i)) {
                 case 'A':
                     nums[i] = 0;
@@ -15,27 +16,32 @@ class Solution {
                 case 'T':
                     nums[i] = 3;
                     break;
+
             }
         }
+        int base = 4, length = 10;
+        int highestDigit = (int)Math.pow(base, length - 1);
+        int slow = 0, fast = 0;
+        int rollingHash = 0;
 
         Set<Integer> seen = new HashSet<>();
-        Set<String> set = new HashSet<>();
-        int length = 10, base = 4, highestDigit = (int)Math.pow(base, length - 1);
-        int hashing = 0;
-        int slow = 0, fast = 0;
+        Set<String> stringSet = new HashSet<>();
         while (fast < nums.length) {
-            hashing = base * hashing + nums[fast];
+            rollingHash = rollingHash * base + nums[fast];
             if (fast - slow + 1 == length) {
-                if (seen.contains(hashing)) {
-                    set.add(s.substring(slow, fast + 1));
+                if (seen.contains(rollingHash)) {
+                    stringSet.add(s.substring(slow, fast + 1));
                 } else {
-                    seen.add(hashing);
+                    seen.add(rollingHash);
                 }
-                hashing = hashing - nums[slow] * highestDigit;
+                rollingHash = rollingHash - highestDigit * nums[slow];
                 slow++;
             }
             fast++;
         }
-        return new ArrayList<>(set);
+        for (String sub : stringSet) {
+            result.add(sub);
+        }
+        return result;
     }
 }
