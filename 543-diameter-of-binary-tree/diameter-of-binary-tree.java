@@ -13,23 +13,24 @@
  *     }
  * }
  */
+/**
+周长，如果是最长，那么一定是leaf
+递归，向左向右要最深的高度，加上1（当前层）
+每次递归 更新最大周长
+ */
 class Solution {
-    int diameter = 0;
+    int maxDiameter = Integer.MIN_VALUE;
     public int diameterOfBinaryTree(TreeNode root) {
         maxDepth(root);
-        return diameter;
+        return maxDiameter;
     }
     private int maxDepth(TreeNode root) {
         if (root == null) {
             return 0;
         }
-
         int left = maxDepth(root.left);
         int right = maxDepth(root.right);
-
-        int localDiameter = left + right;
-        diameter = Math.max(diameter, localDiameter);
-
+        maxDiameter = Math.max(maxDiameter, left + right);
         return Math.max(left, right) + 1;
     }
 }
