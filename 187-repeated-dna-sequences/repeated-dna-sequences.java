@@ -5,16 +5,16 @@ class Solution {
         for (int i = 0; i < s.length(); i++) {
             switch(s.charAt(i)) {
                 case 'A':
-                    nums[i] = 00;
+                    nums[i] = 0;
                     break;
                 case 'C':
-                    nums[i] = 11;
+                    nums[i] = 1;
                     break;
                 case 'G':
-                    nums[i] = 22;
+                    nums[i] = 2;
                     break;
                 case 'T':
-                    nums[i] = 33;
+                    nums[i] = 3;
                     break;
 
             }
