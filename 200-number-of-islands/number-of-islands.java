@@ -1,29 +1,33 @@
 class Solution {
     public int numIslands(char[][] matrix) {
-        if (matrix.length == 0) {
-            return 0;
-        }
-        int count = 0;
         boolean[][] visited = new boolean[matrix.length][matrix[0].length];
+        int count = 0;
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (!visited[i][j] && matrix[i][j] == '1') {
                     count++;
-                    dfs(matrix, i, j, visited);
+                    bfs(matrix, i, j, visited);
                 }
             }
         }
         return count;
     }
-    private void dfs(char[][] matrix, int row, int col, boolean[][] visited) {
-        if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length 
-        || visited[row][col] || matrix[row][col] != '1') {
-            return;
-        }
-        visited[row][col] = true;
-        int[][] direction = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-        for (int[] dir : direction) {
-            dfs(matrix, row + dir[0], col + dir[1], visited);
+    private void bfs(char[][] matrix, int row, int col, boolean[][] visited) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{row, col});
+        int[][] direction = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            for (int[] dir : direction) {
+                int newRow = current[0] + dir[0];
+                int newCol = current[1] + dir[1];
+                if (newRow < 0 || newRow >= matrix.length || newCol < 0 || newCol >= matrix[0].length
+                || matrix[newRow][newCol] != '1' || visited[newRow][newCol]) {
+                    continue;
+                }
+                visited[newRow][newCol] = true;
+                queue.offer(new int[]{newRow, newCol});
+            }
         }
     }
 }
