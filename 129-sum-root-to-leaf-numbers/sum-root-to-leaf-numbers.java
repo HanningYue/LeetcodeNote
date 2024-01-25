@@ -16,19 +16,20 @@
  //上一层*10 + 本层，遇到leaf node 返回当前sum
  //dfs 返回最后的sum
 class Solution {
+    int totalSum = 0;
     public int sumNumbers(TreeNode root) {
-        return dfs(root, 0);
+        dfs(root, 0);
+        return totalSum;
     }
-    private int dfs(TreeNode root, int sum) {
+    private void dfs(TreeNode root, int pathSum) {
         if (root == null) {
-            return 0;
+            return;
         }
-        sum = sum * 10 + root.val;
-        int left = dfs(root.left, sum);
-        int right = dfs(root.right, sum);
+        pathSum = pathSum * 10 + root.val;
+        dfs(root.left, pathSum);
+        dfs(root.right, pathSum);
         if (root.left == null && root.right == null) {
-            return sum;
+            totalSum += pathSum;
         }
-        return left + right;
     }
 }
