@@ -15,27 +15,25 @@
  */
 class Solution {
     public int pathSum(TreeNode root, int targetSum) {
-        List<Integer> result = new ArrayList<>();
-        return dfs(root, targetSum, result);
+        Map<Long, Integer> map = new HashMap<>(); //currentPathSum, previousPathSum
+        return dfs(root, targetSum, map, 0l);
     }
-    private int dfs(TreeNode root, int targetSum, List<Integer> result) {
+    private int dfs(TreeNode root, int targetSum, Map<Long, Integer> map, Long prefixSum) {
         if (root == null) {
             return 0;
         }
-        
-        long pathSum = 0;
         int count = 0;
-        result.add(root.val);
-        for (int i = result.size() - 1; i >= 0; i--) {
-            pathSum += result.get(i);
-            if (pathSum == targetSum) {
-                count++;
-            }
+        prefixSum += root.val;
+        if (prefixSum == targetSum) {
+            count++;
         }
+        count += map.getOrDefault(prefixSum - targetSum, 0);
+        map.put(prefixSum, map.getOrDefault(prefixSum, 0) + 1);
 
-        count += dfs(root.left, targetSum, result);
-        count += dfs(root.right, targetSum, result);
-        result.remove(result.size() - 1);
+        count += dfs(root.left, targetSum, map, prefixSum);
+        count += dfs(root.right, targetSum, map,prefixSum);
+        
+        map.put(prefixSum, map.getOrDefault(prefixSum, 1) - 1);
         return count;
     }
 }
