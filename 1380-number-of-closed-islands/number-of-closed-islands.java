@@ -15,7 +15,7 @@ class Solution {
         if (matrix[row][col] == 1 || visited[row][col]) {
             return true;
         }
-        if (onEdge(matrix, row, col)) {
+        if (row == 0 || row == matrix.length - 1 || col == 0 || col == matrix[0].length - 1) {
             return false;
         }
         visited[row][col] = true;
@@ -25,8 +25,5 @@ class Solution {
             isClosed &= dfs(matrix, row + dir[0], col + dir[1], visited);
         }
         return isClosed;
-    }
-    private boolean onEdge(int[][] matrix, int row, int col) {
-        return row == 0 || row == matrix.length - 1 || col == 0 || col == matrix[0].length - 1;
     }
 }
