@@ -1,30 +1,40 @@
 /**
-1. want to check if the subRoot is the same tree in current root
-2. helper method, isSameTree
-3. in current tree, check if subRoot is null OR root, subRoot isSameTree
-    and check case when only one root is
-4. check root.left and root.right
-*/
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if (sameTree(root, subRoot)) {
-            return true;
-        }
         if (root == null || subRoot == null) {
             return false;
         }
-        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
-    }
-    private boolean sameTree(TreeNode root1, TreeNode root2) {
-        if (root1 == null && root2 == null) {
+        if (sameTree(root, subRoot)) {
             return true;
         }
-        if (root1 == null || root2 == null) {
+        boolean leftSubIsSame = isSubtree(root.left, subRoot);
+        boolean rightSubIsSame = isSubtree(root.right, subRoot);
+        return leftSubIsSame || rightSubIsSame;
+    }
+    private boolean sameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
+        }
+        if (p == null || q == null) {
             return false;
         }
-        boolean leftSame = sameTree(root1.left, root2.left);
-        boolean rightSame = sameTree(root1.right, root2.right);
-        boolean currentSame = root1.val == root2.val;
-        return leftSame && rightSame && currentSame;
+        boolean currentSame = p.val == q.val;
+        boolean leftSame = sameTree(p.left, q.left);
+        boolean rightSame = sameTree(p.right, q.right);
+        return currentSame && leftSame && rightSame;
     }
 }
