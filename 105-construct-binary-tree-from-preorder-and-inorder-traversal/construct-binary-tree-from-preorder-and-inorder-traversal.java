@@ -22,20 +22,21 @@ class Solution {
         return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
     }
     private TreeNode build(int[] preorder, int preleft, int preright, 
-    int[] inorder, int inleft, int inright, Map<Integer, Integer> map)
+    int[] inorder, int inleft, int inright, Map<Integer, Integer> map) 
     {
         if (preleft > preright) {
             return null;
         }
         TreeNode head = new TreeNode(preorder[preleft]);
-        int headIdx = map.get(head.val);
-        int leftSize = headIdx - inleft;
-        
+        int headIdxInorder = map.get(head.val);
+        int leftSize = headIdxInorder - inleft;
+
         head.left = build(preorder, preleft + 1, preleft + leftSize, 
-        inorder, inleft, headIdx - 1, map);
-        
+        inorder, inleft, headIdxInorder - 1, map);
+
         head.right = build(preorder, preleft + leftSize + 1, preright,
-        inorder, headIdx + 1, inright, map);
+        inorder, headIdxInorder + 1, inright, map);
+        
         return head;
     }
 }
