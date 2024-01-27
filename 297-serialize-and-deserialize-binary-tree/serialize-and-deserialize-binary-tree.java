@@ -1,36 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 public class Codec {
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        StringBuilder sb = new StringBuilder();
-        se(root, sb);
-        return sb.toString();
-    }
-    private void se(TreeNode root, StringBuilder sb) {
         if (root == null) {
-            sb.append("#").append(",");
-            return;
+            return "";
         }
-        sb.append(root.val).append(",");
-        se(root.left, sb);
-        se(root.right, sb);
+        StringBuilder sb = new StringBuilder();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode current = queue.poll();
+                if (current == null) {
+                    sb.append("#").append(",");
+                    continue;
+                }
+                sb.append(current.val).append(",");
+                queue.offer(current.left);
+                queue.offer(current.right);
+            }
+        }
+        return sb.toString();
     }
 
     // Decodes your encoded data to tree.
-    int index = 0;
     public TreeNode deserialize(String data) {
-        String[] tree = data.split(",");
-        return de(tree);
-    }
-    private TreeNode de(String[] tree) {        
-        if (tree[index].equals("#")) {
-            index++;
+        if (data.isEmpty()) {
             return null;
         }
-        TreeNode root = new TreeNode(Integer.valueOf(tree[index]));
-        index++;
-        root.left = de(tree);
-        root.right = de(tree);
+        String[] node = data.split(",");
+        TreeNode root = new TreeNode(Integer.parseInt(node[0]));
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int index = 1;
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode parent = queue.poll();
+                String left = node[index++];
+                if (!left.equals("#")) {
+                    parent.left = new TreeNode(Integer.parseInt(left));
+                    queue.offer(parent.left);
+                }
+                String right = node[index++];
+                if (!right.equals("#")) {
+                    parent.right = new TreeNode(Integer.parseInt(right));
+                    queue.offer(parent.right);
+                }
+            }
+        }
         return root;
     }
 }
