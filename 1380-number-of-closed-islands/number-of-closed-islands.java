@@ -15,9 +15,6 @@ class Solution {
     }
 
     private boolean dfs(int[][] matrix, int row, int col, boolean[][] visited) {
-        if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length) {
-            return true;
-        }
         if (matrix[row][col] == 1 || visited[row][col]) {
             return true;
         }
