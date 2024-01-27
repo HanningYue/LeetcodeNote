@@ -19,21 +19,23 @@ class Solution {
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return build(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1, map);
+        return build(postorder, 0, postorder.length - 1, inorder, 0, inorder.length - 1, map);
     }
-    private TreeNode build(int[] inorder, int inleft, int inright, 
-    int[] postorder, int postleft, int postright, Map<Integer, Integer> map) 
+    private TreeNode build(int[] postorder, int postleft, int postright, 
+    int[] inorder, int inleft, int inright, Map<Integer, Integer> map)
     {
-        if (inleft > inright) {
+        if (postleft > postright) {
             return null;
         }
-        TreeNode newHead = new TreeNode(postorder[postright]);
-        int headIndex = map.get(newHead.val);
-        newHead.left = build(inorder, inleft, headIndex - 1, 
-        postorder, postleft, headIndex - inleft + postleft - 1, map);
+        TreeNode head = new TreeNode(postorder[postright]);
+        int headIdx = map.get(head.val);
+        int leftSize = headIdx - inleft;
+        
+        head.left = build(postorder, postleft, postleft + leftSize - 1,
+        inorder, inleft, headIdx - 1, map);
 
-        newHead.right = build(inorder, headIndex + 1, inright,
-        postorder, headIndex - inleft + postleft, postright - 1, map);
-        return newHead;
+        head.right = build(postorder, postleft + leftSize, postright - 1,
+        inorder, headIdx + 1, inright, map);
+        return head;
     }
 }
