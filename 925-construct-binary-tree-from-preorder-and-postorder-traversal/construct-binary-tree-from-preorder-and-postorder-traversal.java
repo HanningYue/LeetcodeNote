@@ -15,33 +15,21 @@
  */
 class Solution {
     public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < postorder.length; i++) {
-            map.put(postorder[i], i);
-        }
-        return build(preorder, 0, preorder.length - 1, postorder, 0, postorder.length - 1, map);
+        int[] preindex = {0}, postindex = {0};
+        return build(preorder, preindex, postorder, postindex);
     }
-    private TreeNode build(int[] preorder, int preleft, int preright, 
-    int[] postorder, int postleft, int postright, Map<Integer, Integer> map)
-    {
-        if (preleft > preright) {
+    private TreeNode build(int[] preorder, int[] preindex, int[] postorder, int[] postindex) {
+        if (preindex[0] == preorder.length) {
             return null;
         }
-        if (preleft == preright) {
-            return new TreeNode(preorder[preleft]);
+        TreeNode head = new TreeNode(preorder[preindex[0]++]);
+        if (head.val != postorder[postindex[0]]) {
+            head.left = build(preorder, preindex, postorder, postindex);
         }
-        
-        int startOfLeft = preorder[preleft + 1];
-        int startOfLeftIdx = map.get(startOfLeft);
-        int leftSize = startOfLeftIdx - postleft + 1;
-
-        TreeNode head = new TreeNode(preorder[preleft]);
-        head.left = build(preorder, preleft + 1, preleft + leftSize, 
-        postorder, postleft, startOfLeftIdx, map);
-
-        head.right = build(preorder, preleft + leftSize + 1, preright,
-        postorder, startOfLeftIdx + 1, postright - 1, map);
-        
+        if (head.val != postorder[postindex[0]]) {
+            head.right = build(preorder, preindex, postorder, postindex);
+        }
+        postindex[0]++;
         return head;
     }
 }
