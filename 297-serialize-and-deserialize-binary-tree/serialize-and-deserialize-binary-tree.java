@@ -8,8 +8,6 @@
  * }
  */
 public class Codec {
-
-    // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         if (root == null) {
             return "";
@@ -23,13 +21,13 @@ public class Codec {
                 TreeNode current = queue.poll();
                 if (current == null) {
                     sb.append("#").append(",");
-                    continue;
+                } else {
+                    sb.append(current.val).append(",");
+                    queue.offer(current.left);
+                    queue.offer(current.right);
                 }
-                sb.append(current.val).append(",");
-                queue.offer(current.left);
-                queue.offer(current.right);
             }
-        }
+        }        
         return sb.toString();
     }
 
@@ -38,24 +36,26 @@ public class Codec {
         if (data.isEmpty()) {
             return null;
         }
-        String[] node = data.split(",");
-        TreeNode root = new TreeNode(Integer.parseInt(node[0]));
+        String[] treeNodeArray = data.split(",");
+        int index = 1;
+        TreeNode root = new TreeNode(Integer.parseInt(treeNodeArray[0]));
+        
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        int index = 1;
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
-                TreeNode parent = queue.poll();
-                String left = node[index++];
+                TreeNode current = queue.poll();
+
+                String left = treeNodeArray[index++];
                 if (!left.equals("#")) {
-                    parent.left = new TreeNode(Integer.parseInt(left));
-                    queue.offer(parent.left);
+                    current.left = new TreeNode(Integer.parseInt(left));
+                    queue.offer(current.left);
                 }
-                String right = node[index++];
+                String right = treeNodeArray[index++];
                 if (!right.equals("#")) {
-                    parent.right = new TreeNode(Integer.parseInt(right));
-                    queue.offer(parent.right);
+                    current.right = new TreeNode(Integer.parseInt(right));
+                    queue.offer(current.right);
                 }
             }
         }
