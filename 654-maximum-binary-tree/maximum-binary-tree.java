@@ -21,16 +21,16 @@ class Solution {
         if (left > right) {
             return null;
         }
-        int maxIndex = -1, maxVal = Integer.MIN_VALUE;
+        int maxIdx = -1, maxVal = Integer.MIN_VALUE;
         for (int i = left; i <= right; i++) {
             if (nums[i] > maxVal) {
                 maxVal = nums[i];
-                maxIndex = i;
+                maxIdx = i;
             }
         }
-        TreeNode newRoot = new TreeNode(maxVal);
-        newRoot.left = build(nums, left, maxIndex - 1);
-        newRoot.right = build(nums, maxIndex + 1, right);
-        return newRoot;
+        TreeNode head = new TreeNode(maxVal);
+        head.left = build(nums, left, maxIdx - 1);
+        head.right = build(nums, maxIdx + 1, right);
+        return head;
     }
 }
