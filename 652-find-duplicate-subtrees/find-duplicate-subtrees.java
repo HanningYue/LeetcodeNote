@@ -17,22 +17,22 @@ class Solution {
     Map<String, Integer> map = new HashMap<>();
     List<TreeNode> result = new ArrayList<>();
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
-        serialize(root);
+        traverse(root);
         return result;
     }
-    private String serialize(TreeNode root) {
+    private String traverse(TreeNode root) {
         if (root == null) {
             return "#";
         }
-        String left = serialize(root.left);
-        String right = serialize(root.right);
-        String myself = left + " " + right + " " + root.val;
+        String leftPath = traverse(root.left);
+        String rightPath = traverse(root.right);
+        String path = leftPath + " " + rightPath + " " + root.val;
         
-        int frequency = map.getOrDefault(myself, 0);
-        if (frequency == 1) {
+        int freq = map.getOrDefault(path, 0);
+        if (freq == 1) {
             result.add(root);
         }
-        map.put(myself, frequency + 1);
-        return myself;
+        map.put(path, freq + 1);
+        return path;
     }
 }
