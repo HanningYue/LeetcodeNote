@@ -12,7 +12,7 @@ class Solution {
         int mid = start + (end - start) / 2;
         sort(nums, start, mid);
         sort(nums, mid + 1, end);
-        merge(nums, start, mid, end);
+        merge(nums, start, mid , end);
     }
     private void merge(int[] nums, int start, int mid, int end) {
         int left = start, right = mid + 1;
@@ -30,7 +30,6 @@ class Solution {
         while (right <= end) {
             temp[pointer++] = nums[right++];
         }
-
         for (int i = start; i <= end; i++) {
             nums[i] = temp[i];
         }
