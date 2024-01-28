@@ -1,6 +1,5 @@
 class Solution {
     public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>();
         Map<Character, String> map = new HashMap<>();
         map.put('2', "abc");
         map.put('3', "def");
@@ -10,23 +9,25 @@ class Solution {
         map.put('7', "pqrs");
         map.put('8', "tuv");
         map.put('9', "wxyz");
+        List<String> result = new ArrayList<>();
         if (digits == null || digits.length() == 0) {
             return result;
         }
         StringBuilder sb = new StringBuilder();
-        backTracking(result, sb, 0, digits, map);
+        backTrack(digits, map, result, sb, 0);
         return result;
     }
-    private void backTracking(List<String> result, StringBuilder sb, int start, 
-    String digits, Map<Character, String> map) {
-        if (start == digits.length()) {
+    private void backTrack(String digits, Map<Character, String> map, List<String> result,
+    StringBuilder sb, int index)
+    {
+        if (index == digits.length()) {
             result.add(sb.toString());
             return;
         }
-        String digitChar = map.get(digits.charAt(start));
-        for (int i = 0; i < digitChar.length(); i++) {
-            sb.append(digitChar.charAt(i));
-            backTracking(result, sb, start + 1, digits, map);
+        String correspondingChars = map.get(digits.charAt(index));
+        for (int i = 0; i < correspondingChars.length(); i++) {
+            sb.append(correspondingChars.charAt(i));
+            backTrack(digits, map, result, sb, index + 1);
             sb.deleteCharAt(sb.length() - 1);
         }
     }
