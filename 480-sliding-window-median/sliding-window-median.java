@@ -14,17 +14,23 @@ class Solution {
                 }
                 slow++;
             }
-            if (minSet.size() <= maxSet.size()) {
+
+            if (maxSet.isEmpty() || nums[maxSet.first()] > nums[fast]) {
                 maxSet.add(fast);
-                minSet.add(maxSet.pollFirst());
             } else {
                 minSet.add(fast);
+            }
+
+            if (maxSet.size() > minSet.size() + 1) {
+                minSet.add(maxSet.pollFirst());
+            } else if (minSet.size() > maxSet.size()) {
                 maxSet.add(minSet.pollFirst());
             }
+            
             if (fast - slow + 1 == k) {
                 result[slow] = k % 2 == 0 ? 
                 ((double) nums[maxSet.first()] + nums[minSet.first()]) / 2.0 
-                : nums[minSet.first()];
+                : nums[maxSet.first()];
             }
             fast++;
         }
