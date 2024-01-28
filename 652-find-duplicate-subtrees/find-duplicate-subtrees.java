@@ -14,25 +14,28 @@
  * }
  */
 class Solution {
-    Map<String, Integer> map = new HashMap<>();
-    List<TreeNode> result = new ArrayList<>();
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
-        traverse(root);
+        Map<String, Integer> map = new HashMap<>();//{Stringpath, Frequency}
+        List<TreeNode> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        dfs(root, result, map);
         return result;
     }
-    private String traverse(TreeNode root) {
+    private String dfs(TreeNode root, List<TreeNode> result, Map<String, Integer> map) {
         if (root == null) {
             return "#";
         }
-        String leftPath = traverse(root.left);
-        String rightPath = traverse(root.right);
-        String path = leftPath + " " + rightPath + " " + root.val;
+        String leftPath = dfs(root.left, result, map);
+        String rightPath = dfs(root.right, result, map);
+        String currentPath = leftPath + "," + rightPath + "," + root.val;
         
-        int freq = map.getOrDefault(path, 0);
+        int freq = map.getOrDefault(currentPath, 0);
         if (freq == 1) {
             result.add(root);
         }
-        map.put(path, freq + 1);
-        return path;
+        map.put(currentPath, map.getOrDefault(currentPath, 0) + 1);
+        return currentPath;
     }
 }
