@@ -1,26 +1,36 @@
 class Solution {
     public int[] findRightInterval(int[][] intervals) {
-        PriorityQueue<int[]> minheapStart = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        PriorityQueue<int[]> minheapEnd = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        
-        for(int i=0; i < intervals.length; i++){
-            minheapStart.add(new int[]{intervals[i][0], i});
-            minheapEnd.add(new int[]{intervals[i][1], i});
+        //{start, index} {end, index}
+        PriorityQueue<int[]> minStart = new PriorityQueue<>(new Comparator<int[]>(){
+            public int compare(int[] a, int[] b) {
+                return a[0] - b[0];
+            }
+        });
+        PriorityQueue<int[]> minEnd = new PriorityQueue<>(new Comparator<int[]>(){
+            public int compare(int[] a, int[] b) {
+                return a[0] - b[0];
+            }
+        });
+        for (int i = 0; i < intervals.length; i++) {
+            minStart.offer(new int[]{intervals[i][0], i});
+            minEnd.offer(new int[]{intervals[i][1], i});
         }
-        
+
         int[] result = new int[intervals.length];
-        for(int i=0; i < intervals.length; i++)
+        for (int i = 0; i < intervals.length; i++) {
             result[i] = -1;
-        
-        while(!minheapEnd.isEmpty()){
-            int[] currEnd = minheapEnd.poll();
-            int currEndVal = currEnd[0];
-            int currEndIdx = currEnd[1];
-            while(!minheapStart.isEmpty() && currEndVal > minheapStart.peek()[0])
-                minheapStart.poll();
-            if(minheapStart.isEmpty())
+        }
+        while (!minEnd.isEmpty()) {
+            int[] currentMinEnd = minEnd.poll();
+            int currentVal = currentMinEnd[0];
+            int currentIdx = currentMinEnd[1];
+            while (!minStart.isEmpty() && minStart.peek()[0] < currentVal) {
+                minStart.poll();
+            }
+            if (minStart.isEmpty()) {
                 return result;
-            result[currEndIdx] = minheapStart.peek()[1];
+            }
+            result[currentIdx] = minStart.peek()[1];
         }
         return result;
     }
