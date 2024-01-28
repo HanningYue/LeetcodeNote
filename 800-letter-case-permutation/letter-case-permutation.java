@@ -19,7 +19,8 @@ class Solution {
             sb.append(Character.toUpperCase(c));
             backTrack(s, sb, result, index + 1);
             sb.deleteCharAt(sb.length() - 1);
-        } else {
+        }
+        else {
             sb.append(c);
             backTrack(s, sb, result, index + 1);
             sb.deleteCharAt(sb.length() - 1);
