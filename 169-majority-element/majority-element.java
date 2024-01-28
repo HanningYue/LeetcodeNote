@@ -1,25 +1,15 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        return divide(nums, 0, nums.length - 1);
-    }
-    private int divide(int[] nums, int left, int right) {
-        if (left == right) {
-            return nums[left];
+        Map<Integer, Integer> map = new HashMap<>();
+        int halfLength = nums.length / 2;
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
-        int mid = left + (right - left) / 2;
-        int leftHalf = divide(nums, left, mid);
-        int rightHalf = divide(nums, mid + 1, right);
-        int leftMax = conquer(nums, leftHalf, left, right);
-        int rightMax = conquer(nums, rightHalf, left, right);
-        return leftMax > rightMax ? leftHalf : rightHalf;
-    }
-    private int conquer(int[] nums, int target, int left, int right) {
-        int count = 0;
-        for (int i = left; i <= right; i++) {
-            if (nums[i] == target) {
-                count++;
+        for (int key : map.keySet()) {
+            if (map.get(key) > halfLength) {
+                return key;
             }
         }
-        return count;
+        return -1;
     }
 }
