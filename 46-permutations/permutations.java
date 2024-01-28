@@ -1,13 +1,14 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        boolean[] visited = new boolean[nums.length];
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        backTrack(nums, visited, result, list);
+        boolean[] visited = new boolean[nums.length];
+        backTrack(nums, result, list, visited);
         return result;
     }
-    private void backTrack(int[] nums, boolean[] visited,
-    List<List<Integer>> result, List<Integer> list) {
+    private void backTrack(int[] nums, List<List<Integer>> result, 
+    List<Integer> list, boolean[] visited) 
+    {
         if (list.size() == nums.length) {
             result.add(new ArrayList<>(list));
         }
@@ -15,9 +16,9 @@ class Solution {
             if (!visited[i]) {
                 visited[i] = true;
                 list.add(nums[i]);
-                backTrack(nums, visited, result, list);
-                list.remove(list.size() - 1);
+                backTrack(nums, result, list, visited);
                 visited[i] = false;
+                list.remove(list.size() - 1);
             }
         }
     }
