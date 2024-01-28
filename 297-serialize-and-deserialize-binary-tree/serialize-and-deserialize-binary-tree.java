@@ -12,6 +12,7 @@ public class Codec {
         if (root == null) {
             return "";
         }
+
         StringBuilder sb = new StringBuilder();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
@@ -27,29 +28,29 @@ public class Codec {
                     queue.offer(current.right);
                 }
             }
-        }        
+        }
         return sb.toString();
     }
     public TreeNode deserialize(String data) {
         if (data.isEmpty()) {
             return null;
-        }
+        }        
         String[] treeArr = data.split(",");
+        TreeNode head = new TreeNode(Integer.valueOf(treeArr[0]));
         int index = 1;
-        TreeNode root = new TreeNode(Integer.valueOf(treeArr[0]));        
+        
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
+        queue.offer(head);
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode current = queue.poll();
-                
+
                 String left = treeArr[index++];
                 if (!left.equals("#")) {
                     current.left = new TreeNode(Integer.valueOf(left));
                     queue.offer(current.left);
                 }
-
                 String right = treeArr[index++];
                 if (!right.equals("#")) {
                     current.right = new TreeNode(Integer.valueOf(right));
@@ -57,7 +58,7 @@ public class Codec {
                 }
             }
         }
-        return root;
+        return head;
     }
 }
 
