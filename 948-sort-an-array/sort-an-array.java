@@ -17,7 +17,6 @@ class Solution {
     private void merge(int[] nums, int start, int mid, int end) {
         int left = start, right = mid + 1;
         int pointer = start;
-
         while (left <= mid && right <= end) {
             if (nums[left] < nums[right]) {
                 temp[pointer++] = nums[left++];
@@ -32,8 +31,8 @@ class Solution {
             temp[pointer++] = nums[right++];
         }
 
-        for (pointer = start; pointer <= end; pointer++) {
-            nums[pointer] = temp[pointer];
+        for (int i = start; i <= end; i++) {
+            nums[i] = temp[i];
         }
     }
 }
