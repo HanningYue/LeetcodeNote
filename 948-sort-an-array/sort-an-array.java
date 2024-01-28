@@ -1,38 +1,39 @@
 class Solution {
+    int[] temp;
     public int[] sortArray(int[] nums) {
-        int[] temp = new int[nums.length];
-        sort(nums, 0, nums.length - 1, temp);
+        temp = new int[nums.length];
+        sort(nums, 0, nums.length - 1);
         return nums;
     }
-    private void sort(int[] nums, int start, int end, int[] temp) {
+    private void sort(int[] nums, int start, int end) {
         if (start >= end) {
             return;
         }
         int mid = start + (end - start) / 2;
-        sort(nums, start, mid, temp);
-        sort(nums, mid + 1, end, temp);
-        merge(nums, start, mid, end, temp);
+        sort(nums, start, mid);
+        sort(nums, mid + 1, end);
+        merge(nums, start, mid, end);
     }
-    private void merge(int[] nums, int start, int mid, int end, int[] temp) {
+    private void merge(int[] nums, int start, int mid, int end) {
         int left = start, right = mid + 1;
-        int index = start;
+        int pointer = start;
+
         while (left <= mid && right <= end) {
             if (nums[left] < nums[right]) {
-                temp[index++] = nums[left++];
+                temp[pointer++] = nums[left++];
             } else {
-                temp[index++] = nums[right++];
+                temp[pointer++] = nums[right++];
             }
         }
-
         while (left <= mid) {
-            temp[index++] = nums[left++];
+            temp[pointer++] = nums[left++];
         }
         while (right <= end) {
-            temp[index++] = nums[right++];
+            temp[pointer++] = nums[right++];
         }
 
-        for (index = start; index <= end; index++) {
-            nums[index] = temp[index];
+        for (pointer = start; pointer <= end; pointer++) {
+            nums[pointer] = temp[pointer];
         }
     }
 }
