@@ -15,21 +15,20 @@
  */
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
-        traverse(root, k);
-        return result;
+        List<Integer> result = new ArrayList<>();
+        inorder(root, k, result);
+        return result.get(k - 1);
     }
-
-    int rank = 0, result = 0;
-    private void traverse(TreeNode root, int k) {
+    private void inorder(TreeNode root, int k, List<Integer> result) {
         if (root == null) {
             return;
         }
-        traverse(root.left, k);
-        rank++;
-        if (rank == k) {
-            result = root.val;
+        inorder(root.left, k, result);
+        result.add(root.val);
+        k--;
+        if (k == 0) {
             return;
         }
-        traverse(root.right, k);
+        inorder(root.right, k, result);
     }
 }
