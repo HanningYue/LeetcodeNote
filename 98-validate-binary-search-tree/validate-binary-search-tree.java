@@ -1,21 +1,38 @@
 /**
-1. DFS, take TreeNode current, Integer min for left subtree, Integer max for right subtree
-2. Apply null value for min and max value in main function
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ /**
+When deciding the validness, we need to make sure the left max is less than current root
+the right min is greater than current root
 */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        if (root == null) return true;
-        return isBST(root, null, null);
+        return isValid(root, null, null);
     }
-    private boolean isBST(TreeNode root, Integer min, Integer max) {
+    private boolean isValid(TreeNode root, TreeNode min, TreeNode max) {
         if (root == null) {
             return true;
         }
-
-        if (min != null && (root.val <= min) || (max != null && (root.val >= max))) {
+        if (min != null && root.val <= min.val) {
             return false;
         }
-
-        return isBST(root.left, min, root.val) && isBST(root.right, root.val, max);
+        if (max != null && root.val >= max.val) {
+            return false;
+        }
+        boolean leftValid = isValid(root.left, min, root);
+        boolean rightValid = isValid(root.right, root, max);
+        return leftValid && rightValid;
     }
 }
