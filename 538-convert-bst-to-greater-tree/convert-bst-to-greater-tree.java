@@ -13,19 +13,22 @@
  *     }
  * }
  */
+ //We are essentially asking for the sum of all right tree + current root val
+ //Notice that the greater the original value of the root is, the smaller their Greater tree value will be
+ //So we need a descending order of original tree, inorder, but from right to left
 class Solution {
     public TreeNode convertBST(TreeNode root) {
-        inorder(root);
+        inorder(root, new int[]{0});
         return root;
     }
-    int sum = 0;
-    private void inorder(TreeNode root) {
+    private int[] inorder(TreeNode root, int[] sum) {
         if (root == null) {
-            return;
+            return new int[]{0};
         }
-        inorder(root.right);
-        sum += root.val;
-        root.val = sum;
-        inorder(root.left);
+        inorder(root.right, sum);
+        sum[0] += root.val;
+        root.val = sum[0];
+        inorder(root.left, sum);
+        return sum;
     }
 }
