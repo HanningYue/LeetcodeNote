@@ -3,24 +3,23 @@ class Solution {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
         boolean[] visited = new boolean[nums.length];
-        backTrack(nums, list, result, visited);
+        backTrack(result, list, visited, nums);
         return result;
     }
-    private void backTrack(int[] nums, List<Integer> list, List<List<Integer>> result, 
-    boolean[] visited)
-    {
+    private void backTrack(List<List<Integer>> result, List<Integer> list, boolean[] visited, int[] nums) {
         if (list.size() == nums.length) {
             result.add(new ArrayList<>(list));
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (!visited[i]) {
-                list.add(nums[i]);
-                visited[i] = true;
-                backTrack(nums, list, result, visited);
-                visited[i] = false;
-                list.remove(list.size() - 1);
+            if (visited[i]) {
+                continue;
             }
+            list.add(nums[i]);
+            visited[i] = true;
+            backTrack(result, list, visited, nums);
+            visited[i] = false;
+            list.remove(list.size() - 1);
         }
     }
 }
