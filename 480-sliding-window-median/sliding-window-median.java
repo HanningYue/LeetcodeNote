@@ -1,10 +1,10 @@
 class Solution {
     public double[] medianSlidingWindow(int[] nums, int k) {
         Comparator<Integer> comparator = (a, b) -> nums[a] != nums[b] 
-        ? Integer.compare(nums[a], nums[b]) : a - b;
+        ? Integer.compare(nums[a], nums[b]) : Integer.compare(a, b);
 
-        TreeSet<Integer> maxSet = new TreeSet<>(comparator.reversed());
         TreeSet<Integer> minSet = new TreeSet<>(comparator);
+        TreeSet<Integer> maxSet = new TreeSet<>(comparator.reversed());
 
         double[] result = new double[nums.length - k + 1];
 
