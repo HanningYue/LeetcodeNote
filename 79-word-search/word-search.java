@@ -1,41 +1,32 @@
-/*
-Exit rule, when index reach word's final index, return true;
-We want to return a boolean value to determine whether the given word exists
-We can apply DFS given the circumstances, iterate 4 directional, if character at the 
-board[row][column] DOES NOT equals to the character at the given index in WORD, we return false;
-for each dfs iteration, we need to mark current board[row][column] as visited,
-*/
 class Solution {
-    public boolean exist(char[][] board, String word) {
-        boolean[][] visited = new boolean[board.length][board[0].length];
-        for (int row = 0; row < board.length; row++) {
-            for (int column = 0; column < board[0].length; column++) {
-                if (backTracking(board, word, visited, row, column, 0)) {
+    public boolean exist(char[][] matrix, String word) {
+        boolean[][] visited = new boolean[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (backTrack(matrix, word, i, j, visited, 0)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    private boolean backTracking(char[][] board, String word, boolean[][] visited, int row,
-    int column, int iteration)
-    {
-        if (iteration == word.length()) {
+    private boolean backTrack(char[][] matrix, String word, int row, int col, boolean[][] visited, int index) {
+        if (index == word.length()) {
             return true;
         }
-
-        if (row < 0 || row >= board.length || column < 0 || column >= board[0].length 
-        || board[row][column] != word.charAt(iteration) || visited[row][column]) 
-        {
+        if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length
+        || visited[row][col] || matrix[row][col] != word.charAt(index)) {
             return false;
         }
 
-        visited[row][column] = true;
-        boolean result = backTracking(board, word, visited, row + 1, column, iteration + 1)
-        || backTracking(board, word, visited, row - 1, column, iteration + 1)
-        || backTracking(board, word, visited, row, column + 1, iteration + 1)
-        || backTracking(board, word, visited, row, column - 1, iteration + 1);
-        visited[row][column] = false;
+        visited[row][col] = true;
+        boolean result = false;
+        int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        for (int[] dir : directions) {
+            result = result || backTrack(matrix, word, row + dir[0], col + dir[1], visited, index + 1);
+        }
+        visited[row][col] = false;
+
         return result;
     }
 }
