@@ -15,17 +15,18 @@
  */
 class Solution {
     public TreeNode bstToGst(TreeNode root) {
-        inorder(root, new int[]{0});
+        inorder(root);
         return root;
     }
-    private int[] inorder(TreeNode root, int[] sum) {
+    int sum = 0;
+    private int inorder(TreeNode root) {
         if (root == null) {
-            return new int[]{0};
+            return 0;
         }
-        inorder(root.right, sum);
-        sum[0] += root.val;
-        root.val = sum[0];
-        inorder(root.left, sum);
+        inorder(root.right);
+        sum += root.val;
+        root.val = sum;
+        inorder(root.left);
         return sum;
     }
 }
