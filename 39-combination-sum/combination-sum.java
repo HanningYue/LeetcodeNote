@@ -16,7 +16,9 @@ class Solution {
         }
         for (int i = index; i < nums.length; i++) {
             list.add(nums[i]);
-            backTrack(nums, target, result, list, i, runningSum + nums[i]);
+            runningSum += nums[i];
+            backTrack(nums, target, result, list, i, runningSum);
+            runningSum -= nums[i];
             list.remove(list.size() - 1);
         }
     }
