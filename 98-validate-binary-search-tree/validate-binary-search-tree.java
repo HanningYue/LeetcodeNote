@@ -13,28 +13,22 @@
  *     }
  * }
  */
- /**
-The current root has to be smaller than the right min and greater than the left max
-Solve by recursion, We need three nodes, root, min and max
-At current level, need left valid, set max of left-sub-tree to current root
-need right valid, set min of right-sub-tree to current root. 
-*/
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        return isValid(root, null, null);
+        return valid(root, null, null);
     }
-    private boolean isValid(TreeNode root, TreeNode min, TreeNode max) {
+    private boolean valid(TreeNode root, TreeNode leftMax, TreeNode rightMin) {
         if (root == null) {
             return true;
         }
-        if (min != null && root.val <= min.val) {
+        if (leftMax != null && root.val <= leftMax.val) {
             return false;
         }
-        if (max != null && root.val >= max.val) {
+        if (rightMin != null && root.val >= rightMin.val) {
             return false;
         }
-        boolean leftValid = isValid(root.left, min, root);
-        boolean rightValid = isValid(root.right, root, max);
+        boolean leftValid = valid(root.left, leftMax, root);
+        boolean rightValid = valid(root.right, root, rightMin);
         return leftValid && rightValid;
     }
 }
