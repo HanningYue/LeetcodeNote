@@ -14,8 +14,10 @@
  * }
  */
  /**
-When deciding the validness, we need to make sure the left max is less than current root
-the right min is greater than current root
+The current root has to be smaller than the right min and greater than the left max
+Solve by recursion, We need three nodes, root, min and max
+At current level, need left valid, set max of left-sub-tree to current root
+need right valid, set min of right-sub-tree to current root. 
 */
 class Solution {
     public boolean isValidBST(TreeNode root) {
