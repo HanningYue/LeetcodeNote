@@ -12,7 +12,6 @@ public class Codec {
         if (root == null) {
             return "";
         }
-
         StringBuilder sb = new StringBuilder();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
@@ -23,7 +22,7 @@ public class Codec {
                 if (current == null) {
                     sb.append("#").append(",");
                 } else {
-                    sb.append(Integer.valueOf(current.val)).append(",");
+                    sb.append(current.val).append(",");
                     queue.offer(current.left);
                     queue.offer(current.right);
                 }
@@ -31,34 +30,36 @@ public class Codec {
         }
         return sb.toString();
     }
+
     public TreeNode deserialize(String data) {
-        if (data.isEmpty()) {
+        if (data.isEmpty() || data.length() == 0) {
             return null;
-        }        
-        String[] treeArr = data.split(",");
-        TreeNode head = new TreeNode(Integer.valueOf(treeArr[0]));
+        }
+
+        String[] tree = data.split(",");
+        TreeNode root = new TreeNode(Integer.valueOf(tree[0]));
         int index = 1;
-        
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(head);
+        queue.offer(root);
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode current = queue.poll();
 
-                String left = treeArr[index++];
-                if (!left.equals("#")) {
-                    current.left = new TreeNode(Integer.valueOf(left));
+                String leftRoot = tree[index++];
+                if (!leftRoot.equals("#")) {
+                    current.left = new TreeNode(Integer.valueOf(leftRoot));
                     queue.offer(current.left);
                 }
-                String right = treeArr[index++];
-                if (!right.equals("#")) {
-                    current.right = new TreeNode(Integer.valueOf(right));
+
+                String rightRoot = tree[index++];
+                if (!rightRoot.equals("#")) {
+                    current.right = new TreeNode(Integer.valueOf(rightRoot));
                     queue.offer(current.right);
                 }
             }
         }
-        return head;
+        return root;
     }
 }
 
