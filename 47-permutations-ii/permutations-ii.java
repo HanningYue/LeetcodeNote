@@ -12,9 +12,11 @@ class Solution {
             result.add(new ArrayList<>(list));
             return;
         }
-        Set<Integer> set = new HashSet<>();
         for (int i = 0; i < nums.length; i++) {
-            if (visited[i] || !set.add(nums[i])) {
+            if (visited[i]) {
+                continue;
+            }
+            if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) {
                 continue;
             }
             list.add(nums[i]);
