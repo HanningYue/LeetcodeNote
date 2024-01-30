@@ -21,14 +21,15 @@ class Solution {
         if (root == null) {
             return true;
         }
+
         if (leftMax != null && root.val <= leftMax.val) {
             return false;
-        }
-        if (rightMin != null && root.val >= rightMin.val) {
+        } else if (rightMin != null && root.val >= rightMin.val) {
             return false;
         }
-        boolean leftValid = valid(root.left, leftMax, root);
-        boolean rightValid = valid(root.right, root, rightMin);
-        return leftValid && rightValid;
+        boolean leftTrue = valid(root.left, leftMax, root);
+        boolean rightTrue = valid(root.right, root, rightMin);
+        boolean bothSideTrue = leftTrue && rightTrue;
+        return bothSideTrue;
     }
 }
