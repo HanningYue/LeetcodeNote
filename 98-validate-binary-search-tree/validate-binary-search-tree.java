@@ -22,13 +22,13 @@ class Solution {
             return true;
         }
 
+        boolean leftTrue = valid(root.left, leftMax, root);
+        boolean rightTrue = valid(root.right, root, rightMin);
         if (leftMax != null && root.val <= leftMax.val) {
             return false;
         } else if (rightMin != null && root.val >= rightMin.val) {
             return false;
         }
-        boolean leftTrue = valid(root.left, leftMax, root);
-        boolean rightTrue = valid(root.right, root, rightMin);
         boolean bothSideTrue = leftTrue && rightTrue;
         return bothSideTrue;
     }
