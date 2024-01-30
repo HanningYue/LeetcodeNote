@@ -18,24 +18,21 @@ class Solution {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
-        }   
-        return build(postorder, 0, postorder.length - 1, inorder, 0, inorder.length - 1, map);
+        }
+        return build(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1, map);
     }
-    private TreeNode build(int[] postorder, int postleft, int postright, 
-    int[] inorder, int inleft, int inright, Map<Integer, Integer> map)
+    private TreeNode build(int[] inorder, int inleft, int inright, int[] postorder, int postleft, int postright, 
+    Map<Integer, Integer> map)
     {
         if (postleft > postright) {
             return null;
         }
         TreeNode head = new TreeNode(postorder[postright]);
-        int headIdxInorder = map.get(head.val);
-        int leftSize = headIdxInorder - inleft;
-
-        head.left = build(postorder, postleft, postleft + leftSize - 1, 
-        inorder, inleft, headIdxInorder - 1, map);
-
-        head.right = build(postorder, postleft + leftSize, postright - 1,
-        inorder, headIdxInorder + 1, inright, map);
+        int headIdx = map.get(head.val);
+        int leftSize = headIdx - inleft;
+        
+        head.left = build(inorder, inleft, headIdx - 1, postorder, postleft, postleft + leftSize - 1, map);
+        head.right = build(inorder, headIdx + 1, inright, postorder, postleft + leftSize, postright - 1, map);
 
         return head;
     }
