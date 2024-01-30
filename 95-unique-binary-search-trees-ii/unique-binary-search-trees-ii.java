@@ -23,7 +23,6 @@ class Solution {
             result.add(null);
             return result;
         }
-
         for (int mid = start; mid <= end; mid++) {
             List<TreeNode> leftTree = build(start, mid - 1);
             List<TreeNode> rightTree = build(mid + 1, end);
