@@ -15,28 +15,25 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();//{inorder value, inorder index}
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
         return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
     }
-    private TreeNode build(int[] preorder, int preleft, int preright, 
-    int[] inorder, int inleft, int inright, Map<Integer, Integer> map) 
+    private TreeNode build(int[] preorder, int preleft, int preright, int[] inorder, int inleft, int inright, 
+    Map<Integer, Integer> map)
     {
         if (preleft > preright) {
             return null;
         }
-        TreeNode head = new TreeNode(preorder[preleft]);
-        int headIdxInorder = map.get(head.val);
-        int leftSize = headIdxInorder - inleft;
+        TreeNode root = new TreeNode(preorder[preleft]);
+        int headIdx = map.get(root.val);
+        int leftSize = headIdx - inleft;
 
-        head.left = build(preorder, preleft + 1, preleft + leftSize, 
-        inorder, inleft, headIdxInorder - 1, map);
+        root.left = build(preorder, preleft + 1, preleft + leftSize, inorder, inleft, headIdx - 1, map);
+        root.right = build(preorder, preleft + leftSize + 1, preright, inorder, headIdx + 1, inright, map);
 
-        head.right = build(preorder, preleft + leftSize + 1, preright,
-        inorder, headIdxInorder + 1, inright, map);
-        
-        return head;
+        return root;
     }
 }
