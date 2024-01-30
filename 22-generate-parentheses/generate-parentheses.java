@@ -2,23 +2,22 @@ class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        backTrack(result, n, n, sb);
+        backTrack(result, sb, n, n);
         return result;
     }
-    private void backTrack(List<String> result, int leftBracketLeft, int rightBracketLeft, StringBuilder sb) {
-        if (leftBracketLeft == 0 && rightBracketLeft == 0) {
+    private void backTrack(List<String> result, StringBuilder sb, int leftBracket, int rightBracket) {
+        if (leftBracket == 0 && rightBracket == 0) {
             result.add(sb.toString());
             return;
         }
-
-        if (leftBracketLeft > 0) {
+        if (leftBracket > 0) {
             sb.append('(');
-            backTrack(result, leftBracketLeft - 1, rightBracketLeft, sb);
+            backTrack(result, sb, leftBracket - 1, rightBracket);
             sb.deleteCharAt(sb.length() - 1);
         }
-        if (rightBracketLeft > leftBracketLeft) {
+        if (rightBracket > leftBracket) {
             sb.append(')');
-            backTrack(result, leftBracketLeft, rightBracketLeft - 1, sb);
+            backTrack(result, sb, leftBracket, rightBracket - 1);
             sb.deleteCharAt(sb.length() - 1);
         }
     }
