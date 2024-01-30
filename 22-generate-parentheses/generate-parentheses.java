@@ -10,14 +10,14 @@ class Solution {
             result.add(sb.toString());
             return;
         }
-        if (leftBracket > 0) {
-            sb.append('(');
-            backTrack(result, sb, leftBracket - 1, rightBracket);
-            sb.deleteCharAt(sb.length() - 1);
-        }
         if (rightBracket > leftBracket) {
             sb.append(')');
             backTrack(result, sb, leftBracket, rightBracket - 1);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        if (leftBracket > 0) {
+            sb.append('(');
+            backTrack(result, sb, leftBracket - 1, rightBracket);
             sb.deleteCharAt(sb.length() - 1);
         }
     }
