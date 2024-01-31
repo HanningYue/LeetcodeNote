@@ -4,29 +4,27 @@ class Solution {
         int right = 0;
         for (int pile : piles) {
             right = Math.max(right, pile);
-        }
-
+        } 
         while (left <= right) {
-            int speed = left + (right - left) / 2;
-            long time = calculateHours(piles, speed);
-            if (time > h) {
-                left = speed + 1; //Eat faster
-            } else if (time < h) {
-                right = speed - 1; //Eat slower
-            } else if (time == h) {
-                right = speed - 1; //Eat slower
+            int mid = left + (right - left) / 2;
+            if (solveFX(piles, mid) == h) {
+                right = mid - 1;
+            } else if (solveFX(piles, mid) > h) {
+                left = mid + 1;
+            } else if (solveFX(piles, mid) < h) {
+                right = mid - 1;
             }
         }
         return left;
     }
-    private long calculateHours(int[] piles, int speed) {
-        long hours = 0;
-        for (int pile : piles) {
-            hours += pile / speed;
-            if (pile % speed > 0) {
-                hours++;
+    private long solveFX(int[] piles, int speed) {
+        long hour = 0;
+        for (int i = 0; i < piles.length; i++) {
+            hour += piles[i] / speed;
+            if (piles[i] % speed != 0) {
+                hour++;
             }
         }
-        return hours;
+        return hour;
     }
 }
