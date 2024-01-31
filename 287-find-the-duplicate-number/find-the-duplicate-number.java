@@ -16,6 +16,6 @@ class Solution {
                 return nums[j];
             }
         }
-        return nums.length;
+        return -1;
     }
 }
