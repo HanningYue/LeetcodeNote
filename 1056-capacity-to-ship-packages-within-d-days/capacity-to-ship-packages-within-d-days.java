@@ -1,35 +1,40 @@
+/**
+1. x is weight capacity, lease amount to ship each day is the heaviest weight, most amount is the sum of all
+2. fx is the time needed, the more we load each day, the smaller fx is
+3. want to find the smallest fx when days are fixed
+*/
 class Solution {
     public int shipWithinDays(int[] weights, int days) {
-        int left = 0, right = 1;
+        int left = 0, right = 0;
         for (int weight : weights) {
             left = Math.max(left, weight);
             right += weight;
-        }        
+        }
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            if (calculateDays(weights, mid) < days) {
+            if (solveFX(weights, mid) == days) {
                 right = mid - 1;
-            } else if (calculateDays(weights, mid) > days) {
+            } else if (solveFX(weights, mid) > days) {
                 left = mid + 1;
-            } else if (calculateDays(weights, mid) == days) {
+            } else if (solveFX(weights, mid) < days) {
                 right = mid - 1;
             }
         }
         return left;
     }
-    private int calculateDays(int[] weights, int capacity) {
-        int days = 0;
+    private int solveFX(int[] weights, int capacity) {
+        int day = 0;
         for (int i = 0; i < weights.length;) {
-            int cap = capacity;
+            int eachDayCap = capacity;
             while (i < weights.length) {
-                if (weights[i] > cap) {
+                if (eachDayCap < weights[i]) {
                     break;
                 }
-                cap -= weights[i];
-                i++;                
+                eachDayCap -= weights[i];
+                i++;
             }
-            days++;
+            day++;
         }
-        return days;
+        return day;
     }
 }
