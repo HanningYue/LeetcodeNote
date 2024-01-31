@@ -9,15 +9,15 @@ class Solution {
 
         for (char c : s.toCharArray()) {
             if (!set.contains(c)) {
-                while (!stack.isEmpty() && stack.peek() > c && map.get(stack.peek()) > 0) {
-                    char lastChar = stack.pop();
-                    set.remove(lastChar);
+                while (!stack.isEmpty() && map.get(stack.peek()) > 0 && stack.peek() > c) {
+                    set.remove(stack.pop());
                 }
                 set.add(c);
                 stack.push(c);
             }
             map.put(c, map.get(c) - 1);
         }
+
         StringBuilder sb = new StringBuilder();
         for (char c : stack) {
             sb.append(c);
