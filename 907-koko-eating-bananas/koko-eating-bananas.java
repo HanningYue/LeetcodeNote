@@ -1,6 +1,6 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int left = 0;
+        int left = 1;
         int right = 0;
         for (int pile : piles) {
             right = Math.max(right, pile);
@@ -8,11 +8,7 @@ class Solution {
 
         while (left <= right) {
             int speed = left + (right - left) / 2;
-            double time = 0.0;
-            for (int pile : piles) {
-                time += Math.ceil((double)pile / speed);
-            }
-
+            long time = calculateHours(piles, speed);
             if (time > h) {
                 left = speed + 1; //Eat faster
             } else if (time < h) {
@@ -22,5 +18,15 @@ class Solution {
             }
         }
         return left;
+    }
+    private long calculateHours(int[] piles, int speed) {
+        long hours = 0;
+        for (int pile : piles) {
+            hours += pile / speed;
+            if (pile % speed > 0) {
+                hours++;
+            }
+        }
+        return hours;
     }
 }
