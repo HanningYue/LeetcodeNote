@@ -5,11 +5,10 @@ class Solution {
         while (i < nums.length) {
             int suppose = nums[i] - 1;
             if (nums[suppose] != nums[i]) {
-                int temp = nums[suppose];
-                nums[suppose] = nums[i];
-                nums[i] = temp;
-            }
-            else {
+                int temp = nums[i];
+                nums[i] = nums[suppose];
+                nums[suppose] = temp;
+            } else {
                 i++;
             }
         }
