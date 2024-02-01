@@ -1,6 +1,7 @@
 class Solution {
+    int[] temp;
     public int[] sortArray(int[] nums) {
-        shuffle(nums);
+        temp = new int[nums.length];
         sort(nums, 0, nums.length - 1);
         return nums;
     }
@@ -8,38 +9,31 @@ class Solution {
         if (left >= right) {
             return;
         }
-        int pivot = partition(nums, left, right);
-        sort(nums, left, pivot - 1);
-        sort(nums, pivot + 1, right);
+        int mid = left + (right - left) / 2;
+        sort(nums, left, mid);
+        sort(nums, mid + 1, right);
+        merge(nums, left, right, mid);
     }
-    private int partition(int[] nums, int left, int right) {
-        int pivot = nums[left];
-        int leftP = left + 1, rightP = right;
-        while (leftP <= rightP) {
-            while (leftP < right && nums[leftP] <= pivot) {
-                leftP++;
+    private void merge(int[] nums, int left, int right, int mid) {
+        int leftP = left, rightP = mid + 1;
+        int arrayP = left;
+        while (leftP <= mid && rightP <= right) {
+            if (nums[leftP] < nums[rightP]) {
+                temp[arrayP++] = nums[leftP++];
+            } else {
+                temp[arrayP++] = nums[rightP++];
             }
-            while (rightP > left && nums[rightP] > pivot) {
-                rightP--;
-            }
-            if (leftP >= rightP) {
-                break;
-            }
-            swap(nums, leftP, rightP);
         }
-        swap(nums, left, rightP);
-        return rightP;
-    }
-    private void shuffle(int[] nums) {
-        Random rand = new Random();
-        for (int i = 0; i < nums.length; i++) {
-            int right = i + rand.nextInt(nums.length - i);
-            swap(nums, i, right);
+
+        while (leftP <= mid) {
+            temp[arrayP++] = nums[leftP++];
         }
-    }
-    private void swap(int[] nums, int left, int right) {
-        int temp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = temp;
+        while (rightP <= right) {
+            temp[arrayP++] = nums[rightP++];
+        }
+
+        for (int i = left; i <= right; i++) {
+            nums[i] = temp[i];
+        }
     }
 }
