@@ -1,30 +1,27 @@
-/*
-Want to return the closest point to origin, use maxHeap<int[]>
-1. In maxHeap, write customizable comparator where the a[0]*a[0] + a[1]*a[1] and b[0]*b[0] + b[1]*b[1]
-2. After comparison, fill maxHeap with int[]points, the maxHeap will sort them from greatest distance to smallest distance. After the maxHeap size exceeds k, pop. So the remaining are the K-th smallest.
-3. Declear result[][], iterate k times, fill result[i] with maxHeap poll()
-*/
 class Solution {
     public int[][] kClosest(int[][] points, int k) {
-        PriorityQueue<int[]> maxHeap = new PriorityQueue<>(new Comparator<int[]>() {
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<int[]>(new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
-                return b[0] * b[0] + b[1] * b[1] - (a[0] * a[0] + a[1] * a[1]);
+                return Double.compare(calculateDistance(b), calculateDistance(a));
             }
         });
-
-        for (int[] point : points) {
-            maxHeap.offer(point);
-            if (maxHeap.size() > k) {
+        for (int i = 0; i < k; i++) {
+            maxHeap.offer(points[i]);
+        }
+        for (int i = k; i < points.length; i++) {
+            int[] last = maxHeap.peek();
+            if (!maxHeap.isEmpty() && calculateDistance(last) > calculateDistance(points[i])) {
                 maxHeap.poll();
+                maxHeap.offer(points[i]);
             }
         }
-
         int[][] result = new int[k][2];
-        for (int i = 0; i < k; i++) {
-            int[] kth = maxHeap.poll();
-            result[i][0] = kth[0];
-            result[i][1] = kth[1];
+        for (int i = 0; i < k && !maxHeap.isEmpty(); i++) {
+            result[i] = maxHeap.poll();
         }
         return result;
+    }
+    private double calculateDistance(int[] point) {
+        return Math.sqrt(point[0] * point[0] + point[1] * point[1]);
     }
 }
