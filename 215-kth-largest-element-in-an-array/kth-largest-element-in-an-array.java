@@ -1,51 +1,45 @@
-/**
-minHeap or QuickSort
-When quick sorting, 
-[... kth ...]       Since position is index, we looking for the KTH, add 1 to index when comparing
-To the left of kth number, are all the numbers greater than k
-To the right of kth number, are all the numbers smaller than k
-Use two pointer to find the range and swap helper function to quick sort
-*/
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        int low = 0, high = nums.length - 1;
-        while (low <= high) {
-            int mid = partition(nums, low, high);
-            if (mid + 1 == k) {
-                return nums[mid];
-            } else if (mid + 1 < k) {
-                low = mid + 1;
-            } else if (mid + 1 > k) {
-                high = mid - 1;
+        shuffle(nums);
+        int left = 0, right = nums.length - 1;
+        k = nums.length - k;
+        while (left <= right) {
+            int pivot = partition(nums, left, right);
+            if (pivot < k) {
+                left = pivot + 1;
+            } else if (pivot > k) {
+                right = pivot - 1;
+            } else if (pivot == k) {
+                return nums[pivot];
             }
         }
         return -1;
     }
-
-    private int partition(int[] nums, int low, int high) {
-        int pivot = nums[low];
-        int left = low + 1;
-        int right = high;
-        while (left <= right) {
-            if (nums[left] < pivot && nums[right] > pivot) {
-                swap(nums, left, right);
-                left++;
-                right--;
+    private int partition(int[] nums, int left, int right) {
+        int pivot = nums[left];
+        int leftP = left, rightP = right;
+        while (leftP < rightP) {
+            while (leftP < rightP && nums[rightP] >= pivot) {
+                rightP--;
             }
-            if (nums[left] >= pivot) {
-                left++;
+            while (leftP < rightP && nums[leftP] <= pivot) {
+                leftP++;
             }
-            if (nums[right] <= pivot){
-                right--;
-            }
+            swap(nums, leftP, rightP);
         }
-        swap(nums, low, right);
-        return right;
+        swap(nums, left, rightP);
+        return rightP;
     }
-
-    private void swap(int[] nums, int a, int b) {
-        int temp = nums[a];
-        nums[a] = nums[b];
-        nums[b] = temp;
+    private void shuffle(int[] nums) {
+        Random rand = new Random();
+        for (int i = 0; i < nums.length; i++) {
+            int nextIdx = rand.nextInt(nums.length - i);
+            swap(nums, i, nextIdx);
+        }
+    }
+    private void swap(int[] nums, int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
     }
 }
