@@ -5,32 +5,36 @@ class Solution {
         sort(nums, 0, nums.length - 1);
         return nums;
     }
-    private void sort(int[] nums, int start, int end) {
-        if (start >= end) {
+    private void sort(int[] nums, int left, int right) {
+        if (left == right) {
             return;
         }
-        int mid = start + (end - start) / 2;
-        sort(nums, start, mid);
-        sort(nums, mid + 1, end);
-        merge(nums, start, mid , end);
+        int mid = left + (right - left) / 2;
+        sort(nums, left, mid);
+        sort(nums, mid + 1, right);
+        merge(nums, left, mid, right);
     }
-    private void merge(int[] nums, int start, int mid, int end) {
-        int left = start, right = mid + 1;
-        int pointer = start;
-        while (left <= mid && right <= end) {
-            if (nums[left] < nums[right]) {
-                temp[pointer++] = nums[left++];
+    private void merge(int[] nums, int left, int mid, int right) {
+        int leftP = left, rightP = mid + 1;
+        int arrayP = left;
+        while (leftP <= mid && rightP <= right) {
+            if (nums[leftP] < nums[rightP]) {
+                temp[arrayP] = nums[leftP];
+                leftP++;
+                arrayP++;
             } else {
-                temp[pointer++] = nums[right++];
+                temp[arrayP] = nums[rightP];
+                rightP++;
+                arrayP++;
             }
         }
-        while (left <= mid) {
-            temp[pointer++] = nums[left++];
+        while (leftP <= mid) {
+            temp[arrayP++] = nums[leftP++];
+        } 
+        while (rightP <= right) {
+            temp[arrayP++] = nums[rightP++];
         }
-        while (right <= end) {
-            temp[pointer++] = nums[right++];
-        }
-        for (int i = start; i <= end; i++) {
+        for (int i = left; i <= right; i++) {
             nums[i] = temp[i];
         }
     }
