@@ -1,39 +1,43 @@
 class Solution {
-    int[] temp;
     public int[] sortArray(int[] nums) {
-        temp = new int[nums.length];
+        shuffle(nums);
         sort(nums, 0, nums.length - 1);
         return nums;
+    }
+    private void shuffle (int[] nums) {
+        Random rand = new Random();
+        for (int i = 0; i < nums.length; i++) {
+            int nextIndex = i + rand.nextInt(nums.length - i);
+            swap(nums, i, nextIndex);
+        }
     }
     private void sort(int[] nums, int left, int right) {
         if (left >= right) {
             return;
         }
-        int mid = left + (right - left) / 2;
-        sort(nums, left, mid);
-        sort(nums, mid + 1, right);
-        merge(nums, left, right, mid);
+        int pivot = partition(nums, left, right);
+        sort(nums, left, pivot - 1);
+        sort(nums, pivot + 1, right);
     }
-    private void merge(int[] nums, int left, int right, int mid) {
-        int leftP = left, rightP = mid + 1;
-        int arrayP = left;
-        while (leftP <= mid && rightP <= right) {
-            if (nums[leftP] < nums[rightP]) {
-                temp[arrayP++] = nums[leftP++];
-            } else {
-                temp[arrayP++] = nums[rightP++];
+    private int partition(int[] nums, int left, int right) {
+        int pivot = nums[left];
+        int leftP = left;
+        int rightP = right;
+        while (leftP < rightP) {
+            while (leftP < rightP && nums[rightP] >= pivot) {
+                rightP--;
             }
+            while (leftP < rightP && nums[leftP] <= pivot) {
+                leftP++;
+            }
+            swap(nums, leftP, rightP);
         }
-
-        while (leftP <= mid) {
-            temp[arrayP++] = nums[leftP++];
-        }
-        while (rightP <= right) {
-            temp[arrayP++] = nums[rightP++];
-        }
-
-        for (int i = left; i <= right; i++) {
-            nums[i] = temp[i];
-        }
+        swap(nums, left, rightP);
+        return rightP;
+    }
+    private void swap(int[] nums, int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
     }
 }
