@@ -1,21 +1,21 @@
 class Solution {
-    public List<Integer> findClosestElements(int[] nums, int k, int x) {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
         List<Integer> result = new ArrayList<>();
-        int closeIdx = binarySearch(nums, 0, nums.length - 1, x);
-        int leftBound = closeIdx - k, rightBound = closeIdx + k;
+        int xIdx = binarySearch(arr, 0, arr.length - 1, x);
 
-        leftBound = Math.max(0, leftBound);
-        rightBound = Math.min(nums.length - 1, rightBound);
+        int leftBound = xIdx - k, rightBound = xIdx + k;
+        leftBound = Math.max(leftBound, 0);
+        rightBound = Math.min(arr.length - 1, rightBound);
 
         while (rightBound - leftBound + 1 > k) {
-            if (x - nums[leftBound] > nums[rightBound] - x) {
+            if (x - arr[leftBound] > arr[rightBound] - x) {
                 leftBound++;
-            } else {
+            } else if (x - arr[leftBound] <= arr[rightBound] - x) {
                 rightBound--;
             }
         }
         for (int i = leftBound; i <= rightBound; i++) {
-            result.add(nums[i]);
+            result.add(arr[i]);
         }
         return result;
     }
@@ -29,7 +29,7 @@ class Solution {
             } else if (nums[mid] < target) {
                 left = mid + 1;
             }
-        }             
-        return left;
+        }
+        return left; //Maintain insertion order
     }
 }
