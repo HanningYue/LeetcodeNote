@@ -10,35 +10,21 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        return divide(lists, 0, lists.length - 1);
-    }
-    private ListNode divide(ListNode[] lists, int left, int right) {
-        if (left > right) {
-            return null;
+        PriorityQueue<ListNode> minHeap = new PriorityQueue<>((a, b) -> a.val - b.val);
+        for (ListNode node : lists) {
+            if (node != null)
+                minHeap.offer(node);
         }
-        if (left == right) {
-            return lists[left];
-        }
-        int mid = left + (right - left) / 2;
-        ListNode leftPart = divide(lists, left, mid);
-        ListNode rightPart = divide(lists, mid + 1, right);
-        ListNode mergedList = conquer(leftPart, rightPart);
-        return mergedList;
-    }
-    private ListNode conquer(ListNode p1, ListNode p2) {
         ListNode dummy = new ListNode(-1);
         ListNode current = dummy;
-        while (p1 != null && p2 != null) {
-            if (p1.val > p2.val) {
-                current.next = p2;
-                p2 = p2.next;
-            } else {
-                current.next = p1;
-                p1 = p1.next;
+        while (!minHeap.isEmpty()) {
+            ListNode smallest = minHeap.poll();
+            current.next = smallest;
+            if (smallest.next != null) {
+                minHeap.offer(smallest.next);
             }
             current = current.next;
         }
-        current.next = p1 == null ? p2 : p1;
         return dummy.next;
     }
 }
