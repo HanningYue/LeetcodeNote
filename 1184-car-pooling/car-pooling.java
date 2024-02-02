@@ -12,7 +12,7 @@ class Solution {
         for (int[] trip : trips) {
             int value = trip[0];
             int from = trip[1];
-            int to = trip[2];
+            int to = trip[2] - 1;
             prefix(result, from, to, value);
         }
         if (result[0] > capacity) {
@@ -28,8 +28,8 @@ class Solution {
     }
     private void prefix(int[] nums, int left, int right, int value) {
         nums[left] += value;
-        if (right < nums.length) {
-            nums[right] -= value;
+        if (right + 1 < nums.length) {
+            nums[right + 1] -= value;
         }
     }
 }
