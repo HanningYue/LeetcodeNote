@@ -1,30 +1,31 @@
+class Pair {
+    int value;
+    int arrayNum;
+    int index;
+    public Pair(int value, int arrayNum, int index) {
+        this.value = value;
+        this.index = index;
+        this.arrayNum = arrayNum;
+    }
+}
 class Solution {
     public int kthSmallest(int[][] matrix, int k) {
-        int left = matrix[0][0], right = matrix[matrix.length - 1][matrix.length - 1];
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (countLessThanK(matrix, mid) < k) {
-                left = mid + 1;
-            } else if (countLessThanK(matrix, mid) > k) {
-                right = mid - 1;
-            } else if (countLessThanK(matrix, mid) == k) {
-                right = mid - 1;
-            }
+        PriorityQueue<Pair> minHeap = new PriorityQueue<Pair>((a, b) -> a.value - b.value);
+        for (int i = 0; i < matrix.length; i++) {
+            minHeap.offer(new Pair(matrix[i][0], i, 0));
         }
-        return left;
-    }
-    private int countLessThanK(int[][] matrix, int target) {
-        int row = matrix.length - 1;;
-        int col = 0;
-        int count = 0;
-        while (col < matrix.length && row >= 0) {
-            if (matrix[row][col] <= target) {
-                count += row + 1;
-                col++;
-            } else if (matrix[row][col] > target) {
-                row--;
+        
+        int arrayNum = 0, index = 0, value = 0;
+        while (!minHeap.isEmpty() && k > 0) {
+            Pair current = minHeap.poll();
+            arrayNum = current.arrayNum;
+            index = current.index;
+            
+            if (index + 1 < matrix[arrayNum].length) {
+                minHeap.offer(new Pair(matrix[arrayNum][index + 1], arrayNum, index + 1));
             }
+            k--;
         }
-        return count;
+        return matrix[arrayNum][index];
     }
 }
