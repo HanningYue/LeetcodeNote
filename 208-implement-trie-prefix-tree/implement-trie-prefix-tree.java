@@ -1,14 +1,15 @@
 class TrieNode {
-    TrieNode[] children = new TrieNode[26];
+    TrieNode[] children;
     boolean isEnd = false;
     public TrieNode() {
+        children = new TrieNode[26];
         for (int i = 0; i < 26; i++) {
             children[i] = null;
         }
     }
 }
 class Trie {
-    private TrieNode root;
+    TrieNode root;
     public Trie() {
         root = new TrieNode();
     }
@@ -29,7 +30,7 @@ class Trie {
         for (char c : word.toCharArray()) {
             if (node.children[c - 'a'] == null) {
                 return false;
-            } 
+            }
             node = node.children[c - 'a'];
         }
         return node.isEnd;
