@@ -1,9 +1,8 @@
-//升序的第nums.length - k个
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         k = nums.length - k;
         shuffle(nums);
-        
+
         int left = 0, right = nums.length - 1;
         while (left <= right) {
             int pivot = partition(nums, left, right);
@@ -12,7 +11,7 @@ class Solution {
             } else if (pivot > k) {
                 right = pivot - 1;
             } else if (pivot < k) {
-                left= pivot + 1;
+                left = pivot + 1;
             }
         }
         return -1;
@@ -29,8 +28,8 @@ class Solution {
             }
             swap(nums, leftP, rightP);
         }
-        swap(nums, left, leftP);
-        return leftP;
+        swap(nums, left, rightP);
+        return rightP;
     }
     private void shuffle(int[] nums) {
         Random rand = new Random();
