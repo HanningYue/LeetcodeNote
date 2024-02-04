@@ -1,18 +1,23 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
+        Comparator<Integer> comparator = (a, b) -> nums[a] == nums[b] 
+        ? Integer.compare(a, b) : Integer.compare(nums[a], nums[b]);
+
+        TreeSet<Integer> maxSet = new TreeSet<>(comparator.reversed());
         int[] result = new int[nums.length - k + 1];
-        Deque<Integer> deque = new ArrayDeque<>();//Index
-        for (int i = 0; i < nums.length; i++) {
-            while (!deque.isEmpty() && nums[i] > nums[deque.peekLast()]) {
-                deque.pollLast();
+        int slow = 0, fast = 0;
+        while (fast < nums.length) {
+            maxSet.add(fast);
+            
+            if (fast - slow + 1 > k) {
+                maxSet.remove(slow);
+                slow++;
             }
-            deque.offerLast(i);
-            if (i - k + 1 > deque.peekFirst()) {
-                deque.pollFirst();
+            
+            if (fast - slow + 1 == k) {
+                result[slow] = nums[maxSet.first()];
             }
-            if (i - k + 1 >= 0) {
-                result[i - k + 1] = nums[deque.peekFirst()];
-            }
+            fast++;
         }
         return result;
     }
