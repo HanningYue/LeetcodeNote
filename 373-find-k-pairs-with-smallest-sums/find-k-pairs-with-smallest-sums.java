@@ -1,30 +1,38 @@
 class Pair {
+    int sum;
     int num1;
     int num2;
-    int num2Index;
-    public Pair(int num1, int num2, int num2Index) {
+    public Pair(int num1, int num2) {
+        this.sum = num1 + num2;
         this.num1 = num1;
         this.num2 = num2;
-        this.num2Index = num2Index;
     }
 }
 class Solution {
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         List<List<Integer>> result = new ArrayList<>();
-        PriorityQueue<Pair> minHeap = new PriorityQueue<Pair>((a, b) -> (a.num1 + a.num2) - (b.num1 + b.num2));
+        PriorityQueue<Pair> maxHeap = new PriorityQueue<>((a, b) -> b.sum - a.sum);
         for (int i = 0; i < nums1.length && i < k; i++) {
-            minHeap.offer(new Pair(nums1[i], nums2[0], 0));
-        }
+            for (int j = 0; j < nums2.length && j < k; j++) {
+                Pair newPair = new Pair(nums1[i], nums2[j]);
+                
+                if (maxHeap.size() < k) {
+                    maxHeap.offer(newPair);
+                } 
+                else if (maxHeap.size() >= k) {
+                    if (newPair.sum >= maxHeap.peek().sum) {
+                        break;
+                    } else if (newPair.sum < maxHeap.peek().sum) {
+                        maxHeap.poll();
+                        maxHeap.offer(newPair);
+                    }
+                }
 
-        while (!minHeap.isEmpty() && k > 0) {
-            Pair current = minHeap.poll();
-            int num1 = current.num1, num2 = current.num2, num2Index = current.num2Index;
-
-            result.add(Arrays.asList(num1, num2));
-
-            if (num2Index + 1 < nums2.length) {
-                minHeap.offer(new Pair(num1, nums2[num2Index + 1], num2Index + 1));
             }
+        }
+        while (!maxHeap.isEmpty() && k > 0) {
+            Pair pair = maxHeap.poll();
+            result.add(Arrays.asList(pair.num1, pair.num2));
             k--;
         }
         return result;
