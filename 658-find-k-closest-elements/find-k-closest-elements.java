@@ -1,25 +1,36 @@
 class Solution {
     public List<Integer> findClosestElements(int[] nums, int distance, int target) {
         List<Integer> result = new ArrayList<>();
-        PriorityQueue<int[]> minHeap = new PriorityQueue<>(new Comparator<int[]>() { // {value, diff}
-            public int compare(int[] a, int[] b) {
-                if (a[1] == b[1]) {
-                    return a[0] - b[0];
-                }
-                return a[1] - b[1];
+        int targetIdx = binarySearch(nums, 0, nums.length - 1, target);
+        
+        int left = targetIdx - distance;
+        int right = targetIdx + distance;
+        left = Math.max(0, left);
+        right = Math.min(nums.length - 1, right);
+
+        while (right - left + 1 > distance) {
+            if (nums[right] - target >= target - nums[left]) {
+                right--;
+            } else if (nums[right] - target < target - nums[left]) {
+                left++;
             }
-        });
-
-        for (int i = 0; i < nums.length; i++) {
-            int diff = Math.abs(nums[i] - target);
-            minHeap.offer(new int[]{nums[i], diff});
         }
-
-        while (!minHeap.isEmpty() && distance > 0) {
-            result.add(minHeap.poll()[0]);
-            distance--;
+        for (int i = left; i <= right; i++) {
+            result.add(nums[i]);
         }
-        Collections.sort(result);
         return result;
+    }
+    private int binarySearch(int[] nums, int left, int right, int target) {
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                right = mid - 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            }
+        }
+        return left;
     }
 }
