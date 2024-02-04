@@ -22,12 +22,14 @@ class LRUCache {
             cache.put(key, value);
             makeRecent(key);
             return;
+        } 
+        else if (!cache.containsKey(key)) {
+            if (cache.size() >= this.capacity) {
+                int leastRecent = cache.keySet().iterator().next();
+                cache.remove(leastRecent);
+            }
+            cache.put(key, value);
         }
-        if (cache.size() >= this.capacity) {
-            int leastRecent = cache.keySet().iterator().next();
-            cache.remove(leastRecent);
-        }
-        cache.put(key, value);
     }
 }
 
