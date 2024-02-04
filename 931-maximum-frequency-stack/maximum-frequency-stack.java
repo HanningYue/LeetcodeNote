@@ -1,33 +1,34 @@
 class FreqStack {
-    Map<Integer, Integer> freqMap;
-    Map<Integer, Stack<Integer>> group;
+    Map<Integer, Integer> map;
+    Map<Integer, Stack<Integer>> mapStack;
     int maxFreq;
     public FreqStack() {
+        mapStack = new HashMap<>();
+        map = new HashMap<>();
         maxFreq = 0;
-        freqMap = new HashMap<>();
-        group = new HashMap<>();
     }
     
     public void push(int val) {
-        freqMap.put(val, freqMap.getOrDefault(val, 0) + 1);
-        int currentFreq = freqMap.get(val);
+        map.put(val, map.getOrDefault(val, 0) + 1);
+        int freq = map.get(val);
 
-        if (currentFreq > maxFreq) {
-            maxFreq = currentFreq;
+        if (freq > maxFreq) {
+            maxFreq = freq;
         }
-        
-        group.putIfAbsent(currentFreq, new Stack<>());
-        group.get(currentFreq).push(val);
+
+        mapStack.putIfAbsent(freq, new Stack<Integer>());
+        mapStack.get(freq).add(val);
     }
     
     public int pop() {
-        int val = group.get(maxFreq).pop();
-        freqMap.put(val, freqMap.get(val) - 1);
+        int result = mapStack.get(maxFreq).pop();
+        map.put(result, map.get(result) - 1);
 
-        if (group.get(maxFreq).size() == 0) {
+        if (mapStack.get(maxFreq).size() == 0) {
             maxFreq--;
         }
-        return val;
+
+        return result;
     }
 }
 
