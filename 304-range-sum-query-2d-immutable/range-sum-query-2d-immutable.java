@@ -3,8 +3,8 @@ class NumMatrix {
     public NumMatrix(int[][] matrix) {
         int m = matrix.length, n = matrix[0].length;
         presum = new int[m + 1][n + 1];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 presum[i + 1][j + 1] 
                 = presum[i][j + 1] + presum[i + 1][j] - presum[i][j] + matrix[i][j];
             }
