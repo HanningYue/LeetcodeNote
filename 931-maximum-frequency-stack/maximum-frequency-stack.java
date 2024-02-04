@@ -9,21 +9,21 @@ class FreqStack {
     }
     
     public void push(int val) {
-        int freq = freqMap.getOrDefault(val, 0) + 1;
-        freqMap.put(val, freq);
+        freqMap.put(val, freqMap.getOrDefault(val, 0) + 1);
+        int currentFreq = freqMap.get(val);
 
-        if (freq > maxFreq) {
-            maxFreq = freq;
+        if (currentFreq > maxFreq) {
+            maxFreq = currentFreq;
         }
         
-        group.putIfAbsent(freq, new Stack<>());
-        group.get(freq).push(val);
+        group.putIfAbsent(currentFreq, new Stack<>());
+        group.get(currentFreq).push(val);
     }
     
     public int pop() {
         int val = group.get(maxFreq).pop();
         freqMap.put(val, freqMap.get(val) - 1);
-        
+
         if (group.get(maxFreq).size() == 0) {
             maxFreq--;
         }
