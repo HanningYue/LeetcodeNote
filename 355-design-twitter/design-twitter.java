@@ -19,8 +19,8 @@ class Twitter {
     List<Tweet> allTweet;
     Map<Integer, User> userMap;
     public Twitter() {
-        userMap = new HashMap<>();
         allTweet = new ArrayList<>();
+        userMap = new HashMap<>();
     }
     private User getUser(int userId) {
         userMap.putIfAbsent(userId, new User(userId));
@@ -32,31 +32,30 @@ class Twitter {
     }
     
     public List<Integer> getNewsFeed(int userId) {
-        User user = userMap.get(userId);
+        User user = getUser(userId);
 
-        List<Integer> last10 = new ArrayList<>();
+        List<Integer> pastTen = new ArrayList<>();
         int i = allTweet.size() - 1;
-        while (last10.size() < 10 && i >= 0) {
+        while (i >= 0 && pastTen.size() < 10) {
             int posterId = allTweet.get(i).userId;
+            
             if (posterId == userId || user.followList.contains(posterId)) {
-                last10.add(allTweet.get(i).tweetId);
+                pastTen.add(allTweet.get(i).tweetId);
             }
             i--;
         }
-        return last10;
+        return pastTen;
     }
     
     public void follow(int followerId, int followeeId) {
         User follower = getUser(followerId);
         User followee = getUser(followeeId);
-
         follower.followList.add(followeeId);
     }
     
     public void unfollow(int followerId, int followeeId) {
         User follower = getUser(followerId);
         User followee = getUser(followeeId);
-
         if (follower.followList.contains(followeeId)) {
             follower.followList.remove(followeeId);
         }
