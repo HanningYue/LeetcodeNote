@@ -1,48 +1,46 @@
-class Solution {
-    public int[] findRedundantConnection(int[][] edges) {
-        UF uf = new UF(edges.length + 1);
-        for (int[] edge : edges) {
-            int vertexOne = edge[0] - 1;
-            int vertexTwo = edge[1] - 1;
-            if (uf.connected(vertexOne, vertexTwo)) {
-                return edge;
-            }
-            uf.union(vertexOne, vertexTwo);
-        }
-        return new int[]{};
-    }
-}
 class UF {
-    int[] parent;
-    int count;
-    public UF (int n) {
+    private int count;
+    private int[] parent;
+    public UF(int n) {
         this.count = n;
         parent = new int[n];
         for (int i = 0; i < n; i++) {
             parent[i] = i;
         }
     }
+    public int find(int x) {
+        if (parent[x] == x) {
+            return x;
+        }
+        return find(parent[x]);
+    }
     public void union(int p, int q) {
         int rootP = find(p);
         int rootQ = find(q);
-        if (rootP == rootQ) {
+        if (rootQ == rootP) {
             return;
         }
-        parent[rootP] = rootQ;
+        parent[rootQ] = rootP;
         count--;
     }
-    public int find(int x) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x]);
-        }
-        return parent[x];
-    }
     public boolean connected(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        return rootP == rootQ;
+        return find(p) == find(q);
     }
     public int count() {
         return count;
+    }
+}
+class Solution {
+    public int[] findRedundantConnection(int[][] edges) {
+        UF uf = new UF(edges.length + 1);
+        for (int[] edge : edges) {
+            int vertexOne = edge[0];
+            int vertexTwo = edge[1];
+            if (uf.connected(vertexOne, vertexTwo)) {
+                return edge;
+            }
+            uf.union(vertexOne, vertexTwo);
+        }
+        return new int[]{};
     }
 }
