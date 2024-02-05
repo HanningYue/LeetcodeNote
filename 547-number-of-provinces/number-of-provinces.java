@@ -1,21 +1,44 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
-        int result = 0;
-        boolean[] visited = new boolean[isConnected.length];
+        UF uf = new UF(isConnected.length);
         for (int i = 0; i < isConnected.length; i++) {
-            if (!visited[i]) {
-                dfs(isConnected, i, visited);
-                result++;
+            for (int j = 0; j < isConnected.length; j++) {
+                if (isConnected[i][j] == 1) {
+                    uf.union(i, j);
+                }
             }
         }
-        return result;
+        return uf.count;
     }
-    private void dfs(int[][] graph, int vertex, boolean[] visited) {
-        for (int i = 0; i < graph[vertex].length; i++) {
-            if (!visited[i] && graph[vertex][i] == 1) {
-                visited[i] = true;
-                dfs(graph, i, visited);
-            }
+}
+class UF {
+    int[] parent;
+    int count;
+    public UF(int numberOfVertex) {
+        parent = new int[numberOfVertex];
+        this.count = numberOfVertex;
+        for (int i = 0; i < numberOfVertex; i++) {
+            parent[i] = i;
         }
+    }
+    public int find(int vertex) {
+        if (parent[vertex] == vertex) {
+            return vertex;
+        }
+        return find(parent[vertex]);
+    }
+    public void union(int vertexOne, int vertexTwo) {
+        int parentOne = find(vertexOne);
+        int parentTwo = find(vertexTwo);
+        if (parentOne != parentTwo) {
+            parent[parentOne] = parentTwo;
+            count--;
+        }
+    }
+    public boolean connected(int vertexOne, int vertexTwo) {
+        return find(vertexOne) == find(vertexTwo);
+    }
+    public int count() {
+        return count;
     }
 }
