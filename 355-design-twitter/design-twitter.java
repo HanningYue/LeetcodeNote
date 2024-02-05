@@ -27,29 +27,29 @@ class Twitter {
     }
 
     List<Tweet> tweetList;
-    Map<Integer, User> map;
+    Map<Integer, User> userMap;
     public Twitter() {
         tweetList = new ArrayList<>();
-        map = new HashMap<>();
+        userMap = new HashMap<>();
     }
     
     public void postTweet(int userId, int tweetId) {
-        if (!map.containsKey(userId)) {
-            map.put(userId, new User(userId));
+        if (!userMap.containsKey(userId)) {
+            userMap.put(userId, new User(userId));
         }
         tweetList.add(new Tweet(userId, tweetId));
     }
     
     public List<Integer> getNewsFeed(int userId) {
-        List<Integer> last10 = new ArrayList<>();
-        if (!map.containsKey(userId)) {
-            map.put(userId, new User(userId));
+        if (!userMap.containsKey(userId)) {
+            userMap.put(userId, new User(userId));
         }
-
+        
+        List<Integer> last10 = new ArrayList<>();
         int i = tweetList.size() - 1;
         while (last10.size() < 10 && i >= 0) {
             int postedId = tweetList.get(i).userId;
-            if (postedId == userId || map.get(userId).follows.contains(postedId)) 
+            if (postedId == userId || userMap.get(userId).follows.contains(postedId)) 
             {
                 last10.add(tweetList.get(i).tweetId);
             }
@@ -59,24 +59,26 @@ class Twitter {
     }
     
     public void follow(int followerId, int followeeId) {
-        if (!map.containsKey(followerId)) {
-            map.put(followerId, new User(followerId));
+        if (!userMap.containsKey(followerId)) {
+            userMap.put(followerId, new User(followerId));
         }
-        if (!map.containsKey(followeeId)) {
-            map.put(followeeId, new User(followeeId));
+        if (!userMap.containsKey(followeeId)) {
+            userMap.put(followeeId, new User(followeeId));
         }
-        User user = map.get(followerId);
+
+        User user = userMap.get(followerId);
         user.follows.add(followeeId);
     }
     
     public void unfollow(int followerId, int followeeId) {
-        if (!map.containsKey(followerId)) {
-            map.put(followerId, new User(followerId));
+        if (!userMap.containsKey(followerId)) {
+            userMap.put(followerId, new User(followerId));
         }
-        if (!map.containsKey(followeeId)) {
-            map.put(followeeId, new User(followeeId));
+        if (!userMap.containsKey(followeeId)) {
+            userMap.put(followeeId, new User(followeeId));
         }
-        User user = map.get(followerId);
+        
+        User user = userMap.get(followerId);
         user.follows.remove(followeeId);   
     }
 }
