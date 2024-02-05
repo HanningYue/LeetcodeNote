@@ -5,25 +5,23 @@ class Solution {
         for (int i = 0; i < n; i++) {
             graph.add(new ArrayList<>());
         }
-        for (int[] dislike : dislikes) {
-            int personA = dislike[0] - 1;
-            int personB = dislike[1] - 1;
+        for (int[] person : dislikes) {
+            int personA = person[0] - 1;
+            int personB = person[1] - 1;
             graph.get(personA).add(personB);
             graph.get(personB).add(personA);
         }
+
         boolean[] visited = new boolean[n];
         boolean[] color = new boolean[n];
         for (int i = 0; i < n; i++) {
-            checkBipartite(i, graph, visited, color);
+            if (!visited[i]) {
+                dfs(i, graph, visited, color);
+            }
         }
-        if (bipartite) {
-            return true;
-        }
-        return false;
+        return bipartite;
     }
-    private void checkBipartite(int vertex, List<List<Integer>> graph, 
-    boolean[] visited, boolean[] color) 
-    {
+    private void dfs(int vertex, List<List<Integer>> graph, boolean[] visited, boolean[] color) {
         if (!bipartite) {
             return;
         }
@@ -31,10 +29,10 @@ class Solution {
         for (int neighbor : graph.get(vertex)) {
             if (!visited[neighbor]) {
                 color[neighbor] = !color[vertex];
-                checkBipartite(neighbor, graph, visited, color);
-            } 
+                dfs(neighbor, graph, visited, color);
+            }
             else {
-                if (color[vertex] == color[neighbor]) {
+                if (color[neighbor] == color[vertex]) {
                     bipartite = false;
                     return;
                 }
