@@ -21,7 +21,7 @@ class Solution {
             else {
                 if (color[neighbor] == color[vertex]) {
                     bipartite = false;
-                    return;
+                    
                 }
             }
         }
