@@ -4,7 +4,9 @@ class Solution {
         boolean[] visited = new boolean[graph.length];
         boolean[] color = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
-            dfs(i, graph, visited, color);
+            if (!visited[i]) {
+                dfs(i, graph, visited, color);
+            }
         }
         return bipartite;
     }
@@ -21,7 +23,7 @@ class Solution {
             else {
                 if (color[neighbor] == color[vertex]) {
                     bipartite = false;
-                    
+                    return;
                 }
             }
         }
