@@ -1,26 +1,27 @@
 class Solution {
-    boolean[] color, visited;
-    boolean isBipartite = true;;
+    private boolean bipartite = true;
     public boolean isBipartite(int[][] graph) {
-        color = new boolean[graph.length];
-        visited = new boolean[graph.length];
+        boolean[] visited = new boolean[graph.length];
+        boolean[] color = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
-            traverse(graph, i);
+            dfs(i, graph, visited, color);
         }
-        return isBipartite;
+        return bipartite;
     }
-    private void traverse(int[][] graph, int vertex) {
-        if (!isBipartite) {
+    private void dfs(int vertex, int[][] graph, boolean[] visited, boolean[] color) {
+        if (!bipartite) {
             return;
         }
         visited[vertex] = true;
         for (int neighbor : graph[vertex]) {
             if (!visited[neighbor]) {
                 color[neighbor] = !color[vertex];
-                traverse(graph, neighbor);
-            } else {
+                dfs(neighbor, graph, visited, color);
+            }
+            else {
                 if (color[neighbor] == color[vertex]) {
-                    isBipartite = false;
+                    bipartite = false;
+                    return;
                 }
             }
         }
