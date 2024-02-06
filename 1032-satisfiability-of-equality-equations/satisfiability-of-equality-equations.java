@@ -1,3 +1,34 @@
+class UF {
+    private int count;
+    private int[] parent;
+    public UF(int numberOfVertex) {
+        this.count = numberOfVertex;
+        parent = new int[numberOfVertex];
+        for (int i = 0; i < numberOfVertex; i++) {
+            parent[i] = i;
+        }
+    }
+    public int find(int vertex) {
+        if (parent[vertex] != vertex) {
+            parent[vertex] = find(parent[vertex]);
+        }
+        return parent[vertex];
+    }
+    public void union(int vertexOne, int vertexTwo) {
+        int parentOne = find(vertexOne);
+        int parentTwo = find(vertexTwo);
+        if (parentOne != parentTwo) {
+            parent[parentOne] = parentTwo;
+            count--;
+        }
+    }
+    public boolean connected(int vertexOne, int vertexTwo) {
+        return find(vertexOne) == find(vertexTwo);
+    }
+    public int count() {
+        return count;
+    }
+}
 class Solution {
     public boolean equationsPossible(String[] equations) {
         UF uf = new UF(26);
@@ -18,39 +49,5 @@ class Solution {
             }
         }
         return true;
-    }
-}
-class UF{
-    int count;
-    int[] parent;
-    public UF (int n) {
-        this.count = n;
-        parent = new int[n];
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-        }
-    }
-    public void union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if (rootP == rootQ) {
-            return;
-        }
-        parent[rootP] = rootQ;
-        count--;
-    }
-    public boolean connected(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        return rootP == rootQ;
-    }
-    public int find(int x) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x]);
-        }
-        return parent[x];
-    }
-    public int count() {
-        return count;
     }
 }
