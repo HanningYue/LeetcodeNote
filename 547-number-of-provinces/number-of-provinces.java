@@ -2,21 +2,21 @@ class Solution {
     public int findCircleNum(int[][] isConnected) {
         UF uf = new UF(isConnected.length);
         for (int i = 0; i < isConnected.length; i++) {
-            for (int j = i + 1; j < isConnected.length; j++) {
+            for (int j = 0; j < isConnected[i].length; j++) {
                 if (isConnected[i][j] == 1) {
                     uf.union(i, j);
                 }
             }
         }
-        return uf.count;
+        return uf.count();
     }
 }
 class UF {
-    int[] parent;
-    int count;
+    private int count;
+    private int[] parent;
     public UF(int numberOfVertex) {
-        parent = new int[numberOfVertex];
         this.count = numberOfVertex;
+        parent = new int[numberOfVertex];
         for (int i = 0; i < numberOfVertex; i++) {
             parent[i] = i;
         }
