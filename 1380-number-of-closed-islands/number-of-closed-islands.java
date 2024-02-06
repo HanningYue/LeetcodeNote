@@ -12,11 +12,11 @@ class Solution {
         return count;
     }
     private boolean dfs(int[][] grid, int row, int col, boolean[][] visited) {
+        if ((grid[row][col] == 0) && (row == 0 || row == grid.length - 1 || col == 0 || col == grid[0].length - 1)) {
+            return false;
+        }
         if (grid[row][col] == 1 || visited[row][col]) {
             return true;
-        }
-        if (row == 0 || row == grid.length - 1 || col == 0 || col == grid[0].length - 1) {
-            return false;
         }
         int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         boolean closed = true;
