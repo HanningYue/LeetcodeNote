@@ -22,10 +22,10 @@ class UF {
         }
     }
     public int find(int vertex) {
-        if (parent[vertex] == vertex) {
-            return vertex;
+        if (parent[vertex] != vertex) {
+            parent[vertex] = find(parent[vertex]);
         }
-        return find(parent[vertex]);
+        return parent[vertex];
     }
     public void union(int vertexOne, int vertexTwo) {
         int parentOne = find(vertexOne);
