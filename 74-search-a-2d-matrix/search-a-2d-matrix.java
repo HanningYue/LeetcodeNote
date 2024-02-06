@@ -1,23 +1,24 @@
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        int m = matrix.length, n = matrix[0].length;
-        int start = 0, end = m * n - 1;
-        while (start <= end) {
-            int mid = start + (end - start) / 2;
-            if (oneDToTwoD(matrix, mid) == target) {
+        int n = matrix.length, m = matrix[0].length;
+        
+        int left = 0, right = n * m - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (oneDtoTwoD(matrix, mid) == target) {
                 return true;
-            } else if (oneDToTwoD(matrix, mid) < target) {
-                start = mid + 1;
-            } else {
-                end = mid - 1;
+            } else if (oneDtoTwoD(matrix, mid) < target) {
+                left = mid + 1;
+            } else if (oneDtoTwoD(matrix, mid) > target) {
+                right = mid - 1;
             }
         }
         return false;
     }
-    private int oneDToTwoD (int[][] matrix, int index) {
-        int m = matrix.length, n = matrix[0].length;
-        int twoDrow = index / n;
-        int twoDcol = index % n;
-        return matrix[twoDrow][twoDcol];
+    private int oneDtoTwoD(int[][] matrix, int index) {
+        int length = matrix[0].length;
+        int row = index / length;
+        int col = index % length;
+        return matrix[row][col];
     }
 }
