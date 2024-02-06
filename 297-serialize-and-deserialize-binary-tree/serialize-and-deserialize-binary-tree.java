@@ -21,16 +21,18 @@ public class Codec {
                 TreeNode current = queue.poll();
                 if (current == null) {
                     sb.append("#").append(",");
-                } else {
+                }
+                else if (current != null) {
                     sb.append(current.val).append(",");
                     queue.offer(current.left);
                     queue.offer(current.right);
                 }
             }
-        }
+        }        
         return sb.toString();
     }
 
+    // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         if (data.isEmpty() || data.length() == 0) {
             return null;
@@ -38,20 +40,18 @@ public class Codec {
 
         String[] tree = data.split(",");
         TreeNode root = new TreeNode(Integer.valueOf(tree[0]));
-        int index = 1;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
+        int index = 1;
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 TreeNode current = queue.poll();
-
                 String leftRoot = tree[index++];
                 if (!leftRoot.equals("#")) {
                     current.left = new TreeNode(Integer.valueOf(leftRoot));
                     queue.offer(current.left);
                 }
-
                 String rightRoot = tree[index++];
                 if (!rightRoot.equals("#")) {
                     current.right = new TreeNode(Integer.valueOf(rightRoot));
