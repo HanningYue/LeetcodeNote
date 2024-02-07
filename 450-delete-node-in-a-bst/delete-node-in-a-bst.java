@@ -20,23 +20,26 @@ class Solution {
         }
         if (root.val == key) {
             if (root.left == null) {
-                return root.right;
-            } else if (root.right == null) {
-                return root.left;
+                root = root.right;
+                return root;
+            } 
+            else if (root.right == null) {
+                root = root.left;
+                return root;
+            } 
+            else {
+                TreeNode rightMin = getRightMin(root.right);
+                root.val = rightMin.val;
+                root.right = deleteNode(root.right, rightMin.val);
             }
-            TreeNode minNode = getMin(root.right);
-            root.val = minNode.val;
-            root.right = deleteNode(root.right, minNode.val);
-        }
-        else if (root.val < key) {
+        } else if (root.val < key) {
             root.right = deleteNode(root.right, key);
-        }
-        else if (root.val > key) {
+        } else if (root.val > key) {
             root.left = deleteNode(root.left, key);
         }
         return root;
     }
-    private TreeNode getMin(TreeNode root) {
+    private TreeNode getRightMin(TreeNode root) {
         while (root.left != null) {
             root = root.left;
         }
