@@ -26,6 +26,6 @@ class Solution {
         } else if (root.val > val) {
             return searchBST(root.left, val);
         }
-        return null;
+        return root;
     }
 }
