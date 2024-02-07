@@ -1,35 +1,39 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
-        int pointer1 = s.length() - 1, pointer2 = t.length() - 1;
-        while (pointer1 >= 0 || pointer2 >= 0) {
-            int validOne = nextIdx(s, pointer1);
-            int validTwo = nextIdx(t, pointer2);
-            if (validOne < 0 && validTwo < 0) {
-                return true;
+        int sCount = 0, tCount = 0;
+        int i = s.length() - 1, j = t.length() - 1;
+        while (i >= 0 || j >= 0) {
+            while (i >= 0) {
+                if (s.charAt(i) == '#') {
+                    sCount++;
+                    i--;
+                } else if (sCount > 0) {
+                    sCount--;
+                    i--;
+                } else {
+                    break;
+                }
             }
-            if (validOne < 0 || validTwo < 0) {
+            while (j >= 0) {
+                if (t.charAt(j) == '#') {
+                    tCount++;
+                    j--;
+                } else if (tCount > 0) {
+                    tCount--;
+                    j--;
+                } else {
+                    break;
+                }
+            }
+            if (i >= 0 && j >= 0 && s.charAt(i) != t.charAt(j)) {
                 return false;
             }
-            if (s.charAt(validOne) != t.charAt(validTwo)) {
+            if ((i >= 0) != (j >= 0)) {
                 return false;
             }
-            pointer1 = validOne - 1;
-            pointer2 = validTwo - 1;
+            i--;
+            j--;
         }
         return true;
-    }
-    private int nextIdx(String s, int idx) {
-        int backSpace = 0;
-        while (idx >= 0) {
-            if (s.charAt(idx) == '#') {
-                backSpace++;
-            } else if (backSpace > 0) {
-                backSpace--;
-            } else if (backSpace == 0 && s.charAt(idx) != '#') {
-                break;
-            }
-            idx--;
-        }
-        return idx;
     }
 }
