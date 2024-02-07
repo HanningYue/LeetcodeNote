@@ -1,29 +1,17 @@
+//
 class Solution {
-    int[] dpTable;
     public int coinChange(int[] coins, int amount) {
-        dpTable = new int[amount + 1];
-        Arrays.fill(dpTable, -666);
-        return dp(coins, amount);
-    }
-    private int dp(int[] coins, int amount) {
-        if (amount == 0) {
-            return 0;
-        }
-        if (amount < 0) {
-            return -1;
-        }
-        if (dpTable[amount] != -666) {
-            return dpTable[amount];
-        }
-        int result = Integer.MAX_VALUE;
-        for (int coin : coins) {
-            int subproblem = dp(coins, amount - coin);
-            if (subproblem == -1) {
-                continue;
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+        for (int i = 0; i < dp.length; i++) {
+            for (int coin : coins) {
+                if (i - coin < 0) {
+                    continue;
+                }
+                dp[i] = Math.min(dp[i], dp[i - coin] + 1);
             }
-            result = Math.min(result, subproblem + 1);
         }
-        dpTable[amount] = (result == Integer.MAX_VALUE ? -1 : result);
-        return dpTable[amount];
+        return dp[amount] == amount + 1 ? -1 : dp[amount];
     }
 }
