@@ -20,29 +20,32 @@ class Solution {
         }
 
         int leftHeight = 1;
-        TreeNode traverseLeft = root;
-        while (traverseLeft.left != null) {
+        TreeNode leftCopy = root;
+        while (leftCopy.left != null) {
             leftHeight++;
-            traverseLeft = traverseLeft.left;
+            leftCopy = leftCopy.left;
         }
 
         int rightHeight = 1;
-        TreeNode traverseRight = root;
-        while (traverseRight.right != null) {
+        TreeNode rightCopy = root;
+        while (rightCopy.right != null) {
             rightHeight++;
-            traverseRight = traverseRight.right;
+            rightCopy = rightCopy.right;
         }
 
-        if (rightHeight == leftHeight) {
+        if (leftHeight == rightHeight) {
             return (int)Math.pow(2, leftHeight) - 1;
         }
 
         return notPerfect(root);
     }
     private int notPerfect(TreeNode root) {
-        int nodeInLeftSub = countNodes(root.left);
-        int nodeInRightSub = countNodes(root.right);
-        int countInCurrent = nodeInLeftSub + nodeInRightSub + 1;
-        return countInCurrent;
+        if (root == null) {
+            return 0;
+        }
+        int leftCount = notPerfect(root.left);
+        int rightCount = notPerfect(root.right);
+        int totalCount = leftCount + rightCount + 1;
+        return totalCount;
     }
 }
