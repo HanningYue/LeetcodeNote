@@ -1,20 +1,24 @@
 class Solution {
+    private Integer[] dpTable;
     public int lengthOfLIS(int[] nums) {
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp, 1);
-        
+        dpTable = new Integer[nums.length];
+        int maxLength = 0;
         for (int i = 0; i < nums.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (nums[j] < nums[i]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }        
+            maxLength = Math.max(maxLength, find(nums, i, dpTable));
+        }
+        return maxLength;
+    }
+    private int find(int[] nums, int index, Integer[] dpTable) {
+        if (dpTable[index] != null) {
+            return dpTable[index];
+        }
+        int maxLength = 1;
+        for (int i = 0; i < index; i++) {
+            if (nums[i] < nums[index]) {
+                maxLength = Math.max(maxLength, 1 + find(nums, i, dpTable));
             }
         }
-
-        int result = 0;
-        for (int i = 0; i < nums.length; i++) {
-            result = Math.max(result, dp[i]);
-        }
-        return result;
+        dpTable[index] = maxLength;
+        return maxLength;
     }
 }
