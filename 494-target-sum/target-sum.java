@@ -1,27 +1,27 @@
 class Solution {
-    int findTargetSumWays(int[] nums, int target) {
-        if (nums.length == 0) return 0;
-        return dp(nums, 0, target);
-    }
-
-    // 备忘录
-    HashMap<String, Integer> memo = new HashMap<>();
-    int dp(int[] nums, int i, int remain) {
-        // base case
-        if (i == nums.length) {
-            if (remain == 0) return 1;
+    public int findTargetSumWays(int[] nums, int target) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum < Math.abs(target) || (sum + target) % 2 == 1) {
             return 0;
         }
-        // 把它俩转成字符串才能作为哈希表的键
-        String key = i + "," + remain;
-        // 避免重复计算
-        if (memo.containsKey(key)) {
-            return memo.get(key);
+        sum = (sum + target) / 2;
+
+        int n = nums.length;
+        int[][] dpTable = new int[n + 1][sum + 1];
+        dpTable[0][0] = 1;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= sum; j++) {
+                int currentNum = nums[i - 1];
+                if (j < currentNum) {
+                    dpTable[i][j] = dpTable[i - 1][j];
+                } else {
+                    dpTable[i][j] = dpTable[i - 1][j] + dpTable[i - 1][j - currentNum];
+                }
+            }
         }
-        // 还是穷举
-        int result = dp(nums, i + 1, remain - nums[i]) + dp(nums, i + 1, remain + nums[i]);
-        // 记入备忘录
-        memo.put(key, result);
-        return result;
+        return dpTable[n][sum];
     }
 }
