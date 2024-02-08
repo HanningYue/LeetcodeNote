@@ -1,34 +1,30 @@
 class Solution {
-    int[][] dpTable;
+    private int[][] dpTable;
     public int numDistinct(String s, String t) {
         dpTable = new int[s.length()][t.length()];
         for (int[] row : dpTable) {
             Arrays.fill(row, -1);
-        }
+        }        
         return dp(s, 0, t, 0);
     }
-    
-    // 定义：s[i..] 的子序列中 t[j..] 出现的次数为 dp(s, i, t, j)
-    private int dp(String s, int i, String t, int j) {
-        if (j == t.length()) {
+    private int dp(String s, int sindex, String t, int tindex) {
+        if (tindex == t.length()) {
             return 1;
         }
-        if (s.length() - i < t.length() - j) {
+        if (s.length() - sindex < t.length() - tindex) {
             return 0;
         }
-        
-        if (dpTable[i][j] != -1) {
-            return dpTable[i][j];
+        if (dpTable[sindex][tindex] != -1) {
+            return dpTable[sindex][tindex];
         }
 
         int result = 0;
-        if (s.charAt(i) == t.charAt(j)) {
-            result += dp(s, i + 1, t, j + 1) + dp(s, i + 1, t, j);
+        if (s.charAt(sindex) == t.charAt(tindex)) {
+            result += dp(s, sindex + 1, t, tindex) + dp(s, sindex + 1, t, tindex + 1);
+        } else {
+            result += dp(s, sindex + 1, t, tindex);
         }
-        else {
-            result += dp(s, i + 1, t, j);
-        }
-        dpTable[i][j] = result;
+        dpTable[sindex][tindex] = result;
         return result;
     }
 }
