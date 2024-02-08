@@ -3,23 +3,23 @@ class Solution {
         if (nums.length == 0) {
             return 0;
         }        
-        backTrack(nums, 0, target);
+        backTrack(nums, 0, target, 0);
         return result;
     }
     private int result = 0;
-    private void backTrack(int[] nums, int index, int remain) {
+    private void backTrack(int[] nums, int index, int target, int sum) {
         if (index == nums.length) {
-            if (remain == 0) {
+            if (target == sum) {
                 result++;
             }
             return;
         }
-        remain += nums[index];
-        backTrack(nums, index + 1, remain);
-        remain -= nums[index];
+        sum += nums[index];
+        backTrack(nums, index + 1, target, sum);
+        sum -= nums[index];
 
-        remain -= nums[index];
-        backTrack(nums, index + 1, remain);
-        remain += nums[index];
+        sum -= nums[index];
+        backTrack(nums, index + 1, target, sum);
+        sum += nums[index];
     }
 }
