@@ -4,7 +4,7 @@ class Solution {
         dpTable = new int[s.length()][t.length()];
         for (int[] row : dpTable) {
             Arrays.fill(row, -1);
-        }        
+        }
         return dp(s, 0, t, 0);
     }
     private int dp(String s, int sindex, String t, int tindex) {
@@ -17,10 +17,9 @@ class Solution {
         if (dpTable[sindex][tindex] != -1) {
             return dpTable[sindex][tindex];
         }
-
         int result = 0;
         if (s.charAt(sindex) == t.charAt(tindex)) {
-            result += dp(s, sindex + 1, t, tindex) + dp(s, sindex + 1, t, tindex + 1);
+            result += dp(s, sindex + 1, t, tindex + 1) + dp(s, sindex + 1, t, tindex);
         } else {
             result += dp(s, sindex + 1, t, tindex);
         }
