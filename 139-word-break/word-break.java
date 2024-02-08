@@ -1,13 +1,12 @@
 class Solution {
-    private int[] dpTable;
+    int[] dpTable;
     public boolean wordBreak(String s, List<String> wordDict) {
         dpTable = new int[s.length()];
         Arrays.fill(dpTable, -1);
         Set<String> set = new HashSet<>(wordDict);
-        return dp(s, set, 0);
+        return dp(s, 0, set);
     }
-
-    private boolean dp(String s, Set<String> set, int index) {
+    private boolean dp(String s, int index, Set<String> set) {
         if (index == s.length()) {
             return true;
         }
@@ -17,8 +16,8 @@ class Solution {
         for (int length = 1; index + length <= s.length(); length++) {
             String prefix = s.substring(index, index + length);
             if (set.contains(prefix)) {
-                boolean subproblem = dp(s, set, index + length);
-                if (subproblem == true) {
+                boolean subproblem = dp(s, index + length, set);
+                if (subproblem) {
                     dpTable[index] = 1;
                     return true;
                 }
