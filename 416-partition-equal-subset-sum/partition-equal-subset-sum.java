@@ -16,10 +16,11 @@ class Solution {
         }
         for (int i = 1; i <= nums.length; i++) {
             for (int j = 1; j <= sum; j++) {
-                if (j - nums[i - 1] < 0) {
+                int currentWeight = nums[i - 1];
+                if (j - currentWeight < 0) {
                     dpTable[i][j] = dpTable[i - 1][j];
                 } else {
-                    dpTable[i][j] = dpTable[i - 1][j] || dpTable[i - 1][j - nums[i - 1]];
+                    dpTable[i][j] = dpTable[i - 1][j] || dpTable[i - 1][j - currentWeight];
                 }
             }
         }
