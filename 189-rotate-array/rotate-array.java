@@ -1,8 +1,3 @@
-/*
-7 6 5 4 3 2 1
-      k
-5 6 7 1 2 3 4
-*/
 class Solution {
     public void rotate(int[] nums, int k) {
         int n = nums.length;
