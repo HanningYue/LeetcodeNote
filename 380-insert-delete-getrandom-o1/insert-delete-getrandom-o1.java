@@ -32,7 +32,7 @@ class RandomizedSet {
     
     public int getRandom() {
         Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
+        return list.get(rand.nextInt(0, list.size()));
     }
 }
 
