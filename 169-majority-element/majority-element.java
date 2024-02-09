@@ -1,22 +1,22 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        return divide(nums, 0, nums.length - 1);
+        return compare(nums, 0, nums.length - 1);
     }
-    private int divide(int[] nums, int start, int end) {
-        if (start >= end) {
-            return nums[start];
+    private int compare(int[] nums, int left, int right) {
+        if (left == right) {
+            return nums[left];
         }
-        int mid = start + (end - start) / 2;
-        int leftNumber = divide(nums, start, mid);
-        int rightNumber = divide(nums, mid + 1, end);
+        int mid = left + (right - left) / 2;
+        int leftNum = compare(nums, left, mid);
+        int rightNum = compare(nums, mid + 1, right);
 
-        int leftMax = conquer(nums, leftNumber, start, mid);
-        int rightMax = conquer(nums, rightNumber, mid + 1, end);
-        return leftMax > rightMax ? leftNumber : rightNumber;
+        int leftFrequent = find(nums, left, right, leftNum);
+        int rightFrequent = find(nums, left, right, rightNum);
+        return leftFrequent > rightFrequent ? leftNum : rightNum;
     }
-    private int conquer(int[] nums, int target, int start, int end) {
+    private int find(int[] nums, int left, int right, int target) {
         int count = 0;
-        for (int i = start; i <= end; i++) {
+        for (int i = left; i <= right; i++) {
             if (nums[i] == target) {
                 count++;
             }
