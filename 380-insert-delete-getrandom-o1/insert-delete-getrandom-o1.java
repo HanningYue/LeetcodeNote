@@ -1,6 +1,5 @@
-//When deleting, make sure the element is at the end of array, swap with current end
 class RandomizedSet {
-    Map<Integer, Integer> map; //{value, index in list}
+    Map<Integer, Integer> map; //Value, index in list
     List<Integer> list;
     public RandomizedSet() {
         list = new ArrayList<>();
@@ -11,7 +10,7 @@ class RandomizedSet {
         if (map.containsKey(val)) {
             return false;
         }
-        map.put(val, list.size());
+        map.put(val, list.size()); //Initially, at 0, because 0-indexed
         list.add(val);
         return true;
     }
@@ -21,19 +20,19 @@ class RandomizedSet {
             return false;
         }
         int indexInList = map.get(val);
-        int currentEnd = list.size() - 1;
-        int currentEndElement = list.get(list.size() - 1);
+        int currentEndIdx = list.size() - 1;
+        int currentEnd = list.get(currentEndIdx);
 
-        map.put(currentEndElement, indexInList);
+        map.put(currentEnd, indexInList);
         map.remove(val);
-        Collections.swap(list, indexInList, currentEnd);
+        Collections.swap(list, indexInList, currentEndIdx);
         list.remove(list.size() - 1);
-
         return true;
     }
     
     public int getRandom() {
-        return list.get((int)(Math.random() * list.size()));
+        Random rand = new Random();
+        return list.get(rand.nextInt(list.size()));
     }
 }
 
