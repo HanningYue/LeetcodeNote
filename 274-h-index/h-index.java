@@ -1,17 +1,19 @@
 class Solution {
     public int hIndex(int[] citations) {
-        int length = citations.length, hIndex = 0;
-        int[] frequency = new int[length + 1];
-        for (int i = 0; i < length; i++) {
-            if (citations[i] >= length) {
-                frequency[length]++;
+        Map<Integer, Integer> map = new HashMap<>();
+        int most = citations.length;
+        for (int i = 0; i < citations.length; i++) {
+            int currentCitation = citations[i];
+            if (currentCitation >= most) {
+                map.put(most, map.getOrDefault(most, 0) + 1);
             } else {
-                frequency[citations[i]]++;
+                map.put(currentCitation, map.getOrDefault(currentCitation, 0) + 1);
             }
         }
-        for (int i = length; i >= 0; i--) {
-            hIndex += frequency[i];
-            if (hIndex >= i) {
+        int totalCitation = 0;
+        for (int i = most; i >= 0; i--) {
+            totalCitation += map.getOrDefault(i, 0);
+            if (totalCitation >= i) {
                 return i;
             }
         }
