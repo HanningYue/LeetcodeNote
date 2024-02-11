@@ -8,7 +8,7 @@ class Solution {
         } else if (s.length() != 0 && t.length() == 0) {
             return false;
         }
-        
+
         int sPointer = 0, tPointer = 0;
         while (tPointer < t.length()) {
             char tChar = t.charAt(tPointer);
