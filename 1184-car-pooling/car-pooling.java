@@ -1,35 +1,42 @@
-/*
-0 2 2 5 5 3 3 0
-      3      -3
-9        -2
-0 1 2 3 4 5 6 7
-[2 1 5]
-[3 3 7]
-*/
 class Solution {
     public boolean carPooling(int[][] trips, int capacity) {
-        int[] result = new int[1001];
+        DiffArr diff = new DiffArr(new int[1001]);
         for (int[] trip : trips) {
-            int value = trip[0];
             int from = trip[1];
             int to = trip[2] - 1;
-            prefix(result, from, to, value);
+            int value = trip[0];
+            diff.increase(from, to, value);
         }
-        if (result[0] > capacity) {
-            return false;
-        }
-        for (int i = 1; i < result.length; i++) {
-            result[i] = result[i] + result[i - 1];
+        int[] result = diff.result();
+        for (int i = 0; i < result.length; i++) {
             if (result[i] > capacity) {
                 return false;
             }
         }
         return true;
     }
-    private void prefix(int[] nums, int left, int right, int value) {
-        nums[left] += value;
-        if (right + 1 < nums.length) {
-            nums[right + 1] -= value;
+}
+class DiffArr {
+    private int[] diff;
+    public DiffArr(int[] nums) {
+        diff = new int[nums.length];
+        diff[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            diff[i] = nums[i] - nums[i - 1];
         }
+    }
+    public void increase(int left, int right, int value) {
+        diff[left] += value;
+        if (right + 1 < diff.length) {
+            diff[right + 1] -= value;
+        }
+    }
+    public int[] result() {
+        int[] res = new int[diff.length];
+        res[0] = diff[0];
+        for (int i = 1; i < diff.length; i++) {
+            res[i] = res[i - 1] + diff[i];
+        }
+        return res;
     }
 }
