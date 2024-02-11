@@ -1,18 +1,18 @@
 class Solution {
     public int[] corpFlightBookings(int[][] bookings, int n) {
-        DiffArr diff = new DiffArr(new int[n]);
+        Diff diff = new Diff(new int[n]);
         for (int[] booking : bookings) {
-            int left = booking[0] - 1;
-            int right = booking[1] - 1;
+            int from = booking[0] - 1;
+            int to = booking[1] - 1;
             int value = booking[2];
-            diff.increase(left, right, value);
+            diff.increase(from, to, value);
         }        
         return diff.result();
     }
 }
-class DiffArr {
-    private int[] diff;
-    public DiffArr(int[] nums) {
+class Diff {
+    int[] diff;
+    public Diff(int[] nums) {
         diff = new int[nums.length];
         diff[0] = nums[0];
         for (int i = 1; i < nums.length; i++) {
