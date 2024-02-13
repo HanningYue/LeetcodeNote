@@ -1,3 +1,4 @@
+/*
 class Solution {
     public int lengthOfLastWord(String s) {
         int length = 0;
@@ -18,5 +19,12 @@ class Solution {
             fast--;
         }
         return length;
+    }
+}
+*/
+class Solution {
+    public int lengthOfLastWord(String s) {
+        String[] words = s.split(" ");
+        return words[words.length - 1].length();
     }
 }
