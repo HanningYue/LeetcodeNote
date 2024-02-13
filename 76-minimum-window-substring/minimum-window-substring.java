@@ -3,21 +3,22 @@ class Solution {
         Map<Character, Integer> map = new HashMap<>();
         for (char c : t.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
-        }        
-        int match = 0, length = Integer.MAX_VALUE;
+        }
+
         String result = "";
-        int slow = 0, fast = 0;
+        int minLength = Integer.MAX_VALUE;
+        int slow = 0, fast = 0, match = 0;
         while (fast < s.length()) {
-            char c = s.charAt(fast);
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) - 1);
-                if (map.get(c) >= 0) {
+            char sChar = s.charAt(fast);
+            if (map.containsKey(sChar)) {
+                map.put(sChar, map.get(sChar) - 1);
+                if (map.get(sChar) >= 0) {
                     match++;
-                }                
+                }
             }
             while (match == t.length()) {
-                if (length > fast - slow + 1) {
-                    length = fast - slow + 1;
+                if (fast - slow + 1 < minLength) {
+                    minLength = Math.min(minLength, fast - slow + 1);
                     result = s.substring(slow, fast + 1);
                 }
                 char slowChar = s.charAt(slow);
