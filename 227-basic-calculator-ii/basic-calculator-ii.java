@@ -25,7 +25,7 @@ class Solution {
                 } else if (sign == '-') {
                     stack.push(-num);
                 } else if (sign == '*') {
-                    stack.push(num * stack.pop());
+                    stack.push(stack.pop() * num);
                 } else if (sign == '/') {
                     stack.push(stack.pop() / num);
                 }
