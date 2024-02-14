@@ -6,7 +6,6 @@ class Solution {
                 queue.offer(c);
             }
         }
-        
         return helper(queue);
     }
     private int helper(Queue<Character> queue) {
@@ -32,10 +31,10 @@ class Solution {
                 }
                 sign = current;
                 num = 0;
-
-                if (current == ')') {
-                    break;
-                }
+            }
+            
+            if (current == ')') {
+                break;
             }
         }
 
