@@ -8,11 +8,9 @@ class Solution {
         for (int num : set) {
             if (!set.contains(num - 1)) {
                 int currentLength = 1;
-                int currentNum = num;
-            
-                while (set.contains(currentNum + 1)) {
+                while (set.contains(num + 1)) {
                     currentLength++;
-                    currentNum++;
+                    num++;
                 }
                 result = Math.max(result, currentLength);
             }
