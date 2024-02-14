@@ -2,10 +2,11 @@ class Solution {
     public int calculate(String s) {
         Queue<Character> queue = new LinkedList<>();
         for (char c : s.toCharArray()) {
-            if (c != ' ')
+            if (c != ' ') {
                 queue.offer(c);
+            }
         }
-        queue.offer('+');
+        
         return helper(queue);
     }
     private int helper(Queue<Character> queue) {
