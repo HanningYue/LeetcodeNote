@@ -4,7 +4,7 @@ class Solution {
         int pointer1 = m - 1;
         int pointer2 = n - 1;
 
-        while (lastP >= 0 && pointer2 >= 0 && pointer1 >= 0) {
+        while (pointer2 >= 0 && pointer1 >= 0) {
             if (nums2[pointer2] >= nums1[pointer1]) {
                 nums1[lastP--] = nums2[pointer2--];
             }
