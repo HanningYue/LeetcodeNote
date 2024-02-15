@@ -6,15 +6,10 @@ class Solution {
         }
 
         for (char c : ransomNote.toCharArray()) {
-            if (!map.containsKey(c)) {
+            if (!map.containsKey(c) || map.get(c) == 0) {
                 return false;
             }
             map.put(c, map.get(c) - 1);
-        }
-        for (int value : map.values()) {
-            if (value < 0) {
-                return false;
-            }
         }
         return true;
     }
