@@ -1,25 +1,27 @@
-/**
-Why ifAllClose? Think of this scenario: ))))))), we can add just one ( at the very front to make it valid. After that, we need to set the balance between opening and closing bracket to 0;
+/*
+( first, increase count
+) first, minus left count, if no left, need to add ( -> increase right count
+result need to add both count of ( and count of ) in case of unbalance
 */
 class Solution {
     public int minAddToMakeValid(String s) {
-        if (s.isEmpty()) {
-            return 0;
-        }
-        int balance = 0;
-        int ifAllClose = 0;
+        int numberOfLeft = 0;
+        int needToInsertRight = 0;
+
         for (char c : s.toCharArray()) {
             if (c == '(') {
-                balance++;
-            } else if (c == ')') {
-                balance--;
-            }
-            if (balance < 0) {
-                ifAllClose++;
-                balance = 0;
+                numberOfLeft++;
+            } 
+            else if (c == ')'){
+                numberOfLeft--;
+                if (numberOfLeft < 0) {
+                    needToInsertRight++;
+                    numberOfLeft = 0;
+                }
             }
         }
-        int sum = ifAllClose + balance;
-        return sum;
+        int result = 0;
+        result = result + numberOfLeft + needToInsertRight;
+        return result;
     }
 }
