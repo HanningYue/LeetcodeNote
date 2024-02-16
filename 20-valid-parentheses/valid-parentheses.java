@@ -11,15 +11,15 @@ class Solution {
                     return false;
                 }
             }
-        }   
+        }
         return stack.isEmpty();
     }
     private char leftOf(char c) {
         if (c == ')') {
             return '(';
-        } else if (c == ']') {
-            return '[';
+        } else if (c == '}') {
+            return '{';
         }
-        return '{';
+        return '[';
     }
 }
