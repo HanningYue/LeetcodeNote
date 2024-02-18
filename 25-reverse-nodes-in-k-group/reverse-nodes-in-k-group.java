@@ -10,6 +10,39 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode previous = null, current = head;
+        while (current != null) {
+            ListNode check = current;
+            int count = 0;
+            for (int i = 0; i < k - 1; i++) {
+                check = check.next;
+                if (check == null) {
+                    return head;
+                }
+                count++;
+            }
+
+            ListNode startOfSublist = previous;
+            ListNode endOfSublist = current;
+            for (int i = 0; i < k; i++) {
+                ListNode next = current.next;
+                current.next = previous;
+                previous = current;
+                current = next;
+            }
+
+            if (startOfSublist == null) {
+                head = previous;
+            } else {
+                startOfSublist.next = previous;
+            }
+            endOfSublist.next = current;
+            previous = endOfSublist;
+        }
+        return head;
+    }
+}
+/**
         if (head == null || head.next == null) {
             return head;
         }
@@ -35,34 +68,4 @@ class Solution {
         }
         return previous;
     }
-}
-/**
-        ListNode previous = null, current = head;
-        while (current != null) {
-            ListNode check = current;
-            int count = 0;
-            for (int i = 0; i < k && check != null; i++) {
-                check = check.next;
-                count++;
-            }
-            if (count < k) {
-                break;
-            }
-            ListNode previousOfSublist = previous;
-            ListNode endOfSublist = current;
-            for (int i = 0; i < k && current != null; i++) {
-                ListNode next = current.next;
-                current.next = previous;
-                previous = current;
-                current = next;
-            }
-            if (previousOfSublist != null) {
-                previousOfSublist.next = previous;
-            } else {
-                head = previous;
-            }
-            endOfSublist.next = current;
-            previous = endOfSublist;
-        }
-        return head;
 */
