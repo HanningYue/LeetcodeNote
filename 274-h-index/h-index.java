@@ -1,22 +1,23 @@
 class Solution {
     public int hIndex(int[] citations) {
         Map<Integer, Integer> map = new HashMap<>();
-        int most = citations.length;
-        for (int i = 0; i < citations.length; i++) {
-            int currentCitation = citations[i];
-            if (currentCitation >= most) {
-                map.put(most, map.getOrDefault(most, 0) + 1);
+        int atMost = citations.length;
+
+        for (int cit : citations) {
+            if (cit >= atMost) {
+                map.put(atMost, map.getOrDefault(atMost, 0) + 1);
             } else {
-                map.put(currentCitation, map.getOrDefault(currentCitation, 0) + 1);
+                map.put(cit, map.getOrDefault(cit, 0) + 1);
             }
         }
-        int totalCitation = 0;
-        for (int i = most; i >= 0; i--) {
-            totalCitation += map.getOrDefault(i, 0);
-            if (totalCitation >= i) {
+
+        int freq = 0;
+        for (int i = atMost; i >= 0; i--) {
+            freq += map.getOrDefault(i, 0);
+            if (freq >= i) {
                 return i;
             }
         }
-        return 0;
+        return -1;
     }
 }
