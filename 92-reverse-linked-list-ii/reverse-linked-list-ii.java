@@ -20,8 +20,9 @@ class Solution {
             current = current.next;
         }
 
-        ListNode previousOfSublist = previous;
-        ListNode endOfSublist = current;
+        ListNode listPrevious = previous;
+        ListNode listEnd = current;
+
         for (int i = 0; i < right - left + 1; i++) {
             ListNode next = current.next;
             current.next = previous;
@@ -29,12 +30,12 @@ class Solution {
             current = next;
         }
 
-        if (previousOfSublist != null) {
-            previousOfSublist.next = previous;
-        } else {
+        if (listPrevious == null) {
             head = previous;
+        } else {
+            listPrevious.next = previous;
         }
-        endOfSublist.next = current;
+        listEnd.next = current;
         return head;
     }
 }
