@@ -1,18 +1,16 @@
 class Solution {
     public int strStr(String haystack, String needle) {
-        if (haystack.length() < needle.length()) {
-            return -1;
-        }
+        Set<String> set = new HashSet<>();
+        set.add(needle);
 
-        int slow = 0;
-        for (int fast = 0; fast < haystack.length(); fast++) {
-            if (fast - slow + 1 == needle.length()) {
-                String sub = haystack.substring(slow, fast + 1);
-                if (sub.equals(needle)) {
-                    return slow;
-                }
-                slow++;
+        int slow = 0, fast = needle.length();
+        while (fast <= haystack.length()) {
+            String sub = haystack.substring(slow, fast);
+            if (set.contains(sub)) {
+                return slow;
             }
+            slow++;
+            fast++;
         }
         return -1;
     }
