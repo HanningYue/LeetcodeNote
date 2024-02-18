@@ -5,27 +5,26 @@ class Solution {
             sbArr[i] = new StringBuilder();
         }
 
-        int i = 0;
-        while (i < s.length()) {
+        int sIdx = 0;
+        while (sIdx < s.length()) {
             int currentRow = 0;
-            while (currentRow < numRows && i < s.length()) {
-                sbArr[currentRow].append(s.charAt(i));
-                i++;
+            while (currentRow < numRows && sIdx < s.length()) {
+                sbArr[currentRow].append(s.charAt(sIdx));
+                sIdx++;
                 currentRow++;
             }
             currentRow -= 2;
-
-            while (currentRow > 0 && i < s.length()) {
-                sbArr[currentRow].append(s.charAt(i));
-                i++;
+            while (currentRow > 0 && sIdx < s.length()) {
+                sbArr[currentRow].append(s.charAt(sIdx));
+                sIdx++;
                 currentRow--;
             }
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < sbArr.length; j++) {
-            sb.append(sbArr[j].toString());
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < sbArr.length; i++) {
+            result.append(sbArr[i].toString());
         }
-        return sb.toString();
+        return result.toString();
     }
 }
