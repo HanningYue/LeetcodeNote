@@ -20,16 +20,15 @@ class Solution {
             end = end.next;
             length++;
         }
-        end.next = head; //Circular
+        end.next = head;
 
-        ListNode endOfRotate = head;
         k = k % length;
+        ListNode endOfRotatedList = head;
         for (int i = 0; i < length - k - 1; i++) {
-            endOfRotate = endOfRotate.next;
+            endOfRotatedList = endOfRotatedList.next;
         }
-        ListNode newHead = endOfRotate.next;
-        endOfRotate.next = null;
-        
+        ListNode newHead = endOfRotatedList.next;
+        endOfRotatedList.next = null;
         return newHead;
     }
 }
