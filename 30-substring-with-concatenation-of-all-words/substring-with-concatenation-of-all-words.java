@@ -6,21 +6,22 @@ class Solution {
             map.put(word, map.getOrDefault(word, 0) + 1);
         }
         int eachWordLength = words[0].length();
-        int totalLength = words.length * eachWordLength;
+        int wordCount = words.length;
+        int permutationLength = eachWordLength * wordCount;
 
-        for (int i = 0; i + totalLength <= s.length(); i++) {
+        for (int i = 0; i + permutationLength <= s.length(); i++) {
             Map<String, Integer> localMap = new HashMap<>();
-            for (int j = 0; j < words.length; j++) {
+            for (int j = 0; j < wordCount; j++) {
                 int nextWordStart = i + j * eachWordLength;
                 String nextWord = s.substring(nextWordStart, nextWordStart + eachWordLength);
-                if (!map.containsKey(nextWord)){
+                if (!map.containsKey(nextWord)) {
                     break;
                 }
                 localMap.put(nextWord, localMap.getOrDefault(nextWord, 0) + 1);
-                if (map.get(nextWord) < localMap.get(nextWord)) {
+                if (localMap.get(nextWord) > map.get(nextWord)) {
                     break;
                 }
-                if (j + 1 == words.length) {
+                if (j + 1 == wordCount) {
                     result.add(i);
                 }
             }
