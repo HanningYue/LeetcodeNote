@@ -7,7 +7,7 @@ class Solution {
                 return new int[]{left + 1, right + 1};
             } else if (sum < target) {
                 left++;
-            } else {
+            } else if (sum > target) {
                 right--;
             }
         }
