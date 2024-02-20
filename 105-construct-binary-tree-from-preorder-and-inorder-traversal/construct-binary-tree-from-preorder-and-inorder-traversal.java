@@ -15,25 +15,28 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> map = new HashMap<>();//{inorder value, inorder index}
+        Map<Integer, Integer> map = new HashMap<>(); //{root, rootIdxInorder}
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
+        return construct(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
     }
-    private TreeNode build(int[] preorder, int preleft, int preright, int[] inorder, int inleft, int inright, 
-    Map<Integer, Integer> map)
+    private TreeNode construct(int[] preorder, int preleft, int preright, 
+    int[] inorder, int inleft, int inright, Map<Integer, Integer> map)
     {
         if (preleft > preright) {
             return null;
         }
-        TreeNode root = new TreeNode(preorder[preleft]);
-        int headIdx = map.get(root.val);
-        int leftSize = headIdx - inleft;
+        TreeNode head = new TreeNode(preorder[preleft]);
+        int headIdxInorder = map.get(head.val);
+        int leftSubTreeRange = headIdxInorder - inleft;
 
-        root.left = build(preorder, preleft + 1, preleft + leftSize, inorder, inleft, headIdx - 1, map);
-        root.right = build(preorder, preleft + leftSize + 1, preright, inorder, headIdx + 1, inright, map);
-
-        return root;
+        head.left = construct(preorder, preleft + 1, preleft + leftSubTreeRange, 
+        inorder, inleft, headIdxInorder - 1, map);
+        head.right = construct(preorder, preleft + leftSubTreeRange + 1, preright,
+        inorder, headIdxInorder + 1, inright, map);
+        return head;
     }
 }
+// 3 9 20 15 7
+// h l r  r  r
