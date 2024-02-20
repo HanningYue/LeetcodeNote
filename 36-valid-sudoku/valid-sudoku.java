@@ -7,7 +7,6 @@ class Solution {
                 if (board[i][j] != '.' && !rowSet.add(board[i][j])) {
                     return false;
                 }
-
                 if (board[j][i] != '.' && !colSet.add(board[j][i])) {
                     return false;
                 }
