@@ -14,20 +14,21 @@
  * }
  */
 class Solution {
-    int globalMax = Integer.MIN_VALUE;
+    private int globalMax = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
         dfs(root);
-        return globalMax;
+        return globalMax == Integer.MIN_VALUE ? 0 : globalMax;
     }
+    
     private int dfs(TreeNode root) {
         if (root == null) {
             return 0;
         }
+
         int left = dfs(root.left);
         if (left < 0) {
             left = 0;
         }
-
         int right = dfs(root.right);
         if (right < 0) {
             right = 0;
