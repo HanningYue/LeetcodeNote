@@ -1,12 +1,12 @@
 class Solution {
     public void gameOfLife(int[][] board) {
-        int[][] directions = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}};
+        int[][] directions = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {1, 0}, {1, -1}, {0, 1}, {1, 1}};
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
                 int count = 0;
                 for (int[] dir : directions) {
-                    int newRow = i + dir[0];
-                    int newCol = j + dir[1];
+                    int newRow = dir[0] + i;
+                    int newCol = dir[1] + j;
                     if (newRow >= 0 && newRow < board.length && newCol >= 0 && newCol < board[0].length
                     && (board[newRow][newCol] == 1 || board[newRow][newCol] == 2))
                     {
