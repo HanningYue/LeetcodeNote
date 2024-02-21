@@ -23,9 +23,18 @@ class Solution {
         if (root == null) {
             return 0;
         }
-        int left = Math.max(0, dfs(root.left));
-        int right = Math.max(0, dfs(root.right));
+        int left = dfs(root.left);
+        if (left < 0) {
+            left = 0;
+        }
+
+        int right = dfs(root.right);
+        if (right < 0) {
+            right = 0;
+        }
+
         globalMax = Math.max(globalMax, left + right + root.val);
-        return root.val + Math.max(left, right);
+        int currentMax = Math.max(left, right) + root.val;
+        return currentMax;
     }
 }
