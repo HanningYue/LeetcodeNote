@@ -9,20 +9,24 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return find(root, p, q);
+        return dfs(root, p, q);
     }
-    private TreeNode find(TreeNode root, TreeNode p, TreeNode q) {
+    private TreeNode dfs(TreeNode root, TreeNode p, TreeNode q) { //return the possible descendant subTree
         if (root == null) {
             return null;
         }
+//Scenario 1, current root is either p or q
         if (root.val == p.val || root.val == q.val) {
             return root;
         }
-        TreeNode findLeft = find(root.left, p, q);
-        TreeNode findRight = find(root.right, p, q);
-        if (findLeft != null && findRight != null) {
+        TreeNode left = dfs(root.left, p, q);
+        TreeNode right = dfs(root.right, p, q);
+//Scenario2, current root is the parent of p and q, why &&? 
+//because if one node is the parent of another, we back to scenario 1
+        if (left != null && right != null) {
             return root;
         }
-        return findLeft != null ? findLeft : findRight;
+
+        return left == null ? right : left;
     }
 }
