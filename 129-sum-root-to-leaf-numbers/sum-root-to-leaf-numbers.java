@@ -14,22 +14,20 @@
  * }
  */
 class Solution {
-    private int result = 0;
     public int sumNumbers(TreeNode root) {
         dfs(root, 0);
         return result;
     }
-    private void dfs(TreeNode root, int runningSum) {
+    private int result = 0;
+    private void dfs(TreeNode root, int sum) {
         if (root == null) {
             return;
         }
-        
-        runningSum = runningSum * 10 + root.val;
-        dfs(root.left, runningSum);
-        dfs(root.right, runningSum);
-        
+        sum = sum * 10 + root.val;
+        dfs(root.left, sum);
+        dfs(root.right, sum);
         if (root.left == null && root.right == null) {
-            result += runningSum;
+            result += sum;
         }
     }
 }
