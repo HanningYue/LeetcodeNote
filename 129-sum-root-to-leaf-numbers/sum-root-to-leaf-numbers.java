@@ -13,23 +13,23 @@
  *     }
  * }
  */
- //上一层*10 + 本层，遇到leaf node 返回当前sum
- //dfs 返回最后的sum
 class Solution {
-    int totalSum = 0;
+    private int result = 0;
     public int sumNumbers(TreeNode root) {
         dfs(root, 0);
-        return totalSum;
+        return result;
     }
-    private void dfs(TreeNode root, int pathSum) {
+    private void dfs(TreeNode root, int runningSum) {
         if (root == null) {
             return;
         }
-        pathSum = pathSum * 10 + root.val;
-        dfs(root.left, pathSum);
-        dfs(root.right, pathSum);
+        
+        runningSum = runningSum * 10 + root.val;
+        dfs(root.left, runningSum);
+        dfs(root.right, runningSum);
+        
         if (root.left == null && root.right == null) {
-            totalSum += pathSum;
+            result += runningSum;
         }
     }
 }
