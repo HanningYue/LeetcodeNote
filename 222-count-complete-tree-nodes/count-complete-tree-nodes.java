@@ -18,23 +18,22 @@ class Solution {
         if (root == null) {
             return 0;
         }
-
-        int leftHeight = 1;
-        TreeNode leftCopy = root;
-        while (leftCopy.left != null) {
+        
+        int leftHeight = 1, rightHeight = 1;
+        TreeNode goLeft = root;
+        while (goLeft.left != null) {
+            goLeft = goLeft.left;
             leftHeight++;
-            leftCopy = leftCopy.left;
         }
 
-        int rightHeight = 1;
-        TreeNode rightCopy = root;
-        while (rightCopy.right != null) {
+        TreeNode goRight = root;
+        while (goRight.right != null) {
+            goRight = goRight.right;
             rightHeight++;
-            rightCopy = rightCopy.right;
         }
 
         if (leftHeight == rightHeight) {
-            return (int)Math.pow(2, leftHeight) - 1;
+            return (int)Math.pow(2, rightHeight) - 1;
         }
 
         return notPerfect(root);
@@ -43,9 +42,9 @@ class Solution {
         if (root == null) {
             return 0;
         }
-        int leftCount = notPerfect(root.left);
-        int rightCount = notPerfect(root.right);
-        int totalCount = leftCount + rightCount + 1;
-        return totalCount;
+        int leftSub = notPerfect(root.left);
+        int rightSub = notPerfect(root.right);
+        int currentNum = leftSub + rightSub + 1;
+        return currentNum;
     }
 }
