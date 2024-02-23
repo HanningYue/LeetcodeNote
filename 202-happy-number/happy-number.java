@@ -1,18 +1,20 @@
 class Solution {
     public boolean isHappy(int n) {
-        int slow = n, fast = n;
+        int slow = n;
+        int fast = n;
         do {
-            slow = digitSum(slow);
-            fast = digitSum(digitSum(fast));
+            slow = process(slow);
+            fast = process(process(fast));
         } while (slow != fast);
+
         return slow == 1;
     }
-    private int digitSum(int num) {
-        int sum = 0, digit;
-        while (num > 0) {
-            digit = num % 10;
+    private int process(int n) {
+        int sum = 0;
+        while (n != 0) {
+            int digit = n % 10;
             sum += digit * digit;
-            num /= 10;
+            n = n / 10;
         }
         return sum;
     }
