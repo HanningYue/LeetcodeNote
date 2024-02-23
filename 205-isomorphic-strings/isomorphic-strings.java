@@ -3,29 +3,24 @@ class Solution {
         if (s.length() != t.length()) {
             return false;
         }
+        Map<Character, Character> mapS = new HashMap<>();
+        Map<Character, Character> mapT = new HashMap<>();
 
-        Map<Character, Character> sMap = new HashMap<>();
-        Map<Character, Character> tMap = new HashMap<>();
-
-        int i = 0;
-        while (i < s.length()) {
+        for (int i = 0; i < s.length(); i++) {
             char sChar = s.charAt(i), tChar = t.charAt(i);
-            
-            if (sMap.containsKey(sChar)) {
-                if (!sMap.get(sChar).equals(tChar)) {
-                    return false;
-                }
+            if (mapS.containsKey(sChar) && mapS.get(sChar) != tChar) {
+                return false;
+            } else {
+                mapS.put(sChar, tChar);
             }
-            
-            if (tMap.containsKey(tChar)) {
-                if (!tMap.get(tChar).equals(sChar)) {
-                    return false;
-                }
+
+            if (mapT.containsKey(tChar) && mapT.get(tChar) != sChar) {
+                return false;
+            } else {
+                mapT.put(tChar, sChar);
             }
-            sMap.put(sChar, tChar);
-            tMap.put(tChar, sChar);
-            i++;
         }
+        
         return true;
     }
 }
