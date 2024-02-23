@@ -16,33 +16,23 @@
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-        Deque<TreeNode> deque = new LinkedList<>();
-        deque.offerLast(root);
-        boolean even = true;
-
-        while (!deque.isEmpty()) {
-            int size = deque.size();
-            List<Integer> list = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                if (even) {
-                    TreeNode current = deque.pollLast();
-                    if (current.left != null) deque.offerFirst(current.left);
-                    if (current.right != null) deque.offerFirst(current.right);
-                    list.add(current.val);
-                }
-                else {
-                    TreeNode current = deque.pollFirst();
-                    if (current.right != null) deque.offerLast(current.right);
-                    if (current.left != null) deque.offerLast(current.left);
-                    list.add(current.val);
-                }
-            }
-            even = !even;
-            result.add(list);
-        }
+        dfs(root, result, 0);
         return result;
+    }
+    private void dfs(TreeNode root, List<List<Integer>> result, int level) {
+        if (root == null) {
+            return;
+        }
+        if (result.size() == level) {
+            result.add(new ArrayList<>());
+        }
+
+        if (level % 2 == 0) {
+            result.get(level).add(root.val);
+        } else if (level % 2 == 1) {
+            result.get(level).add(0, root.val);
+        }
+        dfs(root.left, result, level + 1);
+        dfs(root.right, result, level + 1);
     }
 }
