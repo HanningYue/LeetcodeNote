@@ -14,26 +14,24 @@
  * }
  */
 class BSTIterator {
-    private TreeNode current;
     private Stack<TreeNode> stack;
+    private TreeNode current;
     public BSTIterator(TreeNode root) {
         stack = new Stack<>();
         current = root;
     }
     
-    /** @return the next smallest number */
     public int next() {
         while (current != null) {
             stack.push(current);
             current = current.left;
-        }    
+        }
         current = stack.pop();
-        int val = current.val;
+        int value = current.val;
         current = current.right;
-        return val;
+        return value;
     }
-
-    /** @return whether we have a next smallest number */    
+    
     public boolean hasNext() {
         if (!stack.isEmpty() || current != null) {
             return true;
