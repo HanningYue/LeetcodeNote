@@ -15,7 +15,7 @@
  */
 class Solution {
     public boolean isSymmetric(TreeNode root) {
-        return dfs(root.left, root.right);        
+        return dfs(root.left, root.right);
     }
     private boolean dfs(TreeNode one, TreeNode two) {
         if (one == null && two == null) {
@@ -24,10 +24,9 @@ class Solution {
         if (one == null || two == null) {
             return false;
         }
-        
-        boolean innerEqual = dfs(one.right, two.left);
-        boolean outerEqual = dfs(one.left, two.right);
-        boolean currentEqual = one.val == two.val;
-        return innerEqual && outerEqual && currentEqual;
+        boolean current = (one.val == two.val);
+        boolean inner = dfs(one.right, two.left);
+        boolean outer = dfs(one.left, two.right);
+        return current && inner && outer;
     }
 }
