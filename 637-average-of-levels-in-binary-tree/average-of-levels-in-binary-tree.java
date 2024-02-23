@@ -21,17 +21,19 @@ class Solution {
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
+
         while (!queue.isEmpty()) {
             int size = queue.size();
-            double currentLevelSum = 0.0;
+            long currentLevelSum = 0l;
             for (int i = 0; i < size; i++) {
                 TreeNode current = queue.poll();
                 currentLevelSum += current.val;
                 if (current.left != null) queue.offer(current.left);
                 if (current.right != null) queue.offer(current.right);
+                if (i == size - 1) {
+                    result.add((double)currentLevelSum / size);
+                }
             }
-            double currentLevelAverage = currentLevelSum / size;
-            result.add(currentLevelAverage);
         }
         return result;
     }
