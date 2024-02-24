@@ -7,7 +7,7 @@ class Solution {
     private void shuffleArr(int[] nums) {
         Random rand = new Random();
         for (int i = 0; i < nums.length; i++) {
-            int nextIdx = rand.nextInt(nums.length - i);
+            int nextIdx = i + rand.nextInt(nums.length - i);
             swap(nums, i, nextIdx);
         }
     }
