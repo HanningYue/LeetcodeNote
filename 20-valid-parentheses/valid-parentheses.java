@@ -2,7 +2,7 @@ class Solution {
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
         for (char c : s.toCharArray()) {
-            if (c == '(' || c == '[' || c == '{') {
+            if (c == '(' || c == '{' || c == '[') {
                 stack.push(c);
             } else {
                 if (!stack.isEmpty() && stack.peek() == leftOf(c)) {
@@ -14,12 +14,12 @@ class Solution {
         }
         return stack.isEmpty();
     }
-    private char leftOf(char c) {
-        if (c == ')') {
+    private char leftOf(char rightBracket) {
+        if (rightBracket == ')') {
             return '(';
-        } else if (c == '}') {
-            return '{';
+        } else if (rightBracket == ']') {
+            return '[';
         }
-        return '[';
+        return '{';
     }
 }
