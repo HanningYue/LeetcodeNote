@@ -24,10 +24,9 @@ class Solution {
         boolean leftTrue = dfs(root.left, leftSubMax, root);
         boolean rightTrue = dfs(root.right, root, rightSubMin);
         boolean currentTrue = leftTrue && rightTrue;
-        if (leftSubMax != null && root.val <= leftSubMax.val) {
-            return false;
-        }
-        if (rightSubMin != null && root.val >= rightSubMin.val) {
+        if (leftSubMax != null && root.val <= leftSubMax.val
+        || rightSubMin != null && root.val >= rightSubMin.val) 
+        {
             return false;
         }
         return currentTrue;
