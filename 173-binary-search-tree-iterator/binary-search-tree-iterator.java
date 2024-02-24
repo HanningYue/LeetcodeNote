@@ -17,8 +17,8 @@ class BSTIterator {
     private Stack<TreeNode> stack;
     private TreeNode current;
     public BSTIterator(TreeNode root) {
-        stack = new Stack<>();
         current = root;
+        stack = new Stack<>();
     }
     
     public int next() {
