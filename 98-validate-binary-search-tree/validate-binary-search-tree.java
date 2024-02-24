@@ -15,21 +15,21 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        return isValid(root, null, null);
+        return valid(root, null, null);
     }
-    private boolean isValid(TreeNode root, TreeNode left, TreeNode right) {
+    private boolean valid(TreeNode root, TreeNode leftBound, TreeNode rightBound) {
         if (root == null) {
             return true;
         }
-        boolean leftValid = isValid(root.left, left, root);
-        boolean rightValid = isValid(root.right, root, right);
-        if (left != null && root.val <= left.val) {
-            return false;
+        boolean leftTrue = valid(root.left, leftBound, root);
+        boolean rightTrue = valid(root.right, root, rightBound);
+        if (leftBound != null && root.val <= leftBound.val
+        || rightBound != null && root.val >= rightBound.val) 
+        {
+            return false;    
         }
-        if (right != null && root.val >= right.val) {
-            return false;
-        }
-        boolean currentValid = leftValid && rightValid;
-        return currentValid;
+
+        boolean currentTrue = leftTrue && rightTrue;
+        return currentTrue;
     }
 }
