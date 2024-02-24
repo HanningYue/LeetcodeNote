@@ -6,7 +6,7 @@ class Solution {
         return nums;
     }
     private void divide(int[] nums, int left, int right) {
-        if (left == right) {
+        if (left >= right) {
             return;
         }
         int mid = left + (right - left) / 2;
@@ -15,8 +15,7 @@ class Solution {
         merge(nums, left, right, mid);
     }
     private void merge(int[] nums, int left, int right, int mid) {
-        int leftP = left, rightP = mid + 1;
-        int tempP = left;
+        int leftP = left, rightP = mid + 1, tempP = left;
         while (leftP <= mid && rightP <= right) {
             if (nums[leftP] < nums[rightP]) {
                 temp[tempP++] = nums[leftP++];
@@ -30,7 +29,6 @@ class Solution {
         while (rightP <= right) {
             temp[tempP++] = nums[rightP++];
         }
-
         for (int i = left; i <= right; i++) {
             nums[i] = temp[i];
         }
