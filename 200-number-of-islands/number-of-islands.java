@@ -1,27 +1,36 @@
 class Solution {
     public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+        
+        int numIslands = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
-        int count = 0;
+        Queue<int[]> queue = new LinkedList<>();
+        
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                if (!visited[i][j] && grid[i][j] == '1') {
-                    count++;
-                    dfs(grid, i, j, visited);
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    queue.offer(new int[]{i, j});
+                    visited[i][j] = true; // Mark as visited when adding to queue
+                    
+                    while (!queue.isEmpty()) {
+                        int[] current = queue.poll();
+                        int row = current[0], col = current[1];
+                        
+                        int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+                        for (int[] dir : directions) {
+                            int newRow = row + dir[0], newCol = col + dir[1];
+                            if (newRow >= 0 && newRow < grid.length && newCol >= 0 && newCol < grid[0].length
+                                && grid[newRow][newCol] == '1' && !visited[newRow][newCol]) {
+                                queue.offer(new int[]{newRow, newCol});
+                                visited[newRow][newCol] = true; // Correctly mark the new cell as visited
+                            }
+                        }
+                    }
+                    numIslands++; // Increment count after finishing BFS for an island
                 }
             }
         }
-        return count;
-    }
-    private int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private void dfs(char[][] grid, int row, int col, boolean[][] visited) {
-        if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length || visited[row][col] 
-        || grid[row][col] != '1') 
-        {
-            return;
-        }
-        visited[row][col] = true;
-        for (int[] dir : directions) {
-            dfs(grid, row + dir[0], col + dir[1], visited);
-        }
+        
+        return numIslands;
     }
 }
