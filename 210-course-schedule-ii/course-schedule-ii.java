@@ -8,8 +8,8 @@ class Solution {
             graph.add(new ArrayList<>());
         }
         for (int[] pre : prerequisites) {
-            int from = pre[1];
-            int to = pre[0];
+            int from = pre[0];
+            int to = pre[1];
             graph.get(from).add(to);
         }
         for (int i = 0; i < numCourses; i++) {
@@ -17,7 +17,6 @@ class Solution {
                 return new int[]{};
             }
         }
-        Collections.reverse(result);
         int[] resultArr = new int[numCourses];
         for (int i = 0; i < numCourses; i++) {
             resultArr[i] = result.get(i);
