@@ -2,7 +2,7 @@ class Solution {
     public int numIslands(char[][] grid) {
         if (grid == null || grid.length == 0) return 0;
         
-        int numIslands = 0;
+        int count = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
         Queue<int[]> queue = new LinkedList<>();
         
@@ -11,7 +11,7 @@ class Solution {
                 if (grid[i][j] == '1' && !visited[i][j]) {
                     queue.offer(new int[]{i, j});
                     visited[i][j] = true; // Mark as visited when adding to queue
-                    
+                    count++;
                     while (!queue.isEmpty()) {
                         int[] current = queue.poll();
                         int row = current[0], col = current[1];
@@ -26,11 +26,11 @@ class Solution {
                             }
                         }
                     }
-                    numIslands++; // Increment count after finishing BFS for an island
+
                 }
             }
         }
         
-        return numIslands;
+        return count;
     }
 }
