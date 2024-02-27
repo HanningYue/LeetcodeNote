@@ -1,8 +1,8 @@
 class Node {
-    public String num;
+    public String key;
     public double val;
-    public Node(String num, double val) {
-        this.num = num;
+    public Node(String key, double val) {
+        this.key = key;
         this.val = val;
     }
 }
@@ -25,11 +25,11 @@ class Solution {
             List<String> currentQuery = queries.get(i);
             String dividend = currentQuery.get(0);
             String divisor = currentQuery.get(1);
-            result[i] = dfs(graph, dividend, divisor, 1, new HashSet<>());
+            result[i] = dfs(graph, dividend, divisor, 1.0, new HashSet<>());
         }
         return result;
     }
-    private double dfs(Map<String, List<Node>> graph, String dividend, String divisor, double value, HashSet<String> visited) {
+    public double dfs(Map<String, List<Node>> graph, String dividend, String divisor, double value, Set<String> visited) {
         if (!graph.containsKey(dividend)) {
             return -1.0;
         }
@@ -39,9 +39,10 @@ class Solution {
         if (dividend.equals(divisor)) {
             return value;
         }
+
         visited.add(dividend);
         for (Node neighbor : graph.get(dividend)) {
-            double sub = dfs(graph, neighbor.num, divisor, value * neighbor.val, visited);
+            double sub = dfs(graph, neighbor.key, divisor, value * neighbor.val, visited);
             if (sub != -1.0) {
                 return sub;
             }
