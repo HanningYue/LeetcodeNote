@@ -2,9 +2,9 @@ class Solution {
     public int snakesAndLadders(int[][] board) {
         int n = board.length;
         Queue<Integer> queue = new LinkedList<>();
-        queue.offer(1); // Start from square 1
-        boolean[][] visited = new boolean[n][n]; // Use a 2D visited array
-        visited[n - 1][0] = true; // Mark the start square as visited
+        queue.offer(1);
+        boolean[][] visited = new boolean[n][n];
+        visited[n - 1][0] = true;
 
         int steps = 0;
         while (!queue.isEmpty()) {
@@ -14,15 +14,20 @@ class Solution {
                 if (current == n * n) {
                     return steps;
                 }
+
                 for (int j = 1; j <= 6; j++) {
                     int next = current + j;
-                    if (next > n * n) break; // Check bounds
                     int[] nextCoor = squareToCoor(next, n);
-                    if (visited[nextCoor[0]][nextCoor[1]]) continue; // Skip if already visited
-                    visited[nextCoor[0]][nextCoor[1]] = true; // Mark as visited
-                    
+                    if (next > n * n) {
+                        break;
+                    }
+
+                    if (visited[nextCoor[0]][nextCoor[1]]) {
+                        continue;
+                    }
+                    visited[nextCoor[0]][nextCoor[1]] = true;
                     if (board[nextCoor[0]][nextCoor[1]] != -1) {
-                        next = board[nextCoor[0]][nextCoor[1]]; // Jump via snake or ladder
+                        next = board[nextCoor[0]][nextCoor[1]];
                     }
                     queue.offer(next);
                 }
