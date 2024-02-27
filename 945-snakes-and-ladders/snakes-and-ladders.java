@@ -1,50 +1,42 @@
 class Solution {
     public int snakesAndLadders(int[][] board) {
         int n = board.length;
-        reverseBoard(board);
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(1); // Start from square 1
+        boolean[][] visited = new boolean[n][n]; // Use a 2D visited array
+        visited[n - 1][0] = true; // Mark the start square as visited
 
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{1, 0});
-        boolean[] visited = new boolean[n * n + 1];
-        visited[1] = true;
-
+        int steps = 0;
         while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            for (int i = 1; i <= 6; i++) {
-                int next = current[0] + i;
-                int[] nextCoor = squareToCoor(next, n);
-                if (board[nextCoor[0]][nextCoor[1]] != -1) {
-                    next = board[nextCoor[0]][nextCoor[1]];
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int current = queue.poll();
+                if (current == n * n) {
+                    return steps;
                 }
-
-                if (next == n * n) {
-                    return current[1] + 1;
-                }
-
-                if (!visited[next]) {
-                    visited[next] = true;
-                    queue.offer(new int[]{next, current[1] + 1});
+                for (int j = 1; j <= 6; j++) {
+                    int next = current + j;
+                    if (next > n * n) break; // Check bounds
+                    int[] nextCoor = squareToCoor(next, n);
+                    if (visited[nextCoor[0]][nextCoor[1]]) continue; // Skip if already visited
+                    visited[nextCoor[0]][nextCoor[1]] = true; // Mark as visited
+                    
+                    if (board[nextCoor[0]][nextCoor[1]] != -1) {
+                        next = board[nextCoor[0]][nextCoor[1]]; // Jump via snake or ladder
+                    }
+                    queue.offer(next);
                 }
             }
+            steps++;
         }
         return -1;
     }
-    private int[] squareToCoor(int square, int boardLength) {
-        int row = (square - 1) / boardLength;
-        int col = (square - 1) % boardLength;
-        if (row % 2 != 0) {
-            col = boardLength - 1 - col;
-        }
+
+    private int[] squareToCoor(int square, int n) {
+        int r = (square - 1) / n;
+        int c = (square - 1) % n;
+        int row = n - 1 - r;
+        int col = r % 2 == 0 ? c : n - 1 - c;
         return new int[]{row, col};
-    }
-    private void reverseBoard(int[][] board) {
-        int left = 0, right = board.length - 1;
-        while (left < right) {
-            int[] temp = board[left];
-            board[left] = board[right];
-            board[right] = temp;
-            left++;
-            right--;
-        }
     }
 }
