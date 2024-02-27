@@ -13,17 +13,13 @@ class Solution {
             List<String> equation = equations.get(i);
             String dividend = equation.get(0);
             String divisor = equation.get(1);
-            if (!map.containsKey(dividend)) {
-                map.put(dividend, new ArrayList<>());
-            }
+            map.putIfAbsent(dividend, new ArrayList<>());
             map.get(dividend).add(new Node(divisor, values[i]));
-
-            if (!map.containsKey(divisor)) {
-                map.put(divisor, new ArrayList<>());
-            }
+ 
+            map.putIfAbsent(divisor, new ArrayList<>());
             map.get(divisor).add(new Node(dividend, 1 / values[i]));
         }
-
+ 
         double[] result = new double[queries.size()];
         for (int i = 0; i < result.length; i++) {
             String num1 = queries.get(i).get(0);
@@ -32,24 +28,24 @@ class Solution {
         }
         return result;
     }
-    private double dfs(String start, String end, double value, HashSet<String> visited) {
-        if (!map.containsKey(start)) {
+    private double dfs(String dividend, String divisor, double value, HashSet<String> visited) {
+        if (!map.containsKey(dividend)) {
             return -1;
         }
-        if (visited.contains(start)) {
+        if (visited.contains(dividend)) {
             return -1;
         }
-        if (start.equals(end)) {
+        if (dividend.equals(divisor)) {
             return value;
         }
-        visited.add(start);
-        for (Node next : map.get(start)) {
-            double sub = dfs(next.num, end, value * next.val, visited);
+        visited.add(dividend);
+        for (Node next : map.get(dividend)) {
+            double sub = dfs(next.num, divisor, value * next.val, visited);
             if (sub != -1.0) {
                 return sub;
             }
         }
-        visited.remove(start);
+        visited.remove(dividend);
         return -1;
     }
 }
