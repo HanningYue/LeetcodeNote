@@ -10,8 +10,9 @@ class Solution {
     }
     private int dfs(Queue<Character> queue) {
         Stack<Integer> stack = new Stack<>();
-        char sign = '+';
         int num = 0;
+        char sign = '+';
+
         while (!queue.isEmpty()) {
             char current = queue.poll();
             if (Character.isDigit(current)) {
@@ -21,7 +22,6 @@ class Solution {
             if (current == '(') {
                 num = dfs(queue);
             }
-
             if (!Character.isDigit(current) || queue.isEmpty()) {
                 if (sign == '+') {
                     stack.push(num);
@@ -31,11 +31,11 @@ class Solution {
                 sign = current;
                 num = 0;
             }
-
             if (current == ')') {
                 break;
             }
         }
+        
         int result = 0;
         while (!stack.isEmpty()) {
             result += stack.pop();
