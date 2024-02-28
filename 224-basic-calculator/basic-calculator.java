@@ -6,22 +6,20 @@ class Solution {
                 queue.offer(c);
             }
         }
-        return process(queue);
+        return dfs(queue);
     }
-    private int process(Queue<Character> queue) {
+    private int dfs(Queue<Character> queue) {
         Stack<Integer> stack = new Stack<>();
         char sign = '+';
         int num = 0;
-
         while (!queue.isEmpty()) {
             char current = queue.poll();
-
             if (Character.isDigit(current)) {
                 num = num * 10 + (current - '0');
             }
 
             if (current == '(') {
-                num = process(queue);
+                num = dfs(queue);
             }
 
             if (!Character.isDigit(current) || queue.isEmpty()) {
