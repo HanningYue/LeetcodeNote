@@ -10,29 +10,33 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null || head.next == null) {
-            return head;
-        }
-
-        ListNode kth = head;
-        for (int i = 0; i < k; i++) {
-            if (kth == null) {
-                return head;
+        ListNode previous = null, start = head;
+        while (start != null) {
+            ListNode check = start;
+            for (int i = 0; i < k - 1; i++) {
+                check = check.next;
+                if (check == null) {
+                    return head;
+                }
             }
-            kth = kth.next;
+
+            ListNode previousOfList = previous;
+            ListNode endOfList = start;
+            for (int i = 0; i < k; i++) {
+                ListNode next = start.next;
+                start.next = previous;
+                previous= start;
+                start = next;
+            }
+
+            if (previousOfList == null) {
+                head = previous;
+            } else {
+                previousOfList.next = previous;
+            }
+            endOfList.next = start;
+            previous = endOfList;
         }
-        ListNode reversedHead = reverse(head, kth);
-        head.next = reverseKGroup(kth, k);
-        return reversedHead;
-    }
-    private ListNode reverse(ListNode left, ListNode right) {
-        ListNode current = left, previous = null;
-        while (current != right) {
-            ListNode next = current.next;
-            current.next = previous;
-            previous = current;
-            current = next;
-        }
-        return previous;
+        return head;
     }
 }
