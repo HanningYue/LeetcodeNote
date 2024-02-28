@@ -13,11 +13,11 @@ class Solution {
         ListNode previous = null, current = head;
         while (current != null) {
             ListNode check = current;
-            for (int i = 0; i < k - 1; i++) {
-                check = check.next;
+            for (int i = 0; i < k; i++) {
                 if (check == null) {
                     return head;
                 }
+                check = check.next;
             }
 
             ListNode previousOfList = previous, endOfList = current;
