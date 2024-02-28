@@ -1,11 +1,12 @@
 class Solution {
     public int snakesAndLadders(int[][] board) {
         int n = board.length;
-        boolean[][] visited = new boolean[n][n];
+
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(1);
+        boolean[][] visited = new boolean[n][n];
         visited[n - 1][0] = true;
-        
+
         int step = 0;
         while (!queue.isEmpty()) {
             int size = queue.size();
@@ -13,7 +14,7 @@ class Solution {
                 int current = queue.poll();
                 if (current == n * n) {
                     return step;
-                }
+                } 
 
                 for (int j = 1; j <= 6; j++) {
                     int next = current + j;
@@ -21,11 +22,11 @@ class Solution {
                         break;
                     }
 
-                    int[] nextCoor = toCoor(next, board.length);
+                    int[] nextCoor = numToCoor(next, n);
                     if (visited[nextCoor[0]][nextCoor[1]]) {
                         continue;
                     }
-                    
+
                     visited[nextCoor[0]][nextCoor[1]] = true;
                     if (board[nextCoor[0]][nextCoor[1]] != -1) {
                         next = board[nextCoor[0]][nextCoor[1]];
@@ -37,7 +38,7 @@ class Solution {
         }
         return -1;
     }
-    public int[] toCoor(int num, int colLength) {
+    private int[] numToCoor(int num, int colLength) {
         int r = (num - 1) / colLength;
         int c = (num - 1) % colLength;
         int row = colLength - r - 1;
