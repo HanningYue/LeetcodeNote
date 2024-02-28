@@ -1,29 +1,27 @@
 class Solution {
     public int evalRPN(String[] tokens) {
-        Stack<Integer> stack = new Stack<>();
-        for (String s : tokens) {
-            switch(s) {
-                case "+":
-                    stack.push(stack.pop() + stack.pop());
-                    break;
-                case "-":
-                    int latter = stack.pop();
-                    int previous = stack.pop();
-                    stack.push(previous - latter);
-                    break;
-                case "*":
-                    stack.push(stack.pop() * stack.pop());
-                    break;
-                case "/":
-                    latter = stack.pop();
-                    previous = stack.pop();
-                    stack.push(previous / latter);
-                    break;
-                default:
-                    stack.push(Integer.parseInt(s));
-                    break;
+        Stack<String> stack = new Stack<>();
+        for (String token : tokens) {
+            if (token.equals("+")) {
+                int one = Integer.parseInt(stack.pop());
+                int two = Integer.parseInt(stack.pop());
+                stack.push(String.valueOf(one + two));
+            } else if (token.equals("-")) {
+                int one = Integer.parseInt(stack.pop());
+                int two = Integer.parseInt(stack.pop());
+                stack.push(String.valueOf(two - one));
+            } else if (token.equals("/")) {
+                int one = Integer.parseInt(stack.pop());
+                int two = Integer.parseInt(stack.pop());
+                stack.push(String.valueOf(two / one));
+            } else if (token.equals("*")) {
+                int one = Integer.parseInt(stack.pop());
+                int two = Integer.parseInt(stack.pop());
+                stack.push(String.valueOf(one * two));
+            } else {
+                stack.push(token);
             }
         }
-        return stack.pop();
+        return Integer.parseInt(stack.pop());
     }
 }
