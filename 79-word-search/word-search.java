@@ -1,32 +1,31 @@
 class Solution {
-    public boolean exist(char[][] matrix, String word) {
-        boolean[][] visited = new boolean[matrix.length][matrix[0].length];
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                if (backTrack(matrix, word, i, j, visited, 0)) {
+    public boolean exist(char[][] board, String word) {
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (dfs(board, i, j, visited, 0, word)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    private boolean backTrack(char[][] matrix, String word, int row, int col, boolean[][] visited, int index) {
+    private int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    private boolean dfs(char[][] board, int row, int col, boolean[][] visited, int index, String word) {
         if (index == word.length()) {
             return true;
         }
-        if (row < 0 || row >= matrix.length || col < 0 || col >= matrix[0].length
-        || visited[row][col] || matrix[row][col] != word.charAt(index)) {
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col]
+        || board[row][col] != word.charAt(index)) {
             return false;
         }
-
         visited[row][col] = true;
-        boolean result = false;
-        int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         for (int[] dir : directions) {
-            result = result || backTrack(matrix, word, row + dir[0], col + dir[1], visited, index + 1);
+            if (dfs(board, row + dir[0], col + dir[1], visited, index + 1, word)) {
+                return true;
+            }
         }
         visited[row][col] = false;
-
-        return result;
+        return false;
     }
 }
