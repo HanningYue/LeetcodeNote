@@ -3,15 +3,16 @@ class Solution {
         boolean[][] visited = new boolean[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (dfs(board, i, j, visited, 0, word)) {
+                if (dfs(board, i, j, word, 0, visited)) {
                     return true;
                 }
             }
-        }
+        }        
         return false;
     }
+    
     private int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private boolean dfs(char[][] board, int row, int col, boolean[][] visited, int index, String word) {
+    private boolean dfs(char[][] board, int row, int col, String word, int index, boolean[][] visited) {
         if (index == word.length()) {
             return true;
         }
@@ -19,9 +20,10 @@ class Solution {
         || board[row][col] != word.charAt(index)) {
             return false;
         }
+        
         visited[row][col] = true;
         for (int[] dir : directions) {
-            if (dfs(board, row + dir[0], col + dir[1], visited, index + 1, word)) {
+            if (dfs(board, row + dir[0], col + dir[1], word, index + 1, visited)) {
                 return true;
             }
         }
