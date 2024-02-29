@@ -13,7 +13,6 @@ class Solution {
         if (head == null || head.next == null) {
             return head;
         }
-
         ListNode end = head;
         int length = 1;
         while (end.next != null) {
@@ -23,12 +22,12 @@ class Solution {
         end.next = head;
 
         k = k % length;
-        ListNode endOfRotatedList = head;
+        ListNode endOfRotate = head;
         for (int i = 0; i < length - k - 1; i++) {
-            endOfRotatedList = endOfRotatedList.next;
+            endOfRotate = endOfRotate.next;
         }
-        ListNode newHead = endOfRotatedList.next;
-        endOfRotatedList.next = null;
+        ListNode newHead = endOfRotate.next;
+        endOfRotate.next = null;
         return newHead;
     }
 }
