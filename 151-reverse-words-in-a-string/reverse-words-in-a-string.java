@@ -6,6 +6,7 @@ class Solution {
         return sb.toString();        
     }
     private StringBuilder trim(String s) {
+        StringBuilder sb = new StringBuilder();
         int left = 0, right = s.length() - 1;
         while (left <= right && s.charAt(left) == ' ') {
             left++;
@@ -14,7 +15,6 @@ class Solution {
             right--;
         }
 
-        StringBuilder sb = new StringBuilder();
         while (left <= right) {
             char c = s.charAt(left);
             if (c != ' ') {
@@ -37,14 +37,14 @@ class Solution {
         }
     }
     private void reverseEachWord(StringBuilder sb) {
-        int start = 0, end = 0;
-        while (start < sb.length()) {
-            while (end < sb.length() && sb.charAt(end) != ' ') {
-                end++;
+        int wordStart = 0, wordEnd = 0;
+        while (wordStart < sb.length()) {
+            while (wordEnd < sb.length() && sb.charAt(wordEnd) != ' ') {
+                wordEnd++;
             }
-            reverse(sb, start, end - 1);
-            start = end + 1;
-            end++;
+            reverse(sb, wordStart, wordEnd - 1);
+            wordStart = wordEnd + 1;
+            wordEnd = wordEnd + 1;
         }
     }
 }
