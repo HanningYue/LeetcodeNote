@@ -1,11 +1,11 @@
 class Solution {
     public String reverseWords(String s) {
-        StringBuilder sb = trimSpace(s);
-        reverseSB(sb, 0, sb.length() - 1);
+        StringBuilder sb = trim(s);
+        reverse(sb, 0, sb.length() - 1);
         reverseEachWord(sb);
-        return sb.toString();
+        return sb.toString();        
     }
-    public StringBuilder trimSpace(String s) {
+    private StringBuilder trim(String s) {
         int left = 0, right = s.length() - 1;
         while (left <= right && s.charAt(left) == ' ') {
             left++;
@@ -20,15 +20,15 @@ class Solution {
             if (c != ' ') {
                 sb.append(c);
             }
-            else if (sb.charAt(sb.length() - 1) != ' ') {
+            else if (c == ' ' && sb.charAt(sb.length() - 1) != ' ') {
                 sb.append(c);
             }
             left++;
         }
         return sb;
     }
-    public void reverseSB(StringBuilder sb, int left, int right) {
-        while (left < right) {
+    private void reverse(StringBuilder sb, int left, int right) {
+        while (left <= right) {
             char temp = sb.charAt(left);
             sb.setCharAt(left, sb.charAt(right));
             sb.setCharAt(right, temp);
@@ -36,13 +36,13 @@ class Solution {
             right--;
         }
     }
-    public void reverseEachWord(StringBuilder sb) {
+    private void reverseEachWord(StringBuilder sb) {
         int start = 0, end = 0;
         while (start < sb.length()) {
             while (end < sb.length() && sb.charAt(end) != ' ') {
                 end++;
             }
-            reverseSB(sb, start, end - 1);
+            reverse(sb, start, end - 1);
             start = end + 1;
             end++;
         }
