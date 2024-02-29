@@ -1,9 +1,10 @@
 class Solution {
     public List<String> letterCombinations(String digits) {
         List<String> result = new ArrayList<>();
-        if (digits == null || digits.length() == 0) {
+        if (digits.isEmpty()) {
             return result;
         }
+
         Map<Character, String> map = new HashMap<>();
         map.put('2', "abc");
         map.put('3', "def");
@@ -14,20 +15,19 @@ class Solution {
         map.put('8', "tuv");
         map.put('9', "wxyz");
         StringBuilder sb = new StringBuilder();
-        dfs(digits, 0, result, sb, map);
+        dfs(map, digits, 0, result, sb);
         return result;
     }
-
-    private void dfs(String digits, int index, List<String> result, StringBuilder sb,
-    Map<Character, String> map) {
+    private void dfs(Map<Character, String> map, String digits, int index, List<String> result, StringBuilder sb) 
+    {
         if (index == digits.length()) {
             result.add(sb.toString());
             return;
         }
-        String alignChar = map.get(digits.charAt(index));
-        for (int i = 0; i < alignChar.length(); i++) {
-            sb.append(alignChar.charAt(i));
-            dfs(digits, index + 1, result, sb, map);
+        String corString = map.get(digits.charAt(index));
+        for (int i = 0; i < corString.length(); i++) {
+            sb.append(corString.charAt(i));
+            dfs(map, digits, index + 1, result, sb);
             sb.deleteCharAt(sb.length() - 1);
         }
     }
