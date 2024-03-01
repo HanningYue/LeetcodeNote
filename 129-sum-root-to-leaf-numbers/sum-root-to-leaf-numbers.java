@@ -16,18 +16,20 @@
 class Solution {
     public int sumNumbers(TreeNode root) {
         dfs(root, 0);
-        return result;
+        return total;
     }
-    private int result = 0;
-    private void dfs(TreeNode root, int sum) {
+    private int total = 0;
+    private int dfs(TreeNode root, int runningSum) {
         if (root == null) {
-            return;
+            return 0;
         }
-        sum = sum * 10 + root.val;
-        dfs(root.left, sum);
-        dfs(root.right, sum);
+        
+        runningSum = runningSum * 10 + root.val;
         if (root.left == null && root.right == null) {
-            result += sum;
+            total += runningSum;
         }
+        dfs(root.left, runningSum);
+        dfs(root.right, runningSum);
+        return runningSum;
     }
 }
