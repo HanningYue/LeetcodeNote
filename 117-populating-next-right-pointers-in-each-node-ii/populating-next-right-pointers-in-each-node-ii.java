@@ -26,25 +26,32 @@ class Solution {
         if (root == null) {
             return null;
         }
-
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                Node current = queue.poll();
+        Node current = root, head = null, prev = null;
+        while (current != null) {
+            while (current != null) {
                 if (current.left != null) {
-                    queue.offer(current.left);
+                    if (head == null) {
+                        head = current.left;
+                        prev = current.left;
+                    } else {
+                        prev.next = current.left;
+                        prev = prev.next;
+                    }
                 }
                 if (current.right != null) {
-                    queue.offer(current.right);
+                    if (head == null) {
+                        head = current.right;
+                        prev = current.right;
+                    } else {
+                        prev.next = current.right;
+                        prev = prev.next;
+                    }
                 }
-                if (i == size - 1) {
-                    current.next = null;
-                } else {
-                    current.next = queue.peek();
-                }
+                current = current.next;
             }
+            current = head;
+            head = null;
+            prev = null;
         }
         return root;
     }
