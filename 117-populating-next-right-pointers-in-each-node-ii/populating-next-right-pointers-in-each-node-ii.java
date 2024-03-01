@@ -23,10 +23,9 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        if (root == null) {
-            return null;
-        }
-        Node current = root, head = null, prev = null;
+        Node current = root;
+        Node head = null, prev = null;
+
         while (current != null) {
             while (current != null) {
                 if (current.left != null) {
