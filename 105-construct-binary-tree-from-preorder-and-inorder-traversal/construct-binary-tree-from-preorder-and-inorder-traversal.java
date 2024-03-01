@@ -19,28 +19,28 @@ class Solution {
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return construct(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
+        return dfs(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
     }
-    private TreeNode construct(int[] preorder, int preleft, int preright, 
-    int[] inorder, int inleft, int inright, Map<Integer, Integer> map)
+    private TreeNode dfs(int[] preorder, int preleft, int preright, 
+    int[] inorder, int inleft, int inright, Map<Integer, Integer> map) 
     {
         if (preleft > preright) {
             return null;
         }
-
         TreeNode head = new TreeNode(preorder[preleft]);
         int headIdx = map.get(head.val);
-        int leftRange = headIdx - inleft;
+        int leftSize = headIdx - inleft;
 
-        head.left = construct(preorder, preleft + 1, preleft + leftRange,
-        inorder, inleft, headIdx - 1, map);
-        head.right = construct(preorder, preleft + leftRange + 1, preright, 
-        inorder, headIdx + 1, inright, map);
+        head.left = dfs(preorder, preleft + 1, preleft + leftSize, inorder, inleft, headIdx - 1, map);
+        head.right = dfs(preorder, preleft + leftSize + 1, preright, inorder, headIdx + 1, inright, map);
         return head;
     }
 }
 //     1
 // 2       3
 //     4       5
-// pre: 1 2 3 4 5
-// in:  2 1 4 3 5
+// preorder[1 2 3 4 5]
+// inorder[2 1 4 3 5]
+// head 1
+// left 2
+// right 4 3 5
