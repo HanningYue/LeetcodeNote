@@ -12,6 +12,7 @@ class Solution {
         if (root == null) {
             return null;
         }
+
         if (root.val == p.val || root.val == q.val) {
             return root;
         }
@@ -20,6 +21,7 @@ class Solution {
         if (left != null && right != null) {
             return root;
         }
-        return left == null ? right : left;
+
+        return left != null ? left : right;
     }
 }
