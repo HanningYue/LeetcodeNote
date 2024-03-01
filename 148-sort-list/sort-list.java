@@ -5,7 +5,7 @@
  *     ListNode next;
  *     ListNode() {}
  *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.ne-xt = next; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
 class Solution {
@@ -22,9 +22,9 @@ class Solution {
         }
         previous.next = null;
 
-        ListNode leftNode = sortList(head);
-        ListNode rightNode = sortList(slow);
-        return merge(leftNode, rightNode);
+        ListNode firstHalf = sortList(head);
+        ListNode secondHalf = sortList(slow);
+        return merge(firstHalf, secondHalf);
     }
     private ListNode merge(ListNode p, ListNode q) {
         ListNode dummy = new ListNode(0);
@@ -39,12 +39,7 @@ class Solution {
             }
             current = current.next;
         }
-        if (p != null) {
-            current.next = p;
-        }
-        if (q != null) {
-            current.next = q;
-        }
+        current.next = (p == null ? q : p);
         return dummy.next;
-    } 
+    }
 }
