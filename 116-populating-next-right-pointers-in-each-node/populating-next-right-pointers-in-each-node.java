@@ -35,7 +35,7 @@ class Solution {
         }
         node1.next = node2;
         traverse(node1.left, node1.right);
-        traverse(node2.left, node2.right);
         traverse(node1.right, node2.left);
+        traverse(node2.left, node2.right);
     }
 }
