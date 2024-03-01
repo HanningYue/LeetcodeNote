@@ -16,7 +16,6 @@ class Solution {
         if (left > right) {
             return null;
         }
-
         if (left == right) {
             return lists[left];
         }
@@ -25,20 +24,20 @@ class Solution {
         ListNode rightPart = divide(lists, mid + 1, right);
         return merge(leftPart, rightPart);
     }
-    private ListNode merge(ListNode left, ListNode right) {
+    private ListNode merge(ListNode p, ListNode q) {
         ListNode dummy = new ListNode(0);
         ListNode current = dummy;
-        while (left != null && right != null) {
-            if (left.val < right.val) {
-                current.next = left;
-                left = left.next;
+        while (p != null && q != null) {
+            if (p.val < q.val) {
+                current.next = p;
+                p = p.next;
             } else {
-                current.next = right;
-                right = right.next;
+                current.next = q;
+                q = q.next;
             }
             current = current.next;
         }
-        current.next = (left == null ? right : left);
+        current.next = (p == null ? q : p);
         return dummy.next;
     }
 }
