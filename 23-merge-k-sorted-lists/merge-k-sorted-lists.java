@@ -16,34 +16,29 @@ class Solution {
         if (left > right) {
             return null;
         }
+
         if (left == right) {
             return lists[left];
         }
         int mid = left + (right - left) / 2;
         ListNode leftPart = divide(lists, left, mid);
         ListNode rightPart = divide(lists, mid + 1, right);
-        ListNode merged = merge(lists, leftPart, rightPart);
-        return merged;
+        return merge(leftPart, rightPart);
     }
-    private ListNode merge(ListNode[] lists, ListNode p, ListNode q) {
-        ListNode dummy = new ListNode(-1);
+    private ListNode merge(ListNode left, ListNode right) {
+        ListNode dummy = new ListNode(0);
         ListNode current = dummy;
-        while (p != null && q != null) {
-            if (p.val < q.val) {
-                current.next = p;
-                p = p.next;
-            } else if (p.val >= q.val) {
-                current.next = q;
-                q = q.next;
+        while (left != null && right != null) {
+            if (left.val < right.val) {
+                current.next = left;
+                left = left.next;
+            } else {
+                current.next = right;
+                right = right.next;
             }
             current = current.next;
         }
-        if (p != null) {
-            current.next = p;
-        } else if (q != null) {
-            current.next = q;
-        }
-        
+        current.next = (left == null ? right : left);
         return dummy.next;
     }
 }
