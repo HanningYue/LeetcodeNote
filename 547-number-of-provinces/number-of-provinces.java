@@ -16,10 +16,9 @@ class Solution {
         }
         visited[vertex] = true;
         for (int i = 0; i < isConnected[vertex].length; i++) {
-            if (isConnected[vertex][i] != 1) {
-                continue;
+            if (isConnected[vertex][i] == 1) {
+                dfs(isConnected, i, visited);   
             }
-            dfs(isConnected, i, visited);
         }
     }
 }
