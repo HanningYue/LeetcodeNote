@@ -1,44 +1,25 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
-        UF uf = new UF(isConnected.length);
+        int result = 0;
+        boolean[] visited = new boolean[isConnected.length];
         for (int i = 0; i < isConnected.length; i++) {
-            for (int j = 0; j < isConnected[i].length; j++) {
-                if (isConnected[i][j] == 1) {
-                    uf.union(i, j);
-                }
+            if (!visited[i]) {
+                dfs(isConnected, i, visited);
+                result++;
             }
         }
-        return uf.count();
+        return result;
     }
-}
-class UF {
-    private int count;
-    private int[] parent;
-    public UF(int numberOfVertex) {
-        this.count = numberOfVertex;
-        parent = new int[numberOfVertex];
-        for (int i = 0; i < numberOfVertex; i++) {
-            parent[i] = i;
+    private void dfs(int[][] isConnected, int vertex, boolean[] visited) {
+        if (visited[vertex]) {
+            return;
         }
-    }
-    public int find(int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent[vertex]);
+        visited[vertex] = true;
+        for (int i = 0; i < isConnected[vertex].length; i++) {
+            if (isConnected[vertex][i] != 1) {
+                continue;
+            }
+            dfs(isConnected, i, visited);
         }
-        return parent[vertex];
-    }
-    public void union(int vertexOne, int vertexTwo) {
-        int parentOne = find(vertexOne);
-        int parentTwo = find(vertexTwo);
-        if (parentOne != parentTwo) {
-            parent[parentOne] = parentTwo;
-            count--;
-        }
-    }
-    public boolean connected(int vertexOne, int vertexTwo) {
-        return find(vertexOne) == find(vertexTwo);
-    }
-    public int count() {
-        return count;
     }
 }
