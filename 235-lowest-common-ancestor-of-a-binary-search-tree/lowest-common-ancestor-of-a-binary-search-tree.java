@@ -18,11 +18,11 @@ class Solution {
         if (root == null) {
             return null;
         }
-        if (root.val > max) {
-            return find(root.left, min, max);
-        }
+
         if (root.val < min) {
             return find(root.right, min, max);
+        } else if (root.val > max) {
+            return find(root.left, min, max);
         }
         return root;
     }
