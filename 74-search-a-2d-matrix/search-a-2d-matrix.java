@@ -1,25 +1,15 @@
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        int m = matrix.length, n = matrix[0].length;
-        int endIdx = m * n - 1;
-        int start = 0, end = endIdx;
-        while (start <= end) {
-            int mid = start + (end - start) / 2;
-            int midValue = helper(matrix, mid);
-            if (midValue == target) {
+        int row = 0, col = matrix[0].length - 1;
+        while (row < matrix.length && col >= 0) {
+            if (matrix[row][col] == target) {
                 return true;
-            } else if (midValue < target) {
-                start = mid + 1;;
-            } else if (midValue > target) {
-                end = mid - 1;
+            } else if (matrix[row][col] < target) {
+                row++;
+            } else if (matrix[row][col] > target) {
+                col--;
             }
         }
         return false;
-    }
-    private int helper(int[][] matrix, int midIdx) {
-        int colLength = matrix[0].length;
-        int rowIdx = midIdx / colLength;
-        int colIdx = midIdx % colLength;
-        return matrix[rowIdx][colIdx];
     }
 }
