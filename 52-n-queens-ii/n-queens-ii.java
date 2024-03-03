@@ -1,8 +1,7 @@
 class Solution {
-    int result = 0;
     List<String> board = new ArrayList<>();
-
-    public int totalNQueens(int n) {    
+    int result = 0;
+    public int totalNQueens(int n) {
         for (int i = 0; i < n; i++) {
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < n; j++) {
@@ -13,6 +12,7 @@ class Solution {
         backTrack(0);
         return result;
     }
+
     private void backTrack(int row) {
         if (row == board.size()) {
             result++;
@@ -20,21 +20,23 @@ class Solution {
         }
 
         for (int col = 0; col < board.get(row).length(); col++) {
-            if (!isValid(row, col)) {
+            if (!valid(row, col)) {
                 continue;
             }
-            StringBuilder sb = new StringBuilder(board.get(row));
-            sb.setCharAt(col, 'Q');
-            board.set(row, sb.toString());
+
+            StringBuilder currentRow = new StringBuilder(board.get(row));
+            currentRow.setCharAt(col, 'Q');
+            board.set(row, currentRow.toString());
 
             backTrack(row + 1);
-
-            sb.setCharAt(col, '.');
-            board.set(row, sb.toString());
+            
+            currentRow.setCharAt(col, '.');
+            board.set(row, currentRow.toString());
         }
     }
-    private boolean isValid(int row, int col) {
-        for (int i = 0; i < board.size(); i++) {
+
+    private boolean valid(int row, int col) {
+        for (int i = 0; i < row; i++) {
             if (board.get(i).charAt(col) == 'Q') {
                 return false;
             }
