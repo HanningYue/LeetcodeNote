@@ -1,41 +1,39 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
-        //Leftboundary
+        int leftBoundary = -1, rightBoundary = -1;
+
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            int num = nums[mid];
-            if (num == target) {
+            if (nums[mid] == target) {
                 right = mid - 1;
-            } else if (num < target) {
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
                 left = mid + 1;
-            } else if (num > target) {
-                right = mid - 1;
             }
         }
-        if (left < 0 || left >= nums.length || nums[left] != target) {
+        if (left == nums.length || nums[left] != target) {
             return new int[]{-1, -1};
         }
-        int leftBoundary = left;
+        leftBoundary = left;
 
-        //Rightboundary
-        left = 0; 
+        left = 0;
         right = nums.length - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            int num = nums[mid];
-            if (num == target) {
+            if (nums[mid] == target) {
                 left = mid + 1;
-            } else if (num < target) {
+            } else if (nums[mid] < target) {
                 left = mid + 1;
-            } else if (num > target) {
+            } else if (nums[mid] > target) {
                 right = mid - 1;
             }
         }
-        if (right < 0 || right >= nums.length || nums[right] != target) {
+        if (right == -1 || nums[right] != target) {
             return new int[]{-1, -1};
         }
-        int rightBoundary = right;
+        rightBoundary = right;
 
         return new int[]{leftBoundary, rightBoundary};
     }
