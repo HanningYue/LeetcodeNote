@@ -14,11 +14,11 @@
  * }
  */
 class BSTIterator {
-    private Stack<TreeNode> stack;
-    private TreeNode current;
+    Stack<TreeNode> stack;
+    TreeNode current;
     public BSTIterator(TreeNode root) {
-        current = root;
         stack = new Stack<>();
+        current = root;
     }
     
     public int next() {
@@ -33,11 +33,10 @@ class BSTIterator {
     }
     
     public boolean hasNext() {
-        if (!stack.isEmpty() || current != null) {
+        if (current != null || !stack.isEmpty()) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
 
