@@ -12,16 +12,16 @@ class Solution {
         }
 
         while (!minHeap.isEmpty() && k > 0) {
-            k--;
             int[] current = minHeap.poll();
             int num1 = current[0], num2 = current[1];
             int nums2Idx = current[2];
 
             result.add(Arrays.asList(num1, num2));
-            if (nums2Idx == nums2.length - 1) {
-                continue;
+
+            if (nums2Idx < nums2.length - 1) {
+                minHeap.offer(new int[]{num1, nums2[nums2Idx + 1], nums2Idx + 1});
             }
-            minHeap.offer(new int[]{num1, nums2[nums2Idx + 1], nums2Idx + 1});
+            k--;
         }
         return result;
     }
