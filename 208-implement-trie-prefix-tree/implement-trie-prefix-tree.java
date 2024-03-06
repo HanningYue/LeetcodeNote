@@ -1,10 +1,12 @@
 class TrieNode {
-    public TrieNode[] children = new TrieNode[26];
-    public boolean isEnd = false;
+    TrieNode[] children;
+    boolean isEnd;
     public TrieNode() {
-        for (int i = 0; i < children.length; i++) {
+        children = new TrieNode[26];
+        for (int i = 0; i < 26; i++) {
             children[i] = null;
         }
+        isEnd = false;
     }
 }
 class Trie {
@@ -41,7 +43,7 @@ class Trie {
             if (current.children[c - 'a'] == null) {
                 return false;
             }
-            current = current.children[c - 'a'];
+            current = current.children[c - 'a'];;
         }
         return true;
     }
