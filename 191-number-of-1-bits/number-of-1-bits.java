@@ -1,3 +1,4 @@
+//n = n & (n - 1)
 public class Solution {
     // you need to treat n as an unsigned value
     public int hammingWeight(int n) {
@@ -6,7 +7,7 @@ public class Solution {
             if ((n & 1) == 1) {
                 result++;
             }
-            n >>= 1;
+            n = n >> 1;
         }
         return result;
     }
