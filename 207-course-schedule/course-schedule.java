@@ -21,7 +21,10 @@ class Solution {
         if (visiting[vertex]) {
             return false;
         }
-        if (!graph.containsKey(vertex) || visited[vertex]) {
+        if (visited[vertex]) {
+            return true;
+        }
+        if (!graph.containsKey(vertex)) {
             return true;
         }
     
