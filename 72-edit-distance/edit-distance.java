@@ -5,9 +5,10 @@ class Solution {
         for (int i = 1; i <= m; i++) {
             dp[i][0] = i;
         }
-        for (int i = 1; i <= n; i++) {
-            dp[0][i] = i;
+        for (int j = 1; j <= n; j++) {
+            dp[0][j] = j;
         }
+
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
