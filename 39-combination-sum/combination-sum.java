@@ -2,10 +2,10 @@ class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        backTrack(candidates, target, result, list, 0);
+        backTrack(result, list, candidates, target, 0);
         return result;
     }
-    private void backTrack(int[] candidates, int target, List<List<Integer>> result, List<Integer> list, 
+    private void backTrack(List<List<Integer>> result, List<Integer> list, int[] candidates, int target, 
                            int level) {
         if (target == 0) {
             result.add(new ArrayList<>(list));
@@ -16,7 +16,7 @@ class Solution {
         }
         for (int i = level; i < candidates.length; i++) {
             list.add(candidates[i]);
-            backTrack(candidates, target - candidates[i], result, list, i);
+            backTrack(result, list, candidates, target - candidates[i], i);
             list.remove(list.size() - 1);
         }
     }
