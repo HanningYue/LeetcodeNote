@@ -13,19 +13,24 @@ class Solution {
         if (head == null || head.next == null) {
             return head;
         }
+        ListNode middle = getMiddle(head);
+        ListNode secondHalfStart = middle.next;
+        middle.next = null;
 
-        ListNode slow = head, fast = head;
+        ListNode leftPart = sortList(head);
+        ListNode rightPart = sortList(secondHalfStart);
+        return mergeTwoList(leftPart, rightPart);
+    }
+    private ListNode getMiddle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
         ListNode prev = null;
         while (fast != null && fast.next != null) {
             prev = slow;
             slow = slow.next;
             fast = fast.next.next;
         }
-        prev.next = null;
-
-        ListNode firstHalf = sortList(head);
-        ListNode secondHalf = sortList(slow);
-        return mergeTwoList(firstHalf, secondHalf);
+        return prev;
     }
     private ListNode mergeTwoList(ListNode p, ListNode q) {
         ListNode dummy = new ListNode(0);
