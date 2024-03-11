@@ -14,20 +14,20 @@ class Solution {
             return head;
         }
 
-        ListNode previous = null;
         ListNode slow = head, fast = head;
+        ListNode prev = null;
         while (fast != null && fast.next != null) {
-            previous = slow;
+            prev = slow;
             slow = slow.next;
             fast = fast.next.next;
         }
-        previous.next = null;
+        prev.next = null;
 
         ListNode firstHalf = sortList(head);
         ListNode secondHalf = sortList(slow);
-        return merge(firstHalf, secondHalf);
+        return mergeTwoList(firstHalf, secondHalf);
     }
-    private ListNode merge(ListNode p, ListNode q) {
+    private ListNode mergeTwoList(ListNode p, ListNode q) {
         ListNode dummy = new ListNode(0);
         ListNode current = dummy;
         while (p != null && q != null) {
@@ -40,7 +40,7 @@ class Solution {
             }
             current = current.next;
         }
-        current.next = (p == null ? q : p);
+        current.next = p == null ? q : p;
         return dummy.next;
     }
 }
