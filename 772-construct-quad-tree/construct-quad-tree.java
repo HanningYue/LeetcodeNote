@@ -42,15 +42,15 @@ class Solution {
     public Node construct(int[][] grid) {
         return dfs(grid, 0, 0, grid.length - 1, grid[0].length - 1);
     }
-    private Node dfs(int[][] grid, int topRow, int colLeft, int bottomRow, int colRight) {
-        if (topRow > bottomRow || colLeft > colRight) {
+    private Node dfs(int[][] grid, int topRow, int leftCol, int bottomRow, int rightCol) {
+        if (topRow > bottomRow || leftCol > rightCol) {
             return null;
         }
 
-        int value = grid[topRow][colLeft];
+        int value = grid[topRow][leftCol];
         boolean same = true;
         for (int i = topRow; i <= bottomRow; i++) {
-            for (int j = colLeft; j <= colRight; j++) {
+            for (int j = leftCol; j <= rightCol; j++) {
                 if (grid[i][j] != value) {
                     same = false;
                     break;
@@ -66,17 +66,19 @@ class Solution {
         }
 
         int midRow = (topRow + bottomRow) / 2;
-        int midCol = (colLeft + colRight) / 2;
-        current.isLeaf = false;
-        current.topLeft = dfs(grid, topRow, colLeft, midRow, midCol);
-        current.topRight = dfs(grid, topRow, midCol + 1, midRow, colRight);
-        current.bottomLeft = dfs(grid, midRow + 1, colLeft, bottomRow, midCol);
-        current.bottomRight = dfs(grid, midRow + 1, midCol + 1, bottomRow, colRight);
+        int midCol = (leftCol + rightCol) / 2;
+        current.topLeft = dfs(grid, topRow, leftCol, midRow, midCol);
+        current.topRight = dfs(grid, topRow, midCol + 1, midRow, rightCol);
+        current.bottomLeft = dfs(grid, midRow + 1, leftCol, bottomRow, midCol);
+        current.bottomRight = dfs(grid, midRow + 1, midCol + 1, bottomRow, rightCol);
         return current;
     }
 }
-// topRow, colLeft,                            topRow, midCol + 1,             
-//                     midRow, midCol,                         midRow, colRight
+/**
+topRow, leftCol             topRow, midCol + 1
+        midRow, midCol              midRow, rightCol
 
-// midRow + 1, colLeft,                        midRow + 1, midCol + 1,
-//                     bottomRow, midCol,                      bottomRow, colRight
+midRow + 1, leftCol         midRow + 1, midCol + 1
+        bottomRow, midCol           bottomRow, rightCol
+
+ */
