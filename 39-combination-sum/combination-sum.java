@@ -2,11 +2,11 @@ class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        dfs(candidates, target, result, list, 0);
+        backTrack(candidates, target, result, list, 0);
         return result;
     }
-    private void dfs(int[] candidates, int target, List<List<Integer>> result, List<Integer> list
-    , int index) {
+    private void backTrack(int[] candidates, int target, List<List<Integer>> result, List<Integer> list, 
+                           int level) {
         if (target == 0) {
             result.add(new ArrayList<>(list));
             return;
@@ -14,9 +14,9 @@ class Solution {
         if (target < 0) {
             return;
         }
-        for (int i = index; i < candidates.length; i++) {
+        for (int i = level; i < candidates.length; i++) {
             list.add(candidates[i]);
-            dfs(candidates, target - candidates[i], result, list, i);
+            backTrack(candidates, target - candidates[i], result, list, i);
             list.remove(list.size() - 1);
         }
     }
