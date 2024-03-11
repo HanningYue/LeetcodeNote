@@ -5,10 +5,10 @@ class Solution {
         backTrack(result, list, 0, nums);
         return result;
     }
-    private void backTrack(List<List<Integer>> result, List<Integer> list, int index, int[] nums) {
+    private void backTrack(List<List<Integer>> result, List<Integer> list, int level, int[] nums) {
         result.add(new ArrayList<>(list));
-
-        for (int i = index; i < nums.length; i++) {
+        
+        for (int i = level; i < nums.length; i++) {
             list.add(nums[i]);
             backTrack(result, list, i + 1, nums);
             list.remove(list.size() - 1);
