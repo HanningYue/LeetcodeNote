@@ -7,23 +7,23 @@ class Solution {
                     return true;
                 }
             }
-        }        
+        }
         return false;
     }
-    
     private int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private boolean dfs(char[][] board, int row, int col, String word, int index, boolean[][] visited) {
-        if (index == word.length()) {
+    private boolean dfs(char[][] board, int row, int col, String word, int stringIdx, boolean[][] visited) {
+        if (stringIdx == word.length()) {
             return true;
         }
+
         if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col]
-        || board[row][col] != word.charAt(index)) {
+        || board[row][col] != word.charAt(stringIdx)) {
             return false;
         }
-        
+
         visited[row][col] = true;
         for (int[] dir : directions) {
-            if (dfs(board, row + dir[0], col + dir[1], word, index + 1, visited)) {
+            if (dfs(board, row + dir[0], col + dir[1], word, stringIdx + 1, visited)) {
                 return true;
             }
         }
