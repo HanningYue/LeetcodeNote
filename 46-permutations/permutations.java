@@ -12,13 +12,14 @@ class Solution {
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                list.add(nums[i]);
-                backTrack(result, list, nums, visited);
-                list.remove(list.size() - 1);
-                visited[i] = false;
+            if (visited[i]) {
+                continue;
             }
+            visited[i] = true;
+            list.add(nums[i]);
+            backTrack(result, list, nums, visited);
+            list.remove(list.size() - 1);
+            visited[i] = false;
         }
     }
 }
