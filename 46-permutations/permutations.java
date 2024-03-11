@@ -3,20 +3,19 @@ class Solution {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
         boolean[] visited = new boolean[nums.length];
-        dfs(result, list, visited, nums);
+        backTrack(result, list, nums, visited);
         return result;
     }
-    private void dfs(List<List<Integer>> result, List<Integer> list, boolean[] visited, int[] nums)
-    {
+    private void backTrack(List<List<Integer>> result, List<Integer> list, int[] nums, boolean[] visited) {
         if (list.size() == nums.length) {
             result.add(new ArrayList<>(list));
             return;
         }
         for (int i = 0; i < nums.length; i++) {
             if (!visited[i]) {
-                list.add(nums[i]);
                 visited[i] = true;
-                dfs(result, list, visited, nums);
+                list.add(nums[i]);
+                backTrack(result, list, nums, visited);
                 list.remove(list.size() - 1);
                 visited[i] = false;
             }
