@@ -1,7 +1,8 @@
+//k == 0 ?
 class Solution {
     public int maxProfit(int maxK, int[] prices) {
         int n = prices.length;
-        int[][][]dp = new int[n][maxK + 1][2];
+        int[][][] dp = new int[n][maxK + 1][2];
         for (int i = 0; i < n; i++) {
             for (int k = maxK; k >= 1; k--) {
                 if (i - 1 == -1) {
