@@ -3,25 +3,24 @@ class Solution {
         Arrays.sort(candidates);
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        dfs(candidates, target, result, list, 0);
+        backTrack(result, list, candidates, 0, target, 0);
         return result;
     }
-    private void dfs(int[] candidates, int target, List<List<Integer>> result, List<Integer> list,
-    int index)
-    {
-        if (target == 0) {
+    private void backTrack(List<List<Integer>> result, List<Integer> list, int[] candidates, int sum, 
+                           int target, int level) {
+        if (sum == target) {
             result.add(new ArrayList<>(list));
             return;
         }
-        if (target < 0) {
+        if (sum > target) {
             return;
         }
-        for (int i = index; i < candidates.length; i++) {
-            if (i > index && candidates[i - 1] == candidates[i]) {
+        for (int i = level; i < candidates.length; i++) {
+            if (i > level && candidates[i] == candidates[i - 1]) {
                 continue;
             }
             list.add(candidates[i]);
-            dfs(candidates, target - candidates[i], result, list, i + 1);
+            backTrack(result, list, candidates, sum + candidates[i], target, i + 1);
             list.remove(list.size() - 1);
         }
     }
