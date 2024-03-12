@@ -19,12 +19,11 @@ class Solution {
         int result = Integer.MAX_VALUE;
         for (int coin : coins) {
             int sub = dp(coins, amount - coin);
-            if (sub == -1) {
-                continue;
+            if (sub != -1) {
+                result = Math.min(result, sub + 1);
             }
-            result = Math.min(result, sub + 1);
         }
-        dpTable[amount] = (result == Integer.MAX_VALUE) ? -1 : result;
+        dpTable[amount] = result == Integer.MAX_VALUE ? -1 : result;
         return dpTable[amount];
     }
 }
