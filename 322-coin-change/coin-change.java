@@ -15,6 +15,7 @@ class Solution {
         if (dpTable[amount] != -100) {
             return dpTable[amount];
         }
+
         int result = Integer.MAX_VALUE;
         for (int coin : coins) {
             int sub = dp(coins, amount - coin);
