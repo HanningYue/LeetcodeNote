@@ -1,17 +1,18 @@
 class Solution {
-    int[] memo;
+    int[] dpTable;
     public int climbStairs(int n) {
-        memo = new int[n + 1];
+        dpTable = new int[n + 1];
         return dp(n);
     }
+
     private int dp(int n) {
         if (n <= 2) {
             return n;
         }
-        if (memo[n] > 0) {
-            return memo[n];
+        if (dpTable[n] != 0) {
+            return dpTable[n];
         }
-        memo[n] = dp(n - 2) + dp(n - 1);
-        return memo[n];
+        dpTable[n] = dp(n - 2) + dp(n - 1);
+        return dpTable[n];
     }
 }
