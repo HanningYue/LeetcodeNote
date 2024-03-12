@@ -19,7 +19,7 @@ class Solution {
                 boolean sub = dp(s, index + length, set);
                 if (sub) {
                     dpTable[index] = 1;
-                    return true; 
+                    return true;
                 }
             }
         }
