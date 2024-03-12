@@ -2,6 +2,7 @@ class Solution {
     int[] dpTable;
     public int climbStairs(int n) {
         dpTable = new int[n + 1];
+        Arrays.fill(dpTable, 0);
         return dp(n);
     }
     private int dp(int n) {
