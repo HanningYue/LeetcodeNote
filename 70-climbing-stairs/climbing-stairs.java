@@ -4,7 +4,6 @@ class Solution {
         dpTable = new int[n + 1];
         return dp(n);
     }
-
     private int dp(int n) {
         if (n <= 2) {
             return n;
@@ -12,7 +11,7 @@ class Solution {
         if (dpTable[n] != 0) {
             return dpTable[n];
         }
-        dpTable[n] = dp(n - 2) + dp(n - 1);
+        dpTable[n] = dp(n - 1) + dp(n - 2);
         return dpTable[n];
     }
 }
