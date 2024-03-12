@@ -11,15 +11,15 @@ class Solution {
             return true;
         }
         if (dpTable[index] != -1) {
-            return dpTable[index] == 0 ? false : true;
+            return dpTable[index] == 1 ? true : false;
         }
         for (int length = 1; index + length <= s.length(); length++) {
             String prefix = s.substring(index, index + length);
             if (set.contains(prefix)) {
-                boolean subproblem = dp(s, index + length, set);
-                if (subproblem) {
+                boolean sub = dp(s, index + length, set);
+                if (sub) {
                     dpTable[index] = 1;
-                    return true;
+                    return true; 
                 }
             }
         }
