@@ -7,7 +7,6 @@ class Solution {
     }
     private List<String> dp(String s, int index, Set<String> set) {
         List<String> result = new ArrayList<>();
-
         if (index == s.length()) {
             result.add("");
             return result;
@@ -18,12 +17,12 @@ class Solution {
         for (int length = 1; index + length <= s.length(); length++) {
             String prefix = s.substring(index, index + length);
             if (set.contains(prefix)) {
-                List<String> subproblem = dp(s, index + length, set);
-                for (String sub : subproblem) {
-                    if (sub.isEmpty()) {
+                List<String> subList = dp(s, index + length, set);
+                for (String str : subList) {
+                    if (str.isEmpty()) {
                         result.add(prefix);
                     } else {
-                        result.add(prefix + " " + sub);
+                        result.add(prefix + " " + str);
                     }
                 }
             }
