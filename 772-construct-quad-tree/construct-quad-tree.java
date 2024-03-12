@@ -40,7 +40,7 @@ class Node {
 
 class Solution {
     public Node construct(int[][] grid) {
-        return dfs(grid, 0, 0, grid.length - 1, grid[0].length - 1);
+        return dfs(grid, 0, 0, grid.length - 1, grid.length - 1);
     }
     private Node dfs(int[][] grid, int topRow, int leftCol, int bottomRow, int rightCol) {
         if (topRow > bottomRow || leftCol > rightCol) {
@@ -64,7 +64,6 @@ class Solution {
             current.val = value == 1;
             return current;
         }
-
         int midRow = (topRow + bottomRow) / 2;
         int midCol = (leftCol + rightCol) / 2;
         current.topLeft = dfs(grid, topRow, leftCol, midRow, midCol);
@@ -75,10 +74,8 @@ class Solution {
     }
 }
 /**
-topRow, leftCol             topRow, midCol + 1
-        midRow, midCol              midRow, rightCol
-
-midRow + 1, leftCol         midRow + 1, midCol + 1
-        bottomRow, midCol           bottomRow, rightCol
-
- */
+topRow, leftCol                 topRow, midCol + 1
+        midRow, midCol                  midRow, rightCol
+midRow + 1, leftCol             midRow + 1, midCol
+        bottomRow, midCol               bottomRow, rightCol               
+*/
