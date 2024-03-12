@@ -1,8 +1,8 @@
 class Solution {
-    int[] memo;
+    int[] dpTable;
     public int coinChange(int[] coins, int amount) {
-        memo = new int[amount + 1];
-        Arrays.fill(memo, -100);
+        dpTable = new int[amount + 1];
+        Arrays.fill(dpTable, -100);
         return dp(coins, amount);
     }
     private int dp(int[] coins, int amount) {
@@ -12,8 +12,8 @@ class Solution {
         if (amount < 0) {
             return -1;
         }
-        if (memo[amount] != -100) {
-            return memo[amount];
+        if (dpTable[amount] != -100) {
+            return dpTable[amount];
         }
         int result = Integer.MAX_VALUE;
         for (int coin : coins) {
@@ -23,7 +23,7 @@ class Solution {
             }
             result = Math.min(result, sub + 1);
         }
-        memo[amount] = (result == Integer.MAX_VALUE) ? -1 : result;
-        return memo[amount];
+        dpTable[amount] = (result == Integer.MAX_VALUE) ? -1 : result;
+        return dpTable[amount];
     }
 }
