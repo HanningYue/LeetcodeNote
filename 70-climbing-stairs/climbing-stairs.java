@@ -1,10 +1,9 @@
 class Solution {
     int[] memo;
     public int climbStairs(int n) {
-        memo = new int[n + 1];//We save n + 1steps
+        memo = new int[n + 1];
         return dp(n);
     }
-
     private int dp(int n) {
         if (n <= 2) {
             return n;
@@ -12,7 +11,7 @@ class Solution {
         if (memo[n] > 0) {
             return memo[n];
         }
-        memo[n] = dp(n - 1) + dp(n - 2);
+        memo[n] = dp(n - 2) + dp(n - 1);
         return memo[n];
     }
 }
