@@ -7,6 +7,7 @@ class Solution {
     }
     private List<String> dp(String s, int index, Set<String> set) {
         List<String> result = new ArrayList<>();
+
         if (index == s.length()) {
             result.add("");
             return result;
