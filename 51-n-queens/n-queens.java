@@ -1,7 +1,9 @@
 class Solution {
-    List<String> board = new ArrayList<>();
-    List<List<String>> result = new ArrayList<>();
+    List<String> board;
+    List<List<String>> result;
     public List<List<String>> solveNQueens(int n) {
+        board = new ArrayList<>();
+        result = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < n; j++) {
@@ -18,32 +20,29 @@ class Solution {
             return;
         }
         for (int col = 0; col < board.get(row).length(); col++) {
-            if (!valid(row, col)) {
-                continue;
+            if (isValid(row, col)) {
+                StringBuilder sb = new StringBuilder(board.get(row));
+                sb.setCharAt(col, 'Q');
+                board.set(row, sb.toString());
+                backTrack(row + 1);
+                sb.setCharAt(col, '.');
+                board.set(row, sb.toString());
             }
-            StringBuilder currentRow = new StringBuilder(board.get(row));
-            currentRow.setCharAt(col, 'Q');
-            board.set(row, currentRow.toString());
-
-            backTrack(row + 1);
-
-            currentRow.setCharAt(col, '.');
-            board.set(row, currentRow.toString());
         }
-        
+
     }
-    private boolean valid(int row, int col) {
+    private boolean isValid(int row, int col) {
         for (int i = 0; i < row; i++) {
             if (board.get(i).charAt(col) == 'Q') {
                 return false;
             }
         }
-        for (int i = row - 1, j = col + 1; i >= 0 && j < board.size(); i--, j++) {
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
             if (board.get(i).charAt(j) == 'Q') {
                 return false;
             }
         }
-        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+        for (int i = row - 1, j = col + 1; i >= 0 && j < board.size(); i--, j++) {
             if (board.get(i).charAt(j) == 'Q') {
                 return false;
             }
