@@ -21,13 +21,11 @@ class Solution {
         int insert = dp(s1, i, s2, j - 1) + 1;
         int delete = dp(s1, i - 1, s2, j) + 1;
         int replace = dp(s1, i - 1, s2, j - 1) + 1;
-
         if (s1.charAt(i) == s2.charAt(j)) {
             dpTable[i][j] = skip;
         } 
         else if (s1.charAt(i) != s2.charAt(j)){
-            dpTable[i][j]
-            = Math.min(insert, Math.min(delete, replace));
+            dpTable[i][j] = Math.min(insert, Math.min(delete, replace));
         }
         return dpTable[i][j];
     }
