@@ -1,11 +1,8 @@
 class Solution {
-    int[][] dpTable;
+    Integer[][] dpTable;
     public int minDistance(String word1, String word2) {
         int m = word1.length(), n = word2.length();
-        dpTable = new int[m][n];
-        for (int[] row : dpTable) {
-            Arrays.fill(row, -1);
-        }
+        dpTable = new Integer[m][n];
         return dp(word1, m - 1, word2, n - 1);
     }
 
@@ -16,7 +13,7 @@ class Solution {
         if (j == -1) {
             return i + 1;
         }
-        if (dpTable[i][j] != -1) {
+        if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
         
@@ -24,7 +21,7 @@ class Solution {
             dpTable[i][j] = dp(s1, i - 1, s2, j - 1);
         } 
         else if (s1.charAt(i) != s2.charAt(j)){
-            dpTable[i][j] 
+            dpTable[i][j]
             = findMin(dp(s1, i, s2, j - 1) + 1, dp(s1, i - 1, s2, j - 1) + 1, dp(s1, i - 1, s2, j) + 1);
         }
         return dpTable[i][j];
