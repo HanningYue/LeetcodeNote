@@ -19,8 +19,9 @@ class Solution {
         if (dpTable[row][col] != -1) {
             return dpTable[row][col];
         }
-        dpTable[row][col] = 
-        Math.min(dp(grid, row - 1, col), dp(grid, row, col - 1)) + grid[row][col];
-        return dpTable[row][col];
+        
+        int result = Math.min(dp(grid, row - 1, col), dp(grid, row, col - 1)) + grid[row][col];
+        dpTable[row][col] = result;
+        return result;
     }
 }
