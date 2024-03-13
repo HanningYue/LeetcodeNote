@@ -15,7 +15,7 @@ class Solution {
             for (int j = 1; j < n; j++) {
                 if (matrix[i][j] != '0') {
                     dpTable[i][j] 
-                    = Math.min(Math.min(dpTable[i - 1][j], dpTable[i][j - 1]), dpTable[i - 1][j - 1]) + 1;
+                    = Math.min(dpTable[i - 1][j - 1], Math.min(dpTable[i - 1][j], dpTable[i][j - 1])) + 1;
                 }
             }
         }
