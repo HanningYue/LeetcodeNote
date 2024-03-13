@@ -5,21 +5,19 @@ class Solution {
             public int compare(int[] a, int[] b) {
                 return (a[0] + a[1]) - (b[0] + b[1]);
             }
-        });        
+        });
 
-        for (int i = 0; i < nums1.length && i < k; i++) {
+        for (int i = 0; i < nums1.length; i++) {
             minHeap.offer(new int[]{nums1[i], nums2[0], 0});
         }
-
         while (!minHeap.isEmpty() && k > 0) {
-            int[] current = minHeap.poll();
-            int num1 = current[0], num2 = current[1];
-            int nums2Idx = current[2];
+            int[] currentSmallest = minHeap.poll();
+            int numOne = currentSmallest[0];
+            int numTwo = currentSmallest[1], numTwoIdx = currentSmallest[2];
+            result.add(Arrays.asList(numOne, numTwo));
 
-            result.add(Arrays.asList(num1, num2));
-
-            if (nums2Idx < nums2.length - 1) {
-                minHeap.offer(new int[]{num1, nums2[nums2Idx + 1], nums2Idx + 1});
+            if (numTwoIdx + 1 < nums2.length) {
+                minHeap.offer(new int[]{numOne, nums2[numTwoIdx + 1], numTwoIdx + 1});
             }
             k--;
         }
