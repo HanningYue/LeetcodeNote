@@ -1,11 +1,7 @@
 class Solution {
-    int[][] dpTable;
+    Integer[][] dpTable;
     public int uniquePaths(int m, int n) {
-        dpTable = new int[m][n];
-        for (int[] row : dpTable) {
-            Arrays.fill(row, 0);
-        }
-
+        dpTable = new Integer[m][n];
         return dp(m - 1, n - 1);
     }
     private int dp(int row, int col) {
@@ -15,12 +11,13 @@ class Solution {
         if (row < 0 || col < 0) {
             return 0;
         }
-        if (dpTable[row][col] != 0) {
+        if (dpTable[row][col] != null) {
             return dpTable[row][col];
         }
 
-        int result = dp(row - 1, col) + dp(row, col - 1);
-        dpTable[row][col] = result;
-        return result;
+        int up = dp(row - 1, col);
+        int left = dp(row, col - 1);
+        dpTable[row][col] = up + left;
+        return dpTable[row][col];
     }
 }
