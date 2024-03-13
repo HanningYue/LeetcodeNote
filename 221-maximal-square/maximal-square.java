@@ -1,33 +1,35 @@
+/**
+dp 数组：以 matrix[i][j] 为右下角元素的最大的全为 1 正方形矩阵的边长为 dp[i][j]
+水桶效应 所以找min
+*/
 class Solution {
-    int[][] dpTable;
+    Integer[][] dpTable;
     public int maximalSquare(char[][] matrix) {
         int m = matrix.length, n = matrix[0].length;
-        dpTable = new int[m][n];
-
-        for (int i = 0; i < matrix.length; i++) {
-            dpTable[i][0] = matrix[i][0] - '0';
-        }
-        for (int j = 0; j < matrix[0].length; j++) {
-            dpTable[0][j] = matrix[0][j] - '0';
-        }
-
-        for (int i = 1; i < matrix.length; i++) {
-            for (int j = 1; j < matrix[0].length; j++) {
-                if (matrix[i][j] != '0') {
-                    dpTable[i][j] =
-                    findMin(dpTable[i - 1][j], dpTable[i][j - 1], dpTable[i - 1][j - 1]) + 1;
-                }
+        dpTable = new Integer[m][n];
+        
+        int maxSide = 0;
+        for (int row = 0; row < m; row++) {
+            for (int col = 0; col < n; col++) {
+                maxSide = Math.max(maxSide, findMaxSquare(matrix, row, col));
             }
         }
-        int result = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                result = Math.max(result, dpTable[i][j]);
-            }
-        }
-        return result * result;
+        return maxSide * maxSide; // Return area
     }
-    private int findMin(int a, int b, int c) {
-        return Math.min(a, Math.min(b, c));
+
+    private int findMaxSquare(char[][] matrix, int row, int col) {
+        if (row < 0 || col < 0 || matrix[row][col] == '0') {
+            return 0;
+        }
+        if (dpTable[row][col] != null) {
+            return dpTable[row][col];
+        }
+        
+        int up = findMaxSquare(matrix, row - 1, col);
+        int left = findMaxSquare(matrix, row, col - 1);
+        int leftUp = findMaxSquare(matrix, row - 1, col - 1);
+        
+        dpTable[row][col] = Math.min(Math.min(up, left), leftUp) + 1;
+        return dpTable[row][col];
     }
 }
