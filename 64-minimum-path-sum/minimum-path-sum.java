@@ -8,17 +8,18 @@ class Solution {
         }
         return dp(grid, m - 1, n - 1);
     }
-    private int dp(int[][] grid, int i, int j) {
-        if (i == 0 && j == 0) {
+    private int dp(int[][] grid, int row, int col) {
+        if (row == 0 && col == 0) {
             return grid[0][0];
         }
-        if (i < 0 || j < 0) {
+        if (row < 0 || col < 0) {
             return Integer.MAX_VALUE;
         }
-        if (dpTable[i][j] != -1) {
-            return dpTable[i][j];
+        if (dpTable[row][col] != -1) {
+            return dpTable[row][col];
         }
-        dpTable[i][j] = Math.min(dp(grid, i - 1, j), dp(grid, i, j - 1)) + grid[i][j];
-        return dpTable[i][j];
+        dpTable[row][col] = 
+        Math.min(dp(grid, row - 1, col), dp(grid, row, col - 1)) + grid[row][col];
+        return dpTable[row][col];
     }
 }
