@@ -8,17 +8,19 @@ class Solution {
 
         return dp(m - 1, n - 1);
     }
-    private int dp(int x, int y) {
-        if (x == 0 && y == 0) {
+    private int dp(int row, int col) {
+        if (row == 0 && col == 0) {
             return 1;
         }
-        if (x < 0 || y < 0) {
+        if (row < 0 || col < 0) {
             return 0;
         }
-        if (dpTable[x][y] != 0) {
-            return dpTable[x][y];
+        if (dpTable[row][col] != 0) {
+            return dpTable[row][col];
         }
-        dpTable[x][y] = dp(x - 1, y) + dp(x, y - 1);
-        return dpTable[x][y]; 
+
+        int result = dp(row - 1, col) + dp(row, col - 1);
+        dpTable[row][col] = result;
+        return result;
     }
 }
