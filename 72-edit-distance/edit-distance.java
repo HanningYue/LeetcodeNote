@@ -9,12 +9,15 @@ class Solution {
         for (int j = 1; j <= n; j++) {
             dpTable[0][j] = j;
         }
+
         for (int i = 1; i <= m; i++) {
             for (int j = 1; j <= n; j++) {
                 if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
                     dpTable[i][j] = dpTable[i - 1][j - 1];
-                } else {
-                    dpTable[i][j] = findMin(dpTable[i - 1][j] + 1, dpTable[i][j - 1] + 1, dpTable[i - 1][j - 1] + 1);
+                } 
+                else {
+                    dpTable[i][j] 
+                    = findMin(dpTable[i - 1][j] + 1, dpTable[i][j - 1] + 1, dpTable[i - 1][j - 1] + 1);
                 }
             }
         }
