@@ -7,8 +7,8 @@ class Solution {
         int totalLength = nums1.length + nums2.length;
         int halfLength = (totalLength + 1) / 2;
         boolean even = totalLength % 2 == 0;
-        int left = 0, right = nums1.length;
 
+        int left = 0, right = nums1.length;
         while (left <= right) {
             int pointer1 = left + (right - left) / 2;
             int pointer2 = halfLength - pointer1;
@@ -24,9 +24,11 @@ class Solution {
                 } else {
                     return Math.max(left1, left2);
                 }
-            } else if (left1 > right2) {
+            }
+            else if (left1 > right2) {
                 right = pointer1 - 1;
-            } else if (left2 > right1) {
+            }
+            else if (left2 > right1) {
                 left = pointer1 + 1;
             }
         }
