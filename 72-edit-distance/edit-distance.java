@@ -17,17 +17,18 @@ class Solution {
             return dpTable[i][j];
         }
         
+        int skip = dp(s1, i - 1, s2, j - 1);
+        int insert = dp(s1, i, s2, j - 1) + 1;
+        int delete = dp(s1, i - 1, s2, j) + 1;
+        int replace = dp(s1, i - 1, s2, j - 1) + 1;
+
         if (s1.charAt(i) == s2.charAt(j)) {
-            dpTable[i][j] = dp(s1, i - 1, s2, j - 1);
+            dpTable[i][j] = skip;
         } 
         else if (s1.charAt(i) != s2.charAt(j)){
             dpTable[i][j]
-            = findMin(dp(s1, i, s2, j - 1) + 1, dp(s1, i - 1, s2, j - 1) + 1, dp(s1, i - 1, s2, j) + 1);
+            = Math.min(insert, Math.min(delete, replace));
         }
         return dpTable[i][j];
-    }
-
-    private int findMin(int a, int b, int c) {
-        return Math.min(a, Math.min(b, c));
     }
 }
