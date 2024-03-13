@@ -3,8 +3,8 @@ class Solution {
     public int minPathSum(int[][] grid) {
         int m = grid.length, n = grid[0].length;
         dpTable = new int[m][n];
-        for (int[] row : dpTable) {
-            Arrays.fill(row, -1);
+        for (int i = 0; i < dpTable.length; i++) {
+            Arrays.fill(dpTable[i], -1);
         }
         return dp(grid, m - 1, n - 1);
     }
