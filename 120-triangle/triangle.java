@@ -1,30 +1,28 @@
+import java.util.List;
+
 class Solution {
-    int[][] dpTable;
+    Integer[][] dpTable;
+
     public int minimumTotal(List<List<Integer>> triangle) {
         int n = triangle.size();
-        dpTable = new int[n][n];
-        for (int[] row : dpTable) {
-            Arrays.fill(row, Integer.MAX_VALUE);
-        }
+        dpTable = new Integer[n][n]; // Use Integer for null check
+        return dp(triangle, 0, 0);
+    }
 
-        dpTable[0][0] = triangle.get(0).get(0);
-        for (int i = 1; i < n; i++) {
-            List<Integer> currentRow = triangle.get(i);
-            for (int j = 0; j < currentRow.size(); j++) {
-                if (j - 1 < 0) {
-                    dpTable[i][j] = dpTable[i - 1][j] + currentRow.get(j);
-                }
-                else if (j - 1 >= 0) {
-                    dpTable[i][j] 
-                    = Math.min(dpTable[i - 1][j], dpTable[i - 1][j - 1]) + currentRow.get(j);
-                }
-            }
+    private int dp(List<List<Integer>> triangle, int row, int col) {
+        // Base case: if we reach beyond the last row, no more steps required
+        if (row == triangle.size()) {
+            return 0;
         }
-        
-        int result = Integer.MAX_VALUE;
-        for (int i = 0; i < dpTable[n - 1].length; i++) {
-            result = Math.min(result, dpTable[n - 1][i]);
+        // Check if the result is already computed
+        if (dpTable[row][col] != null) {
+            return dpTable[row][col];
         }
-        return result;
+        // Recursive case: choose the minimum path sum of the current position by deciding to go down or diagonally right down
+        int down = dp(triangle, row + 1, col);
+        int diagRight = dp(triangle, row + 1, col + 1);
+        // Calculate the minimum path sum for the current position
+        dpTable[row][col] = Math.min(down, diagRight) + triangle.get(row).get(col);
+        return dpTable[row][col];
     }
 }
