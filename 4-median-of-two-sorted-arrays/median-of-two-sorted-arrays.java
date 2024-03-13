@@ -1,6 +1,6 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        if (nums2.length < nums1.length) {
+        if (nums1.length > nums2.length) {
             return findMedianSortedArrays(nums2, nums1);
         }
 
@@ -15,7 +15,6 @@ class Solution {
 
             int left1 = pointer1 > 0 ? nums1[pointer1 - 1] : Integer.MIN_VALUE;
             int right1 = pointer1 < nums1.length ? nums1[pointer1] : Integer.MAX_VALUE;
-
             int left2 = pointer2 > 0 ? nums2[pointer2 - 1] : Integer.MIN_VALUE;
             int right2 = pointer2 < nums2.length ? nums2[pointer2] : Integer.MAX_VALUE;
 
@@ -25,11 +24,9 @@ class Solution {
                 } else {
                     return Math.max(left1, left2);
                 }
-            } 
-            else if (left1 > right2) {
+            } else if (left1 > right2) {
                 right = pointer1 - 1;
-            }
-            else if (left2 > right1) {
+            } else if (left2 > right1) {
                 left = pointer1 + 1;
             }
         }
