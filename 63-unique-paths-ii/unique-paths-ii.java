@@ -6,8 +6,7 @@ class Solution {
         return dp(obstacleGrid, m - 1, n - 1);
     }
     private int dp(int[][] grid, int row, int col) {
-        int m = grid.length, n = grid[0].length;
-        if (row < 0 || row >= m || col < 0 || col >= n || grid[row][col] == 1) {
+        if (row < 0 || col < 0 || grid[row][col] == 1) {
             return 0;
         }
         if (row == 0 && col == 0) {
