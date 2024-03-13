@@ -8,18 +8,16 @@ class Solution {
             }
 
             if (nums[mid] >= nums[left]) {
-                if (target >= nums[left] && target < nums[mid]) {
+                if (target < nums[mid] && target >= nums[left]) {
                     right = mid - 1;
-                }
-                else {
+                } else {
                     left = mid + 1;
                 }
-            } 
+            }
             else if (nums[mid] <= nums[right]) {
-                if (target <= nums[right] && target > nums[mid]) {
+                if (target > nums[mid] && target <= nums[right]) {
                     left = mid + 1;
-                }
-                else {
+                } else {
                     right = mid - 1;
                 }
             }
