@@ -1,24 +1,18 @@
-/**
-BackTracking, substring() is exclusive
-helper function to check palindrome condition
-*/
 class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> result = new ArrayList<>();
         List<String> list = new ArrayList<>();
-        backTracking(result, list, 0, s);
+        backTrack(result, list, s, 0);
         return result;
-        
     }
-    private void backTracking(List<List<String>> result, List<String> list, int startIndex, String s) {
-        if (startIndex == s.length()) {
-            result.add(new ArrayList(list));
-            return;
+    private void backTrack(List<List<String>> result, List<String> list, String s, int startIdx) {
+        if (startIdx == s.length()) {
+            result.add(new ArrayList<>(list));
         }
-        for (int i = startIndex; i < s.length(); i++) {
-            if (isPalindrome(s, startIndex, i)) {
-                list.add(s.substring(startIndex, i + 1));
-                backTracking(result, list, i + 1, s);
+        for (int i = startIdx; i < s.length(); i++) {
+            if (isPalindrome(s, startIdx, i)) {
+                list.add(s.substring(startIdx, i + 1));
+                backTrack(result, list, s, i + 1);
                 list.remove(list.size() - 1);
             }
         }
