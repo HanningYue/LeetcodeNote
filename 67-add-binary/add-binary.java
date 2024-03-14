@@ -1,19 +1,19 @@
 class Solution {
     public String addBinary(String a, String b) {
+        int pointerA = a.length() - 1, pointerB = b.length() - 1;
         StringBuilder sb = new StringBuilder();
-        int aPointer = a.length() - 1, bPointer = b.length() - 1;
-        
         int carry = 0;
-        while (aPointer >= 0 || bPointer >= 0) {
-            int num1 = aPointer >= 0 ? a.charAt(aPointer) - '0' : 0;
-            int num2 = bPointer >= 0 ? b.charAt(bPointer) - '0' : 0;
-            int sum = carry + num1 + num2;
+        while (pointerA >= 0 || pointerB >= 0) {
+            int numA = pointerA >= 0 ? a.charAt(pointerA) - '0' : 0;
+            int numB = pointerB >= 0 ? b.charAt(pointerB) - '0' : 0;
+            int sum = numA + numB + carry;
 
-            sb.insert(0, sum % 2);
             carry = sum / 2;
-            aPointer--;
-            bPointer--;
+            sb.insert(0, sum % 2);
+            pointerA--;
+            pointerB--;
         }
+
         if (carry != 0) {
             sb.insert(0, carry);
         }
