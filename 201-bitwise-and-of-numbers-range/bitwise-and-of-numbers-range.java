@@ -7,7 +7,7 @@ class Solution {
             right = right >> 1;
             pointer++;
         }
-        left = left << pointer;
-        return left;
+        int shiftBack = left << pointer;
+        return shiftBack;
     }
 }
