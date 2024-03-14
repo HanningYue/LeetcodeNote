@@ -26,10 +26,10 @@ class Solution {
         if (result.size() == level) {
             result.add(new ArrayList<>());
         }
-
         if (level % 2 == 0) {
             result.get(level).add(root.val);
-        } else if (level % 2 == 1) {
+        }
+        else if (level % 2 == 1) {
             result.get(level).add(0, root.val);
         }
         dfs(root.left, result, level + 1);
