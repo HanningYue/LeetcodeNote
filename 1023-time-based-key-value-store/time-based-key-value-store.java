@@ -1,14 +1,14 @@
 class Pair {
+    int value;
     String key;
-    Integer value;
-    public Pair(String key, Integer value) {
+    public Pair(String key, int value) {
         this.key = key;
         this.value = value;
     }
     public String getKey() {
         return key;
     }
-    public Integer getValue() {
+    public int getValue() {
         return value;
     }
 }
@@ -30,7 +30,6 @@ class TimeMap {
         List<Pair> list = map.get(key);
         return binarySearch(list, timestamp);
     }
-
     private String binarySearch(List<Pair> list, int timestamp) {
         int left = 0, right = list.size() - 1;
         while (left <= right) {
@@ -39,7 +38,7 @@ class TimeMap {
                 return list.get(mid).getKey();
             } else if (list.get(mid).getValue() < timestamp) {
                 left = mid + 1;
-            } else {
+            } else if (list.get(mid).getValue() > timestamp) {
                 right = mid - 1;
             }
         }
