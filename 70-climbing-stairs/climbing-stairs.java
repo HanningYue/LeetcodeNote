@@ -1,18 +1,17 @@
 class Solution {
-    int[] dpTable;
+    Integer[] dpTable;
     public int climbStairs(int n) {
-        dpTable = new int[n + 1];
-        Arrays.fill(dpTable, 0);
+        dpTable = new Integer[n + 1];
         return dp(n);
     }
     private int dp(int n) {
         if (n <= 2) {
             return n;
         }
-        if (dpTable[n] != 0) {
+        if (dpTable[n] != null) {
             return dpTable[n];
         }
-        dpTable[n] = dp(n - 1) + dp(n - 2);
+        dpTable[n] = dp(n - 2) + dp(n - 1);
         return dpTable[n];
     }
 }
