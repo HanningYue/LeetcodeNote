@@ -1,11 +1,25 @@
+class Pair {
+    String key;
+    Integer value;
+    public Pair(String key, Integer value) {
+        this.key = key;
+        this.value = value;
+    }
+    public String getKey() {
+        return key;
+    }
+    public Integer getValue() {
+        return value;
+    }
+}
 class TimeMap {
-    Map<String, List<Pair<String, Integer>>> map;
+    Map<String, List<Pair>> map;
     public TimeMap() {
         map = new HashMap<>();
     }
     
     public void set(String key, String value, int timestamp) {
-        map.putIfAbsent(key, new ArrayList<Pair<String, Integer>>());
+        map.putIfAbsent(key, new ArrayList<Pair>());
         map.get(key).add(new Pair(value, timestamp));
     }
     
@@ -13,10 +27,11 @@ class TimeMap {
         if (!map.containsKey(key)) {
             return "";
         }
-        List<Pair<String, Integer>> list = map.get(key);
+        List<Pair> list = map.get(key);
         return binarySearch(list, timestamp);
     }
-    private String binarySearch(List<Pair<String, Integer>> list, int timestamp) {
+
+    private String binarySearch(List<Pair> list, int timestamp) {
         int left = 0, right = list.size() - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
