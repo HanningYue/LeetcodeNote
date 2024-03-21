@@ -1,6 +1,6 @@
 class Solution {
     public double myPow(double x, int n) {
-        return helper(x, n);      
+        return helper(x, n);
     }
     private double helper(double x, long n) {
         if (n == 0) {
