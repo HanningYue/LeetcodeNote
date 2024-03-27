@@ -1,24 +1,26 @@
 class Solution {
-    Integer[] dpTable1;
-    Integer[] dpTable2;
+    Integer[] dpTableOne;
+    Integer[] dpTableTwo;
     public int rob(int[] nums) {
         if (nums.length == 1) {
             return nums[0];
         }
-        
-        dpTable1 = new Integer[nums.length];
-        dpTable2 = new Integer[nums.length];
-        return Math.max(dp(nums, 0, nums.length - 2, dpTable1), dp(nums, 1, nums.length - 1, dpTable2));
+        dpTableOne = new Integer[nums.length];
+        dpTableTwo = new Integer[nums.length];
+
+        int result = Math.max(dp(nums, 0, nums.length - 2, dpTableOne), dp(nums, 1, nums.length - 1, dpTableTwo));
+        return result;
     }
-    private int dp(int[] nums, int start, int end, Integer[] dpTable) {
-        if (start > end) {
+    private int dp(int[] nums, int startIdx, int endIdx, Integer[] dpTable) {
+        if (startIdx > endIdx) {
             return 0;
         }
-        if (dpTable[start] != null) {
-            return dpTable[start];
+        if (dpTable[startIdx] != null) {
+            return dpTable[startIdx];
         }
-        dpTable[start] = Math.max(dp(nums, start + 2, end, dpTable) + nums[start],
-                                dp(nums, start + 1, end, dpTable));
-        return dpTable[start];
+        int result = Math.max(dp(nums, startIdx + 1, endIdx, dpTable), 
+                                    dp(nums, startIdx + 2, endIdx, dpTable) + nums[startIdx]);
+        dpTable[startIdx] = result;
+        return dpTable[startIdx];
     }
 }
