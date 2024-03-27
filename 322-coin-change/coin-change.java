@@ -1,8 +1,7 @@
 class Solution {
-    int[] dpTable;
+    Integer[] dpTable;
     public int coinChange(int[] coins, int amount) {
-        dpTable = new int[amount + 1];
-        Arrays.fill(dpTable, -100);
+        dpTable = new Integer[amount + 1];
         return dp(coins, amount);
     }
     private int dp(int[] coins, int amount) {
@@ -12,7 +11,7 @@ class Solution {
         if (amount < 0) {
             return -1;
         }
-        if (dpTable[amount] != -100) {
+        if (dpTable[amount] != null) {
             return dpTable[amount];
         }
 
