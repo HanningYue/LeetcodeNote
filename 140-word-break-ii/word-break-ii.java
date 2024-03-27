@@ -1,6 +1,5 @@
 class Solution {
     List<String>[] dpTable;
-    
     public List<String> wordBreak(String s, List<String> wordDict) {
         dpTable = new ArrayList[s.length()];
         Set<String> dict = new HashSet<>(wordDict);
@@ -15,22 +14,19 @@ class Solution {
         if (dpTable[index] != null) {
             return dpTable[index];
         }
-
         for (int length = 1; index + length <= s.length(); length++) {
             String prefix = s.substring(index, index + length);
             if (dict.contains(prefix)) {
                 List<String> subList = dp(s, index + length, dict);
-                for (String subString : subList) {
-                    if (subString.isEmpty()) {
+                for (String subStr : subList) {
+                    if (subStr.isEmpty()) {
                         result.add(prefix);
-                    }
-                    else {
-                        result.add(prefix + " " + subString);
-                    }
+                    } else {
+                        result.add(prefix + " " + subStr);
+                   }
                 }
             }
         }
-        
         dpTable[index] = result;
         return result;
     }
