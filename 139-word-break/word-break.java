@@ -1,28 +1,28 @@
 class Solution {
-    Integer[] dpTable;
+    Boolean[] dpTable;
     public boolean wordBreak(String s, List<String> wordDict) {
-        dpTable = new Integer[s.length()];
-        Set<String> set = new HashSet<>(wordDict);
-        return dp(s, 0, set);
+        dpTable = new Boolean[s.length()];
+        Set<String> dict = new HashSet<>(wordDict);
+        return dp(s, 0, dict);
     }
-    private boolean dp(String s, int startIdx, Set<String> set) {
-        if (startIdx == s.length()) {
+    private boolean dp(String s, int index, Set<String> dict) {
+        if (index == s.length()) {
             return true;
         }
-        if (dpTable[startIdx] != null) {
-            return dpTable[startIdx] == 1 ? true : false;
+        if (dpTable[index] != null) {
+            return dpTable[index];
         }
-        for (int length = 1; startIdx + length <= s.length(); length++) {
-            String prefix = s.substring(startIdx, startIdx + length);
-            if (set.contains(prefix)) {
-                boolean sub = dp(s, startIdx + length, set);
+        for (int length = 1; index + length <= s.length(); length++) {
+            String prefix = s.substring(index, index + length);
+            if (dict.contains(prefix)) {
+                boolean sub = dp(s, index + length, dict);
                 if (sub) {
-                    dpTable[startIdx] = 1;
+                    dpTable[index] = true;
                     return true;
                 }
             }
         }
-        dpTable[startIdx] = 0;
+        dpTable[index] = false;
         return false;
     }
 }
