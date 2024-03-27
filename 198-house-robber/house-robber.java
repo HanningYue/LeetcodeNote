@@ -12,7 +12,8 @@ class Solution {
             return dpTable[index];
         }
 
-        dpTable[index] = Math.max(dp(nums, index + 1), dp(nums, index + 2) + nums[index]);
-        return dpTable[index];
+        int result = Math.max(dp(nums, index + 1), dp(nums, index + 2) + nums[index]);
+        dpTable[index] = result;
+        return result;
     }
 }
