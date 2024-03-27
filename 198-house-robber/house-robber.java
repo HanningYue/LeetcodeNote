@@ -1,20 +1,19 @@
 class Solution {
-    int[] dpTable;
+    Integer[] dpTable;
     public int rob(int[] nums) {
-        dpTable = new int[nums.length];
-        Arrays.fill(dpTable, -1);
+        dpTable = new Integer[nums.length];
         return dp(nums, 0);
     }
-    private int dp(int[] nums, int startIdx) {
-        if (startIdx >= nums.length) {
+    private int dp(int[] nums, int index) {
+        if (index >= nums.length) {
             return 0;
         }
-        if (dpTable[startIdx] != -1) {
-            return dpTable[startIdx];
+        if (dpTable[index] != null) {
+            return dpTable[index];
         }
 
-        int result = Math.max(dp(nums, startIdx + 1), nums[startIdx] + dp(nums, startIdx + 2));
-        dpTable[startIdx] = result;
+        int result = Math.max(dp(nums, index + 1), nums[index] + dp(nums, index + 2));
+        dpTable[index] = result;
         return result;
     }
 }
