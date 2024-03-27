@@ -1,11 +1,12 @@
 class Solution {
     List<String>[] dpTable;
+    
     public List<String> wordBreak(String s, List<String> wordDict) {
         dpTable = new ArrayList[s.length()];
-        Set<String> set = new HashSet<>(wordDict);
-        return dp(s, 0, set);
+        Set<String> dict = new HashSet<>(wordDict);
+        return dp(s, 0, dict);
     }
-    private List<String> dp(String s, int index, Set<String> set) {
+    private List<String> dp(String s, int index, Set<String> dict) {
         List<String> result = new ArrayList<>();
         if (index == s.length()) {
             result.add("");
@@ -14,19 +15,22 @@ class Solution {
         if (dpTable[index] != null) {
             return dpTable[index];
         }
+
         for (int length = 1; index + length <= s.length(); length++) {
             String prefix = s.substring(index, index + length);
-            if (set.contains(prefix)) {
-                List<String> subList = dp(s, index + length, set);
-                for (String str : subList) {
-                    if (str.isEmpty()) {
+            if (dict.contains(prefix)) {
+                List<String> subList = dp(s, index + length, dict);
+                for (String subString : subList) {
+                    if (subString.isEmpty()) {
                         result.add(prefix);
-                    } else {
-                        result.add(prefix + " " + str);
+                    }
+                    else {
+                        result.add(prefix + " " + subString);
                     }
                 }
             }
         }
+        
         dpTable[index] = result;
         return result;
     }
