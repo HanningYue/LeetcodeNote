@@ -1,7 +1,7 @@
 class Solution {
     public List<String> letterCombinations(String digits) {
         List<String> result = new ArrayList<>();
-        if (digits == null || digits.length() == 0) {
+        if (digits.length() == 0 || digits == null) {
             return result;
         }
         Map<Character, String> map = new HashMap<>();
@@ -13,20 +13,21 @@ class Solution {
         map.put('7', "pqrs");
         map.put('8', "tuv");
         map.put('9', "wxyz");
+
         StringBuilder sb = new StringBuilder();
-        dfs(map, result, digits, sb, 0);
+        backTrack(digits, map, result, 0, sb);
         return result;
     }
-    private void dfs(Map<Character, String> map, List<String> result, String digits, StringBuilder sb, 
-                    int index) {
+    private void backTrack(String digits, Map<Character, String> map, List<String> result, int index, StringBuilder sb) {
         if (index == digits.length()) {
             result.add(sb.toString());
             return;
         }
-        String corString = map.get(digits.charAt(index));
-        for (int i = 0; i < corString.length(); i++) {
-            sb.append(corString.charAt(i));
-            dfs(map, result, digits, sb, index + 1);
+
+        String cor = map.get(digits.charAt(index));
+        for (int i = 0; i < cor.length(); i++) {
+            sb.append(cor.charAt(i));
+            backTrack(digits, map, result, index + 1, sb);
             sb.deleteCharAt(sb.length() - 1);
         }
     }
