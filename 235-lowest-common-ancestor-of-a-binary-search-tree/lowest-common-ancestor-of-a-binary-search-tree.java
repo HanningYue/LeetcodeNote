@@ -10,20 +10,20 @@
 
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        int min = Math.min(p.val, q.val);
-        int max = Math.max(p.val, q.val);
-        return find(root, min, max);
+        return LCA(root, p, q);
     }
-    private TreeNode find(TreeNode root, int min, int max) {
+    private TreeNode LCA(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
             return null;
         }
-
-        if (root.val < min) {
-            return find(root.right, min, max);
-        } else if (root.val > max) {
-            return find(root.left, min, max);
+        if (root.val == p.val || root.val == q.val) {
+            return root;
         }
-        return root;
+        TreeNode left = LCA(root.left, p, q);
+        TreeNode right = LCA(root.right, p, q);
+        if (left != null && right != null) {
+            return root;
+        }
+        return left == null ? right : left;
     }
 }
