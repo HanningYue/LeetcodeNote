@@ -1,29 +1,28 @@
 class Pair {
-    int key, value;
-    public Pair(int key, int value) {
-        this.key = key;
-        this.value = value;
+    int index, height;
+    public Pair(int index, int height) {
+        this.index = index;
+        this.height = height;
     }
-    public int getKey() {
-        return key;
+    public int getHeight() {
+        return height;
     }
-    public int getValue() {
-        return value;
+    public int getIdx() {
+        return index;
     }
 }
 class Solution {
     public int largestRectangleArea(int[] heights) {
-        Stack<Pair> stack = new Stack<>();
         int result = 0;
-
+        Stack<Pair> stack = new Stack<>();
         for (int i = 0; i < heights.length; i++) {
             int currentIdx = i;
             int currentHeight = heights[i];
 
-            while (!stack.isEmpty() && stack.peek().getValue() > currentHeight) {
+            while (!stack.isEmpty() && stack.peek().getHeight() > currentHeight) {
                 Pair lastRectangle = stack.pop();
-                int lastIdx = lastRectangle.getKey();
-                int lastHeight = lastRectangle.getValue();
+                int lastIdx = lastRectangle.getIdx();
+                int lastHeight = lastRectangle.getHeight();
 
                 result = Math.max(result, (i - lastIdx) * lastHeight);
                 currentIdx = lastIdx;
@@ -33,8 +32,9 @@ class Solution {
 
         while (!stack.isEmpty()) {
             Pair lastRectangle = stack.pop();
-            int lastIdx = lastRectangle.getKey();
-            int lastHeight = lastRectangle.getValue();
+            int lastIdx = lastRectangle.getIdx();
+            int lastHeight = lastRectangle.getHeight();
+            
             result = Math.max(result, (heights.length - lastIdx) * lastHeight);
         }
         return result;
