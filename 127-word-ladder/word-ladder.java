@@ -12,15 +12,14 @@ class Solution {
                 if (current.equals(endWord)) {
                     return result;
                 }
-    
                 StringBuilder sb = new StringBuilder(current);
                 for (int j = 0; j < sb.length(); j++) {
                     char currentChar = sb.charAt(j);
                     for (char c = 'a'; c <= 'z'; c++) {
                         sb.setCharAt(j, c);
                         if (set.contains(sb.toString())) {
-                            queue.offer(sb.toString());
                             set.remove(sb.toString());
+                            queue.offer(sb.toString());
                         }
                     }
                     sb.setCharAt(j, currentChar);
