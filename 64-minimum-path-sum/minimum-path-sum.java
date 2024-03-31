@@ -10,7 +10,7 @@ class Solution {
             return Integer.MAX_VALUE;
         }
         if (row == 0 && col == 0) {
-            return grid[row][col];
+            return grid[0][0];
         }
         if (dpTable[row][col] != null) {
             return dpTable[row][col];
