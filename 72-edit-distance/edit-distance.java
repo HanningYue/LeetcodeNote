@@ -1,12 +1,10 @@
 class Solution {
     Integer[][] dpTable;
     public int minDistance(String word1, String word2) {
-        int m = word1.length(), n = word2.length();
-        dpTable = new Integer[m][n];
-        return dp(word1, m - 1, word2, n - 1);
+        dpTable = new Integer[word1.length()][word2.length()];
+        return dp(word1, word1.length() - 1, word2, word2.length() - 1);
     }
-
-    private int dp(String s1, int i, String s2, int j) {
+    private int dp(String word1, int i, String word2, int j) {
         if (i == -1) {
             return j + 1;
         }
@@ -16,16 +14,15 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
-        
-        int skip = dp(s1, i - 1, s2, j - 1);
-        int insert = dp(s1, i, s2, j - 1) + 1;
-        int delete = dp(s1, i - 1, s2, j) + 1;
-        int replace = dp(s1, i - 1, s2, j - 1) + 1;
-        if (s1.charAt(i) == s2.charAt(j)) {
+
+        int skip = dp(word1, i - 1, word2, j - 1);
+        int replace = dp(word1, i - 1, word2, j - 1) + 1;
+        int insert = dp(word1, i, word2, j - 1) + 1;
+        int delete = dp(word1, i - 1, word2, j) + 1;
+        if (word1.charAt(i) == word2.charAt(j)) {
             dpTable[i][j] = skip;
-        } 
-        else if (s1.charAt(i) != s2.charAt(j)){
-            dpTable[i][j] = Math.min(insert, Math.min(delete, replace));
+        } else if (word1.charAt(i) != word2.charAt(j)) {
+            dpTable[i][j] = Math.min(replace, Math.min(insert, delete));
         }
         return dpTable[i][j];
     }
