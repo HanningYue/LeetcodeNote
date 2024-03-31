@@ -6,10 +6,10 @@ class Solution {
         dpTable = new Integer[matrix.length][matrix[0].length];
         int result = 1;
 
-        for(int i = 0; i < matrix.length; i++){
-            for(int j = 0; j < matrix[0].length; j++){
+        for(int row = 0; row < matrix.length; row++){
+            for(int col = 0; col < matrix[0].length; col++){
                 result = Math.max(result, 
-                dfs(matrix, i, j, Integer.MIN_VALUE));
+                dfs(matrix, row, col, Integer.MIN_VALUE));
             }
         }
         
@@ -25,12 +25,13 @@ class Solution {
             return dpTable[row][col];
         }
         
-        int up = dfs(matrix, row - 1, col, matrix[row][col]) + 1;
-        int down = dfs(matrix, row + 1, col, matrix[row][col]) + 1;
-        int left = dfs(matrix, row, col - 1, matrix[row][col]) + 1;
-        int right = dfs(matrix, row, col + 1, matrix[row][col]) + 1;
+        int result = 0;
+        result = Math.max(result, dfs(matrix, row - 1, col, matrix[row][col]) + 1);
+        result = Math.max(result, dfs(matrix, row + 1, col, matrix[row][col]) + 1);
+        result = Math.max(result, dfs(matrix, row, col - 1, matrix[row][col]) + 1);
+        result = Math.max(result, dfs(matrix, row, col + 1, matrix[row][col]) + 1);
         
-        dpTable[row][col] = Math.max(up, Math.max(down, Math.max(left, right)));
-        return dpTable[row][col];
+        dpTable[row][col] = result;
+        return result;
     }
 }
