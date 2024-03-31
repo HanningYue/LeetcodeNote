@@ -10,12 +10,11 @@ class Solution {
             return Integer.MAX_VALUE;
         }
         if (row == 0 && col == 0) {
-            return grid[0][0];
+            return grid[row][col];
         }
         if (dpTable[row][col] != null) {
             return dpTable[row][col];
         }
-        
         int up = dp(grid, row - 1, col);
         int left = dp(grid, row, col - 1);
         dpTable[row][col] = Math.min(up, left) + grid[row][col];
