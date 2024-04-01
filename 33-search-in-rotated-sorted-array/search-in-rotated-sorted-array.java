@@ -5,16 +5,13 @@ class Solution {
             int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
                 return mid;
-            }
-
-            if (nums[mid] >= nums[left]) {
+            } else if (nums[mid] >= nums[left]) {
                 if (target < nums[mid] && target >= nums[left]) {
                     right = mid - 1;
                 } else {
                     left = mid + 1;
                 }
-            }
-            else if (nums[mid] <= nums[right]) {
+            } else if (nums[mid] <= nums[right]) {
                 if (target > nums[mid] && target <= nums[right]) {
                     left = mid + 1;
                 } else {
