@@ -1,22 +1,21 @@
 class Solution {
     public double myPow(double x, int n) {
-        return helper(x, n);
+        return recursion(x, n);
     }
-    private double helper(double x, long n) {
+    private double recursion(double x, long n) {
         if (n == 0) {
-            return 1;
+            return 1.0;
         } else if (n == 1) {
             return x;
         } else if (n < 0) {
-            x = 1 / x;
-            n = -n;
-            return helper(x, n);
+            double result = recursion(1 / x, -n);
+            return result;
+        } else {
+            double result = recursion(x * x, n / 2);
+            if (n % 2 != 0) {
+                result = result * x;
+            }
+            return result;
         }
-
-        double result = helper(x * x, n / 2);
-        if (n % 2 == 1) {
-            result = result * x;
-        }
-        return result;
     }
 }
