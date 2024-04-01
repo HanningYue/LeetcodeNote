@@ -15,9 +15,9 @@ class Solution {
         if (dpTable[row][col] != null) {
             return dpTable[row][col];
         }
-        int up = dp(grid, row - 1, col);
         int left = dp(grid, row, col - 1);
-        dpTable[row][col] = Math.min(up, left) + grid[row][col];
+        int up = dp(grid, row - 1, col);
+        dpTable[row][col] = Math.min(left, up) + grid[row][col];
         return dpTable[row][col];
     }
 }
