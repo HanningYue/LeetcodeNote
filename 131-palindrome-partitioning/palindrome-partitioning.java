@@ -8,17 +8,19 @@ class Solution {
     private void backTrack(String s, int index, List<List<String>> result, List<String> list) {
         if (index == s.length()) {
             result.add(new ArrayList<>(list));
+            return;
         }
         for (int i = index; i < s.length(); i++) {
-            if (!palindrome(s, index, i)) {
-                continue;
+            String current = s.substring(index, i + 1);
+            if (isPalindrome(current)) {
+                list.add(current);
+                backTrack(s, i + 1, result, list);
+                list.remove(list.size() - 1);
             }
-            list.add(s.substring(index, i + 1));
-            backTrack(s, i + 1, result, list);
-            list.remove(list.size() - 1);
         }
     }
-    private boolean palindrome(String s, int left, int right) {
+    private boolean isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
         while (left < right) {
             if (s.charAt(left) != s.charAt(right)) {
                 return false;
