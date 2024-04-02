@@ -2,8 +2,8 @@ class Solution {
     List<List<String>> result;
     List<String> board;
     public List<List<String>> solveNQueens(int n) {
-        result = new ArrayList<>();
         board = new ArrayList<>();
+        result = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             StringBuilder sb = new StringBuilder();
             for (int j = 0; j < n; j++) {
