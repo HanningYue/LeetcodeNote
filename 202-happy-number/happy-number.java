@@ -1,10 +1,12 @@
 class Solution {
     public boolean isHappy(int n) {
-        int slow = n, fast = process(n);
-        while (slow != fast) {
+        int slow = n, fast = n;
+        
+        do {
             slow = process(slow);
             fast = process(process(fast));
-        }
+        } while (slow != fast);
+        
         return slow == 1;
     }
     private int process(int n) {
