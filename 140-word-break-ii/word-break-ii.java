@@ -27,7 +27,6 @@ class Solution {
                 }
             }
         }
-
         dpTable[index] = result;
         return result;
     }
