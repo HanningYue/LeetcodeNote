@@ -1,12 +1,10 @@
 class Solution {
     public int eraseOverlapIntervals(int[][] intervals) {
         int notOverlap = findNot(intervals);
-        return intervals.length - notOverlap;
+        return intervals.length - notOverlap;        
     }
     private int findNot(int[][] intervals) {
-        if (intervals.length == 0) {
-            return 0;
-        }
+        int count = 1;
 
         Arrays.sort(intervals, new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
@@ -14,11 +12,10 @@ class Solution {
             }
         });
 
-        int count = 1;
         int end = intervals[0][1];
         for (int[] interval : intervals) {
             int start = interval[0];
-            if(start >= end) {
+            if (start >= end) {
                 count++;
                 end = interval[1];
             }
