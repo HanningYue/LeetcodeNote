@@ -2,26 +2,27 @@ class Solution {
     public boolean mergeTriplets(int[][] triplets, int[] target) {
         boolean[] result = new boolean[3];
         for (int[] triplet : triplets) {
-            boolean greaterElement = false;
+            
+            boolean greater = false;
             for (int i = 0; i < 3; i++) {
                 if (triplet[i] > target[i]) {
-                    greaterElement = true;
+                    greater = true;
                     break;
                 }
             }
             
-            if (greaterElement) {
+            if (greater) {
                 continue;
             }
-
+            
             for (int i = 0; i < 3; i++) {
                 if (triplet[i] == target[i]) {
                     result[i] = true;
                 }
             }
         }
-        for (boolean val : result) {
-            if (!val) {
+        for (boolean value : result) {
+            if (!value) {
                 return false;
             }
         }
