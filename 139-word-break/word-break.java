@@ -2,10 +2,10 @@ class Solution {
     Boolean[] dpTable;
     public boolean wordBreak(String s, List<String> wordDict) {
         dpTable = new Boolean[s.length()];
-        Set<String> dict = new HashSet<>(wordDict);
-        return dp(s, 0, dict);
+        Set<String> set = new HashSet<>(wordDict);
+        return dp(s, 0, set);
     }
-    private boolean dp(String s, int index, Set<String> dict) {
+    private boolean dp(String s, int index, Set<String> set) {
         if (index == s.length()) {
             return true;
         }
@@ -14,8 +14,8 @@ class Solution {
         }
         for (int length = 1; index + length <= s.length(); length++) {
             String prefix = s.substring(index, index + length);
-            if (dict.contains(prefix)) {
-                boolean sub = dp(s, index + length, dict);
+            if (set.contains(prefix)) {
+                boolean sub = dp(s, index + length, set);
                 if (sub) {
                     dpTable[index] = true;
                     return true;
