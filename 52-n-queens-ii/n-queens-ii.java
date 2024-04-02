@@ -20,7 +20,7 @@ class Solution {
             return;
         }
         for (int col = 0; col < board.get(row).length(); col++) {
-            if (isValid(row, col)) {
+            if (valid(row, col)) {
                 StringBuilder currentRow = new StringBuilder(board.get(row));
                 currentRow.setCharAt(col, 'Q');
                 board.set(row, currentRow.toString());
@@ -30,7 +30,7 @@ class Solution {
             }
         }
     }
-    private boolean isValid(int row, int col) {
+    private boolean valid(int row, int col) {
         for (int i = 0; i < row; i++) {
             if (board.get(i).charAt(col) == 'Q') {
                 return false;
