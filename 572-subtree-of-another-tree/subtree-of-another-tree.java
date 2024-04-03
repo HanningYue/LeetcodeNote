@@ -15,15 +15,18 @@
  */
 class Solution {
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if (root == null || subRoot == null) {
+        if (root == null && subRoot == null) {
+            return true;
+        } else if (root == null || subRoot == null) {
             return false;
-        }
+        }    
         if (sameTree(root, subRoot)) {
             return true;
         }
-        boolean leftSubIsSame = isSubtree(root.left, subRoot);
-        boolean rightSubIsSame = isSubtree(root.right, subRoot);
-        return leftSubIsSame || rightSubIsSame;
+        
+        boolean leftTrue = isSubtree(root.left, subRoot);
+        boolean rightTrue = isSubtree(root.right, subRoot);
+        return leftTrue || rightTrue;
     }
     private boolean sameTree(TreeNode p, TreeNode q) {
         if (p == null && q == null) {
@@ -32,9 +35,10 @@ class Solution {
         if (p == null || q == null) {
             return false;
         }
-        boolean currentSame = p.val == q.val;
         boolean leftSame = sameTree(p.left, q.left);
         boolean rightSame = sameTree(p.right, q.right);
-        return currentSame && leftSame && rightSame;
+        boolean currentSame = leftSame && rightSame && p.val == q.val;
+        return currentSame;
     }
+    
 }
