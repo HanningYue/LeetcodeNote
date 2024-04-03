@@ -1,17 +1,12 @@
 class Pair {
-    int value;
-    String key;
-    public Pair(String key, int value) {
-        this.key = key;
+    String value;
+    int timestamp;
+    public Pair(String value, int timestamp) {
         this.value = value;
-    }
-    public String getKey() {
-        return key;
-    }
-    public int getValue() {
-        return value;
+        this.timestamp = timestamp;
     }
 }
+
 class TimeMap {
     Map<String, List<Pair>> map;
     public TimeMap() {
@@ -30,20 +25,24 @@ class TimeMap {
         List<Pair> list = map.get(key);
         return binarySearch(list, timestamp);
     }
-    private String binarySearch(List<Pair> list, int timestamp) {
+
+    public String binarySearch(List<Pair> list, int timestamp) {
         int left = 0, right = list.size() - 1;
         while (left <= right) {
             int mid = left + (right - left) / 2;
-            if (list.get(mid).getValue() == timestamp) {
-                return list.get(mid).getKey();
-            } else if (list.get(mid).getValue() < timestamp) {
-                left = mid + 1;
-            } else if (list.get(mid).getValue() > timestamp) {
+            Pair currentPair = list.get(mid);
+
+            if (currentPair.timestamp == timestamp) {
+                return currentPair.value;
+            } else if (currentPair.timestamp > timestamp) {
                 right = mid - 1;
+            } else if (currentPair.timestamp < timestamp) {
+                left = mid + 1;
             }
         }
+
         if (right >= 0) {
-            return list.get(right).getKey();
+            return list.get(right).value;
         }
         return "";
     }
