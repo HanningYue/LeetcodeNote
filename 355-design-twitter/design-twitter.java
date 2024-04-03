@@ -2,60 +2,62 @@ class User {
     int userId;
     Set<Integer> followList;
     public User(int userId) {
-        this.userId = userId;
         followList = new HashSet<>();
+        this.userId = userId;
     }
 }
 class Tweet {
-    int userId;
     int tweetId;
-    public Tweet(int userId, int tweetId) {
-        this.userId = userId;
+    int userId;
+    public Tweet(int tweetId, int userId) {
         this.tweetId = tweetId;
+        this.userId = userId;
     }
 }
 class Twitter {
-    List<Tweet> allTweet;
     Map<Integer, User> map;
+    List<Tweet> allTweet;
     public Twitter() {
-        allTweet = new ArrayList<>();
         map = new HashMap<>();
+        allTweet = new ArrayList<>();
     }
-
-    public User getUser(int userId) {
+    
+    public User createUser(int userId) {
         map.putIfAbsent(userId, new User(userId));
         return map.get(userId);
     }
-    
+
     public void postTweet(int userId, int tweetId) {
-        User user = getUser(userId);
-        allTweet.add(new Tweet(userId, tweetId));
+        
+        allTweet.add(new Tweet(tweetId, userId));
     }
     
     public List<Integer> getNewsFeed(int userId) {
-        List<Integer> pastTenTweetId = new ArrayList<>();
-        User user = getUser(userId);
+        User user = createUser(userId);
+        List<Integer> pastTen = new ArrayList<>();
         
         int i = allTweet.size() - 1;
-        while (i >= 0 && pastTenTweetId.size() < 10) {
-            int posterId = allTweet.get(i).userId;
+        while (i >= 0 && pastTen.size() < 10) {
+            Tweet lastTweet = allTweet.get(i);
+            int posterId = lastTweet.userId;
+            int tweetId = lastTweet.tweetId;
             if (posterId == userId || user.followList.contains(posterId)) {
-                pastTenTweetId.add(allTweet.get(i).tweetId);
+                pastTen.add(tweetId);
             }
             i--;
         }
-        return pastTenTweetId;
+        return pastTen;
     }
     
     public void follow(int followerId, int followeeId) {
-        User follower = getUser(followerId);
-        User followee = getUser(followeeId);
+        User follower = createUser(followerId);
+        User followee = createUser(followeeId);
         follower.followList.add(followeeId);
     }
     
     public void unfollow(int followerId, int followeeId) {
-        User follower = getUser(followerId);
-        User followee = getUser(followeeId);    
+        User follower = createUser(followerId);
+        User followee = createUser(followeeId);
         follower.followList.remove(followeeId);
     }
 }
