@@ -1,15 +1,15 @@
 class Solution {
-    List<List<String>> result;
     List<String> board;
+    List<List<String>> result;
     public List<List<String>> solveNQueens(int n) {
-        board = new ArrayList<>();
         result = new ArrayList<>();
+        board = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder row = new StringBuilder();
             for (int j = 0; j < n; j++) {
-                sb.append('.');
+                row.append('.');
             }
-            board.add(sb.toString());
+            board.add(row.toString());
         }
         backTrack(0);
         return result;
@@ -20,8 +20,8 @@ class Solution {
             return;
         }
         for (int col = 0; col < board.get(row).length(); col++) {
+            StringBuilder currentRow = new StringBuilder(board.get(row));
             if (isValid(row, col)) {
-                StringBuilder currentRow = new StringBuilder(board.get(row));
                 currentRow.setCharAt(col, 'Q');
                 board.set(row, currentRow.toString());
                 backTrack(row + 1);
@@ -31,7 +31,7 @@ class Solution {
         }
     }
     private boolean isValid(int row, int col) {
-        for (int i = 0; i < row; i++) {
+        for (int i = row - 1; i >= 0; i--) {
             if (board.get(i).charAt(col) == 'Q') {
                 return false;
             }
