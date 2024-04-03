@@ -7,8 +7,9 @@ class User {
     }
 }
 class Tweet {
-    int tweetId, userId;
-    public Tweet(int tweetId, int userId) {
+    int userId;
+    int tweetId;
+    public Tweet(int userId, int tweetId) {
         this.userId = userId;
         this.tweetId = tweetId;
     }
@@ -17,10 +18,10 @@ class Twitter {
     List<Tweet> allTweet;
     Map<Integer, User> userMap;
     public Twitter() {
-        allTweet = new ArrayList<>();
         userMap = new HashMap<>();
+        allTweet = new ArrayList<>();
     }
-    
+
     public User getUser(int userId) {
         userMap.putIfAbsent(userId, new User(userId));
         return userMap.get(userId);
@@ -28,7 +29,7 @@ class Twitter {
 
     public void postTweet(int userId, int tweetId) {
         User user = getUser(userId);
-        allTweet.add(new Tweet(tweetId, userId));
+        allTweet.add(new Tweet(userId, tweetId));
     }
     
     public List<Integer> getNewsFeed(int userId) {
