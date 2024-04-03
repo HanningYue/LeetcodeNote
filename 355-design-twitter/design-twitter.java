@@ -1,31 +1,31 @@
+class User {
+    int userId;
+    Set<Integer> followList;
+    public User(int userId) {
+        this.userId = userId;
+        followList = new HashSet<>();
+    }
+}
+class Tweet {
+    int tweetId, userId;
+    public Tweet(int tweetId, int userId) {
+        this.userId = userId;
+        this.tweetId = tweetId;
+    }
+}
 class Twitter {
-    class User {
-        int userId;
-        Set<Integer> followList;
-        public User(int userId) {
-            this.userId = userId;
-            followList = new HashSet<>();
-        }
-    }
-    class Tweet {
-        int tweetId;
-        int userId;
-        public Tweet(int tweetId, int userId) {
-            this.tweetId = tweetId;
-            this.userId = userId;
-        }
-    }
-
     List<Tweet> allTweet;
     Map<Integer, User> userMap;
     public Twitter() {
         allTweet = new ArrayList<>();
         userMap = new HashMap<>();
     }
-    private User getUser(int userId) {
+    
+    public User getUser(int userId) {
         userMap.putIfAbsent(userId, new User(userId));
         return userMap.get(userId);
     }
+
     public void postTweet(int userId, int tweetId) {
         User user = getUser(userId);
         allTweet.add(new Tweet(tweetId, userId));
@@ -38,7 +38,6 @@ class Twitter {
         int i = allTweet.size() - 1;
         while (i >= 0 && pastTen.size() < 10) {
             int posterId = allTweet.get(i).userId;
-            
             if (posterId == userId || user.followList.contains(posterId)) {
                 pastTen.add(allTweet.get(i).tweetId);
             }
