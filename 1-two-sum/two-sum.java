@@ -8,6 +8,6 @@ class Solution {
             }
             map.put(current, i);
         }
-        return new int[]{-1, -1};
+        return null;
     }
 }
