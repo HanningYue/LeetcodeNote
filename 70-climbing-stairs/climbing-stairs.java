@@ -11,7 +11,7 @@ class Solution {
         if (dpTable[n] != null) {
             return dpTable[n];
         }
-        dpTable[n] = dp(n - 1) + dp(n - 2);
+        dpTable[n] = dp(n - 2) + dp(n - 1);
         return dpTable[n];
     }
 }
