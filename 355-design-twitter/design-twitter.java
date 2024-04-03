@@ -16,35 +16,35 @@ class Tweet {
 }
 class Twitter {
     List<Tweet> allTweet;
-    Map<Integer, User> userMap;
+    Map<Integer, User> map;
     public Twitter() {
-        userMap = new HashMap<>();
         allTweet = new ArrayList<>();
+        map = new HashMap<>();
     }
 
     public User getUser(int userId) {
-        userMap.putIfAbsent(userId, new User(userId));
-        return userMap.get(userId);
+        map.putIfAbsent(userId, new User(userId));
+        return map.get(userId);
     }
-
+    
     public void postTweet(int userId, int tweetId) {
         User user = getUser(userId);
         allTweet.add(new Tweet(userId, tweetId));
     }
     
     public List<Integer> getNewsFeed(int userId) {
+        List<Integer> pastTenTweetId = new ArrayList<>();
         User user = getUser(userId);
-
-        List<Integer> pastTen = new ArrayList<>();
+        
         int i = allTweet.size() - 1;
-        while (i >= 0 && pastTen.size() < 10) {
+        while (i >= 0 && pastTenTweetId.size() < 10) {
             int posterId = allTweet.get(i).userId;
             if (posterId == userId || user.followList.contains(posterId)) {
-                pastTen.add(allTweet.get(i).tweetId);
+                pastTenTweetId.add(allTweet.get(i).tweetId);
             }
             i--;
         }
-        return pastTen;
+        return pastTenTweetId;
     }
     
     public void follow(int followerId, int followeeId) {
