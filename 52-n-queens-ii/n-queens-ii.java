@@ -1,15 +1,15 @@
 class Solution {
-    int result;
     List<String> board;
+    int result;
     public int totalNQueens(int n) {
-        result = 0;
         board = new ArrayList<>();
+        result = 0;
         for (int i = 0; i < n; i++) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder currentRow = new StringBuilder();
             for (int j = 0; j < n; j++) {
-                sb.append('.');
+                currentRow.append('.');
             }
-            board.add(sb.toString());
+            board.add(currentRow.toString());
         }
         backTrack(0);
         return result;
@@ -20,8 +20,8 @@ class Solution {
             return;
         }
         for (int col = 0; col < board.get(row).length(); col++) {
+            StringBuilder currentRow = new StringBuilder(board.get(row));
             if (valid(row, col)) {
-                StringBuilder currentRow = new StringBuilder(board.get(row));
                 currentRow.setCharAt(col, 'Q');
                 board.set(row, currentRow.toString());
                 backTrack(row + 1);
@@ -31,7 +31,7 @@ class Solution {
         }
     }
     private boolean valid(int row, int col) {
-        for (int i = 0; i < row; i++) {
+        for (int i = row - 1; i >= 0; i--) {
             if (board.get(i).charAt(col) == 'Q') {
                 return false;
             }
