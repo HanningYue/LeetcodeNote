@@ -55,10 +55,8 @@ class Twitter {
     
     public void unfollow(int followerId, int followeeId) {
         User follower = getUser(followerId);
-        User followee = getUser(followeeId);
-        if (follower.followList.contains(followeeId)) {
-            follower.followList.remove(followeeId);
-        }
+        User followee = getUser(followeeId);    
+        follower.followList.remove(followeeId);
     }
 }
 
