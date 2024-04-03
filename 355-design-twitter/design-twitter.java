@@ -28,7 +28,6 @@ class Twitter {
     }
 
     public void postTweet(int userId, int tweetId) {
-        
         allTweet.add(new Tweet(tweetId, userId));
     }
     
@@ -51,13 +50,11 @@ class Twitter {
     
     public void follow(int followerId, int followeeId) {
         User follower = createUser(followerId);
-        User followee = createUser(followeeId);
         follower.followList.add(followeeId);
     }
     
     public void unfollow(int followerId, int followeeId) {
         User follower = createUser(followerId);
-        User followee = createUser(followeeId);
         follower.followList.remove(followeeId);
     }
 }
