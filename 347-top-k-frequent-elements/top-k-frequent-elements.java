@@ -4,7 +4,7 @@ class Solution {
         for (int num : nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
-
+        
         List<List<Integer>> bucket = new ArrayList<>();
         for (int i = 0; i <= nums.length; i++) {
             bucket.add(new ArrayList<>());
@@ -17,16 +17,14 @@ class Solution {
 
         int[] result = new int[k];
         int index = 0;
-        for (int i = nums.length; i > 0 && index < k; i--) {
-            for (int num : bucket.get(i)) {
-                result[index] = num;
-                index++;
+        for (int currentFreq = nums.length; currentFreq > 0 && index < k; currentFreq--) {
+            for (int num : bucket.get(currentFreq)) {
+                result[index++] = num;
                 if (index == k) {
                     break;
                 }
             }
         }
-
         return result;
     }
 }
