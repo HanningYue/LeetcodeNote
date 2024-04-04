@@ -1,12 +1,13 @@
 class Solution {
     public int jump(int[] nums) {
-        int end = 0, farthest = 0;
+        int subFurthest = 0, furthest = 0;
         int step = 0;
+
         for (int i = 0; i < nums.length - 1; i++) {
-            farthest = Math.max(i + nums[i], farthest);
-            if (end == i) {
+            furthest = Math.max(furthest, nums[i] + i);
+            if (i == subFurthest) {
                 step++;
-                end = farthest;
+                subFurthest = furthest;
             }
         }
         return step;
