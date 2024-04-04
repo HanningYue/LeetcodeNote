@@ -14,8 +14,8 @@ class Solution {
             if (!set.contains(num - 1)) {
                 int localLength = 1;
                 while (set.contains(num + 1)) {
-                    num++;
                     localLength++;
+                    num++;
                 }
                 maxLength = Math.max(maxLength, localLength);
             }
