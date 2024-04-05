@@ -15,7 +15,6 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
-
         if (i < s1.length() && s1.charAt(i) == s3.charAt(k)) {
             dpTable[i][j] = dp(s1, i + 1, s2, j, s3, k + 1);
             if (dpTable[i][j]) {
@@ -28,7 +27,6 @@ class Solution {
                 return true;
             }
         }
-
         dpTable[i][j] = false;
         return false;
     }
