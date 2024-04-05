@@ -4,6 +4,7 @@ class Solution {
         for (char c : s1.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
+
         int slow = 0, fast = 0, match = 0;
         while (fast < s2.length()) {
             char fastChar = s2.charAt(fast);
@@ -13,7 +14,8 @@ class Solution {
                     match++;
                 }
             }
-            while (fast - slow + 1 >= s1.length()) {
+
+            if (fast - slow + 1 == s1.length()) {
                 if (match == s1.length()) {
                     return true;
                 }
