@@ -5,20 +5,20 @@ class Solution {
         dpTable = new Integer[m][n];
         return dp(text1, m - 1, text2, n - 1);
     }
-    private int dp(String s, int i, String t, int j) {
-        if (i < 0 || j < 0) {
+    private int dp(String text1, int i, String text2, int j) {
+        if (i == -1 || j == -1) {
             return 0;
         }
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
-        if (s.charAt(i) == t.charAt(j)) {
-            int skipBoth = dp(s, i - 1, t, j - 1);
-            dpTable[i][j] = skipBoth + 1;
+        if (text1.charAt(i) == text2.charAt(j)) {
+            int foundSubsequence = dp(text1, i - 1, text2, j - 1);
+            dpTable[i][j] = foundSubsequence + 1;
         } else {
-            int skipS = dp(s, i - 1, t, j);
-            int skipT = dp(s, i, t, j - 1);
-            dpTable[i][j] = Math.max(skipS, skipT);
+            int skipI = dp(text1, i - 1, text2, j);
+            int skipJ = dp(text1, i, text2, j - 1);
+            dpTable[i][j] = Math.max(skipI, skipJ);
         }
         return dpTable[i][j];
     }
