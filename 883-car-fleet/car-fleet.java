@@ -6,10 +6,14 @@ class Solution {
             cars[i][0] = position[i];
             cars[i][1] = speed[i];
         }
+        
         // 按照初始位置，从小到大排序
-        Arrays.sort(cars, (int[] a, int[] b) -> {
-            return Integer.compare(a[0], b[0]);
+        Arrays.sort(cars, new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return a[0] - b[0];
+            }
         });
+
         // 计算每辆车到达终点的时间
         double[] time = new double[n];
         for (int i = 0; i < n; i++) {
