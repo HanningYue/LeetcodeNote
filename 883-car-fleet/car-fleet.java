@@ -6,29 +6,28 @@ class Solution {
             cars[i][0] = position[i];
             cars[i][1] = speed[i];
         }
-        
-        // 按照初始位置，从小到大排序
+
         Arrays.sort(cars, new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
                 return a[0] - b[0];
             }
         });
 
-        // 计算每辆车到达终点的时间
         double[] time = new double[n];
         for (int i = 0; i < n; i++) {
-            int[] car = cars[i];
-            time[i] = (double) (target - car[0]) / car[1];
+            int currentPos = cars[i][0];
+            int currentSpeed = cars[i][1];
+            double timeToDes = (double)(target - currentPos) / currentSpeed;
+            time[i] = timeToDes;
         }
 
-        //使用单调栈计算车队的数量
-        Stack<Double> stk = new Stack<>();
-        for (double t : time) {
-            while (!stk.isEmpty() && t >= stk.peek()) {
-                stk.pop();
+        Stack<Double> stack = new Stack<>();
+        for (double currentTime : time) {
+            while (!stack.isEmpty() && currentTime >= stack.peek()) {
+                stack.pop();
             }
-            stk.push(t);
+            stack.push(currentTime);
         }
-        return stk.size();
+        return stack.size();
     }
 }
