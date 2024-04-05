@@ -9,10 +9,10 @@ class Solution {
         int match = 0, length = Integer.MAX_VALUE;
         String result = "";
         while (fast < s.length()) {
-            char fastChar = s.charAt(fast);
-            if (map.containsKey(fastChar)) {
-                map.put(fastChar, map.get(fastChar) - 1);
-                if (map.get(fastChar) >= 0) {
+            char c = s.charAt(fast);
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) - 1);
+                if (map.get(c) >= 0) {
                     match++;
                 }
             }
@@ -23,10 +23,10 @@ class Solution {
                     result = s.substring(slow, fast + 1);
                 }
 
-                char slowChar = s.charAt(slow);
-                if (map.containsKey(slowChar)) {
-                    map.put(slowChar, map.get(slowChar) + 1);
-                    if (map.get(slowChar) > 0) {
+                c = s.charAt(slow);
+                if (map.containsKey(c)) {
+                    map.put(c, map.get(c) + 1);
+                    if (map.get(c) > 0) {
                         match--;
                     }
                 }
