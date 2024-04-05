@@ -12,13 +12,12 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
-
-        int skipS = dp(s, i - 1, t, j);
-        int skipT = dp(s, i, t, j - 1);
-        int skipBoth = dp(s, i - 1, t, j - 1);
         if (s.charAt(i) == t.charAt(j)) {
-            dpTable[i][j] = 1 + skipBoth;
+            int skipBoth = dp(s, i - 1, t, j - 1);
+            dpTable[i][j] = skipBoth + 1;
         } else {
+            int skipS = dp(s, i - 1, t, j);
+            int skipT = dp(s, i, t, j - 1);
             dpTable[i][j] = Math.max(skipS, skipT);
         }
         return dpTable[i][j];
