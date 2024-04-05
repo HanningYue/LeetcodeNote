@@ -12,13 +12,14 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
+
         if (text1.charAt(i) == text2.charAt(j)) {
-            int foundSubsequence = dp(text1, i - 1, text2, j - 1);
-            dpTable[i][j] = foundSubsequence + 1;
+            int foundSubsequence = dp(text1, i - 1, text2, j - 1) + 1;
+            dpTable[i][j] = foundSubsequence;
         } else {
-            int skipI = dp(text1, i - 1, text2, j);
-            int skipJ = dp(text1, i, text2, j - 1);
-            dpTable[i][j] = Math.max(skipI, skipJ);
+            int diffInText1 = dp(text1, i - 1, text2, j);
+            int diffInText2 = dp(text1, i, text2, j - 1);
+            dpTable[i][j] = Math.max(diffInText1, diffInText2);
         }
         return dpTable[i][j];
     }
