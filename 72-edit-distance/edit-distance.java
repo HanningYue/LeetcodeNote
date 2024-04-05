@@ -16,12 +16,13 @@ class Solution {
             return dpTable[i][j];
         }
         if (word1.charAt(i) == word2.charAt(j)) {
-            dpTable[i][j] = dp(word1, i - 1, word2, j - 1);
+            int sameChar = dp(word1, i - 1, word2, j - 1);
+            dpTable[i][j] = sameChar;
         } else {
-            int skipI = dp(word1, i - 1, word2, j) + 1;
-            int skipJ = dp(word1, i, word2, j - 1) + 1;
-            int skipBoth = dp(word1, i - 1, word2, j - 1) + 1;
-            dpTable[i][j] = Math.min(skipI, Math.min(skipJ, skipBoth));
+            int delete = dp(word1, i - 1, word2, j) + 1;
+            int insert = dp(word1, i, word2, j - 1) + 1;
+            int replace = dp(word1, i - 1, word2, j - 1) + 1;
+            dpTable[i][j] = Math.min(delete, Math.min(insert, replace));
         }
         return dpTable[i][j];
     }
