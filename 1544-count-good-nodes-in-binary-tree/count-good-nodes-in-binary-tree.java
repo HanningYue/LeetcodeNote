@@ -14,20 +14,20 @@
  * }
  */
 class Solution {
-    int result = 0;
+    int count = 0;
     public int goodNodes(TreeNode root) {
         dfs(root, root.val);
-        return result;
+        return count;
     }
-    private void dfs(TreeNode root, int prevMax) {
+    private void dfs(TreeNode root, int pathMax) {
         if (root == null) {
             return;
         }
-        if (root.val >= prevMax) {
-            result++;
-            prevMax = root.val;
+        if (root.val >= pathMax) {
+            count++;
+            pathMax = root.val;
         }
-        dfs(root.left, prevMax);
-        dfs(root.right, prevMax);
+        dfs(root.left, pathMax);
+        dfs(root.right, pathMax);
     }
 }
