@@ -1,21 +1,22 @@
 class Solution {
     public int numIslands(char[][] grid) {
-        int result = 0;
+        int count = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
         for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+            for (int j = 0; j < grid[i].length; j++) {
                 if (!visited[i][j] && grid[i][j] == '1') {
-                    result++;
+                    count++;
                     dfs(grid, i, j, visited);
                 }
             }
         }
-        return result;
+        return count;
     }
-    private int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+    int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     private void dfs(char[][] grid, int row, int col, boolean[][] visited) {
-        if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length 
-        || visited[row][col] || grid[row][col] != '1') {
+        if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length || visited[row][col]
+        || grid[row][col] != '1') {
             return;
         }
         visited[row][col] = true;
