@@ -19,7 +19,7 @@ class Trie {
                 node.children[c - 'a'] = new TrieNode();
             }
             node = node.children[c - 'a'];
-        }        
+        }
         node.isEnd = true;
     }
     
