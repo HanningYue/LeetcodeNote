@@ -1,8 +1,3 @@
-/**
-1.BFS遍历, 最短时间
-2.要先遍历一遍图，记录fresh的数量和fill out queue里的坏橙子
-3.在BFS时，当条件符合时，才加入queue （和dfs 退出return条件刚好相反）
-*/
 class Solution {
     public int orangesRotting(int[][] grid) {
         int fresh = 0;
@@ -17,28 +12,32 @@ class Solution {
             } 
         }
 
-        int min = 0;
+        int step = 0;
         boolean[][] visited = new boolean[grid.length][grid[0].length];
         int[][] dirs = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
         while (!queue.isEmpty() && fresh != 0) {
             int size = queue.size();
-            min++;
+            step++;
             for (int i = 0; i < size; i++) {
                 int[] rotten = queue.poll();
                 for (int[] dir : dirs) {
-                    int x = rotten[0] + dir[0];
-                    int y = rotten[1] + dir[1];
-                    if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length 
-                    || grid[x][y] != 1 || visited[x][y]) {
+                    int row = rotten[0], col = rotten[1];
+                    int newRow = row + dir[0];
+                    int newCol = col + dir[1];
+                    
+                    if (newRow < 0 || newRow >= grid.length || newCol < 0 || newCol >= grid[0].length 
+                    || grid[newRow][newCol] != 1 || visited[newRow][newCol]) {
                         continue;
                     }
-                    grid[x][y] = 2;
-                    visited[x][y] = true;
+                    
+                    grid[newRow][newCol] = 2;
+                    visited[newRow][newCol] = true;
                     fresh--;
-                    queue.offer(new int[]{x, y});
+                    queue.offer(new int[]{newRow, newCol});
                 }
             }
         }
-        return fresh == 0 ? min : -1;
+        return fresh == 0 ? step : -1;
     }
 }
