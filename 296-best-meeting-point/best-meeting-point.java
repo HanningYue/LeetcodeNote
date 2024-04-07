@@ -10,20 +10,19 @@ class Solution {
                 }
             }
         }
-
         Collections.sort(xAxis);
         Collections.sort(yAxis);
         int xMedian = xAxis.get(xAxis.size() / 2);
         int yMedian = yAxis.get(yAxis.size() / 2);
         
-        int distanceX = getDistance(xAxis, xMedian);
-        int distanceY = getDistance(yAxis, yMedian);
-        return distanceX + distanceY;
+        int xDistance = getDistance(xAxis, xMedian);
+        int yDistance = getDistance(yAxis, yMedian);
+        return xDistance + yDistance;
     }
     private int getDistance(List<Integer> axis, int median) {
         int distance = 0;
-        for (int coordinate : axis) {
-            distance += Math.abs(coordinate - median);
+        for (int coor : axis) {
+            distance += Math.abs(coor - median);
         }
         return distance;
     }
