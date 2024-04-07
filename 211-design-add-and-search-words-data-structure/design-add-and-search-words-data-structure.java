@@ -1,9 +1,9 @@
 class TrieNode {
-    TrieNode[] children;
     boolean isEnd;
+    TrieNode[] children;
     public TrieNode() {
-        children = new TrieNode[26];
         isEnd = false;
+        children = new TrieNode[26];
     }
 }
 class WordDictionary {
@@ -13,39 +13,39 @@ class WordDictionary {
     }
     
     public void addWord(String word) {
-        TrieNode current = root;
+        TrieNode node = root;
         for (char c : word.toCharArray()) {
-            if (current.children[c - 'a'] == null) {
-                current.children[c - 'a'] = new TrieNode();
+            if (node.children[c - 'a'] == null) {
+                node.children[c - 'a'] = new TrieNode();
             }
-            current = current.children[c - 'a'];
+            node = node.children[c - 'a'];
         }
-        current.isEnd = true;
+        node.isEnd = true;
     }
     
     public boolean search(String word) {
-        TrieNode current = root;
-        return dfs(word, current);
+        TrieNode node = root;
+        return searchDfs(word, node);
     }
-    private boolean dfs(String word, TrieNode root) {
+
+    public boolean searchDfs(String word, TrieNode node) {
         for (int i = 0; i < word.length(); i++) {
-            char c = word.charAt(i);
-            if (c == '.') {
-                for (TrieNode child : root.children) {
-                    if (child != null && dfs(word.substring(i + 1), child)) {
+            if (word.charAt(i) == '.') {
+                for (TrieNode child : node.children) {
+                    if (child != null && searchDfs(word.substring(i + 1), child)) {
                         return true;
                     }
                 }
                 return false;
-            }
-            else {
-                if (root.children[c - 'a'] == null) {
+            } else {
+                char c = word.charAt(i);
+                if (node.children[c - 'a'] == null) {
                     return false;
                 }
-                root = root.children[c - 'a'];
+                node = node.children[c - 'a'];
             }
         }
-        return root.isEnd;
+        return node.isEnd;
     }
 }
 
