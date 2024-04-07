@@ -6,12 +6,14 @@ class Solution {
         int runningProduct = nums[0];
         for (int i = 1; i < nums.length; i++) {
             result[i] = runningProduct;
+            
             runningProduct = runningProduct * nums[i];
         }
 
         runningProduct = nums[nums.length - 1];
         for (int i = nums.length - 2; i >= 0; i--) {
             result[i] = result[i] * runningProduct;
+            
             runningProduct = runningProduct * nums[i];
         }
         return result;
