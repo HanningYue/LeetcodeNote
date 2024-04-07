@@ -7,9 +7,7 @@ class Solution {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == 1) {
                     totalBuildings++;
-                    if (!bfs(grid, i, j, reach, distance)) {
-                        return -1;
-                    }
+                    bfs(grid, i, j, reach, distance);
                 }
             }
         }
@@ -26,7 +24,7 @@ class Solution {
     }
 
     int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private boolean bfs(int[][] grid, int row, int col, int[][] reach, int[][] distance) {
+    private void bfs(int[][] grid, int row, int col, int[][] reach, int[][] distance) {
         boolean[][] visited = new boolean[grid.length][grid[0].length];
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{row, col});
@@ -53,6 +51,5 @@ class Solution {
             }
             step++;
         }
-        return true;
     }
 }
