@@ -1,20 +1,21 @@
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        for (int i = 0; i < board.length; i++) {
+        int m = board.length, n = board[0].length;
+        for (int row = 0; row < m; row++) {
             Set<Character> rowSet = new HashSet<>();
             Set<Character> colSet = new HashSet<>();
-            for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] != '.' && !rowSet.add(board[i][j])) {
+            for (int col = 0; col < n; col++) {
+                if (board[row][col] != '.' && !rowSet.add(board[row][col])) {
                     return false;
                 }
-                if (board[j][i] != '.' && !colSet.add(board[j][i])) {
+                if (board[col][row] != '.' && !colSet.add(board[col][row])) {
                     return false;
                 }
             }
         }
-        for (int i = 0; i < board.length; i += 3) {
-            for (int j = 0; j < board[0].length; j += 3) {
-                if (!smallGrid(board, i, j)) {
+        for (int row = 0; row < board.length; row += 3) {
+            for (int col = 0; col < board[0].length; col += 3) {
+                if (!smallGrid(board, row, col)) {
                     return false;
                 }
             }
