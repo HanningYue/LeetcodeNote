@@ -22,6 +22,7 @@ class Solution {
         }
         return true;
     }
+    
     private boolean smallGrid(char[][] board, int row, int col) {
         Set<Character> set = new HashSet<>();
         for (int i = row; i < row + 3; i++) {
