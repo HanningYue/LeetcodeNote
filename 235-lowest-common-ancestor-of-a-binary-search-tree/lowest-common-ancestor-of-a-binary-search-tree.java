@@ -10,17 +10,19 @@
 
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        int min = Math.min(p.val, q.val);
+        int max = Math.max(p.val, q.val);
+        return LCA(root, min, max);
+    }
+    private TreeNode LCA(TreeNode root, int min, int max) {
         if (root == null) {
             return null;
         }
-        if (root.val == p.val || root.val == q.val) {
-            return root;
+        if (root.val < min) {
+            return LCA(root.right, min, max);
+        } else if (root.val > max) {
+            return LCA(root.left, min, max);
         }
-        TreeNode checkLeft = lowestCommonAncestor(root.left, p, q);
-        TreeNode checkRight = lowestCommonAncestor(root.right, p, q);
-        if (checkLeft != null && checkRight != null) {
-            return root;
-        }
-        return checkLeft == null ? checkRight : checkLeft;
+        return root;
     }
 }
