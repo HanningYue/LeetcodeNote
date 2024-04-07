@@ -1,29 +1,30 @@
 class Solution {
-    private int[][] dpTable;
+    Integer[][] dpTable;
     public int numDistinct(String s, String t) {
-        dpTable = new int[s.length()][t.length()];
-        for (int[] row : dpTable) {
-            Arrays.fill(row, -1);
-        }
+        dpTable = new Integer[s.length()][t.length()];
         return dp(s, 0, t, 0);
     }
-    private int dp(String s, int sindex, String t, int tindex) {
-        if (tindex == t.length()) {
+    private int dp(String s, int i, String t, int j) {
+        if (j == t.length()) {
             return 1;
         }
-        if (s.length() - sindex < t.length() - tindex) {
+        if (t.length() - j > s.length() - i) {
             return 0;
         }
-        if (dpTable[sindex][tindex] != -1) {
-            return dpTable[sindex][tindex];
+        if (dpTable[i][j] != null) {
+            return dpTable[i][j];
         }
+
         int result = 0;
-        if (s.charAt(sindex) == t.charAt(tindex)) {
-            result += dp(s, sindex + 1, t, tindex + 1) + dp(s, sindex + 1, t, tindex);
+        if (s.charAt(i) == t.charAt(j)) {
+            int skipBoth = dp(s, i + 1, t, j + 1);
+            int skipI = dp(s, i + 1, t, j);
+            result += skipBoth + skipI;
         } else {
-            result += dp(s, sindex + 1, t, tindex);
+            int skipI = dp(s, i + 1, t, j);
+            result += skipI;            
         }
-        dpTable[sindex][tindex] = result;
-        return result;
+        dpTable[i][j] = result;
+        return dpTable[i][j];
     }
 }
