@@ -20,14 +20,12 @@ class Solution {
         if (root == null) {
             return null;
         }
-        
+
         TreeNode leftSub = LCA(root.left, p, q);
         TreeNode rightSub = LCA(root.right, p, q);
-        
         if (leftSub != null && rightSub != null) {
-            return root;
+            return root;    
         }
-
         if (root.val == p.val || root.val == q.val) {
             if (root.val == p.val) {
                 foundP = true;
