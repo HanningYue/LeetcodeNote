@@ -3,11 +3,10 @@ class Solution {
         int notOverlapIntervals = notOverlap(intervals);
         return intervals.length - notOverlapIntervals;        
     }
+
     private int notOverlap(int[][] intervals) {
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                return a[1] - b[1];
-            }
+        Arrays.sort(intervals, (a, b) -> {
+            return a[1] - b[1];
         });
 
         int count = 1;
