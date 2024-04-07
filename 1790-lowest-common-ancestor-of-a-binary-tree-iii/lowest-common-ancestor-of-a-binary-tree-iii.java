@@ -17,6 +17,7 @@ class Solution {
             } else {
                 nodeOne = nodeOne.parent;
             }
+
             if (nodeTwo == null) {
                 nodeTwo = p;
             } else {
