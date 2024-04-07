@@ -10,13 +10,13 @@ class Solution {
         });
 
         int count = 1;
-        int end = intervals[0][1];
-        for (int i = 0; i < intervals.length; i++) {
+        int lastEnd = intervals[0][1];
+        for (int i = 1; i < intervals.length; i++) {
             int[] currentInterval = intervals[i];
             int start = currentInterval[0];
-            if (start >= end) {
+            if (start >= lastEnd) {
                 count++;
-                end = currentInterval[1];
+                lastEnd = currentInterval[1];
             }
         }
         return count;
