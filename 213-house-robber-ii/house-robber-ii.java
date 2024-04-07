@@ -2,9 +2,10 @@ class Solution {
     Integer[] dpTableOne;
     Integer[] dpTableTwo;
     public int rob(int[] nums) {
-        if (nums == null || nums.length == 1) {
+        if (nums.length == 1) {
             return nums[0];
         }
+        
         dpTableOne = new Integer[nums.length];
         dpTableTwo = new Integer[nums.length];
 
