@@ -7,15 +7,15 @@ class Solution {
 
         result.add(intervals[0]);
         for (int i = 1; i < intervals.length; i++) {
-            int[] currentInterval = intervals[i];
             int[] lastInterval = result.get(result.size() - 1);
+            int[] currentInterval = intervals[i];
+
             if (currentInterval[0] <= lastInterval[1]) {
                 lastInterval[1] = Math.max(lastInterval[1], currentInterval[1]);
             } else {
                 result.add(currentInterval);
             }
         }
-        
-        return result.toArray(new int[0][0]);
+        return result.toArray(new int[result.size()][]);
     }
 }
