@@ -15,8 +15,8 @@ class Solution {
             if (visited[i]) {
                 continue;
             }
-            list.add(nums[i]);
             visited[i] = true;
+            list.add(nums[i]);
             backTrack(result, list, visited, nums);
             list.remove(list.size() - 1);
             visited[i] = false;
