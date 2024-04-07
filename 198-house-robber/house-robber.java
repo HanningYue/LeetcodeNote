@@ -12,7 +12,9 @@ class Solution {
             return dpTable[index];
         }
 
-        int result = Math.max(dp(nums, index + 1), dp(nums, index + 2) + nums[index]);
+        int rob = dp(nums, index + 2) + nums[index];
+        int notRob = dp(nums, index + 1);
+        int result = Math.max(rob, notRob);
         dpTable[index] = result;
         return result;
     }
