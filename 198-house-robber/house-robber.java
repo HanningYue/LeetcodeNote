@@ -11,11 +11,9 @@ class Solution {
         if (dpTable[index] != null) {
             return dpTable[index];
         }
-
         int rob = dp(nums, index + 2) + nums[index];
-        int notRob = dp(nums, index + 1);
-        int result = Math.max(rob, notRob);
-        dpTable[index] = result;
-        return result;
+        int doNotRob = dp(nums, index + 1);
+        dpTable[index] = Math.max(rob, doNotRob);
+        return dpTable[index];
     }
 }
