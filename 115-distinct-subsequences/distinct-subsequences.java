@@ -14,17 +14,15 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
-
-        int result = 0;
+        
         if (s.charAt(i) == t.charAt(j)) {
+            int skipS = dp(s, i + 1, t, j);
             int skipBoth = dp(s, i + 1, t, j + 1);
-            int skipI = dp(s, i + 1, t, j);
-            result += skipBoth + skipI;
-        } else {
-            int skipI = dp(s, i + 1, t, j);
-            result += skipI;            
+            dpTable[i][j] = skipS + skipBoth;
+        } else if (s.charAt(i) != t.charAt(j)) {
+            int skipS = dp(s, i + 1, t, j);
+            dpTable[i][j] = skipS;
         }
-        dpTable[i][j] = result;
         return dpTable[i][j];
     }
 }
