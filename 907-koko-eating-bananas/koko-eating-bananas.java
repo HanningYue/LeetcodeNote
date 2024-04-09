@@ -1,30 +1,29 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int left = 1;
-        int right = 0;
+        int right = 0, left = 1;
         for (int pile : piles) {
-            right = Math.max(right, pile);
-        } 
-        while (left <= right) {
+            right = Math.max(pile, right);
+        }
+    
+        while (left < right) {
             int mid = left + (right - left) / 2;
-            if (solveFX(piles, mid) == h) {
-                right = mid - 1;
-            } else if (solveFX(piles, mid) > h) {
+            if (function(piles, mid) <= h) {
+                right = mid;
+            } else {
                 left = mid + 1;
-            } else if (solveFX(piles, mid) < h) {
-                right = mid - 1;
             }
         }
         return left;
     }
-    private long solveFX(int[] piles, int speed) {
-        long hour = 0;
+
+    private int function(int[] piles, int rate) {
+        int hours = 0;
         for (int i = 0; i < piles.length; i++) {
-            hour += piles[i] / speed;
-            if (piles[i] % speed != 0) {
-                hour++;
+            hours += piles[i] / rate;
+            if (piles[i] % rate > 0) {
+                hours++;
             }
         }
-        return hour;
+        return hours;
     }
 }
