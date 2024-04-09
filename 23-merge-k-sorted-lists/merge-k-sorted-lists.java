@@ -10,24 +10,34 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
+        return divide(lists, 0, lists.length - 1);
+    }
+    private ListNode divide(ListNode[] lists, int left, int right) {
+        if (left > right) {
+            return null;
+        }
+        if (left == right) {
+            return lists[left];
+        }
+        int mid = left + (right - left) / 2;
+        ListNode leftPart = divide(lists, left, mid);
+        ListNode rightPart = divide(lists, mid + 1, right);
+        return merge(leftPart, rightPart);
+    }
+    private ListNode merge(ListNode p, ListNode q) {
         ListNode dummy = new ListNode(-1);
         ListNode current = dummy;
-
-        PriorityQueue<ListNode> minHeap = new PriorityQueue<>((a, b) -> a.val - b.val);
-        for (ListNode head : lists) {
-            if (head != null) {
-                minHeap.offer(head);
+        while (p != null && q != null) {
+            if (p.val < q.val) {
+                current.next = p;
+                p = p.next;
+            } else if (p.val >= q.val) {
+                current.next = q;
+                q = q.next;
             }
-        }
-
-        while (!minHeap.isEmpty()) {
-            ListNode smallest = minHeap.poll();
-            current.next = smallest;
             current = current.next;
-            if (smallest.next != null) {
-                minHeap.offer(smallest.next);
-            }
         }
+        current.next = p == null ? q : p;
         return dummy.next;
     }
 }
