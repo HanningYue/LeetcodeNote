@@ -1,6 +1,7 @@
-//dptable represents [i][j] , at ith place, if we can sum up (here is j) to sum / 2 ?
 class Solution {
+    Boolean[][] dpTable;
     public boolean canPartition(int[] nums) {
+        int n = nums.length;
         int sum = 0;
         for (int num : nums) {
             sum += num;
@@ -8,22 +9,24 @@ class Solution {
         if (sum % 2 != 0) {
             return false;
         }
+        dpTable = new Boolean[n][sum + 1];
         sum = sum / 2;
+        return dp(nums, n - 1, sum);
+    }
+    private boolean dp(int[] nums, int index, int target) {
+        if (target == 0) {
+            return true;
+        }
+        if (index < 0 || target < 0) {
+            return false;
+        }
+        if (dpTable[index][target] != null) {
+            return dpTable[index][target];
+        }
 
-        boolean[][] dpTable = new boolean[nums.length + 1][sum + 1];
-        for (int i = 0; i <= nums.length; i++) {
-            dpTable[i][0] = true;
-        }
-        for (int i = 1; i <= nums.length; i++) {
-            for (int j = 1; j <= sum; j++) {
-                int currentWeight = nums[i - 1];
-                if (j - currentWeight < 0) {
-                    dpTable[i][j] = dpTable[i - 1][j];
-                } else {
-                    dpTable[i][j] = dpTable[i - 1][j] || dpTable[i - 1][j - currentWeight];
-                }
-            }
-        }
-        return dpTable[nums.length][sum];
+        boolean includeCurrent = dp(nums, index - 1, target - nums[index]);
+        boolean excludeCurrent = dp(nums, index - 1, target);
+        dpTable[index][target] = includeCurrent || excludeCurrent;
+        return dpTable[index][target];
     }
 }
