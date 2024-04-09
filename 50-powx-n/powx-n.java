@@ -1,6 +1,7 @@
 class Solution {
     public double myPow(double x, int n) {
-        return recursion(x, n);
+        long N = n;
+        return recursion(x, N);
     }
     public double recursion(double x, long n) {
         if (n == 0) {
