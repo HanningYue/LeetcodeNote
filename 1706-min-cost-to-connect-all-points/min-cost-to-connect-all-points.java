@@ -1,75 +1,31 @@
-/*
-Kruskal or Prim
-Kruskal: Sorted First, use Union-find to find MST
-Prim: Use optimized sorting data structure, such as PriorityQueue
-*/
-class Prim {
-    boolean[] inMST;
-    int weightSum = 0;
-    List<int[]>[] graph;
-    PriorityQueue<int[]> pq;
-    public Prim (List<int[]>[] graph) {
-        this.graph = graph;
-        this.inMST = new boolean[graph.length];
-        this.pq = new PriorityQueue<>((a, b) -> {
-            return a[2] - b[2];
-        });
-        
-        inMST[0] = true;
-        cut(0);
-        while (!pq.isEmpty()) {
-            int[] edge = pq.poll();
-            int to = edge[1];
-            int weight = edge[2];
-            if (inMST[to]) {
-                continue;
-            }
-            inMST[to] = true;
-            weightSum += weight;
-            cut(to);
-        }
-    }
-    public void cut(int vertex) {
-        for (int[] neighbor : graph[vertex]) {
-            int to = neighbor[1];
-            if (inMST[to]) {
-                continue;
-            }
-            pq.offer(neighbor);
-        }
-    }
-    public int weightSum() {
-        return weightSum;
-    }
-    public boolean allConnected() {
-        for (int i = 0; i < inMST.length; i++) {
-            if (!inMST[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-}
 class Solution {
     public int minCostConnectPoints(int[][] points) {
-        List<int[]>[] graph = buildGraph(points.length, points);
-        Prim prim = new Prim(graph);
-        return prim.weightSum();
-    }
-    private List<int[]>[] buildGraph(int n, int[][] points) {
-        List<int[]>[] graph = new LinkedList[n];
-        for (int i = 0; i < n; i++) {
-            graph[i] = new LinkedList<>();
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j < n; j++) {
-                int ix = points[i][0], iy = points[i][1];
-                int jx = points[j][0], jy = points[j][1];
-                int weight = Math.abs(ix - jx) + Math.abs(iy - jy);
-                graph[i].add(new int[]{i, j, weight});
-                graph[j].add(new int[]{j, i, weight});
+        int cost = 0;
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
+        minHeap.offer(new int[]{0, 0});
+        Set<Integer> visited = new HashSet<>();
+        
+        while (visited.size() < points.length) {
+            int[] point = minHeap.poll();
+            int currentWeight = point[0];
+            int currentNode = point[1];
+
+            if (visited.contains(currentNode)) {
+                continue;
+            }
+            visited.add(currentNode);
+            cost += currentWeight;
+
+            for (int nextNode = 0; nextNode < points.length; nextNode++) {
+                if (visited.contains(nextNode)) {
+                    continue;
+                }
+            
+                int nextWeight = Math.abs(points[nextNode][0] - points[currentNode][0])
+                                +Math.abs(points[nextNode][1] - points[currentNode][1]);
+                minHeap.offer(new int[]{nextWeight, nextNode});                
             }
         }
-        return graph;
+        return cost;
     }
 }
