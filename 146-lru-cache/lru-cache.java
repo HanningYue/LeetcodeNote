@@ -1,62 +1,36 @@
-class Node {
-    int key, value;
-    Node prev, next;
-    public Node(int key, int value) {
-        this.key = key;
-        this.value = value;
-    }
-}
 class LRUCache {
-    Node head, tail;
-    Map<Integer, Node> map;
-    int capacity, count;
+    LinkedHashMap<Integer, Integer> map;
+    int capacity;
     public LRUCache(int capacity) {
-        head = new Node(0, 0);
-        tail = new Node(0, 0);
-        head.next = tail;
-        tail.prev = head;
-        map = new HashMap<>();
         this.capacity = capacity;
-        count = 0;
+        map = new LinkedHashMap<>();
     }
-    public void add(Node node) {
-        node.next = head.next;
-        node.prev = head;
-        head.next.prev = node;
-        head.next = node;
+    
+    public void makeRecent(int key) {
+        int value = map.get(key);
+        map.remove(key);
+        map.put(key, value);
     }
-    public void delete(Node node) {
-        node.next.prev = node.prev;
-        node.prev.next = node.next;
-    }
+
     public int get(int key) {
         if (map.containsKey(key)) {
-            Node node = map.get(key);
-            delete(node);
-            add(node);
-            return node.value;
+            makeRecent(key);
+            return map.get(key);
         }
         return -1;
     }
+    
     public void put(int key, int value) {
         if (map.containsKey(key)) {
-            Node node = map.get(key);
-            node.value = value;
-            delete(node);
-            add(node);
+            map.put(key, value);
+            makeRecent(key);
             return;
         }
-        else if (!map.containsKey(key)) {
-            Node newNode = new Node(key, value);
-            if (count < capacity) {
-                count++;
-            } else {
-                map.remove(tail.prev.key);
-                delete(tail.prev);
-            }
-            map.put(key, newNode);
-            add(newNode);
+        if (map.size() >= capacity) {
+            int leastRecent = map.keySet().iterator().next();
+            map.remove(leastRecent);
         }
+        map.put(key, value);
     }
 }
 
