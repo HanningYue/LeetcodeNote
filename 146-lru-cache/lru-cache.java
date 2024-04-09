@@ -2,8 +2,8 @@ class LRUCache {
     LinkedHashMap<Integer, Integer> map;
     int capacity;
     public LRUCache(int capacity) {
-        this.capacity = capacity;
         map = new LinkedHashMap<>();
+        this.capacity = capacity;
     }
     
     public void makeRecent(int key) {
