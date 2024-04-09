@@ -31,7 +31,7 @@ class Solution {
             if (p.val < q.val) {
                 current.next = p;
                 p = p.next;
-            } else {
+            } else if (p.val >= q.val) {
                 current.next = q;
                 q = q.next;
             }
