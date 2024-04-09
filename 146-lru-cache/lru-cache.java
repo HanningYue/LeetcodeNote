@@ -56,8 +56,8 @@ class LRUCache {
                 delete(tail.prev);
             }
             Node newNode = new Node(key, value);
-            add(newNode);
             map.put(key, newNode);
+            add(newNode);
         }
     }
 }
