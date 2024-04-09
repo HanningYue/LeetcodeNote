@@ -28,7 +28,7 @@ class LRUCache {
         }
         if (map.size() >= capacity) {
             int leastRecent = map.keySet().iterator().next();
-            map.remove(leastRecent);
+            map.remove(leastRecent);    
         }
         map.put(key, value);
     }
