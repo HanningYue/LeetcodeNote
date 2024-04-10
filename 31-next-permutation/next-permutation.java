@@ -9,14 +9,11 @@ class Solution {
             return;
         }
 
-        if (firstDecrease >= 0) {
-            int firstGreater = nums.length - 1;
-            while (firstGreater > 0 && nums[firstGreater] <= nums[firstDecrease]) {
-                firstGreater--;
-            }
-            swap(nums, firstDecrease, firstGreater);
+        int firstGreater = nums.length - 1;
+        while (firstGreater >= 0 && nums[firstGreater] <= nums[firstDecrease]) {
+            firstGreater--;
         }
-
+        swap(nums, firstDecrease, firstGreater);
         reverse(nums, firstDecrease + 1);
     }
     private void reverse(int[] nums, int index) {
