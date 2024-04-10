@@ -34,6 +34,6 @@ class Solution {
         boolean currentSame = p.val == q.val;
         boolean leftSame = sameTree(p.left, q.left);
         boolean rightSame = sameTree(p.right, q.right);
-        return currentSame && rightSame && leftSame;
+        return currentSame && leftSame && rightSame;
     }
 }
