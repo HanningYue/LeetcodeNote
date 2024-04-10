@@ -1,13 +1,18 @@
+/**
+        1           12
+    112 112
+112 112 112 112 112 112
+*/
 class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
         boolean[] visited = new boolean[nums.length];
-        backTrack(result, list, visited, nums);
-        return result;
+        backTrack(nums, result, list, visited);
+        return result;      
     }
-    private void backTrack(List<List<Integer>> result, List<Integer> list, boolean[] visited, int[] nums) {
+    private void backTrack(int[] nums, List<List<Integer>> result, List<Integer> list, boolean[] visited) {
         if (list.size() == nums.length) {
             result.add(new ArrayList<>(list));
             return;
@@ -18,7 +23,7 @@ class Solution {
             }
             visited[i] = true;
             list.add(nums[i]);
-            backTrack(result, list, visited, nums);
+            backTrack(nums, result, list, visited);
             list.remove(list.size() - 1);
             visited[i] = false;
         }
