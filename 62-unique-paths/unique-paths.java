@@ -5,11 +5,11 @@ class Solution {
         return dp(m - 1, n - 1);
     }
     private int dp(int row, int col) {
-        if (row == 0 && col == 0) {
-            return 1;
-        }
         if (row < 0 || col < 0) {
             return 0;
+        }
+        if (row == 0 && col == 0) {
+            return 1;
         }
         if (dpTable[row][col] != null) {
             return dpTable[row][col];
