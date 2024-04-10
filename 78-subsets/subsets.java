@@ -1,26 +1,23 @@
+/**
+                []
+        1        2      3
+    2      3     3   
+3   
+*/
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        backTrack(result, list, 0, nums);
+        backTrack(nums, result, list, 0);
         return result;
     }
-    private void backTrack(List<List<Integer>> result, List<Integer> list, int level, int[] nums) {
+    private void backTrack(int[] nums, List<List<Integer>> result, List<Integer> list, int index) {
         result.add(new ArrayList<>(list));
-        
-        for (int i = level; i < nums.length; i++) {
+
+        for (int i = index; i < nums.length; i++) {
             list.add(nums[i]);
-            backTrack(result, list, i + 1, nums);
+            backTrack(nums, result, list, i + 1);
             list.remove(list.size() - 1);
         }
     }
 }
-/** 无重复不可复选
-                    [ ]
-                /    |     \
-        [1]         [2]    [3]
-    /       \        |
-[1, 2]      [1, 3]  [2, 3]
-    |
-[1, 2, 3]
-*/
