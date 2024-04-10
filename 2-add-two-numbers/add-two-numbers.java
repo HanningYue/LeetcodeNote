@@ -25,7 +25,7 @@ class Solution {
             }
             sum += carry;
             carry = sum / 10;
-            
+
             int newNodeValue = sum % 10;
             ListNode newNode = new ListNode(newNodeValue);
             current.next = newNode;
