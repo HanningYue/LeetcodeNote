@@ -15,9 +15,9 @@ class Solution {
         if (dpTable[row][col] != null) {
             return dpTable[row][col];
         }
-        int up = dp(grid, row - 1, col);
         int left = dp(grid, row, col - 1);
-        dpTable[row][col] = up + left;
+        int up = dp(grid, row - 1, col);
+        dpTable[row][col] = left + up;
         return dpTable[row][col];
     }
 }
