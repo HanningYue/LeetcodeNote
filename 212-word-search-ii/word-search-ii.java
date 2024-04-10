@@ -8,12 +8,11 @@ class TrieNode {
         word = "";
     }
 }
-
 class Solution {
     TrieNode root;
     public List<String> findWords(char[][] board, String[] words) {
         root = new TrieNode();
-        List<String> result = new ArrayList<>();        
+        List<String> result = new ArrayList<>();
         for (String word : words) {
             insert(word);
         }
@@ -24,7 +23,7 @@ class Solution {
                 char current = board[i][j];
                 if (root.children[current - 'a'] != null) {
                     TrieNode node = root;
-                    dfs(board, node, i, j, result, visited);
+                    backTrack(board, node, i, j, visited, result);
                 }
             }
         }
@@ -32,22 +31,21 @@ class Solution {
     }
 
     int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private void dfs(char[][] board, TrieNode node, int row, int col, List<String> result,
-    boolean[][] visited) {
-        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length 
-        || node.children[board[row][col] - 'a'] == null || visited[row][col]) {
+    private void backTrack(char[][] board, TrieNode node, int row, int col, boolean[][] visited, List<String> result) {
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length
+        || visited[row][col] || node.children[board[row][col] - 'a'] == null) {
             return;
         }
 
-        char current = board[row][col];
-        if (node.children[current - 'a'].isEnd) {
-            result.add(node.children[current - 'a'].word);
-            node.children[current - 'a'].isEnd = false;
+        char c = board[row][col];
+        if (node.children[c - 'a'].isEnd) {
+            node.children[c - 'a'].isEnd = false;
+            result.add(node.children[c - 'a'].word);
         }
-        
+
         visited[row][col] = true;
         for (int[] dir : directions) {
-            dfs(board, node.children[current - 'a'], row + dir[0], col + dir[1], result, visited);
+            backTrack(board, node.children[c - 'a'], row + dir[0], col + dir[1], visited, result);
         }
         visited[row][col] = false;
     }
