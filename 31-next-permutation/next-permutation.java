@@ -4,10 +4,14 @@ class Solution {
         while (firstDecrease >= 0 && nums[firstDecrease + 1] <= nums[firstDecrease]) {
             firstDecrease--;
         }
+        if (firstDecrease == -1) {
+            reverse(nums, 0);
+            return;
+        }
 
         if (firstDecrease >= 0) {
             int firstGreater = nums.length - 1;
-            while (firstGreater >= 0 && nums[firstGreater] <= nums[firstDecrease]) {
+            while (firstGreater > 0 && nums[firstGreater] <= nums[firstDecrease]) {
                 firstGreater--;
             }
             swap(nums, firstDecrease, firstGreater);
