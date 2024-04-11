@@ -1,28 +1,37 @@
+class Pair {
+    int nums1, nums2, nums2Idx;
+    public Pair(int nums1, int nums2, int nums2Idx) {
+        this.nums1 = nums1;
+        this.nums2 = nums2;
+        this.nums2Idx = nums2Idx;
+    }
+}
 class Solution {
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         List<List<Integer>> result = new ArrayList<>();
-        PriorityQueue<int[]> heap = new PriorityQueue<>(new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                int sumA = a[0] + a[1];
-                int sumB = b[0] + b[1];
+        PriorityQueue<Pair> heap = new PriorityQueue<>(new Comparator<Pair>() {
+            public int compare(Pair a, Pair b) {
+                int sumA = a.nums1 + a.nums2;
+                int sumB = b.nums1 + b.nums2;
                 return sumA - sumB;
             }
         });
         for (int i = 0; i < nums1.length; i++) {
-            heap.offer(new int[]{nums1[i], nums2[0], 0});
+            heap.offer(new Pair(nums1[i], nums2[0], 0));
         }
-
-        while (!heap.isEmpty() && k > 0) {
-            int[] currentSmallest = heap.poll();
-            int numOne = currentSmallest[0];
-            int numTwo = currentSmallest[1];
-            int numTwoIndex = currentSmallest[2];
+        
+        int count = 0;
+        while (!heap.isEmpty() && count < k) {
+            Pair currentSmallest = heap.poll();
+            int numOne = currentSmallest.nums1;
+            int numTwo = currentSmallest.nums2;
+            int numTwoIndex = currentSmallest.nums2Idx;
             result.add(Arrays.asList(numOne, numTwo));
 
             if (numTwoIndex + 1 < nums2.length) {
-                heap.offer(new int[]{numOne, nums2[numTwoIndex + 1], numTwoIndex + 1});
+                heap.offer(new Pair(numOne, nums2[numTwoIndex + 1], numTwoIndex + 1));
             }
-            k--;
+            count++;
         }
         return result;
     }
