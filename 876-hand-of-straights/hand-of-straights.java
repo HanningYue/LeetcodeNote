@@ -1,15 +1,6 @@
-/**
-Use a HashMap {card, frequency}
-Sort the hand, check frequency, because we always want the minimum card to fill our groudSize
-If frequency 0, continue;
-Fill up groupSize
-    currentCard = hand[i] + j, because consecutive number, so just add j
-    check currentCard frequency, if non-exit in the initial map Init, return false
-    decrease frequency by 1
-*/
 class Solution {
     public boolean isNStraightHand(int[] hand, int groupSize) {
-        Map<Integer, Integer> map = new HashMap<>(); //{card, frequency}
+        Map<Integer, Integer> map = new HashMap<>();
         for (int card : hand) {
             map.put(card, map.getOrDefault(card, 0) + 1);
         }
@@ -20,11 +11,12 @@ class Solution {
                 continue;
             }
             for (int j = 0; j < groupSize; j++) {
-                int nextCard = hand[i] + j;
-                if (map.getOrDefault(nextCard, 0) == 0) {
+                int consecutive = hand[i] + j;
+                if (map.getOrDefault(consecutive, 0) == 0) {
                     return false;
                 }
-                map.put(nextCard, map.get(nextCard) - 1);
+
+                map.put(consecutive, map.get(consecutive) - 1);
             }
         }
         return true;
