@@ -10,7 +10,7 @@ class Solution {
             map.put(fastChar, map.getOrDefault(fastChar, 0) + 1);
             maxFreq = Math.max(maxFreq, map.get(fastChar));
 
-            if (fast - slow + 1 - maxFreq > k) {
+            while (fast - slow + 1 - maxFreq > k) {
                 char slowChar = s.charAt(slow);
                 map.put(slowChar, map.get(slowChar) - 1);
                 slow++;
