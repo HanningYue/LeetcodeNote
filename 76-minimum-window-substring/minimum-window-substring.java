@@ -4,9 +4,9 @@ class Solution {
         for (char c : t.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
-        
+
         int slow = 0, fast = 0;
-        int match = 0, length = Integer.MAX_VALUE;
+        int length = Integer.MAX_VALUE, match = 0;
         String result = "";
         while (fast < s.length()) {
             char fastChar = s.charAt(fast);
