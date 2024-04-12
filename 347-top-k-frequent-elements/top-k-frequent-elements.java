@@ -6,11 +6,7 @@ class Solution {
         }
         
         List<Integer> freq = new ArrayList<>(map.keySet());
-        Collections.sort(freq, new Comparator<Integer>() {
-            public int compare(Integer a, Integer b) {
-                return map.get(b).compareTo(map.get(a));
-            }
-        });
+        Collections.sort(freq, (a, b) -> map.get(b) - map.get(a));
 
         int[] result = new int[k];
         for (int i = 0; i < k; i++) {
