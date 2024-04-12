@@ -1,28 +1,34 @@
+class Pair {
+    int position;
+    int speed;
+    public Pair(int position, int speed) {
+        this.position = position;
+        this.speed = speed;
+    }
+}
 class Solution {
     public int carFleet(int target, int[] position, int[] speed) {
+        List<Pair> list = new ArrayList<Pair>();
         int n = position.length;
-        int[][] cars = new int[n][2];
         for (int i = 0; i < n; i++) {
-            cars[i][0] = position[i];
-            cars[i][1] = speed[i];
+            list.add(new Pair(position[i], speed[i]));
         }
 
-        Arrays.sort(cars, new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                return a[0] - b[0];
+        Collections.sort(list, new Comparator<Pair>() {
+            public int compare(Pair a, Pair b) {
+                return a.position - b.position;
             }
         });
 
         double[] time = new double[n];
         for (int i = 0; i < n; i++) {
-            int currentPos = cars[i][0];
-            int currentSpeed = cars[i][1];
-            double timeToDes = (double)(target - currentPos) / currentSpeed;
-            time[i] = timeToDes;
+            Pair furthest = list.get(i);
+            time[i] = (double) (target - furthest.position) / furthest.speed;
         }
 
         Stack<Double> stack = new Stack<>();
-        for (double currentTime : time) {
+        for (int i = 0; i < n; i++) {
+            double currentTime = time[i];
             while (!stack.isEmpty() && currentTime >= stack.peek()) {
                 stack.pop();
             }
