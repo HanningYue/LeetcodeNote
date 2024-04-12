@@ -18,27 +18,26 @@ class Solution {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
-        }        
-        return dfs(postorder, 0, postorder.length - 1, inorder, 0, inorder.length - 1, map);
+        }
+        return dfs(map, postorder, 0, postorder.length - 1, inorder, 0, inorder.length - 1);
     }
-    private TreeNode dfs(int[] postorder, int postleft, int postright, 
-    int[] inorder, int inleft, int inright, Map<Integer, Integer> map)
-    {
+    private TreeNode dfs(Map<Integer, Integer> map, int[] postorder, int postleft, int postright,
+    int[] inorder, int inleft, int inright) {
         if (postleft > postright) {
             return null;
         }
-        TreeNode head = new TreeNode(postorder[postright]);
-        int headIdx = map.get(head.val);
-        int leftSize = headIdx - inleft;
+        int headValue = postorder[postright];
+        int headIndex = map.get(headValue);
+        int leftSize = headIndex - inleft;
 
-        head.left = dfs(postorder, postleft, postleft + leftSize - 1, inorder, inleft, headIdx - 1, map);
-        head.right = dfs(postorder, postleft + leftSize, postright - 1, inorder, headIdx + 1, inright, map);
-        return head;
+        TreeNode newHead = new TreeNode(headValue);
+        newHead.left = dfs(map, postorder, postleft, postleft + leftSize - 1, inorder, inleft, headIndex - 1);
+        newHead.right = dfs(map, postorder, postleft + leftSize, postright - 1, inorder, headIndex + 1, inright);
+        return newHead;
     }
 }
-
-//     1
-// 2       3
-//     4       5
-// postorder [2 4 5 3 1]
-// inorder [2 1 4 3 5]
+/**
+9 3 15 20 7
+9 15 7 20 3
+0 1  2  3 4
+*/
