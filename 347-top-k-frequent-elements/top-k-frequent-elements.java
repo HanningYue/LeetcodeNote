@@ -5,25 +5,16 @@ class Solution {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
         
-        List<List<Integer>> bucket = new ArrayList<>();
-        for (int i = 0; i <= nums.length; i++) {
-            bucket.add(new ArrayList<>());
-        }
-
-        for (int num : map.keySet()) {
-            int freq = map.get(num);
-            bucket.get(freq).add(num);
-        }
+        List<Integer> freq = new ArrayList<>(map.keySet());
+        Collections.sort(freq, new Comparator<Integer>() {
+            public int compare(Integer a, Integer b) {
+                return map.get(b).compareTo(map.get(a));
+            }
+        });
 
         int[] result = new int[k];
-        int index = 0;
-        for (int currentFreq = nums.length; currentFreq > 0 && index < k; currentFreq--) {
-            for (int num : bucket.get(currentFreq)) {
-                result[index++] = num;
-                if (index == k) {
-                    break;
-                }
-            }
+        for (int i = 0; i < k; i++) {
+            result[i] = freq.get(i);
         }
         return result;
     }
