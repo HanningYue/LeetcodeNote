@@ -4,13 +4,26 @@ class Solution {
         for (int num : nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
-        
-        List<Integer> numList = new ArrayList<>(map.keySet());
-        Collections.sort(numList, (a, b) -> map.get(b) - map.get(a));
-        
+
+        List<List<Integer>> freqBucket = new ArrayList<>();
+        for (int freq = 0; freq <= nums.length; freq++) {
+            freqBucket.add(new ArrayList<>());
+        }
+
+        for (int num : map.keySet()) {
+            int numFreq = map.get(num);
+            freqBucket.get(numFreq).add(num);
+        }
+
         int[] result = new int[k];
-        for (int i = 0; i < k; i++) {
-            result[i] = numList.get(i);
+        int index = 0;
+        for (int maxFreq = nums.length; maxFreq > 0 && index < k; maxFreq--) {
+            for (int num : freqBucket.get(maxFreq)) {
+                result[index++] = num;
+                if (index == k) {
+                    break;
+                }
+            }
         }
         return result;
     }
