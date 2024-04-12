@@ -14,6 +14,6 @@ class Solution {
         if (sum < 0) {
             return -1;
         }
-        return start == gas.length ? 0 : start;
+        return start;
     }
 }
