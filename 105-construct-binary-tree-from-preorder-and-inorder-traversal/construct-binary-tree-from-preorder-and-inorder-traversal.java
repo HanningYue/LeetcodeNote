@@ -19,28 +19,26 @@ class Solution {
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return dfs(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, map);
+        return dfs(map, preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
-    private TreeNode dfs(int[] preorder, int preleft, int preright, 
-    int[] inorder, int inleft, int inright, Map<Integer, Integer> map) 
-    {
+    private TreeNode dfs(Map<Integer, Integer> map, int[] preorder, int preleft, int preright, 
+    int[] inorder, int inleft, int inright) {
         if (preleft > preright) {
             return null;
         }
-        TreeNode head = new TreeNode(preorder[preleft]);
-        int headIdx = map.get(head.val);
-        int leftSize = headIdx - inleft;
+        
+        int headVal = preorder[preleft];
+        int midIndex = map.get(headVal);
+        int leftSize = midIndex - inleft;
 
-        head.left = dfs(preorder, preleft + 1, preleft + leftSize, inorder, inleft, headIdx - 1, map);
-        head.right = dfs(preorder, preleft + leftSize + 1, preright, inorder, headIdx + 1, inright, map);
-        return head;
+        TreeNode newHead = new TreeNode(headVal);
+        newHead.left = dfs(map, preorder, preleft + 1, preleft + leftSize, inorder, inleft, midIndex - 1);
+        newHead.right = dfs(map, preorder, preleft + leftSize + 1, preright, inorder, midIndex + 1, inright);
+        return newHead;
     }
 }
-//     1
-// 2       3
-//     4       5
-// preorder[1 2 3 4 5]
-// inorder[2 1 4 3 5]
-// head 1
-// left 2
-// right 4 3 5
+/**
+3 9 20 15 7
+9 3 15 20 7
+0 1  2  3 4
+*/
