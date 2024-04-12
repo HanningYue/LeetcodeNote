@@ -1,13 +1,11 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
         Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < s1.length(); i++) {
-            char c = s1.charAt(i);
+        for (char c : s1.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        int slow = 0, fast = 0;
-        int match = 0;
+        int slow = 0, fast = 0, match = 0;
         while (fast < s2.length()) {
             char fastChar = s2.charAt(fast);
             if (map.containsKey(fastChar)) {
@@ -16,6 +14,7 @@ class Solution {
                     match++;
                 }
             }
+
             if (fast - slow + 1 == s1.length()) {
                 if (match == s1.length()) {
                     return true;
