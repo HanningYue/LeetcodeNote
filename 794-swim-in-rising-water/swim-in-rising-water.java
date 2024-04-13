@@ -24,6 +24,7 @@ class Solution {
             int currentRow = current.row;
             int currentCol = current.col;
             int currentMaxWater = current.maxWater;
+            visited[currentRow][currentCol] = true;
             if (currentRow == m - 1 && currentCol == n - 1) {
                 return currentMaxWater;
             }
@@ -36,7 +37,6 @@ class Solution {
                     continue;
                 }
 
-                visited[newRow][newCol] = true;
                 int newMaxWater = Math.max(currentMaxWater, grid[newRow][newCol]);
                 heap.offer(new Pair(newRow, newCol, newMaxWater));
             }
