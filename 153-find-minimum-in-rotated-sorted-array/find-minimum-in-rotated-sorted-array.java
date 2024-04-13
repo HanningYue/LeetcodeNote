@@ -1,10 +1,6 @@
-/**            
-            /
-           /
-      /
-     /  
+/**
 1 2 3 4 5 6 7
-6 7 1 2 3 4 5
+5 6 7 1 2 3 4
 */
 class Solution {
     public int findMin(int[] nums) {
@@ -13,10 +9,10 @@ class Solution {
             int mid = left + (right - left) / 2;
             if (nums[mid] < nums[right]) {
                 right = mid;
-            } else if (nums[mid] >= nums[left]) {
+            } else if (nums[mid] > nums[right]) {
                 left = mid + 1;
             }
         }
-        return nums[right];
+        return nums[left];
     }
 }
