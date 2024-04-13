@@ -1,9 +1,11 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int minute = 0;
         Queue<int[]> queue = new LinkedList<>();
         int fresh = 0;
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (grid[i][j] == 2) {
                     queue.offer(new int[]{i, j});
                 } else if (grid[i][j] == 1) {
@@ -12,19 +14,19 @@ class Solution {
             }
         }
 
-        int step = 0;
+        boolean[][] visited = new boolean[m][n];
         int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-        boolean[][] visited = new boolean[grid.length][grid[0].length];
         while (!queue.isEmpty() && fresh > 0) {
             int size = queue.size();
-            step++;
             for (int i = 0; i < size; i++) {
                 int[] rotten = queue.poll();
+                int row = rotten[0];
+                int col = rotten[1];
                 for (int[] dir : directions) {
-                    int row = rotten[0], col = rotten[1];
-                    int newRow = row + dir[0], newCol = col + dir[1];
-                    if (newRow < 0 || newRow >= grid.length || newCol < 0 || newCol >= grid[0].length
-                    || grid[newRow][newCol] != 1 || visited[newRow][newCol]) {
+                    int newRow = row + dir[0];
+                    int newCol = col + dir[1];
+                    if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n || visited[newRow][newCol]
+                    || grid[newRow][newCol] != 1) {
                         continue;
                     }
                     visited[newRow][newCol] = true;
@@ -32,10 +34,11 @@ class Solution {
                     queue.offer(new int[]{newRow, newCol});
                 }
             }
+            minute++;
         }
-        if (fresh == 0) {
-            return step;
+        if (fresh != 0) {
+            return -1;
         }
-        return -1;
+        return minute;
     }
 }
