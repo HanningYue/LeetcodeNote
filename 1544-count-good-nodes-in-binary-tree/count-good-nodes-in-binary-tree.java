@@ -16,7 +16,8 @@
 class Solution {
     int count = 0;
     public int goodNodes(TreeNode root) {
-        dfs(root, root.val);
+        int pathMax = root.val;
+        dfs(root, pathMax);
         return count;
     }
     private void dfs(TreeNode root, int pathMax) {
