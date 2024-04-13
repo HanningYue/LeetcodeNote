@@ -1,7 +1,8 @@
 class Solution {
     Integer[] dpTable;
     public int rob(int[] nums) {
-        dpTable = new Integer[nums.length];
+        int m = nums.length;
+        dpTable = new Integer[m];
         return dp(nums, 0);
     }
     private int dp(int[] nums, int index) {
@@ -11,9 +12,9 @@ class Solution {
         if (dpTable[index] != null) {
             return dpTable[index];
         }
-        int rob = dp(nums, index + 2) + nums[index];
-        int doNotRob = dp(nums, index + 1);
-        dpTable[index] = Math.max(rob, doNotRob);
+        int robCurrent = dp(nums, index + 2) + nums[index];
+        int notRobCurrent = dp(nums, index + 1);
+        dpTable[index] = Math.max(robCurrent, notRobCurrent);
         return dpTable[index];
     }
 }
