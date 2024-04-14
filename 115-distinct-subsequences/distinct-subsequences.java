@@ -14,10 +14,11 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
+
         if (s.charAt(i) == t.charAt(j)) {
-            int skipS = dp(s, i + 1, t, j);
-            int skipBoth = dp(s, i + 1, t, j + 1);
-            dpTable[i][j] = skipS + skipBoth;
+            int notUseS = dp(s, i + 1, t, j);
+            int useS = dp(s, i + 1, t, j + 1);
+            dpTable[i][j] = notUseS + useS;
         } else if (s.charAt(i) != t.charAt(j)) {
             int skipS = dp(s, i + 1, t, j);
             dpTable[i][j] = skipS;
