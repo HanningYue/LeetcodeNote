@@ -3,8 +3,7 @@ class Solution {
         int i = 0;
         while (i < nums.length) {
             int supposeIndex = nums[i] - 1;
-            if (nums[i] > 0 && nums[i] <= nums.length
-            && nums[supposeIndex] != nums[i]) {
+            if (nums[i] > 0 && nums[i] < nums.length && nums[i] != nums[supposeIndex]) {
                 int temp = nums[i];
                 nums[i] = nums[supposeIndex];
                 nums[supposeIndex] = temp;
