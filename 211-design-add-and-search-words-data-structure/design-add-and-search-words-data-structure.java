@@ -1,6 +1,6 @@
 class TrieNode {
-    TrieNode[] children;
     boolean isEnd;
+    TrieNode[] children;
     public TrieNode() {
         children = new TrieNode[26];
         isEnd = false;
@@ -25,15 +25,15 @@ class WordDictionary {
     
     public boolean search(String word) {
         TrieNode node = root;
-        return searchHelper(word, node);
+        return dfs(word, node);
     }
-    
-    private boolean searchHelper(String word, TrieNode node) {
+
+    private boolean dfs(String word, TrieNode node) {
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             if (c == '.') {
                 for (TrieNode child : node.children) {
-                    if (child != null && searchHelper(word.substring(i + 1), child)) {
+                    if (child != null && dfs(word.substring(i + 1), child)) {
                         return true;
                     }
                 }
