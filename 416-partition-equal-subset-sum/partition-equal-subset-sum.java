@@ -8,25 +8,23 @@ class Solution {
         if (sum % 2 != 0) {
             return false;
         }
-
         sum = sum / 2;
         dpTable = new Boolean[nums.length][sum + 1];
-        return dp(nums, nums.length - 1, sum);
+        return dp(nums, sum, nums.length - 1);
     }
-    private boolean dp(int[] nums, int index, int target) {
-        if (index < 0 || target < 0) {
-            return false;
-        }
+    private boolean dp(int[] nums, int target, int index) {
         if (target == 0) {
             return true;
+        }
+        if (target < 0 || index < 0) {
+            return false;
         }
         if (dpTable[index][target] != null) {
             return dpTable[index][target];
         }
-        boolean includeCurrent = dp(nums, index - 1, target - nums[index]);
-        boolean excludeCurrent = dp(nums, index - 1, target);
-        dpTable[index][target] = includeCurrent || excludeCurrent;
+        boolean useCurrent = dp(nums, target - nums[index], index - 1);
+        boolean notUseCurrent = dp(nums, target, index - 1);
+        dpTable[index][target] = useCurrent || notUseCurrent;
         return dpTable[index][target];
-
     }
 }
