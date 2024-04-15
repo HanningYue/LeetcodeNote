@@ -1,36 +1,34 @@
 class Solution {
     public int minCostConnectPoints(int[][] points) {
-        Set<Integer> visitedNode = new HashSet<>();
-        PriorityQueue<int[]> heap = new PriorityQueue<>(new Comparator<int[]>() {
+        PriorityQueue<int[]> heap = new PriorityQueue<int[]>(new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
                 return a[1] - b[1];
             }
         });
         heap.offer(new int[]{0, 0});
-        
-        int result = 0;        
-        while (visitedNode.size() < points.length) {
-            int[] currentNode = heap.poll();
-            int currentIndex = currentNode[0];
-            int currentWeight = currentNode[1];
+        Set<Integer> visited = new HashSet<>();
+        int cost = 0;
 
-            if (visitedNode.contains(currentIndex)) {
+        while (visited.size() < points.length) {
+            int[] point = heap.poll();
+            int index = point[0];
+            int distance = point[1];
+
+            if (visited.contains(index)) {
                 continue;
             }
-            visitedNode.add(currentIndex);
-            result += currentWeight;
-
-            for (int i = 0; i < points.length; i++) {
-                if (visitedNode.contains(i)) {
+            cost += distance;
+            
+            for (int nextIndex = 0; nextIndex < points.length; nextIndex++) {
+                if (visited.contains(nextIndex)) {
                     continue;
                 }
-
-                int nextWeight = Math.abs(points[i][0] - points[currentIndex][0])
-                                +Math.abs(points[i][1] - points[currentIndex][1]);
-                int[] nextNode = new int[]{i, nextWeight};
-                heap.offer(nextNode);
+                visited.add(index);
+                int distanceToCurrent = Math.abs(points[nextIndex][0] - points[index][0])
+                                       +Math.abs(points[nextIndex][1] - points[index][1]);
+                heap.offer(new int[]{nextIndex, distanceToCurrent});
             }
         }
-        return result;
+        return cost;
     }
 }
