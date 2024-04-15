@@ -23,6 +23,7 @@ class Solution {
                 if (visited.contains(nextIndex)) {
                     continue;
                 }
+
                 visited.add(index);
                 int distanceToCurrent = Math.abs(points[nextIndex][0] - points[index][0])
                                        +Math.abs(points[nextIndex][1] - points[index][1]);
