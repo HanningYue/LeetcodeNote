@@ -5,13 +5,18 @@ class Solution {
         return dp(n);
     }
     private int dp(int n) {
-        if (n <= 2) {
-            return n;
+        if (n == 0) {
+            return 1;
+        }
+        if (n < 0) {
+            return 0;
         }
         if (dpTable[n] != null) {
             return dpTable[n];
         }
-        dpTable[n] = dp(n - 2) + dp(n - 1);
+        int climbOne = dp(n - 1);
+        int climbTwo = dp(n - 2);
+        dpTable[n] = climbOne + climbTwo;
         return dpTable[n];
     }
 }
