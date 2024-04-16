@@ -2,8 +2,11 @@ class Solution {
     Integer[] dpTable;
     public int minCostClimbingStairs(int[] cost) {
         dpTable = new Integer[cost.length];
-        return Math.min(dp(cost, cost.length - 1), dp(cost, cost.length - 2));
+        int startFromLast = dp(cost, cost.length - 1);
+        int startFromSecondLast = dp(cost, cost.length - 2);
+        return Math.min(startFromLast, startFromSecondLast);
     }
+    
     private int dp(int[] cost, int index) {
         if (index < 0) {
             return 0;
@@ -14,9 +17,10 @@ class Solution {
         if (dpTable[index] != null) {
             return dpTable[index];
         }
-        int climbOne = dp(cost, index - 1);
-        int climbTwo = dp(cost, index - 2);
-        dpTable[index] = Math.min(climbOne, climbTwo) + cost[index];
+
+        int climbOneCost = dp(cost, index - 1);
+        int climbTwoCost = dp(cost, index - 2);
+        dpTable[index] = Math.min(climbOneCost, climbTwoCost) + cost[index];
         return dpTable[index];
     }
 }
