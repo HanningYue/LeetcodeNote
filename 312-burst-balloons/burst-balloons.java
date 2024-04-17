@@ -8,10 +8,9 @@ class Solution {
         for (int i = 1; i <= n; i++) {
             points[i] = nums[i - 1];
         }
-
-        return dp(0, n + 1, points);
+        return dp(points, 0, n + 1);
     }
-    private int dp(int left, int right, int[] points) {
+    private int dp(int[] points, int left, int right) {
         if (left + 1 == right) {
             return 0;
         }
@@ -21,8 +20,10 @@ class Solution {
 
         int maxPoint = 0;
         for (int i = left + 1; i < right; i++) {
-            int currentPoint = dp(left, i, points) + dp(i, right, points) 
-            + points[left] * points[right] * points[i];
+            int leftPart = dp(points, left, i);
+            int rightPart = dp(points, i, right);
+            int currentPoint = leftPart + rightPart + points[left] * points[i] * points[right];
+
             maxPoint = Math.max(maxPoint, currentPoint);
         }
         dpTable[left][right] = maxPoint;
