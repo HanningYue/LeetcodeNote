@@ -7,7 +7,6 @@ class Solution {
         int startFromSecondLast = dp(cost, n - 2);
         return Math.min(startFromLast, startFromSecondLast);
     }
-    
     private int dp(int[] cost, int index) {
         if (index < 0) {
             return 0;
@@ -18,10 +17,9 @@ class Solution {
         if (dpTable[index] != null) {
             return dpTable[index];
         }
-
-        int climbOneCost = dp(cost, index - 1);
-        int climbTwoCost = dp(cost, index - 2);
-        dpTable[index] = Math.min(climbOneCost, climbTwoCost) + cost[index];
+        int climbOne = dp(cost, index - 1);
+        int climbTwo = dp(cost, index - 2);
+        dpTable[index] = Math.min(climbOne, climbTwo) + cost[index];
         return dpTable[index];
     }
 }
