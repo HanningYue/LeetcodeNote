@@ -13,7 +13,6 @@ class Solution {
             int[] point = heap.poll();
             int index = point[0];
             int distance = point[1];
-
             if (visited.contains(index)) {
                 continue;
             }
