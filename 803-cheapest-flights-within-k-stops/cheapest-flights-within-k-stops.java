@@ -18,10 +18,8 @@ class Solution {
             graph.get(from).add(new int[]{to, cost});
         }
         
-        int[] stopsToNode = new int[numCities];
-        Arrays.fill(stopsToNode, Integer.MAX_VALUE);
-        
-        // int[] format: {cost from source, current node, number of stops from source}
+        int[] minStopsToNode = new int[numCities];
+        Arrays.fill(minStopsToNode, Integer.MAX_VALUE);        
         PriorityQueue<State> queue = new PriorityQueue<>(new Comparator<State>() {
             public int compare(State a, State b) {
                 return a.cost - b.cost;
@@ -35,19 +33,17 @@ class Solution {
             int currentNode = currentState.node;
             int currentStops = currentState.stops;
             
-            // Check if current path is longer in stops than a known shorter path
-            if (currentStops > stopsToNode[currentNode] || currentStops > maxStops + 1) {
+            if (currentStops > minStopsToNode[currentNode] || currentStops > maxStops + 1) {
                 continue;
             }
-            stopsToNode[currentNode] = currentStops;
-            
+            minStopsToNode[currentNode] = currentStops;
             if (currentNode == destination) {
                 return currentCost;
             }
+
             if (!graph.containsKey(currentNode)) {
                 continue;
-            }
-            
+            }            
             for (int[] neighbor : graph.get(currentNode)) {
                 int nextNode = neighbor[0];
                 int travelCost = neighbor[1];
