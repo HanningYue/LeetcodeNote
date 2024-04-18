@@ -1,17 +1,37 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        int n = nums.length;
-        Integer[] dpTable = new Integer[n];
-        dpTable[0] = nums[0];
+        return divide(nums, 0, nums.length - 1);
+    }
+    private int divide(int[] nums, int left, int right) {
+        if (left == right) {
+            return nums[left];
+        }
+        int mid = left + (right - left) / 2;
+        int leftPart = divide(nums, left, mid);
+        int rightPart = divide(nums, mid + 1, right);
+        int combine = conquer(nums, left, mid, right);
+        
+        return Math.max(combine, Math.max(leftPart, rightPart));
+    }
+    private int conquer(int[] nums, int left, int mid, int right) {
+        int leftSum = Integer.MIN_VALUE;
+        int rightSum = Integer.MIN_VALUE;
 
-        for (int i = 1; i < n; i++) {
-            dpTable[i] = Math.max(dpTable[i - 1] + nums[i], nums[i]);
+        int sum = 0;
+        for (int i = mid; i >= left; i--) {
+            sum += nums[i];
+            if (sum > leftSum) {
+                leftSum = sum;
+            }
         }
 
-        int result = Integer.MIN_VALUE;
-        for (int i = 0; i < n; i++) {
-            result = Math.max(result, dpTable[i]);
+        sum = 0;
+        for (int i = mid + 1; i <= right; i++) {
+            sum += nums[i];
+            if (sum > rightSum) {
+                rightSum = sum;
+            }
         }
-        return result;
+        return leftSum + rightSum;
     }
 }
