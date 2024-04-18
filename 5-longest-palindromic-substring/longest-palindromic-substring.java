@@ -9,12 +9,11 @@ class Solution {
         }
         return result;
     }
-    private String palindrome(String s, int left, int right) {
-        while (left >= 0 && right < s.length() 
-        && s.charAt(left) == s.charAt(right)) {
-            left--;
-            right++;
+    private String palindrome(String s, int leftPointer, int rightPointer) {
+        while (leftPointer >= 0 && rightPointer < s.length() && s.charAt(leftPointer) == s.charAt(rightPointer)) {
+            leftPointer--;
+            rightPointer++;
         }
-        return s.substring(left + 1, right);
+        return s.substring(leftPointer + 1, rightPointer);
     }
 }
