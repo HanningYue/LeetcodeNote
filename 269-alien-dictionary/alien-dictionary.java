@@ -1,6 +1,5 @@
 class Solution {
     public String alienOrder(String[] words) {
-        // Initialize graph
         Map<Character, Set<Character>> graph = new HashMap<>();
         for (String word : words) {
             for (char c : word.toCharArray()) {
@@ -8,33 +7,33 @@ class Solution {
             }
         }
 
-        // Build graph relationships from adjacent words
         for (int i = 0; i < words.length - 1; i++) {
             String currentWord = words[i];
             String nextWord = words[i + 1];
             if (currentWord.length() > nextWord.length() && currentWord.startsWith(nextWord)) {
-                return "";  // Not a valid lexicographical order if a longer word prefixes a shorter word
+                return "";
             }
+
             for (int j = 0; j < Math.min(currentWord.length(), nextWord.length()); j++) {
                 char currentChar = currentWord.charAt(j);
                 char nextChar = nextWord.charAt(j);
+
                 if (currentChar != nextChar) {
-                    graph.get(currentChar).add(nextChar);
+                    graph.get(nextChar).add(currentChar);
                     break;
                 }
             }
         }
 
-        // DFS to detect cycle and topological order
         Set<Character> visiting = new HashSet<>();
         Set<Character> visited = new HashSet<>();
         StringBuilder sb = new StringBuilder();
         for (char currentChar : graph.keySet()) {
             if (!dfs(visiting, visited, sb, graph, currentChar)) {
-                return "";  // If a cycle is detected return an empty string
+                return "";
             }
         }
-        return sb.reverse().toString();  // Reverse because we append characters post visiting them
+        return sb.toString();
     }
 
     private boolean dfs(Set<Character> visiting, Set<Character> visited, StringBuilder sb,
