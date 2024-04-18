@@ -1,25 +1,25 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
         int left = 1, right = 0;
-        for (int pile : piles) {
-            right = Math.max(right, pile);
+        for (int banana : piles) {
+            right = Math.max(right, banana);
         }
         while (left < right) {
-            int mid = left + (right - left) / 2;
-            int hours = totalHours(piles, mid);
-            if (hours > h) {
-                left = mid + 1;
-            } else if (hours <= h) {
-                right = mid;
+            int speed = left + (right - left) / 2;
+            int totalHours = findHours(piles, speed);
+            if (totalHours > h) {
+                left = speed + 1;
+            } else if (totalHours <= h) {
+                right = speed;
             }
         }
-        return left;
+        return right;
     }
-    private int totalHours(int[] piles, int rate) {
+    private int findHours(int[] bananas, int speed) {
         int hours = 0;
-        for (int pile : piles) {
-            hours += pile / rate;
-            if (pile % rate != 0) {
+        for (int banana : bananas) {
+            hours += banana / speed;
+            if (banana % speed != 0) {
                 hours++;
             }
         }
