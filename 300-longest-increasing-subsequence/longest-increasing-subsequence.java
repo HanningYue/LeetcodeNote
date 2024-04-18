@@ -12,8 +12,8 @@ class Solution {
                 }
             }
         }
-        
-        int result = Integer.MIN_VALUE;
+
+        int result = 1;
         for (int i = 0; i < n; i++) {
             result = Math.max(result, dpTable[i]);
         }
