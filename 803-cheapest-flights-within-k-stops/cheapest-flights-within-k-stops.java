@@ -1,32 +1,39 @@
+class State {
+    int cost, node, stops;
+    public State(int cost, int node, int stops) {
+        this.cost = cost;
+        this.node = node;
+        this.stops = stops;
+    }
+}
+
 class Solution {
     public int findCheapestPrice(int numCities, int[][] flights, int source, int destination, int maxStops) {
-        Map<Integer, List<int[]>> flightGraph = new HashMap<>();
+        Map<Integer, List<int[]>> graph = new HashMap<>();
         for (int[] flight : flights) {
             int from = flight[0];
             int to = flight[1];
-            int cost = flight[2];
-            
-            flightGraph.putIfAbsent(from, new ArrayList<>());
-            flightGraph.get(from).add(new int[]{to, cost});
+            int cost = flight[2];            
+            graph.putIfAbsent(from, new ArrayList<>());
+            graph.get(from).add(new int[]{to, cost});
         }
-
-        // Array to track the smallest number of stops to reach each node
+        
         int[] stopsToNode = new int[numCities];
         Arrays.fill(stopsToNode, Integer.MAX_VALUE);
         
-        PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                return Integer.compare(a[0], b[0]);
+        // int[] format: {cost from source, current node, number of stops from source}
+        PriorityQueue<State> queue = new PriorityQueue<>(new Comparator<State>() {
+            public int compare(State a, State b) {
+                return a.cost - b.cost;
             }
         });
-        // Array format: {cost from source, current node, number of stops from source}
-        queue.offer(new int[] {0, source, 0});
+        queue.offer(new State(0, source, 0));
 
         while (!queue.isEmpty()) {
-            int[] currentState = queue.poll();
-            int currentCost = currentState[0];
-            int currentNode = currentState[1];
-            int currentStops = currentState[2];
+            State currentState = queue.poll();
+            int currentCost = currentState.cost;
+            int currentNode = currentState.node;
+            int currentStops = currentState.stops;
             
             // Check if current path is longer in stops than a known shorter path
             if (currentStops > stopsToNode[currentNode] || currentStops > maxStops + 1) {
@@ -37,14 +44,14 @@ class Solution {
             if (currentNode == destination) {
                 return currentCost;
             }
-            if (!flightGraph.containsKey(currentNode)) {
+            if (!graph.containsKey(currentNode)) {
                 continue;
             }
             
-            for (int[] neighbor : flightGraph.get(currentNode)) {
+            for (int[] neighbor : graph.get(currentNode)) {
                 int nextNode = neighbor[0];
                 int travelCost = neighbor[1];
-                queue.offer(new int[] {currentCost + travelCost, nextNode, currentStops + 1});
+                queue.offer(new State(currentCost + travelCost, nextNode, currentStops + 1));
             }
         }
         return -1;
