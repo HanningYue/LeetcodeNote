@@ -1,41 +1,38 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
+        int n = numCourses;
+        boolean[] visiting = new boolean[n];
+        boolean[] visited = new boolean[n];
         Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int[] pre : prerequisites) {
-            int before = pre[1];
-            int after = pre[0];
-            graph.putIfAbsent(after, new HashSet<>());
-            graph.get(after).add(before);
+            int first = pre[1];
+            int second = pre[0];
+            graph.putIfAbsent(second, new HashSet<>());
+            graph.get(second).add(first);
         }
-        boolean[] visited = new boolean[numCourses];
-        boolean[] visiting = new boolean[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            if (!dfs(graph, visited, visiting, i)) {
+
+        for (int vertex = 0; vertex < n; vertex++) {
+            if (!dfs(vertex, graph, visiting, visited)) {
                 return false;
             }
         }
         return true;
     }
-    private boolean dfs(Map<Integer, Set<Integer>> graph, boolean[] visited, boolean[] visiting,
-    int vertex) {
+    private boolean dfs(int vertex, Map<Integer, Set<Integer>> graph, boolean[] visiting, boolean[] visited) {
         if (visiting[vertex]) {
             return false;
         }
-        if (!graph.containsKey(vertex)) {
-            visited[vertex] = true;
-            return true;
-        }
-        if (visited[vertex]) {
+        if (visited[vertex] || !graph.containsKey(vertex)) {
             return true;
         }
         visiting[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
-            if (!dfs(graph, visited, visiting, neighbor)) {
+            if (!dfs(neighbor, graph, visiting, visited)) {
                 return false;
             }
         }
-        visiting[vertex] = false;
         visited[vertex] = true;
+        visiting[vertex] = false;
         return true;
     }
 }
