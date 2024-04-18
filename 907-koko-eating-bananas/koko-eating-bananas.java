@@ -6,20 +6,20 @@ class Solution {
         }
         while (left < right) {
             int speed = left + (right - left) / 2;
-            int totalHours = findHours(piles, speed);
-            if (totalHours > h) {
+            int hours = findHours(piles, speed);
+            if (hours > h) {
                 left = speed + 1;
-            } else if (totalHours <= h) {
+            } else {
                 right = speed;
             }
         }
         return right;
     }
-    private int findHours(int[] bananas, int speed) {
+    private int findHours(int[] piles, int speed) {
         int hours = 0;
-        for (int banana : bananas) {
-            hours += banana / speed;
-            if (banana % speed != 0) {
+        for (int pile : piles) {
+            hours += pile / speed;
+            if (pile % speed != 0) {
                 hours++;
             }
         }
