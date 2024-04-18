@@ -1,34 +1,34 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> result = new ArrayList<>();
         int m = matrix.length, n = matrix[0].length;
-        int topRow = 0, bottomRow = m - 1, leftCol = 0, rightCol = n - 1;
-        int size = m * n;
-
-        while (result.size() < size) {
-            if (topRow <= bottomRow) {
-                for (int i = leftCol; i <= rightCol; i++) {
-                    result.add(matrix[topRow][i]);
+        int totalElements = m * n;
+        List<Integer> result = new ArrayList<>();
+        
+        int top = 0, bottom = m - 1, left = 0, right = n - 1;
+        while (result.size() < totalElements) {
+            if (top <= bottom) {
+                for (int col = left; col <= right; col++) {
+                    result.add(matrix[top][col]);
                 }
-                topRow++;
+                top++;
             }
-            if (leftCol <= rightCol) {
-                for (int i = topRow; i <= bottomRow; i++) {
-                    result.add(matrix[i][rightCol]);
+            if (left <= right) {
+                for (int row = top; row <= bottom; row++) {
+                    result.add(matrix[row][right]);
                 }
-                rightCol--;
+                right--;
             }
-            if (topRow <= bottomRow) {
-                for (int i = rightCol; i >= leftCol; i--) {
-                    result.add(matrix[bottomRow][i]);
+            if (top <= bottom) {
+                for (int col = right; col >= left; col--) {
+                    result.add(matrix[bottom][col]);
                 }
-                bottomRow--;
+                bottom--;
             }
-            if (leftCol <= rightCol) {
-                for (int i = bottomRow; i >= topRow; i--) {
-                    result.add(matrix[i][leftCol]);
+            if (left <= right) {
+                for (int row = bottom; row >= top; row--) {
+                    result.add(matrix[row][left]);
                 }
-                leftCol++;
+                left++;
             }
         }
         return result;
