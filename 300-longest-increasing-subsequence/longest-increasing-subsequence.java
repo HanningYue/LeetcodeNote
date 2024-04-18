@@ -1,8 +1,7 @@
 class Solution {
-    Integer[] dpTable;
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        dpTable = new Integer[n];
+        Integer[] dpTable = new Integer[n];
         Arrays.fill(dpTable, 1);
 
         for (int i = 0; i < n; i++) {
