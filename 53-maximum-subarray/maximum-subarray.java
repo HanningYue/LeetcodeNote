@@ -1,32 +1,36 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        int n = nums.length;
-        Integer[] dpTable = new Integer[n];
-        dpTable[0] = nums[0];
-        for (int i = 1; i < n; i++) {
-            dpTable[i] = Math.max(nums[i], nums[i] + dpTable[i - 1]);
+        return divide(nums, 0, nums.length - 1);        
+    }
+    private int divide(int[] nums, int left, int right) {
+        if (left == right) {
+            return nums[left];
         }
+        int mid = left + (right - left) / 2;
+        int leftSub = divide(nums, left, mid);
+        int rightSub = divide(nums, mid + 1, right);
+        int combine = conquer(nums, left, mid, right);
+        
+        return Math.max(combine, Math.max(leftSub, rightSub));
+    }
+    private int conquer(int[] nums, int left, int mid, int right) {
+        int leftSum = Integer.MIN_VALUE, rightSum = Integer.MIN_VALUE;
 
-        int result = Integer.MIN_VALUE;
-        for (int i = 0; i < n; i++) {
-            result = Math.max(result, dpTable[i]);
-        }
-        return result;
-    }
-}
-/**
-class Solution {
-    public int maxSubArray(int[] nums) {
-        int runningSum = 0;
-        int result = Integer.MIN_VALUE;
-        for (int num : nums) {
-            if (runningSum < 0) {
-                runningSum = 0;
+        int sum = 0;
+        for (int i = mid; i >= left; i--) {
+            sum += nums[i];
+            if (leftSum < sum) {
+                leftSum = sum;
             }
-            runningSum += num;
-            result = Math.max(result, runningSum);
         }
-        return result;
+        
+        sum = 0;
+        for (int i = mid + 1; i <= right; i++) {
+            sum += nums[i];
+            if (rightSum < sum) {
+                rightSum = sum;
+            }
+        }
+        return leftSum + rightSum;
     }
 }
-*/
