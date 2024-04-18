@@ -1,55 +1,78 @@
 class State {
-    int cost, node, stops;
-    public State(int cost, int node, int stops) {
+    int cost;
+    int city;
+    int stops;
+    public State(int cost, int city, int stops) {
         this.cost = cost;
-        this.node = node;
+        this.city = city;
         this.stops = stops;
+    }
+}
+class Pair {
+    int next;
+    int cost;
+    public Pair(int next, int cost) {
+        this.next = next;
+        this.cost = cost;
     }
 }
 
 class Solution {
-    public int findCheapestPrice(int numCities, int[][] flights, int source, int destination, int maxStops) {
-        Map<Integer, List<int[]>> graph = new HashMap<>();
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        Map<Integer, List<Pair>> graph = new HashMap<>();
         for (int[] flight : flights) {
-            int from = flight[0];
-            int to = flight[1];
-            int cost = flight[2];            
-            graph.putIfAbsent(from, new ArrayList<>());
-            graph.get(from).add(new int[]{to, cost});
+            int from = flight[0], to = flight[1], cost = flight[2];
+            graph.putIfAbsent(from, new ArrayList<Pair>());
+            graph.get(from).add(new Pair(to, cost));
         }
-        
-        int[] minStopsToNode = new int[numCities];
-        Arrays.fill(minStopsToNode, Integer.MAX_VALUE);        
-        PriorityQueue<State> queue = new PriorityQueue<>(new Comparator<State>() {
-            public int compare(State a, State b) {
-                return a.cost - b.cost;
-            }
-        });
-        queue.offer(new State(0, source, 0));
 
-        while (!queue.isEmpty()) {
-            State currentState = queue.poll();
-            int currentCost = currentState.cost;
-            int currentNode = currentState.node;
-            int currentStops = currentState.stops;
-            
-            if (currentStops > minStopsToNode[currentNode] || currentStops > maxStops + 1) {
+        int[] minStopToCity = new int[n];
+        Arrays.fill(minStopToCity, Integer.MAX_VALUE);
+        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
+        heap.offer(new State(0, src, 0));
+
+        while (!heap.isEmpty()) {
+            State current = heap.poll();
+            int currentCost = current.cost;
+            int currentCity = current.city;
+            int currentStops = current.stops;
+
+            if (currentStops > minStopToCity[currentCity] || currentStops > k + 1) {
                 continue;
             }
-            minStopsToNode[currentNode] = currentStops;
-            if (currentNode == destination) {
+            minStopToCity[currentCity] = currentStops;
+
+            if (currentCity == dst) {
                 return currentCost;
             }
-
-            if (!graph.containsKey(currentNode)) {
+            if (!graph.containsKey(currentCity)) {
                 continue;
-            }            
-            for (int[] neighbor : graph.get(currentNode)) {
-                int nextNode = neighbor[0];
-                int travelCost = neighbor[1];
-                queue.offer(new State(currentCost + travelCost, nextNode, currentStops + 1));
+            }
+            for (Pair pair : graph.get(currentCity)) {
+                int nextCity = pair.next;
+                int cost = pair.cost;
+                heap.offer(new State(currentCost + cost, nextCity, currentStops + 1));
             }
         }
         return -1;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
