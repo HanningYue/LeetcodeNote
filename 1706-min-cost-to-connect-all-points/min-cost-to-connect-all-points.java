@@ -21,10 +21,6 @@ class Solution {
             visited.add(index);
             
             for (int nextIndex = 0; nextIndex < points.length; nextIndex++) {
-                if (visited.contains(nextIndex)) {
-                    continue;
-                }
-
                 int distanceToCurrent = Math.abs(points[nextIndex][0] - points[index][0])
                                        +Math.abs(points[nextIndex][1] - points[index][1]);
                 heap.offer(new int[]{nextIndex, distanceToCurrent});
