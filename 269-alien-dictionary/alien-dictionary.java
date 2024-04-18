@@ -17,7 +17,6 @@ class Solution {
             for (int j = 0; j < Math.min(currentWord.length(), nextWord.length()); j++) {
                 char currentChar = currentWord.charAt(j);
                 char nextChar = nextWord.charAt(j);
-
                 if (currentChar != nextChar) {
                     graph.get(nextChar).add(currentChar);
                     break;
@@ -28,31 +27,31 @@ class Solution {
         Set<Character> visiting = new HashSet<>();
         Set<Character> visited = new HashSet<>();
         StringBuilder sb = new StringBuilder();
-        for (char currentChar : graph.keySet()) {
-            if (!dfs(visiting, visited, sb, graph, currentChar)) {
+        for (char c : graph.keySet()) {
+            if (!dfs(graph, visiting, visited, sb, c)) {
                 return "";
             }
         }
         return sb.toString();
     }
 
-    private boolean dfs(Set<Character> visiting, Set<Character> visited, StringBuilder sb,
-                        Map<Character, Set<Character>> graph, char c) 
+    private boolean dfs(Map<Character, Set<Character>> graph, Set<Character> visiting, Set<Character> visited,
+                        StringBuilder sb, char c)
     {
         if (visiting.contains(c)) {
             return false;
         }
-        if (visited.contains(c) || !graph.containsKey(c)) {
+        if (visited.contains(c)) {
             return true;
         }
         visiting.add(c);
         for (char neighbor : graph.get(c)) {
-            if (!dfs(visiting, visited, sb, graph, neighbor)) {
+            if (!dfs(graph, visiting, visited, sb, neighbor)) {
                 return false;
             }
         }
-        visiting.remove(c);
         visited.add(c);
+        visiting.remove(c);
         sb.append(c);
         return true;
     }
