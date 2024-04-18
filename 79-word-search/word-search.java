@@ -21,13 +21,12 @@ class Solution {
     }
     int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     private boolean dfs(char[][] board, boolean[][] visited, int row, int col, int index, String word) {
-        if (index == word.length()) {
-            return true;
-        }
-
         if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col]
         || board[row][col] != word.charAt(index)) {
             return false;
+        }
+        if (index == word.length() - 1) {
+            return true;
         }
 
         visited[row][col] = true;
