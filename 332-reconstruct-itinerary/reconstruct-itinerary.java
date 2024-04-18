@@ -1,20 +1,26 @@
 class Solution {
     public List<String> findItinerary(List<List<String>> tickets) {
         List<String> result = new ArrayList<>();
+
         Map<String, PriorityQueue<String>> graph = new HashMap<>();
-        
         for (List<String> ticket : tickets) {
-            graph.computeIfAbsent(ticket.get(0), k -> new PriorityQueue<>()).add(ticket.get(1));
+            String depart = ticket.get(0);
+            String arrive = ticket.get(1);
+            graph.putIfAbsent(depart, new PriorityQueue<String>());
+            graph.get(depart).add(arrive);
         }
 
         Stack<String> stack = new Stack<>();
         stack.push("JFK");
 
         while (!stack.isEmpty()) {
-            while (graph.containsKey(stack.peek()) && !graph.get(stack.peek()).isEmpty()) {
-                stack.push(graph.get(stack.peek()).poll());
+            String lastCity = stack.peek();
+            if (!graph.containsKey(lastCity) || graph.get(lastCity).isEmpty()) {
+                result.add(0, stack.pop());
+            } else {
+                String nextCity = graph.get(lastCity).poll();
+                stack.push(nextCity);
             }
-            result.add(0, stack.pop()); // add to result in reverse order
         }
         return result;
     }
