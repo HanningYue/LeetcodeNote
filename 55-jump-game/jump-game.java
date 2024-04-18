@@ -1,12 +1,27 @@
 class Solution {
+    Boolean[] dpTable;
     public boolean canJump(int[] nums) {
-        int maxJump = 0;
-        for (int i = 0; i < nums.length - 1; i++) {
-            maxJump = Math.max(maxJump, nums[i] + i);
-            if (maxJump == i) {
-                return false;
+        int n = nums.length;
+        dpTable = new Boolean[n];
+        return dp(nums, 0);
+    }
+
+    private boolean dp(int[] nums, int index) {
+        if (index >= nums.length - 1) {
+            return true;
+        }
+        if (dpTable[index] != null) {
+            return dpTable[index];
+        }
+
+        int maxJump = Math.min(nums[index] + index, nums.length - 1);
+        for (int nextIndex = index + 1; nextIndex <= maxJump; nextIndex++) {
+            if (dp(nums, nextIndex)) {
+                dpTable[index] = true;
+                return true;
             }
         }
-        return maxJump >= nums.length - 1;
+        dpTable[index] = false;
+        return false;
     }
 }
