@@ -1,34 +1,20 @@
-/**
-Declear a 2D array to save points' frequency
-Use an ArrayList to save all the points array
-To find all the potential squares current point could form
-    increase the frequency of the adding points, use a 2D array
-    Iterate each array in allPoints
-        Check the diagonal x-axis point and y-axis point, skip current array if distance between x and dx is 0
-        Or the length is different from height
-    Add the product of points frequency to result
-*/
 class DetectSquares {
-    int[][] pointsFrequency;
+    int[][] pointFreq;
     List<int[]> allPoints;
-
     public DetectSquares() {
+        pointFreq = new int[1001][1001];
         allPoints = new ArrayList<>();
-        pointsFrequency = new int[1001][1001];
     }
     
     public void add(int[] point) {
-        int x = point[0];
-        int y = point[1];
-        pointsFrequency[x][y]++;
+        int x = point[0], y = point[1];
+        pointFreq[x][y]++;
         allPoints.add(point);
     }
     
     public int count(int[] point) {
-        int x = point[0];
-        int y = point[1];
-        int result = 0;
-
+        int count = 0;
+        int x = point[0], y = point[1];
         for (int[] diagonalPoint : allPoints) {
             int diagonalX = diagonalPoint[0];
             int diagonalY = diagonalPoint[1];
@@ -36,10 +22,16 @@ class DetectSquares {
             || Math.abs(diagonalX - x) != Math.abs(diagonalY - y)) {
                 continue;
             }
-
-            result += pointsFrequency[x][diagonalY] * pointsFrequency[diagonalX][y];
+    
+            count += pointFreq[diagonalX][y] * pointFreq[x][diagonalY];
         }
-
-        return result;
+        return count;
     }
 }
+
+/**
+ * Your DetectSquares object will be instantiated and called as such:
+ * DetectSquares obj = new DetectSquares();
+ * obj.add(point);
+ * int param_2 = obj.count(point);
+ */
