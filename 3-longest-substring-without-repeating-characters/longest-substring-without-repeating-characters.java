@@ -1,9 +1,9 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         Set<Character> set = new HashSet<>();
-        
         int slow = 0, fast = 0;
         int result = 0;
+
         while (fast < s.length()) {
             char fastChar = s.charAt(fast);
             while (!set.add(fastChar)) {
