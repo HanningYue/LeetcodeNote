@@ -1,32 +1,54 @@
 class Solution {
-    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        Map<Integer, List<int[]>> adjacent = new HashMap<>();
-        for (int[] i : flights) {
-            adjacent.computeIfAbsent(i[0], value -> new ArrayList<>()).add(new int[] { i[1], i[2] });
+    public int findCheapestPrice(int numCities, int[][] flights, int source, int destination, int maxStops) {
+        // Adjacency list to hold the graph representation
+        Map<Integer, List<int[]>> flightGraph = new HashMap<>();
+        for (int[] flight : flights) {
+            int from = flight[0];
+            int to = flight[1];
+            int cost = flight[2];
+            flightGraph.computeIfAbsent(from, key -> new ArrayList<>()).add(new int[] {to, cost});
         }
-        
-        int[] stops = new int[n];
-        Arrays.fill(stops, Integer.MAX_VALUE);
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        // {dist_from_src_node, node, number_of_stops_from_src_node}
-        pq.offer(new int[] { 0, src, 0 });
 
-        while (!pq.isEmpty()) {
-            int[] temp = pq.poll();
-            int dist = temp[0];
-            int node = temp[1];
-            int steps = temp[2];
-            // We have already encountered a path with a lower cost and fewer stops,
-            // or the number of stops exceeds the limit.
-            if (steps > stops[node] || steps > k + 1)
+        // Array to track the smallest number of stops to reach each node
+        int[] stopsToNode = new int[numCities];
+        Arrays.fill(stopsToNode, Integer.MAX_VALUE);
+        
+        // Priority queue to hold current state during the search
+        PriorityQueue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
+            public int compare(int[] o1, int[] o2) {
+                return Integer.compare(o1[0], o2[0]);
+            }
+        });
+        // Array format: {cost from source, current node, number of stops from source}
+        queue.offer(new int[] {0, source, 0});
+
+        while (!queue.isEmpty()) {
+            int[] currentState = queue.poll();
+            int currentCost = currentState[0];
+            int currentNode = currentState[1];
+            int currentStops = currentState[2];
+            
+            // Check if current path is longer in stops than a known shorter path
+            if (currentStops > stopsToNode[currentNode] || currentStops > maxStops + 1) {
                 continue;
-            stops[node] = steps;
-            if (node == dst)
-                return dist;
-            if (!adjacent.containsKey(node))
+            }
+            stopsToNode[currentNode] = currentStops;
+            
+            // Destination check
+            if (currentNode == destination) {
+                return currentCost;
+            }
+
+            // Avoid NPE and unnecessary processing if no further paths
+            if (!flightGraph.containsKey(currentNode)) {
                 continue;
-            for (int[] a : adjacent.get(node)) {
-                pq.offer(new int[] { dist + a[1], a[0], steps + 1 });
+            }
+            
+            // Explore neighbors
+            for (int[] neighbor : flightGraph.get(currentNode)) {
+                int nextNode = neighbor[0];
+                int travelCost = neighbor[1];
+                queue.offer(new int[] {currentCost + travelCost, nextNode, currentStops + 1});
             }
         }
         return -1;
