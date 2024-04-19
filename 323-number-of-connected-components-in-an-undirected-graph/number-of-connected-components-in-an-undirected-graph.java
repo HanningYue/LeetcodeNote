@@ -1,9 +1,5 @@
 class Solution {
     public int countComponents(int n, int[][] edges) {
-        if (n <= 1) {
-            return n;
-        }
-
         Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int i = 0; i < n; i++) {
             graph.put(i, new HashSet<>());
