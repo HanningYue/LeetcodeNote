@@ -1,44 +1,37 @@
-class UF {
-    int count;
-    int[] parent;
-    public UF(int numberOfVertex) {
-        parent = new int[numberOfVertex];
-        this.count = numberOfVertex;
-        for (int i = 0; i < numberOfVertex; i++) {
-            parent[i] = i;
-        }
-    }
-    public int find(int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent[vertex]);
-        }
-        return parent[vertex];
-    }
-    public void union(int vertexOne, int vertexTwo) {
-        int parentOne = find(vertexOne);
-        int parentTwo = find(vertexTwo);
-        if (parentOne == parentTwo) {
-            return;
-        }
-        parent[parentOne] = parentTwo;
-        count--;
-    }
-    public boolean connected(int vertexOne, int vertexTwo) {
-        return find(vertexOne) == find(vertexTwo);
-    }
-}
-
 class Solution {
     public int countComponents(int n, int[][] edges) {
-        UF uf = new UF(n);
+        if (n <= 1) {
+            return n;
+        }
+
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            graph.put(i, new HashSet<>());
+        }
         for (int[] edge : edges) {
-            int vertexOne = edge[0];
-            int vertexTwo = edge[1];
-            if (uf.connected(vertexOne, vertexTwo)) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+        }
+
+        int count = 0;
+        Set<Integer> visited = new HashSet<>();
+        for (int vertex : graph.keySet()) {
+            if (visited.contains(vertex)) {
                 continue;
             }
-            uf.union(vertexOne, vertexTwo);
+            count++;
+            dfs(vertex, graph, visited);
         }
-        return uf.count;
+        return count;
+    }
+
+    private void dfs(int vertex, Map<Integer, Set<Integer>> graph, Set<Integer> visited) {
+        if (visited.contains(vertex)) {
+            return;
+        }
+        visited.add(vertex);
+        for (int neighbor : graph.get(vertex)) {
+            dfs(neighbor, graph, visited);
+        }
     }
 }
