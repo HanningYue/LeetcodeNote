@@ -9,18 +9,17 @@ class Solution {
             graph.get(edge[1]).add(edge[0]);
         }
 
-        int count = 0;
         Set<Integer> visited = new HashSet<>();
+        int count = 0;
         for (int vertex : graph.keySet()) {
             if (visited.contains(vertex)) {
                 continue;
             }
-            dfs(vertex, graph, visited);
             count++;
+            dfs(vertex, graph, visited);
         }
         return count;
     }
-
     private void dfs(int vertex, Map<Integer, Set<Integer>> graph, Set<Integer> visited) {
         if (visited.contains(vertex)) {
             return;
