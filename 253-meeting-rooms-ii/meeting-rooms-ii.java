@@ -15,7 +15,7 @@ class Solution {
 
         for (int i = 1; i < intervals.length; i++) {
             int[] currentInterval = intervals[i];
-            if (!heap.isEmpty() && currentInterval[0] >= heap.peek()[1]) {
+            if (currentInterval[0] >= heap.peek()[1]) {
                 heap.poll();
             }
             heap.offer(currentInterval);
