@@ -16,7 +16,7 @@ public class Solution {
             return false;
         }
         
-
+        
         return visited.size() == n;
     }
 
