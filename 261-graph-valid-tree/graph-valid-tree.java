@@ -9,19 +9,25 @@ class Solution {
             }
             uf.union(vertexOne, vertexTwo);
         }
-        return uf.count() == 1;
+        return uf.count == 1;
     }
 }
 class UF {
     int count;
     int[] parent;
-    public UF (int n) {
+    public UF(int n) {
         this.count = n;
         parent = new int[n];
         for (int i = 0; i < n; i++) {
             parent[i] = i;
         }
     }
+    public int find(int vertex) {
+        if (parent[vertex] != vertex) {
+            parent[vertex] = find(parent[vertex]);
+        }
+        return parent[vertex];
+    } 
     public void union(int p, int q) {
         int rootP = find(p);
         int rootQ = find(q);
@@ -31,18 +37,9 @@ class UF {
         parent[rootP] = rootQ;
         count--;
     }
-    public int find(int x) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x]);
-        }
-        return parent[x];
-    }
     public boolean connected(int p, int q) {
         int rootP = find(p);
         int rootQ = find(q);
         return rootP == rootQ;
-    }
-    public int count() {
-        return count;
     }
 }
