@@ -1,30 +1,32 @@
-/**
-Create two int[], one for SORTED meeting start, one for SORTED meeting end
-If the second meeting starts before the first meeting ends, increase the room count
-    In code, this is start[current] < end[previousStart]
-    Increase the previous by 1, since it is sorted, we need to check the MAX ending time
-*/
 class Solution {
     public int minMeetingRooms(int[][] intervals) {
-        int n = intervals.length;
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
 
-        int[] starts = new int[n];
-        int[] ends = new int[n];
-        for (int i = 0; i < intervals.length; i++) {
-            starts[i] = intervals[i][0];
-            ends[i] = intervals[i][1];
-        }
-        Arrays.sort(starts);
-        Arrays.sort(ends);
-        
-        int previousEnd = 0, rooms = 0;
-        for (int current = 0; current < n; current++) {
-            if (starts[current] < ends[previousEnd]) {
-                rooms++;
-            } else {
-                previousEnd++;
+        int room = 1;
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return a[0] - b[0];
             }
+        });
+
+        PriorityQueue<int[]> heap = new PriorityQueue<>(new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return a[1] - b[1];
+            }
+        });
+        heap.offer(intervals[0]);
+
+        for (int i = 1; i < intervals.length; i++) {
+            int[] currentMeeting = intervals[i];
+
+            if (!heap.isEmpty() && currentMeeting[0] >= heap.peek()[1]) {
+                heap.poll();
+            }
+            heap.offer(currentMeeting);
+            room = Math.max(room, heap.size());
         }
-        return rooms;
+        return room;
     }
 }
