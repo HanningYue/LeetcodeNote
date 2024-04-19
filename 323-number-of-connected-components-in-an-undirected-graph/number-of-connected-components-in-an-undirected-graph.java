@@ -15,8 +15,8 @@ class Solution {
             if (visited.contains(vertex)) {
                 continue;
             }
-            count++;
             dfs(vertex, graph, visited);
+            count++;
         }
         return count;
     }
