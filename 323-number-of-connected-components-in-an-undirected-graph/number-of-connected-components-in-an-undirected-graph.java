@@ -1,3 +1,33 @@
+class UF {
+    int count;
+    int[] parent;
+    public UF(int numberOfVertex) {
+        parent = new int[numberOfVertex];
+        this.count = numberOfVertex;
+        for (int i = 0; i < numberOfVertex; i++) {
+            parent[i] = i;
+        }
+    }
+    public int find(int vertex) {
+        if (parent[vertex] != vertex) {
+            parent[vertex] = find(parent[vertex]);
+        }
+        return parent[vertex];
+    }
+    public void union(int vertexOne, int vertexTwo) {
+        int parentOne = find(vertexOne);
+        int parentTwo = find(vertexTwo);
+        if (parentOne == parentTwo) {
+            return;
+        }
+        parent[parentOne] = parentTwo;
+        count--;
+    }
+    public boolean connected(int vertexOne, int vertexTwo) {
+        return find(vertexOne) == find(vertexTwo);
+    }
+}
+
 class Solution {
     public int countComponents(int n, int[][] edges) {
         UF uf = new UF(n);
@@ -9,40 +39,6 @@ class Solution {
             }
             uf.union(vertexOne, vertexTwo);
         }
-        return uf.count();
-    }
-}
-class UF {
-    int[] parent;
-    int count;
-    public UF(int n) {
-        this.count = n;
-        parent = new int[n];
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-        }
-    }
-    public int find(int x) {
-        if (parent[x] != x) {
-            parent[x] = find(parent[x]);
-        }
-        return parent[x];
-    }
-    public void union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if (rootP == rootQ) {
-            return;
-        }
-        parent[rootP] = rootQ;
-        count--;
-    }
-    public int count() {
-        return count;
-    }
-    public boolean connected(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        return rootP == rootQ;
+        return uf.count;
     }
 }
