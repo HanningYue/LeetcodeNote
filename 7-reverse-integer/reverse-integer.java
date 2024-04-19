@@ -3,12 +3,19 @@ class Solution {
         int reverse = 0;
         while (x != 0) {
             int lastDigit = x % 10;
-            int tempResult = reverse * 10 + lastDigit;
-            if (tempResult / 10 != reverse) {
-                return 0;
+            if (reverse > 0) {
+                if (reverse > Integer.MAX_VALUE / 10 
+                || reverse == Integer.MAX_VALUE / 10 && lastDigit > Integer.MAX_VALUE % 10) {
+                    return 0;
+                }
+            } else if (reverse < 0) {
+                if (reverse < Integer.MIN_VALUE / 10
+                || reverse == Integer.MIN_VALUE / 10 && lastDigit < Integer.MIN_VALUE % 10) {
+                    return 0;
+                }
             }
-            reverse = reverse * 10 + lastDigit;
             x = x / 10;
+            reverse = reverse * 10 + lastDigit;
         }
         return reverse;
     }
