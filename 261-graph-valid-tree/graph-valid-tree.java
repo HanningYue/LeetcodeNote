@@ -1,43 +1,42 @@
-class UF {
-    int[] parent;
-    int count;
-    public UF(int numberOfNode) {
-        this.count = numberOfNode;
-        parent = new int[numberOfNode];
-        for (int i = 0; i < numberOfNode; i++) {
-            parent[i] = i;
-        }
-    }
-    public int find(int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent[vertex]);
-        }
-        return parent[vertex];
-    }
-    public void union(int p, int q) {
-        int parentP = find(p);
-        int parentQ = find(q);
-        if (parentQ == parentP) {
-            return;
-        }
-        parent[parentP] = parentQ;
-        count--;
-    }
-    public boolean connected(int p, int q) {
-        return find(p) == find(q);
-    }
-}
-class Solution {
+public class Solution {
     public boolean validTree(int n, int[][] edges) {
-        UF uf = new UF(n);
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            graph.put(i, new HashSet<>());
+        }
         for (int[] edge : edges) {
-            int vertexOne = edge[0];
-            int vertexTwo = edge[1];
-            if (uf.connected(vertexOne, vertexTwo)) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+        }
+
+        Set<Integer> visited = new HashSet<>();
+        Set<Integer> visiting = new HashSet<>();
+        
+        if (!dfs(0, visited, visiting, graph, -1)) {
+            return false;
+        }
+        
+
+        return visited.size() == n;
+    }
+
+    private boolean dfs(int vertex, Set<Integer> visited, Set<Integer> visiting, 
+                        Map<Integer, Set<Integer>> graph, int parent) {
+        if (visiting.contains(vertex)) {
+            return false;
+        }
+        if (visited.contains(vertex)) {
+            return true;
+        }
+
+        visiting.add(vertex);
+        for (int neighbor : graph.get(vertex)) {
+            if (neighbor != parent && !dfs(neighbor, visited, visiting, graph, vertex)) {
                 return false;
             }
-            uf.union(vertexOne, vertexTwo);
         }
-        return uf.count == 1;
+        visited.add(vertex);
+        visiting.remove(vertex);
+        return true;
     }
 }
