@@ -1,18 +1,20 @@
 class Solution {
     Boolean[][] dpTable;
     public int countSubstrings(String s) {
-        dp(s);
+        int n = s.length();
+        fillTable(s);
+        
         int count = 0;
-        for (int left = 0; left < s.length(); left++) {
-            for (int right = left; right < s.length(); right++) {
+        for (int left = 0; left < n; left++) {
+            for (int right = left; right < n; right++) {
                 if (dpTable[left][right]) {
                     count++;
                 }
             }
-        }        
+        }
         return count;
     }
-    private void dp(String s) {
+    private void fillTable(String s) {
         int n = s.length();
         dpTable = new Boolean[n][n];
         for (int i = 0; i < n; i++) {
@@ -20,8 +22,7 @@ class Solution {
         }
 
         for (int i = 0; i < n - 1; i++) {
-            boolean adjacent = s.charAt(i) == s.charAt(i + 1);
-            dpTable[i][i + 1] = adjacent;
+            dpTable[i][i + 1] = s.charAt(i) == s.charAt(i + 1);
         }
 
         for (int length = 3; length <= n; length++) {
