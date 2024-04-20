@@ -1,24 +1,23 @@
 class Solution {
     public int longestValidSubstring(String word, List<String> forbidden) {
-        Set<String> set = new HashSet<>();
-        int maxLength = 0;
-        for (String s : forbidden) {
+        HashSet<String> set=new HashSet<>();
+        for(String s:forbidden)
             set.add(s);
-            maxLength = Math.max(maxLength, s.length());
-        }
-
-        int result = 0;
-        for (int leftMost = word.length() - 1, rightMost = word.length(); leftMost >= 0; leftMost--) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = leftMost; i < rightMost && i - leftMost < maxLength; i++) {
-                sb.append(word.charAt(i));
-                if (set.contains(sb.toString())) {
-                    rightMost = i;
+        
+        int n=word.length();
+        int ans=0;
+        int i=0;
+        int j=0;
+        while(j<n){
+            for(int k=j;k>j-10 && k>=i;k--){
+                if(set.contains(word.substring(k,j+1))){
+                    i=k+1;
                     break;
                 }
             }
-            result = Math.max(result, rightMost - leftMost);
+            ans=Math.max(j-i+1,ans);
+            j++;
         }
-        return result;
+        return ans;
     }
 }
