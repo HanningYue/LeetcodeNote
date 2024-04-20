@@ -1,22 +1,27 @@
 class Solution {
     public double myPow(double x, int n) {
         long N = n;
-        return dfs(x, N);
+        return helper(x, N);
     }
-
-    public double dfs(double x, long n) {
+    private double helper(double x, long n) {
         if (n == 0) {
-            return 1.0;
+            return 1;
         } else if (n == 1) {
             return x;
         } else if (n < 0) {
-            return dfs(1 / x, -n);
-        } else {            
-            double result = dfs(x * x, n / 2);
+            x = 1 / x;
+            n = -n;
+        }
+
+        double result = 1;
+        while (n != 0) {
             if (n % 2 != 0) {
                 result = result * x;
+                n--;
             }
-            return result;
+            x = x * x;
+            n = n / 2;
         }
+        return result;
     }
 }
