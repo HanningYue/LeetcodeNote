@@ -2,12 +2,11 @@ class Solution {
     Boolean[][] dpTable;
     public String longestPalindrome(String s) {
         dp(s);
-        int n = s.length();
-        int start = 0, maxLength = 1;
         
-        for (int left = 0; left < n; left++) {
-            for (int right = left; right < n; right++) {
-                if (dpTable[left][right] && (right - left + 1) > maxLength) {
+        int start = 0, maxLength = 1;
+        for (int left = 0; left < s.length(); left++) {
+            for (int right = left; right < s.length(); right++) {
+                if (dpTable[left][right] && maxLength < (right - left + 1)) {
                     maxLength = right - left + 1;
                     start = left;
                 }
@@ -15,6 +14,7 @@ class Solution {
         }
         return s.substring(start, start + maxLength);
     }
+
     private void dp(String s) {
         int n = s.length();
         dpTable = new Boolean[n][n];
