@@ -27,11 +27,11 @@ class Solution {
             return null;
         }
 
-        int root = preorder[preleft];
-        int rootIndex = inMap.get(root);
+        int rootVal = preorder[preleft];
+        int rootIndex = inMap.get(rootVal);
         int leftSubTreeSize = rootIndex - inleft;
 
-        TreeNode newRoot = new TreeNode(root);
+        TreeNode newRoot = new TreeNode(rootVal);
         newRoot.left = build(preorder, preleft + 1, preleft + leftSubTreeSize, inorder, inleft, rootIndex - 1);
         newRoot.right = build(preorder, preleft + leftSubTreeSize + 1, preright, inorder, rootIndex + 1, inright);
         return newRoot;
