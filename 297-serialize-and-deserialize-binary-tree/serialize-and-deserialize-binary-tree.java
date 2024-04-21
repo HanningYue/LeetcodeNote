@@ -8,6 +8,8 @@
  * }
  */
 public class Codec {
+
+    // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
         se(root, sb);
@@ -23,6 +25,7 @@ public class Codec {
         se(root.right, sb);
     }
 
+    // Decodes your encoded data to tree.
     int index = 0;
     public TreeNode deserialize(String data) {
         String[] tree = data.split(",");
@@ -33,6 +36,7 @@ public class Codec {
             index++;
             return null;
         }
+
         TreeNode root = new TreeNode(Integer.parseInt(tree[index]));
         index++;
         root.left = de(tree);
@@ -40,6 +44,7 @@ public class Codec {
         return root;
     }
 }
+
 // Your Codec object will be instantiated and called as such:
 // Codec ser = new Codec();
 // Codec deser = new Codec();
