@@ -17,19 +17,19 @@ class Solution {
     public boolean isValidBST(TreeNode root) {
         return isBST(root, null, null);
     }
-    private boolean isBST(TreeNode root, TreeNode leftMaxRoot, TreeNode rightMinRoot) {
+    private boolean isBST(TreeNode root, TreeNode leftMax, TreeNode rightMin) {
         if (root == null) {
             return true;
         }
 
-        boolean leftTrue = isBST(root.left, leftMaxRoot, root);
-        boolean rightTrue = isBST(root.right, root, rightMinRoot);
-
-        boolean currentTrue = leftTrue && rightTrue;
-        if (leftMaxRoot != null && leftMaxRoot.val >= root.val
-        ||  rightMinRoot != null && rightMinRoot.val <= root.val) {
+        boolean leftTrue = isBST(root.left, leftMax, root);
+        boolean rightTrue = isBST(root.right, root, rightMin);
+        if (leftMax != null && root.val <= leftMax.val
+        ||  rightMin != null && root.val >= rightMin.val) {
             return false;
         }
+
+        boolean currentTrue = leftTrue && rightTrue;
         return currentTrue;
     }
 }
