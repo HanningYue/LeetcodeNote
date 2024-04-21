@@ -35,11 +35,10 @@ class Solution {
             return -1;
         }
 
-        int currentMax = Math.max(leftMax, rightMax) + 1;
-
         if (Math.abs(leftMax - rightMax) > 1) {
             return -1;
         }
+        int currentMax = Math.max(leftMax, rightMax) + 1;
         return currentMax;
     }
 }
