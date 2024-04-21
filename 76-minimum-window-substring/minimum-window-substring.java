@@ -20,7 +20,7 @@ class Solution {
             while (match == t.length()) {
                 if (fast - slow + 1 < length) {
                     length = fast - slow + 1;
-                    result = s.substring(slow, fast + 1);
+                    result = s.substring(slow, slow + length);
                 }
                 char slowChar = s.charAt(slow);
                 if (map.containsKey(slowChar)) {
