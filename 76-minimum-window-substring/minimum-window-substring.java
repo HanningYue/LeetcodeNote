@@ -5,9 +5,9 @@ class Solution {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        int slow = 0, fast = 0;
-        int length = Integer.MAX_VALUE, match = 0;
         String result = "";
+        int match = 0, length = Integer.MAX_VALUE;
+        int slow = 0, fast = 0;
         while (fast < s.length()) {
             char fastChar = s.charAt(fast);
             if (map.containsKey(fastChar)) {
