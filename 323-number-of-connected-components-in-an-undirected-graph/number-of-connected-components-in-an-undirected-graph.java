@@ -20,15 +20,16 @@ class Solution {
         }
         return count;
     }
+
     private void dfs(Map<Integer, Set<Integer>> graph, boolean[] visited, int vertex) {
         if (visited[vertex]) {
             return;
         }
+        visited[vertex] = true;
         if (!graph.containsKey(vertex)) {
             return;
         }
         
-        visited[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
             dfs(graph, visited, neighbor);
         }
