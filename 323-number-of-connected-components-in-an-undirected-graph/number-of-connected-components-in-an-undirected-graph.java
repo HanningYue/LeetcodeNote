@@ -1,42 +1,36 @@
 class Solution {
     public int countComponents(int n, int[][] edges) {
-        UnionFind uf = new UnionFind(n);
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int[] edge : edges) {
-            int vertexOne = edge[0], vertexTwo = edge[1];
-            if (uf.connected(vertexOne, vertexTwo)) {
-                continue;
+            int vertexOne = edge[0];
+            int vertexTwo = edge[1];
+            graph.putIfAbsent(vertexOne, new HashSet<>());
+            graph.putIfAbsent(vertexTwo, new HashSet<>());
+            graph.get(vertexTwo).add(vertexOne);
+            graph.get(vertexOne).add(vertexTwo);
+        }
+
+        int count = 0;
+        boolean[] visited = new boolean[n];
+        for (int vertex = 0; vertex < n; vertex++) {
+            if (!visited[vertex]) {
+                count++;
+                dfs(graph, visited, vertex);
             }
-            uf.union(vertexOne, vertexTwo);
         }
-        return uf.count;
+        return count;
     }
-}
-class UnionFind {
-    int[] parent;
-    int count;
-    public UnionFind(int numberOfVertex) {
-        this.count = numberOfVertex;
-        parent = new int[numberOfVertex];
-        for (int i = 0; i < numberOfVertex; i++) {
-            parent[i] = i;
-        }
-    }
-    public int find(int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent[vertex]);
-        }
-        return parent[vertex];
-    }
-    public void union(int vertexOne, int vertexTwo) {
-        int parentOne = find(vertexOne);
-        int parentTwo = find(vertexTwo);
-        if (parentOne == parentTwo) {
+    private void dfs(Map<Integer, Set<Integer>> graph, boolean[] visited, int vertex) {
+        if (visited[vertex]) {
             return;
         }
-        parent[parentOne] = parentTwo;
-        count--;
-    }
-    public boolean connected(int vertexOne, int vertexTwo) {
-        return find(vertexOne) == find(vertexTwo);
+        if (!graph.containsKey(vertex)) {
+            return;
+        }
+        
+        visited[vertex] = true;
+        for (int neighbor : graph.get(vertex)) {
+            dfs(graph, visited, neighbor);
+        }
     }
 }
