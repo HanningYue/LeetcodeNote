@@ -9,7 +9,8 @@ Form a window, we want to return the window size to a List<Integer>
 class Solution {
     public List<Integer> partitionLabels(String s) {
         List<Integer> result = new ArrayList<>();
-        Map<Character, Integer> map = new HashMap<>();
+        Map<Character, Integer> map = new HashMap<>(); //character, lastIndex
+
         for (int i = 0; i < s.length(); i++) {
             map.put(s.charAt(i), i);
         }
@@ -17,14 +18,20 @@ class Solution {
         int left = 0, right = 0;
         while (left < s.length()) {
             int size = 0;
-            right = Math.max(right, map.get(s.charAt(left)));
+            char currentChar = s.charAt(left);
+            int lastIndex = map.get(currentChar);
+            right = Math.max(right, lastIndex);
+
             while (left <= right) {
-                right = Math.max(right, map.get(s.charAt(left)));
+                currentChar = s.charAt(left);
+                lastIndex = map.get(currentChar);
+                right = Math.max(right, lastIndex);
                 left++;
                 size++;
             }
             result.add(size);
         }
+        
         return result;
     }
 }
