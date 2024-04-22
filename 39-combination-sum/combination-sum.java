@@ -1,16 +1,12 @@
-/**
-        2           3           6           7
-    2 3 6 7        367          67          7
-*/
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        backTrack(result, list, candidates, target, 0, 0);
+        backTrack(result, list, target, 0, candidates, 0);
         return result;
     }
-    private void backTrack(List<List<Integer>> result, List<Integer> list, int[] nums, int target, 
-    int runningSum, int index) {
+    private void backTrack(List<List<Integer>> result, List<Integer> list, int target, int runningSum, 
+    int[] candidates, int index) {
         if (runningSum == target) {
             result.add(new ArrayList<>(list));
             return;
@@ -18,11 +14,11 @@ class Solution {
         if (runningSum > target) {
             return;
         }
-        for (int i = index; i < nums.length; i++) {
-            list.add(nums[i]);
-            runningSum += nums[i];
-            backTrack(result, list, nums, target, runningSum, i);
-            runningSum -= nums[i];
+        for (int i = index; i < candidates.length; i++) {
+            list.add(candidates[i]);
+            runningSum += candidates[i];
+            backTrack(result, list, target, runningSum, candidates, i);
+            runningSum -= candidates[i];
             list.remove(list.size() - 1);
         }
     }
