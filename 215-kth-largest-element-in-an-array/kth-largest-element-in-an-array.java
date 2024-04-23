@@ -3,7 +3,7 @@ class Solution {
         int left = 0;
         int right = nums.length - 1;
 
-        while(left <= right){
+        while(true){
             // pos + 1 就是第几大数
             int pos = findPosition(nums, left, right);
             if(pos + 1 == k){
@@ -14,7 +14,6 @@ class Solution {
                 left = pos + 1; // 选定的数字大了, 结果在 pos 右边
             }
         }
-        return -1;
     }
 
     private int findPosition(int[] nums, int left, int right){
