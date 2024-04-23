@@ -3,7 +3,7 @@ class Solution {
         int i = 0;
         while (i < nums.length) {
             int suppose = nums[i] - 1;
-            if (nums[i] < nums.length && nums[i] > 0 && nums[suppose] != nums[i]) {
+            if (nums[i] <= nums.length && nums[i] > 0 && nums[suppose] != nums[i]) {
                 int temp = nums[suppose];
                 nums[suppose] = nums[i];
                 nums[i] = temp;
