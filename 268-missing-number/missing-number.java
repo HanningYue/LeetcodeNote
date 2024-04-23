@@ -1,9 +1,21 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        int missing = nums.length;
-        for (int i = 0; i < nums.length; i++) {
-            missing = missing ^ i ^ nums[i];
+        int i = 0;
+        while (i < nums.length) {
+            int suppose = nums[i];
+            if (suppose < nums.length && nums[suppose] != nums[i]) {
+                int temp = nums[i];
+                nums[i] = nums[suppose];
+                nums[suppose] = temp;
+            } else {
+                i++;
+            }
         }
-        return missing;
+        for (int j = 0; j < nums.length; j++) {
+            if (nums[j] != j) {
+                return j;
+            }
+        }
+        return nums.length;
     }
 }
