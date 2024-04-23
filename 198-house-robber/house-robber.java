@@ -1,8 +1,8 @@
 class Solution {
     Integer[] dpTable;
     public int rob(int[] nums) {
-        int m = nums.length;
-        dpTable = new Integer[m];
+        int n = nums.length;
+        dpTable = new Integer[n];
         return dp(nums, 0);
     }
     private int dp(int[] nums, int index) {
