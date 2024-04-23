@@ -5,7 +5,7 @@ class Solution {
         dpTable = new Integer[m][n];
         return dp(word1, m - 1, word2, n - 1);
     }
-    private int dp(String word1, int i, String word2, int j) {
+    private int dp(String s, int i, String t, int j) {
         if (i == -1) {
             return j + 1;
         } else if (j == -1) {
@@ -16,14 +16,14 @@ class Solution {
             return dpTable[i][j];
         }
 
-        if (word1.charAt(i) == word2.charAt(j)) {
-            int skip = dp(word1, i - 1, word2, j - 1);
+        if (s.charAt(i) == t.charAt(j)) {
+            int skip = dp(s, i - 1, t, j - 1);
             dpTable[i][j] = skip;
-        } else if (word1.charAt(i) != word2.charAt(j)) {
-            int delete = dp(word1, i - 1, word2, j);
-            int replace = dp(word1, i - 1, word2, j - 1);
-            int insert = dp(word1, i, word2, j - 1);
-            dpTable[i][j] = Math.min(delete, Math.min(replace, insert)) + 1;
+        } else if (s.charAt(i) != t.charAt(j)) {
+            int replace = dp(s, i - 1, t, j - 1) + 1;
+            int insert = dp(s, i, t, j - 1) + 1;
+            int delete = dp(s, i - 1, t, j) + 1;
+            dpTable[i][j] = Math.min(delete, Math.min(replace, insert));
         }
         return dpTable[i][j];
     }
