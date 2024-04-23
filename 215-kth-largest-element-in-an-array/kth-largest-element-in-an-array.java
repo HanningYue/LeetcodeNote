@@ -17,7 +17,7 @@ class Solution {
         int leftP = left + 1, rightP = right;
 
         while (leftP <= rightP) {
-            while (leftP <= rightP && nums[leftP] < pivot && nums[rightP] > pivot) {
+            if (nums[leftP] < pivot && nums[rightP] > pivot) {
                 swap(nums, leftP, rightP);
                 leftP++;
                 rightP--;
