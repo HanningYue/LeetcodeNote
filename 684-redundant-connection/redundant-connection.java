@@ -1,7 +1,7 @@
-class UF {
-    private int count;
-    private int[] parent;
-    public UF(int numberOfVertex) {
+class UnionFind {
+    int[] parent;
+    int count;
+    public UnionFind(int numberOfVertex) {
         this.count = numberOfVertex;
         parent = new int[numberOfVertex];
         for (int i = 0; i < numberOfVertex; i++) {
@@ -17,28 +17,27 @@ class UF {
     public void union(int vertexOne, int vertexTwo) {
         int parentOne = find(vertexOne);
         int parentTwo = find(vertexTwo);
-        if (parentOne != parentTwo) {
-            parent[parentOne] = parentTwo;
-            count--;
+        if (parentOne == parentTwo) {
+            return;
         }
+        parent[parentOne] = parentTwo;
+        count--;
     }
     public boolean connected(int vertexOne, int vertexTwo) {
         return find(vertexOne) == find(vertexTwo);
     }
-    public int count() {
-        return count;
-    }
 }
 class Solution {
     public int[] findRedundantConnection(int[][] edges) {
-        UF uf = new UF(edges.length);
+        int n = edges.length;
+        UnionFind uf = new UnionFind(n);
         for (int[] edge : edges) {
-            int start = edge[0] - 1;
-            int end = edge[1] - 1;
-            if (uf.connected(start, end)) {
+            int vertexOne = edge[0] - 1;
+            int vertexTwo = edge[1] - 1;
+            if (uf.connected(vertexOne, vertexTwo)) {
                 return edge;
             }
-            uf.union(start, end);
+            uf.union(vertexOne, vertexTwo);
         }
         return new int[]{};
     }
