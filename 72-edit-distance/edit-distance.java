@@ -15,14 +15,15 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
+
         if (word1.charAt(i) == word2.charAt(j)) {
-            int sameChar = dp(word1, i - 1, word2, j - 1);
-            dpTable[i][j] = sameChar;
-        } else {
-            int delete = dp(word1, i - 1, word2, j) + 1;
-            int insert = dp(word1, i, word2, j - 1) + 1;
-            int replace = dp(word1, i - 1, word2, j - 1) + 1;
-            dpTable[i][j] = Math.min(delete, Math.min(insert, replace));
+            int skip = dp(word1, i - 1, word2, j - 1);
+            dpTable[i][j] = skip;
+        } else if (word1.charAt(i) != word2.charAt(j)) {
+            int delete = dp(word1, i - 1, word2, j);
+            int replace = dp(word1, i - 1, word2, j - 1);
+            int insert = dp(word1, i, word2, j - 1);
+            dpTable[i][j] = Math.min(delete, Math.min(replace, insert)) + 1;
         }
         return dpTable[i][j];
     }
