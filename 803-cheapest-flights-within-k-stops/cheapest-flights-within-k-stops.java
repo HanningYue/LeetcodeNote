@@ -1,78 +1,50 @@
 class State {
-    int cost;
-    int city;
-    int stops;
-    public State(int cost, int city, int stops) {
+    int cost, city, stop;
+    public State(int cost, int city, int stop) {
         this.cost = cost;
         this.city = city;
-        this.stops = stops;
+        this.stop = stop;
     }
 }
 class Pair {
-    int next;
-    int cost;
-    public Pair(int next, int cost) {
-        this.next = next;
+    int city, cost;
+    public Pair(int city, int cost) {
+        this.city = city;
         this.cost = cost;
     }
 }
-
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        Map<Integer, List<Pair>> graph = new HashMap<>();
+        k = k + 1;
+        Map<Integer, Set<Pair>> graph = new HashMap<>();
         for (int[] flight : flights) {
             int from = flight[0], to = flight[1], cost = flight[2];
-            graph.putIfAbsent(from, new ArrayList<Pair>());
+            graph.putIfAbsent(from, new HashSet<>());
             graph.get(from).add(new Pair(to, cost));
         }
+        int[] minStop = new int[n];
+        Arrays.fill(minStop, Integer.MAX_VALUE);
 
-        int[] minStopToCity = new int[n];
-        Arrays.fill(minStopToCity, Integer.MAX_VALUE);
         PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
         heap.offer(new State(0, src, 0));
 
-        while (!heap.isEmpty()) {
+        while(!heap.isEmpty()) {
             State current = heap.poll();
-            int currentCost = current.cost;
-            int currentCity = current.city;
-            int currentStops = current.stops;
-
-            if (currentStops > minStopToCity[currentCity] || currentStops > k + 1) {
+            if (current.stop > minStop[current.city] || current.stop > k) {
                 continue;
             }
-            minStopToCity[currentCity] = currentStops;
-
-            if (currentCity == dst) {
-                return currentCost;
+            minStop[current.city] = current.stop;
+            if (current.city == dst) {
+                return current.cost;
             }
-            if (!graph.containsKey(currentCity)) {
+
+            if (!graph.containsKey(current.city)) {
                 continue;
             }
-            for (Pair pair : graph.get(currentCity)) {
-                int nextCity = pair.next;
-                int cost = pair.cost;
-                heap.offer(new State(currentCost + cost, nextCity, currentStops + 1));
+            for (Pair pair : graph.get(current.city)) {
+                heap.offer(new State(current.cost + pair.cost, pair.city, current.stop + 1));
             }
         }
         return -1;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
