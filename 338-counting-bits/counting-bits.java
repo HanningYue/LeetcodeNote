@@ -2,14 +2,14 @@ class Solution {
     public int[] countBits(int n) {
         int[] result = new int[n + 1];
         for (int i = 0; i <= n; i++) {
-            result[i] = findOne(i);
+            result[i] = countOne(i);
         }
         return result;
     }
-    private int findOne(int num) {
+    private int countOne(int n) {
         int count = 0;
-        while (num != 0) {
-            num = num & (num - 1);
+        while (n != 0) {
+            n = n & (n - 1);
             count++;
         }
         return count;
