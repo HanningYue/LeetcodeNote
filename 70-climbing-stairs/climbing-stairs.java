@@ -6,10 +6,10 @@ class Solution {
     }
     private int dp(int n) {
         if (n == 0) {
-            return 1;
-        }
-        if (n < 0) {
             return 0;
+        }
+        if (n <= 2) {
+            return n;
         }
         if (dpTable[n] != null) {
             return dpTable[n];
