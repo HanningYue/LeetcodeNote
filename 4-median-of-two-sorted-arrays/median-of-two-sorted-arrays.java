@@ -9,7 +9,7 @@ class Solution {
         boolean even = totalLength % 2 == 0;
 
         int left = 0, right = nums1.length;
-        while (left <= right) {
+        while (true) {
             int pointerOne = left + (right - left) / 2;
             int pointerTwo = halfLength - pointerOne;
 
@@ -30,6 +30,5 @@ class Solution {
                 left = pointerOne + 1;
             }
         }
-        return 0.0;
     }
 }
