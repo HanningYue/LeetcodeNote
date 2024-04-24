@@ -10,26 +10,24 @@ class Solution {
 
         int left = 0, right = nums1.length;
         while (left <= right) {
-            int pointer1 = left + (right - left) / 2;
-            int pointer2 = halfLength - pointer1;
+            int pointerOne = left + (right - left) / 2;
+            int pointerTwo = halfLength - pointerOne;
 
-            int left1 = pointer1 > 0 ? nums1[pointer1 - 1] : Integer.MIN_VALUE;
-            int right1 = pointer1 < nums1.length ? nums1[pointer1] : Integer.MAX_VALUE;
-            int left2 = pointer2 > 0 ? nums2[pointer2 - 1] : Integer.MIN_VALUE;
-            int right2 = pointer2 < nums2.length ? nums2[pointer2] : Integer.MAX_VALUE;
+            int leftOne = pointerOne > 0 ? nums1[pointerOne - 1] : Integer.MIN_VALUE;
+            int leftTwo = pointerTwo > 0 ? nums2[pointerTwo - 1] : Integer.MIN_VALUE;
+            int rightOne = pointerOne < nums1.length ? nums1[pointerOne] : Integer.MAX_VALUE;
+            int rightTwo = pointerTwo < nums2.length ? nums2[pointerTwo] : Integer.MAX_VALUE;
 
-            if (left1 <= right2 && left2 <= right1) {
+            if (leftOne <= rightTwo && leftTwo <= rightOne) {
                 if (even) {
-                    return (Math.max(left1, left2) + Math.min(right1, right2)) / 2.0;
+                    return (Math.max(leftOne, leftTwo) + Math.min(rightOne, rightTwo)) / 2.0;
                 } else {
-                    return Math.max(left1, left2);
+                    return Math.max(leftOne, leftTwo);
                 }
-            }
-            else if (left1 > right2) {
-                right = pointer1 - 1;
-            }
-            else if (left2 > right1) {
-                left = pointer1 + 1;
+            } else if (leftOne > rightTwo) {
+                right = pointerOne - 1;
+            } else if (leftTwo > rightOne) {
+                left = pointerOne + 1;
             }
         }
         return 0.0;
