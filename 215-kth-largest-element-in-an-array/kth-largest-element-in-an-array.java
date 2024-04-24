@@ -22,10 +22,10 @@ class Solution {
                 swap(nums, leftP, rightP);
                 leftP++;
                 rightP--;
-            }
+            } 
             if (nums[leftP] >= pivotNum) {
                 leftP++;
-            } 
+            }
             if (nums[rightP] <= pivotNum) {
                 rightP--;
             }
