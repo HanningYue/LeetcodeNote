@@ -10,9 +10,11 @@ class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
         k = k + 1;
         Map<Integer, Set<State>> graph = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            graph.put(i, new HashSet<>());
+        }
         for (int[] flight : flights) {
             int from = flight[0], to = flight[1], cost = flight[2];
-            graph.putIfAbsent(from, new HashSet<>());
             graph.get(from).add(new State(to, cost, 0));
         }
 
@@ -32,9 +34,6 @@ class Solution {
                 return current.cost;
             }
             
-            if (!graph.containsKey(current.city)) {
-                continue;
-            }
             for (State neighbor : graph.get(current.city)) {
                 heap.offer(new State(neighbor.city, neighbor.cost + current.cost, current.stop + 1));
             }
