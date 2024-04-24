@@ -25,7 +25,7 @@ class Solution {
             }
             if (nums[leftP] >= pivotNum) {
                 leftP++;
-            }
+            } 
             if (nums[rightP] <= pivotNum) {
                 rightP--;
             }
