@@ -1,36 +1,38 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[] mergedArray = mergeSortedArrays(nums1, nums2);
-        return calculateMedian(mergedArray);
+        int[] tempArr = mergeSort(nums1, nums2);
+        return findMedian(tempArr);
     }
-
-    private int[] mergeSortedArrays(int[] nums1, int[] nums2) {
+    
+    private int[] mergeSort(int[] nums1, int[] nums2) {
         int m = nums1.length, n = nums2.length;
-        int[] merged = new int[m + n];
-        int i = 0, j = 0, k = 0;
+        int[] tempArr = new int[m + n];
 
-        while (i < m && j < n) {
-            if (nums1[i] < nums2[j]) {
-                merged[k++] = nums1[i++];
+        int pointerOne = 0, pointerTwo = 0, tempPointer = 0;
+        while (pointerOne < m && pointerTwo < n) {
+            if (nums1[pointerOne] < nums2[pointerTwo]) {
+                tempArr[tempPointer++] = nums1[pointerOne++];
             } else {
-                merged[k++] = nums2[j++];
+                tempArr[tempPointer++] = nums2[pointerTwo++];
             }
         }
-        while (i < m) {
-            merged[k++] = nums1[i++];
+        while (pointerOne < m) {
+            tempArr[tempPointer++] = nums1[pointerOne++];
         }
-        while (j < n) {
-            merged[k++] = nums2[j++];
+        while (pointerTwo < n) {
+            tempArr[tempPointer++] = nums2[pointerTwo++];
         }
-        return merged;
+        return tempArr;
     }
 
-    private double calculateMedian(int[] nums) {
-        int totalLength = nums.length;
-        if (totalLength % 2 == 0) {
-            return (nums[totalLength / 2 - 1] + nums[totalLength / 2]) / 2.0;
+    private double findMedian(int[] tempArr) {
+        boolean even = tempArr.length % 2 == 0;
+        int middleIndex = tempArr.length / 2;
+        
+        if (even) {
+            return (tempArr[middleIndex - 1] + tempArr[middleIndex]) / 2.0;
         } else {
-            return nums[totalLength / 2];
+            return tempArr[middleIndex];
         }
     }
 }
