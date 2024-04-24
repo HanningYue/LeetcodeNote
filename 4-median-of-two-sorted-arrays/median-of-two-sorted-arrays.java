@@ -1,34 +1,36 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        if (nums1.length > nums2.length) {
-            return findMedianSortedArrays(nums2, nums1);
-        }
+        int[] mergedArray = mergeSortedArrays(nums1, nums2);
+        return calculateMedian(mergedArray);
+    }
 
-        int totalLength = nums1.length + nums2.length;
-        int halfLength = (totalLength + 1) / 2;
-        boolean even = totalLength % 2 == 0;
+    private int[] mergeSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.length, n = nums2.length;
+        int[] merged = new int[m + n];
+        int i = 0, j = 0, k = 0;
 
-        int left = 0, right = nums1.length;
-        while (true) {
-            int pointerOne = left + (right - left) / 2;
-            int pointerTwo = halfLength - pointerOne;
-
-            int leftOne = pointerOne > 0 ? nums1[pointerOne - 1] : Integer.MIN_VALUE;
-            int leftTwo = pointerTwo > 0 ? nums2[pointerTwo - 1] : Integer.MIN_VALUE;
-            int rightOne = pointerOne < nums1.length ? nums1[pointerOne] : Integer.MAX_VALUE;
-            int rightTwo = pointerTwo < nums2.length ? nums2[pointerTwo] : Integer.MAX_VALUE;
-
-            if (leftOne <= rightTwo && leftTwo <= rightOne) {
-                if (even) {
-                    return (Math.max(leftOne, leftTwo) + Math.min(rightOne, rightTwo)) / 2.0;
-                } else {
-                    return Math.max(leftOne, leftTwo);
-                }
-            } else if (leftOne > rightTwo) {
-                right = pointerOne - 1;
-            } else if (leftTwo > rightOne) {
-                left = pointerOne + 1;
+        while (i < m && j < n) {
+            if (nums1[i] < nums2[j]) {
+                merged[k++] = nums1[i++];
+            } else {
+                merged[k++] = nums2[j++];
             }
+        }
+        while (i < m) {
+            merged[k++] = nums1[i++];
+        }
+        while (j < n) {
+            merged[k++] = nums2[j++];
+        }
+        return merged;
+    }
+
+    private double calculateMedian(int[] nums) {
+        int totalLength = nums.length;
+        if (totalLength % 2 == 0) {
+            return (nums[totalLength / 2 - 1] + nums[totalLength / 2]) / 2.0;
+        } else {
+            return nums[totalLength / 2];
         }
     }
 }
