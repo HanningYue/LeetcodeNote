@@ -1,32 +1,27 @@
 class Solution {
-    private Map<String, Integer> memo;
-
     public int findTargetSumWays(int[] nums, int target) {
-        memo = new HashMap<>();
-        return dfs(nums, 0, 0, target);
+        int sum = 0;
+        for (int num : nums) sum += num;
+
+        if (Math.abs(target) > sum) return 0; // Target out of possible sum range
+
+        Integer[][] dpTable = new Integer[nums.length][2 * sum + 1];
+        return dp(nums, 0, 0, target, dpTable, sum);
     }
-    
-    private int dfs(int[] nums, int index, int currentSum, int target) {
-        // Base case: if we've reached the end of the array
+
+    private int dp(int[] nums, int index, int currentSum, int target, Integer[][] dpTable, int sum) {
         if (index == nums.length) {
-            if (currentSum == target) {
-                return 1;  // Found a valid way
-            }
-            return 0;  // No valid way
+            return currentSum == target ? 1 : 0;
         }
         
-        // Memoization check
-        String key = index + "," + currentSum;
-        if (memo.containsKey(key)) {
-            return memo.get(key);
+        if (dpTable[index][currentSum + sum] != null) {
+            return dpTable[index][currentSum + sum];
         }
         
-        // Calculate the number of ways by considering both adding and subtracting the current number
-        int add = dfs(nums, index + 1, currentSum + nums[index], target);
-        int subtract = dfs(nums, index + 1, currentSum - nums[index], target);
+        int add = dp(nums, index + 1, currentSum + nums[index], target, dpTable, sum);
+        int subtract = dp(nums, index + 1, currentSum - nums[index], target, dpTable, sum);
         
-        // Store the result in the memoization table before returning
-        memo.put(key, add + subtract);
-        return memo.get(key);
+        dpTable[index][currentSum + sum] = add + subtract;
+        return dpTable[index][currentSum + sum];
     }
 }
