@@ -1,43 +1,38 @@
 class Solution {
+    int[] tempArr;
     public int[] sortArray(int[] nums) {
-        shuffleArr(nums);
+        tempArr = new int[nums.length];
         sort(nums, 0, nums.length - 1);
         return nums;
-    }
-    private void shuffleArr(int[] nums) {
-        Random rand = new Random();
-        for (int i = 0; i < nums.length; i++) {
-            int nextIdx = i + rand.nextInt(nums.length - i);
-            swap(nums, i, nextIdx);
-        }
-    }
-    private void swap(int[] nums, int left, int right) {
-        int temp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = temp;
     }
     private void sort(int[] nums, int left, int right) {
         if (left >= right) {
             return;
         }
-        int pivotIdx = partition(nums, left, right);
-        sort(nums, left, pivotIdx - 1);
-        sort(nums, pivotIdx + 1, right);
+        int mid = left + (right - left) / 2;
+        sort(nums, left, mid);
+        sort(nums, mid + 1, right);
+        merge(nums, left, right, mid);
     }
-    private int partition(int[] nums, int left, int right) {
-        int pivot = nums[left];
+    private void merge(int[] nums, int left, int right, int mid) {
+        int tempP = left;
+        int leftP = left, rightP = mid + 1;
 
-        int leftP = left, rightP = right;
-        while (leftP < rightP) {
-            while (leftP < rightP && nums[rightP] >= pivot) {
-                rightP--;
+        while (leftP <= mid && rightP <= right) {
+            if (nums[leftP] < nums[rightP]) {
+                tempArr[tempP++] = nums[leftP++];
+            } else {
+                tempArr[tempP++] = nums[rightP++];
             }
-            while (leftP < rightP && nums[leftP] <= pivot) {
-                leftP++;
-            }
-            swap(nums, leftP, rightP);
         }
-        swap(nums, left, rightP);
-        return rightP;
+        while (leftP <= mid) {
+            tempArr[tempP++] = nums[leftP++];
+        }
+        while (rightP <= right) {
+            tempArr[tempP++] = nums[rightP++];
+        }
+        for (int i = left; i <= right; i++) {
+            nums[i] = tempArr[i];
+        }
     }
 }
