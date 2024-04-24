@@ -5,9 +5,7 @@ class Solution {
 
         int[] previousInterval = intervals[0];
         for (int i = 1; i < intervals.length; i++) {
-            if (previousInterval[0] > intervals[i][1]) {
-                result.add(intervals[i]);
-            } else if (previousInterval[1] < intervals[i][0]) {
+            if (previousInterval[1] < intervals[i][0]) {
                 result.add(previousInterval);
                 previousInterval = intervals[i];
             } else {
