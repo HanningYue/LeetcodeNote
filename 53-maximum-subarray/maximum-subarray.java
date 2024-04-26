@@ -2,36 +2,37 @@ class Solution {
     public int maxSubArray(int[] nums) {
         return divide(nums, 0, nums.length - 1);
     }
+
     private int divide(int[] nums, int left, int right) {
         if (left == right) {
             return nums[left];
         }
         int mid = left + (right - left) / 2;
-        int leftPart = divide(nums, left, mid);
-        int rightPart = divide(nums, mid + 1, right);
+        int leftSubarray = divide(nums, left, mid);
+        int rightSubarray = divide(nums, mid + 1, right);
         int combine = conquer(nums, left, mid, right);
-        
-        return Math.max(combine, Math.max(leftPart, rightPart));
+        return Math.max(combine, Math.max(leftSubarray, rightSubarray));
     }
+
     private int conquer(int[] nums, int left, int mid, int right) {
-        int leftSum = Integer.MIN_VALUE;
-        int rightSum = Integer.MIN_VALUE;
+        int leftSum = Integer.MIN_VALUE, rightSum = Integer.MIN_VALUE;
 
         int sum = 0;
-        for (int i = mid; i >= left; i--) {
-            sum += nums[i];
+        for (int leftP = mid; leftP >= left; leftP--) {
+            sum += nums[leftP];
             if (sum > leftSum) {
                 leftSum = sum;
             }
         }
 
         sum = 0;
-        for (int i = mid + 1; i <= right; i++) {
-            sum += nums[i];
+        for (int rightP = mid + 1; rightP <= right; rightP++) {
+            sum += nums[rightP];
             if (sum > rightSum) {
                 rightSum = sum;
             }
         }
+
         return leftSum + rightSum;
     }
 }
