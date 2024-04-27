@@ -1,37 +1,41 @@
 class Solution {
     public boolean validTree(int n, int[][] edges) {
-        Map<Integer, List<Integer>> graph = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            graph.put(i, new ArrayList<>());
-        }
+        UnionFind uf = new UnionFind(n);
         for (int[] edge : edges) {
-            graph.get(edge[0]).add(edge[1]);
-            graph.get(edge[1]).add(edge[0]);
-        }
-
-        Set<Integer> visiting = new HashSet<>();
-        Set<Integer> visited = new HashSet<>();
-        if (!dfs(0, graph, visiting, visited, -1)) {
-            return false;
-        }
-        return visited.size() == n;
-    }
-    private boolean dfs(int vertex, Map<Integer, List<Integer>> graph, Set<Integer> visiting, 
-    Set<Integer> visited, int parent) {
-        if (visiting.contains(vertex)) {
-            return false;
-        }
-        if (visited.contains(vertex)) {
-            return true;
-        }
-        visiting.add(vertex);
-        for (int neighbor : graph.get(vertex)) {
-            if (neighbor != parent && !dfs(neighbor, graph, visiting, visited, vertex)) {
+            int vertexOne = edge[0], vertexTwo = edge[1];
+            if (uf.connected(vertexOne, vertexTwo)) {
                 return false;
             }
+            uf.union(vertexOne, vertexTwo);
+        }        
+        return uf.count == 1;
+    }
+}
+class UnionFind {
+    int[] parent;
+    int count;
+    public UnionFind(int numberOfVertex) {
+        parent = new int[numberOfVertex];
+        this.count = numberOfVertex;
+        for (int i = 0; i < numberOfVertex; i++) {
+            parent[i] = i;
         }
-        visiting.remove(vertex);
-        visited.add(vertex);
-        return true;
+    }
+    public int find(int vertex) {
+        if (parent[vertex] != vertex) {
+            parent[vertex] = find(parent[vertex]);
+        }
+        return parent[vertex];
+    }
+    public void union(int vertexOne, int vertexTwo) {
+        int parentOne = find(vertexOne), parentTwo = find(vertexTwo);
+        if (parentOne == parentTwo) {
+            return;
+        }
+        parent[parentOne] = parentTwo;
+        count--;
+    }
+    public boolean connected(int vertexOne, int vertexTwo) {
+        return find(vertexOne) == find(vertexTwo);
     }
 }
