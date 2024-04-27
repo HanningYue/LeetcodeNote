@@ -1,70 +1,50 @@
-/**
-加权有向图，没有负权重边，OK，可以用 Dijkstra 算法计算最短路径。
-求从起始点k到距离最远的vertex的最短路径
-*/
 class State {
-    int id;
-    int distFromStart;
-    public State(int id, int distFromStart) {
-        this.id = id;
-        this.distFromStart = distFromStart;
+    int node, time;
+    public State(int node, int time) {
+        this.node = node;
+        this.time = time;
     }
 }
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
-        int result = 0;
-        List<int[]>[] graph = buildGraph(times, n);
-        int[] distTo = dijkstra(graph, k);
-        
-        for (int i = 1; i < distTo.length; i++) {
-            if (distTo[i] == Integer.MAX_VALUE) {
-                return -1;
-            }
-            result = Math.max(result, distTo[i]);
-        }
-        return result;
-    }
-
-    public List<int[]>[] buildGraph(int[][] times, int n) {
-        List<int[]>[] graph = new LinkedList[n + 1];
+        Map<Integer, List<State>> graph = new HashMap<>();
         for (int i = 1; i <= n; i++) {
-            graph[i] = new LinkedList<>();
+            graph.put(i, new ArrayList<>());
         }
         for (int[] time : times) {
-            int from = time[0];
-            int to = time[1];
-            int weight = time[2];
-            graph[from].add(new int[]{to, weight});
+            int source = time[0], target = time[1], cost = time[2];
+            graph.get(source).add(new State(target, cost));
         }
-        return graph;
-    }
 
-    public int[] dijkstra(List<int[]>[] graph, int start) {
-        int[] distTo = new int[graph.length];
-        Arrays.fill(distTo, Integer.MAX_VALUE);
-        distTo[start] = 0;
-        PriorityQueue<State> pq = new PriorityQueue<>((a, b) -> {
-            return a.distFromStart - b.distFromStart;
-        });
-        pq.offer(new State(start, 0));
-        
-        while (!pq.isEmpty()) {
-            State state = pq.poll();
-            int currentNode = state.id;
-            int currentDist = state.distFromStart;
-            if (currentDist > distTo[currentNode]) {
+        // Dijkstra's algorithm to find the shortest path to all nodes
+        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.time - b.time);
+        heap.offer(new State(k, 0)); // start from the source node k
+
+        Map<Integer, Integer> minTimeToNode = new HashMap<>();
+        while (!heap.isEmpty()) {
+            State current = heap.poll();
+
+            if (minTimeToNode.containsKey(current.node)) {
                 continue;
             }
-            
-            for (int[] neighbor : graph[currentNode]) {
-                int nextNode = neighbor[0];
-                int nextDist = currentDist + neighbor[1];
-                if (distTo[nextNode] > nextDist) {
-                    distTo[nextNode] = nextDist;
-                    pq.offer(new State(nextNode, nextDist));
+
+            // Record the shortest time to reach this node
+            minTimeToNode.put(current.node, current.time);
+
+            // Explore all neighbors
+            for (State neighbor : graph.get(current.node)) {
+                if (!minTimeToNode.containsKey(neighbor.node)) {
+                    heap.offer(new State(neighbor.node, current.time + neighbor.time));
                 }
             }
         }
-        return distTo;
+
+        // If we reached all nodes, return the maximum time
+        if (minTimeToNode.size() != n) return -1; // not all nodes are reachable
+        int maxTime = 0;
+        for (int time : minTimeToNode.values()) {
+            maxTime = Math.max(maxTime, time);
+        }
+        return maxTime;
     }
 }
