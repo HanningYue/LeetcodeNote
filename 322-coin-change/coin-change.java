@@ -15,14 +15,14 @@ class Solution {
             return dpTable[amount];
         }
 
-        int currentNumberOfCoin = Integer.MAX_VALUE;
+        int result = Integer.MAX_VALUE;
         for (int coin : coins) {
             int subProblem = dp(coins, amount - coin);
             if (subProblem != -1) {
-                currentNumberOfCoin = Math.min(currentNumberOfCoin, subProblem + 1);
+                result = Math.min(result, subProblem + 1);
             }
         }
-        dpTable[amount] = currentNumberOfCoin == Integer.MAX_VALUE ? -1 : currentNumberOfCoin;
+        dpTable[amount] = result == Integer.MAX_VALUE ? -1 : result;
         return dpTable[amount];
     }
 }
