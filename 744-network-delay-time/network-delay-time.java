@@ -8,9 +8,9 @@ class State {
 
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
-        Map<Integer, List<State>> graph = new HashMap<>();
+        Map<Integer, Set<State>> graph = new HashMap<>();
         for (int i = 1; i <= n; i++) {
-            graph.put(i, new ArrayList<>());
+            graph.put(i, new HashSet<>());
         }
         for (int[] time : times) {
             int source = time[0], target = time[1], cost = time[2];
@@ -18,7 +18,7 @@ class Solution {
         }
 
         PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.time - b.time);
-        heap.offer(new State(k, 0)); // start from the source node k
+        heap.offer(new State(k, 0));
 
         int[] minTimeToNode = new int[n + 1];
         Arrays.fill(minTimeToNode, Integer.MAX_VALUE);
