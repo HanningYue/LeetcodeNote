@@ -26,9 +26,9 @@ class Solution {
 
         while (!heap.isEmpty()) {
             State current = heap.poll();
-            if (current.time > minTimeToNode[current.node]) {
-                continue;
-            }
+            // if (current.time > minTimeToNode[current.node]) {
+            //     continue;
+            // }
 
             for (State neighbor : graph.get(current.node)) {
                 int newTime = current.time + neighbor.time;
