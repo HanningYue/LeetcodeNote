@@ -29,10 +29,10 @@ class Solution {
                 continue;
             }
 
-            minStopToCurrentCity[current.city] = current.stop;
             if (current.city == dst) {
                 return current.cost;
             }
+            minStopToCurrentCity[current.city] = current.stop;
             
             for (State neighbor : graph.get(current.city)) {
                 heap.offer(new State(neighbor.city, neighbor.cost + current.cost, current.stop + 1));
