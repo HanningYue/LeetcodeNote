@@ -13,19 +13,22 @@ class Solution {
             graph.put(i, new HashSet<>());
         }
         for (int[] time : times) {
-            int source = time[0], target = time[1], cost = time[2];
-            graph.get(source).add(new State(target, cost));
+            int from = time[0], to = time[1], delay = time[2];
+            graph.get(from).add(new State(to, delay));
         }
-
-        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.time - b.time);
-        heap.offer(new State(k, 0));
 
         int[] minTimeToNode = new int[n + 1];
         Arrays.fill(minTimeToNode, Integer.MAX_VALUE);
         minTimeToNode[k] = 0;
 
+        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.time - b.time);
+        heap.offer(new State(k, 0));
+
         while (!heap.isEmpty()) {
             State current = heap.poll();
+            if (current.time > minTimeToNode[current.node]) {
+                continue;
+            }
 
             for (State neighbor : graph.get(current.node)) {
                 int newTime = current.time + neighbor.time;
