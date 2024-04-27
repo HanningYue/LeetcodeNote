@@ -7,6 +7,6 @@ class Solution {
                 return false;
             }
         }
-        return maxJumpAtEachStep >= nums.length - 1;
+        return true;
     }
 }
