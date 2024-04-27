@@ -5,6 +5,7 @@ class State {
         this.time = time;
     }
 }
+
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
         Map<Integer, List<State>> graph = new HashMap<>();
@@ -16,34 +17,31 @@ class Solution {
             graph.get(source).add(new State(target, cost));
         }
 
-        // Dijkstra's algorithm to find the shortest path to all nodes
         PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.time - b.time);
         heap.offer(new State(k, 0)); // start from the source node k
 
-        Map<Integer, Integer> minTimeToNode = new HashMap<>();
+        int[] minTimeToNode = new int[n + 1];
+        Arrays.fill(minTimeToNode, Integer.MAX_VALUE);
+        minTimeToNode[k] = 0;
+
         while (!heap.isEmpty()) {
             State current = heap.poll();
 
-            if (minTimeToNode.containsKey(current.node)) {
-                continue;
-            }
-
-            // Record the shortest time to reach this node
-            minTimeToNode.put(current.node, current.time);
-
-            // Explore all neighbors
             for (State neighbor : graph.get(current.node)) {
-                if (!minTimeToNode.containsKey(neighbor.node)) {
-                    heap.offer(new State(neighbor.node, current.time + neighbor.time));
+                int newTime = current.time + neighbor.time;
+                if (newTime < minTimeToNode[neighbor.node]) {
+                    minTimeToNode[neighbor.node] = newTime;
+                    heap.offer(new State(neighbor.node, newTime));
                 }
             }
         }
 
-        // If we reached all nodes, return the maximum time
-        if (minTimeToNode.size() != n) return -1; // not all nodes are reachable
         int maxTime = 0;
-        for (int time : minTimeToNode.values()) {
-            maxTime = Math.max(maxTime, time);
+        for (int i = 1; i <= n; i++) {
+            if (minTimeToNode[i] == Integer.MAX_VALUE) {
+                return -1;
+            }
+            maxTime = Math.max(maxTime, minTimeToNode[i]);
         }
         return maxTime;
     }
