@@ -15,16 +15,16 @@ class Solution {
         }
 
         ListNode current = head;
-        ListNode kth = current;
+        ListNode kth = head;
         for (int i = 0; i < k; i++) {
             if (kth == null) {
-                return current;
+                return head;
             }
             kth = kth.next;
         }
 
-        ListNode reverseHead = reverseRange(current, kth);
-        current.next = reverseKGroup(kth, k);
+        ListNode reverseHead = reverseRange(head, kth);
+        head.next = reverseKGroup(kth, k);
         return reverseHead;
     }
     private ListNode reverseRange(ListNode left, ListNode right) {
