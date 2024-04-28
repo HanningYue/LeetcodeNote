@@ -24,7 +24,7 @@ class Solution {
         }
 
         ListNode reverseHead = reverseRange(current, kth);
-        head.next = reverseKGroup(kth, k);
+        current.next = reverseKGroup(kth, k);
         return reverseHead;
     }
     private ListNode reverseRange(ListNode left, ListNode right) {
