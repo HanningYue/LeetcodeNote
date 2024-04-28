@@ -15,10 +15,10 @@ class Solution {
         }
 
         ListNode current = head;
-        ListNode kth = head;
+        ListNode kth = current;
         for (int i = 0; i < k; i++) {
             if (kth == null) {
-                return head;
+                return current;
             }
             kth = kth.next;
         }
