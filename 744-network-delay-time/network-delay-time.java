@@ -1,11 +1,10 @@
 class State {
-    int node, time;
-    public State(int node, int time) {
-        this.node = node;
-        this.time = time;
+    int vertex, cost;
+    public State(int vertex, int cost) {
+        this.vertex = vertex;
+        this.cost = cost;
     }
 }
-
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
         Map<Integer, Set<State>> graph = new HashMap<>();
@@ -13,39 +12,41 @@ class Solution {
             graph.put(i, new HashSet<>());
         }
         for (int[] time : times) {
-            int from = time[0], to = time[1], delay = time[2];
-            graph.get(from).add(new State(to, delay));
+            int source = time[0], target = time[1], cost = time[2];
+            graph.get(source).add(new State(target, cost));
         }
 
-        int[] minTimeToNode = new int[n + 1];
-        Arrays.fill(minTimeToNode, Integer.MAX_VALUE);
-        minTimeToNode[k] = 0;
+        int[] minTimeToCurrent = new int[n + 1];
+        Arrays.fill(minTimeToCurrent, Integer.MAX_VALUE);
+        minTimeToCurrent[k] = 0;
 
-        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.time - b.time);
+        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
         heap.offer(new State(k, 0));
 
         while (!heap.isEmpty()) {
             State current = heap.poll();
-            // if (current.time > minTimeToNode[current.node]) {
-            //     continue;
-            // }
+            int currentVertex = current.vertex;
+            int currentCost = current.cost;
 
-            for (State neighbor : graph.get(current.node)) {
-                int newTime = current.time + neighbor.time;
-                if (newTime < minTimeToNode[neighbor.node]) {
-                    minTimeToNode[neighbor.node] = newTime;
-                    heap.offer(new State(neighbor.node, newTime));
+            for (State neighbor : graph.get(currentVertex)) {
+                int neighborVertex = neighbor.vertex;
+                int costToNeighbor = neighbor.cost;
+                int totalCost = currentCost + costToNeighbor;
+                
+                if (totalCost < minTimeToCurrent[neighborVertex]) {
+                    minTimeToCurrent[neighborVertex] = totalCost;
+                    heap.offer(new State(neighborVertex, totalCost));
                 }
             }
         }
 
-        int maxTime = 0;
-        for (int i = 1; i <= n; i++) {
-            if (minTimeToNode[i] == Integer.MAX_VALUE) {
+        int result = Integer.MIN_VALUE;
+        for (int i = 1; i < minTimeToCurrent.length; i++) {
+            if (minTimeToCurrent[i] == Integer.MAX_VALUE) {
                 return -1;
             }
-            maxTime = Math.max(maxTime, minTimeToNode[i]);
+            result = Math.max(result, minTimeToCurrent[i]);
         }
-        return maxTime;
+        return result;
     }
 }
