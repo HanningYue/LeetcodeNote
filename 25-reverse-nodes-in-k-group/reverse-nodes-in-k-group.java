@@ -13,8 +13,6 @@ class Solution {
         if (head == null || head.next == null) {
             return head;
         }
-
-        ListNode current = head;
         ListNode kth = head;
         for (int i = 0; i < k; i++) {
             if (kth == null) {
