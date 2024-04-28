@@ -12,40 +12,33 @@ class Solution {
             graph.put(i, new HashSet<>());
         }
         for (int[] time : times) {
-            int source = time[0], target = time[1], cost = time[2];
-            graph.get(source).add(new State(target, cost));
+            int from = time[0], to = time[1], cost = time[2];
+            graph.get(from).add(new State(to, cost));
         }
 
-        int[] minTimeToCurrent = new int[n + 1];
-        Arrays.fill(minTimeToCurrent, Integer.MAX_VALUE);
-        minTimeToCurrent[k] = 0;
-
-        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
+        int[] minCostToCurrent = new int[n + 1];
+        Arrays.fill(minCostToCurrent, Integer.MAX_VALUE);
+        minCostToCurrent[k] = 0;
+        
+        PriorityQueue<State> heap = new PriorityQueue<State>((a, b) -> a.cost - b.cost);
         heap.offer(new State(k, 0));
-
         while (!heap.isEmpty()) {
             State current = heap.poll();
-            int currentVertex = current.vertex;
-            int currentCost = current.cost;
 
-            for (State neighbor : graph.get(currentVertex)) {
-                int neighborVertex = neighbor.vertex;
-                int costToNeighbor = neighbor.cost;
-                int totalCost = currentCost + costToNeighbor;
-                
-                if (totalCost < minTimeToCurrent[neighborVertex]) {
-                    minTimeToCurrent[neighborVertex] = totalCost;
-                    heap.offer(new State(neighborVertex, totalCost));
+            for (State neighbor : graph.get(current.vertex)) {
+                if (neighbor.cost + current.cost < minCostToCurrent[neighbor.vertex]) {
+                    minCostToCurrent[neighbor.vertex] = neighbor.cost + current.cost;
+                    heap.offer(new State(neighbor.vertex, neighbor.cost + current.cost));
                 }
             }
         }
 
         int result = Integer.MIN_VALUE;
-        for (int i = 1; i < minTimeToCurrent.length; i++) {
-            if (minTimeToCurrent[i] == Integer.MAX_VALUE) {
+        for (int i = 1; i < minCostToCurrent.length; i++) {
+            if (minCostToCurrent[i] == Integer.MAX_VALUE) {
                 return -1;
             }
-            result = Math.max(result, minTimeToCurrent[i]);
+            result = Math.max(result, minCostToCurrent[i]);
         }
         return result;
     }
