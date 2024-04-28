@@ -21,7 +21,7 @@ class Solution {
             }
 
             ListNode previousOfList = previous, endOfList = current;
-            for (int i = 0; i < k && current != null; i++) {
+            for (int i = 0; i < k; i++) {
                 ListNode next = current.next;
                 current.next = previous;
                 previous = current;
@@ -33,6 +33,7 @@ class Solution {
             } else {
                 previousOfList.next = previous;
             }
+
             endOfList.next = current;
             previous = endOfList;
         }
