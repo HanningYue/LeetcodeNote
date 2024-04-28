@@ -1,14 +1,13 @@
 class State {
-    int city, cost, stop;
-    public State(int city, int cost, int stop) {
-        this.city = city;
+    int vertex, cost, stop;
+    public State(int vertex, int cost, int stop) {
+        this.vertex = vertex;
         this.cost = cost;
         this.stop = stop;
     }
 }
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        k = k + 1;
         Map<Integer, Set<State>> graph = new HashMap<>();
         for (int i = 0; i < n; i++) {
             graph.put(i, new HashSet<>());
@@ -18,24 +17,28 @@ class Solution {
             graph.get(from).add(new State(to, cost, 0));
         }
 
-        int[] minStopToCurrentCity = new int[n];
-        Arrays.fill(minStopToCurrentCity, Integer.MAX_VALUE);
+        int[] minStopToCurrent = new int[n];
+        Arrays.fill(minStopToCurrent, Integer.MAX_VALUE);
+        minStopToCurrent[src] = 0;
 
-        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
+        k = k + 1;
+        PriorityQueue<State> heap = new PriorityQueue<State>((a, b) -> a.cost - b.cost);
         heap.offer(new State(src, 0, 0));
+        
         while (!heap.isEmpty()) {
             State current = heap.poll();
-            if (current.stop > minStopToCurrentCity[current.city] || current.stop > k) {
+            
+            if (current.stop > minStopToCurrent[current.vertex] || current.stop > k) {
                 continue;
             }
 
-            if (current.city == dst) {
+            minStopToCurrent[current.vertex] = current.stop;
+            if (current.vertex == dst) {
                 return current.cost;
             }
-            minStopToCurrentCity[current.city] = current.stop;
-            
-            for (State neighbor : graph.get(current.city)) {
-                heap.offer(new State(neighbor.city, neighbor.cost + current.cost, current.stop + 1));
+
+            for (State neighbor : graph.get(current.vertex)) {
+                heap.offer(new State(neighbor.vertex, current.cost + neighbor.cost, current.stop + 1));
             }
         }
         return -1;
