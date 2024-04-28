@@ -5,10 +5,11 @@ class Solution {
             char[] charArray = str.toCharArray();
             Arrays.sort(charArray);
 
-            String sorted = new String(charArray);
+            String sorted = String.valueOf(charArray);
             map.putIfAbsent(sorted, new ArrayList<String>());
             map.get(sorted).add(str);
         }
+
         List<List<String>> result = new ArrayList<>(map.values());
         return result;
     }
