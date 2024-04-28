@@ -1,25 +1,37 @@
+class Pair {
+    int freq, time;
+    public Pair(int freq, int time) {
+        this.freq = freq;
+        this.time = time;
+    }
+}
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a, b) -> b - a);
-        Map<Character, Integer> map = new HashMap<>();
-        for (char c : tasks) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
+        Queue<Pair> queue = new LinkedList<>();
+        PriorityQueue<Integer> heap = new PriorityQueue<>((a, b) -> b - a);
+        
+        int[] freqArr = new int[26];
+        for (char task : tasks) {
+            freqArr[task - 'A']++;
         }
-        maxHeap.addAll(map.values());
+        for (int freq : freqArr) {
+            if (freq > 0) {
+                heap.offer(freq);
+            }
+        }
 
         int time = 0;
-        Queue<int[]> queue = new LinkedList<>();
-        while (!maxHeap.isEmpty() || !queue.isEmpty()) {
+        while (!heap.isEmpty() || !queue.isEmpty()) {
             time++;
-            if (!maxHeap.isEmpty()) {
-                int mostFreq = maxHeap.poll();
-                mostFreq--;
-                if (mostFreq > 0) {
-                    queue.offer(new int[]{mostFreq, time + n});
+            if (!heap.isEmpty()) {
+                int maxFreq = heap.poll();
+                maxFreq--;
+                if (maxFreq > 0) {
+                    queue.offer(new Pair(maxFreq, time + n));
                 }
             }
-            if (!queue.isEmpty() && queue.peek()[1] == time) {
-                maxHeap.offer(queue.poll()[0]);
+            if (!queue.isEmpty() && queue.peek().time == time) {
+                heap.offer(queue.poll().freq);
             }
         }
         return time;
