@@ -4,16 +4,15 @@ class Solution {
             return false;
         }
 
-        int[] count = new int[26];
+        int[] countArr = new int[26];
         for (char c : s.toCharArray()) {
-            count[c - 'a']++;
+            countArr[c - 'a']++;
         }
         for (char c : t.toCharArray()) {
-            count[c - 'a']--;
+            countArr[c - 'a']--;
         }
-        
-        for (int c : count) {
-            if (c != 0) {
+        for (int freq : countArr) {
+            if (freq != 0) {
                 return false;
             }
         }
