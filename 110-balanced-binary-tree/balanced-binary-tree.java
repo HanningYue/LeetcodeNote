@@ -25,20 +25,21 @@ class Solution {
             return 0;
         }
 
-        int leftMax = maxDepth(root.left);
-        if (leftMax == -1) {
+        int leftDepth = maxDepth(root.left);
+        if (leftDepth == -1) {
             return -1;
         }
 
-        int rightMax = maxDepth(root.right);
-        if (rightMax == -1) {
+        int rightDepth = maxDepth(root.right);
+        if (rightDepth == -1) {
             return -1;
         }
 
-        if (Math.abs(leftMax - rightMax) > 1) {
+        if (Math.abs(leftDepth - rightDepth) > 1) {
             return -1;
         }
-        int currentMax = Math.max(leftMax, rightMax) + 1;
-        return currentMax;
+        
+        int currentMaxDepth = Math.max(leftDepth, rightDepth) + 1;
+        return currentMaxDepth;
     }
 }
