@@ -1,7 +1,7 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        Deque<Integer> deque = new ArrayDeque<>();
         int[] result = new int[nums.length - k + 1];
+        Deque<Integer> deque = new ArrayDeque<>();
 
         for (int i = 0; i < nums.length; i++) {
             while (!deque.isEmpty() && nums[i] > nums[deque.peekLast()]) {
