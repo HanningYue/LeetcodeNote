@@ -15,21 +15,19 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<>();
-        TreeNode prev = null;
-
-        while (!stack.isEmpty() || root != null) {
-            while (root != null) {
-                stack.push(root);
-                root = root.left;
-            }
-            root = stack.pop();
-            if (prev != null && root.val <= prev.val) {
-                return false;
-            }
-            prev = root;
-            root = root.right;
+        return check(root, null, null);
+    }
+    private boolean check(TreeNode root, TreeNode leftMax, TreeNode rightMin) {
+        if (root == null) {
+            return true;
         }
-        return true;
+        boolean leftTrue = check(root.left, leftMax, root);
+        boolean rightTrue = check(root.right, root, rightMin);
+        
+        if (leftMax != null && root.val <= leftMax.val
+        || rightMin != null && root.val >= rightMin.val) {
+            return false;
+        }
+        return leftTrue && rightTrue;
     }
 }
