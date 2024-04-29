@@ -1,7 +1,6 @@
 class Solution {
     public boolean checkValidString(String s) {
-        int minLeft = 0, maxLeft = 0;
-
+        int maxLeft = 0, minLeft = 0;
         for (char c : s.toCharArray()) {
             if (c == '(') {
                 maxLeft++;
@@ -17,7 +16,6 @@ class Solution {
                     minLeft--;
                 }
             }
-            //If anytime maxLeft is negative, not possible immediately
             if (maxLeft < 0) {
                 return false;
             }
