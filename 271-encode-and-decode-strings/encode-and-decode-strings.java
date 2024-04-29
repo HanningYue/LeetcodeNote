@@ -3,8 +3,8 @@ public class Codec {
     // Encodes a list of strings to a single string.
     public String encode(List<String> strs) {
         StringBuilder sb = new StringBuilder();
-        for (String str : strs) {
-            sb.append(str.length()).append("/").append(str);
+        for (String s : strs) {
+            sb.append(s.length()).append("/").append(s);
         }
         return sb.toString();
     }
@@ -15,10 +15,11 @@ public class Codec {
         int index = 0;
         while (index < s.length()) {
             int slashIndex = s.indexOf("/", index);
-            int length = Integer.parseInt(s.substring(index, slashIndex));
-            String str = s.substring(slashIndex + 1, slashIndex + 1 + length);
+            int length = Integer.valueOf(s.substring(index, slashIndex));
+
+            String str = s.substring(slashIndex + 1, slashIndex + length + 1);
+            index = slashIndex + length + 1;
             result.add(str);
-            index = slashIndex + 1 + length;
         }
         return result;
     }
