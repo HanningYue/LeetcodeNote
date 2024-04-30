@@ -1,28 +1,48 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
-        int count = 0;
-        Set<Integer> visited = new HashSet<>();
-        for (int i = 0; i < isConnected.length; i++) {
-            if (!visited.contains(i)) {
-                count++;
-                bfs(i, isConnected, visited);
-            }
-        }        
-        return count;
-    }
+        int n = isConnected.length;
 
-    private void bfs(int vertex, int[][] isConnected, Set<Integer> visited) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(vertex);
-
-        while (!queue.isEmpty()) {
-            int city = queue.poll();
-            for (int i = 0; i < isConnected.length; i++) {
-                if(isConnected[city][i] == 1 && !visited.contains(i)) {
-                    queue.offer(i);
-                    visited.add(i);
+        UnionFind uf = new UnionFind(n);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isConnected[i][j] == 1) {
+                    int vertexOne = i, vertexTwo = j;
+                    if (uf.connected(vertexOne, vertexTwo)) {
+                        continue;
+                    }
+                    uf.union(vertexOne, vertexTwo);
                 }
             }
         }
+        return uf.count;
+    }
+}
+class UnionFind {
+    int[] parent;
+    int count;
+    public UnionFind(int n) {
+        parent = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+            this.count = n;
+        }
+    }
+    public int find(int vertex) {
+        if (parent[vertex] != vertex) {
+            parent[vertex] = find(parent[vertex]);
+        }
+        return parent[vertex];
+    }
+    public void union(int one, int two) {
+        int parentOne = find(one);
+        int parentTwo = find(two);
+        if (parentOne == parentTwo) {
+            return;
+        }
+        parent[parentOne] = parentTwo;
+        count--;
+    }
+    public boolean connected(int one, int two) {
+        return find(one) == find(two);
     }
 }
