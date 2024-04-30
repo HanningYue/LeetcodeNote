@@ -20,10 +20,10 @@ class Solution {
             int skip = dp(s, i - 1, t, j - 1);
             dpTable[i][j] = skip;
         } else if (s.charAt(i) != t.charAt(j)) {
-            int replace = dp(s, i - 1, t, j - 1) + 1;
-            int insert = dp(s, i, t, j - 1) + 1;
-            int delete = dp(s, i - 1, t, j) + 1;
-            dpTable[i][j] = Math.min(delete, Math.min(replace, insert));
+            int replace = dp(s, i - 1, t, j - 1);
+            int insert = dp(s, i, t, j - 1);
+            int delete = dp(s, i - 1, t, j);
+            dpTable[i][j] = Math.min(delete, Math.min(replace, insert)) + 1;
         }
         return dpTable[i][j];
     }
