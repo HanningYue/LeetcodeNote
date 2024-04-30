@@ -6,11 +6,10 @@ class Solution {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (isConnected[i][j] == 1) {
-                    int vertexOne = i, vertexTwo = j;
-                    if (uf.connected(vertexOne, vertexTwo)) {
+                    if (uf.connected(i, j)) {
                         continue;
                     }
-                    uf.union(vertexOne, vertexTwo);
+                    uf.union(i, j);
                 }
             }
         }
