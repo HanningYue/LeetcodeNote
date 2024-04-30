@@ -15,7 +15,7 @@ class Solution {
         if (dpTable[index] != null) {
             return dpTable[index];
         }
-
+        
         int count = dp(s, index + 1);
         if (index + 1 < s.length()) {
             int twoDigits = (s.charAt(index) - '0') * 10 + (s.charAt(index + 1) - '0');
@@ -24,6 +24,6 @@ class Solution {
             }
         }
         dpTable[index] = count;
-        return count;
+        return dpTable[index];
     }
 }
