@@ -12,7 +12,7 @@ class Solution {
                 if (sum == target) {
                     return target;
                 } else if (Math.abs(target - sum) < Math.abs(target - closestSum)) {
-                    closestSum = sum;
+                    closestSum = sum;  
                 } else if (sum < target) {
                     i++;
                 } else if (sum > target) {
