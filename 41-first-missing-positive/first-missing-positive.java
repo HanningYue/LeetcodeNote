@@ -2,11 +2,11 @@ class Solution {
     public int firstMissingPositive(int[] nums) {
         int i = 0;
         while (i < nums.length) {
-            int suppose = nums[i] - 1;
-            if (nums[i] > 0 && nums[i] < nums.length && nums[i] != nums[suppose]) {
+            int naturalIndex = nums[i] - 1;
+            if (nums[i] > 0 && nums[i] < nums.length && nums[i] != nums[naturalIndex]) {
                 int temp = nums[i];
-                nums[i] = nums[suppose];
-                nums[suppose] = temp;
+                nums[i] = nums[naturalIndex];
+                nums[naturalIndex] = temp;
             } else {
                 i++;
             }
