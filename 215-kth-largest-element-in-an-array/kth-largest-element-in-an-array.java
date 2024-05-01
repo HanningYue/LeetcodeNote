@@ -15,20 +15,24 @@ class Solution {
     private int findPivotIndex(int[] nums, int left, int right) {
         int pivotValue = nums[left];
         int leftP = left + 1, rightP = right;
-        
+
         while (leftP <= rightP) {
-            if (nums[leftP] < pivotValue && nums[rightP] > pivotValue) {
+            // Move leftP right until finding an element smaller than pivotValue
+            while (leftP <= rightP && nums[leftP] >= pivotValue) {
+                leftP++;
+            }
+            // Move rightP left until finding an element greater than pivotValue
+            while (leftP <= rightP && nums[rightP] < pivotValue) {
+                rightP--;
+            }
+            // Swap elements to move larger elements to the left and smaller to the right
+            if (leftP < rightP) {
                 swap(nums, leftP, rightP);
                 leftP++;
                 rightP--;
             }
-            if (nums[leftP] >= pivotValue) {
-                leftP++;
-            }
-            if (nums[rightP] <= pivotValue) {
-                rightP--;
-            }
         }
+        // Swap pivot into correct place
         swap(nums, left, rightP);
         return rightP;
     }
