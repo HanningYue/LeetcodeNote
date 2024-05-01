@@ -1,32 +1,31 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         int left = 0, right = nums.length - 1;
-        
         while (true) {
-            int pivotIndex = findPivotIndex(nums, left, right);
-            if (pivotIndex + 1 == k) {
-                return nums[pivotIndex];
-            } else if (pivotIndex + 1 < k) {
-                left = pivotIndex + 1;
-            } else if (pivotIndex + 1 > k) {
-                right = pivotIndex - 1;
+            int pivot = findPivotIndex(nums, left, right);
+            if (pivot + 1 == k) {
+                return nums[pivot];
+            } else if (pivot + 1 > k) {
+                right = pivot - 1;
+            } else if (pivot + 1 < k) {
+                left = pivot + 1;
             }
         }
     }
     private int findPivotIndex(int[] nums, int left, int right) {
-        int pivotNum = nums[left];
-
+        int pivotValue = nums[left];
         int leftP = left + 1, rightP = right;
+        
         while (leftP <= rightP) {
-            if (nums[leftP] < pivotNum && nums[rightP] > pivotNum) {
+            if (nums[leftP] < pivotValue && nums[rightP] > pivotValue) {
                 swap(nums, leftP, rightP);
                 leftP++;
                 rightP--;
-            } 
-            if (nums[leftP] >= pivotNum) {
+            }
+            if (nums[leftP] >= pivotValue) {
                 leftP++;
             }
-            if (nums[rightP] <= pivotNum) {
+            if (nums[rightP] <= pivotValue) {
                 rightP--;
             }
         }
