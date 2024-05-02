@@ -14,9 +14,9 @@ class Solution {
 
             if (map.containsKey(pair)) {
                 maxLength = Math.max(maxLength, i - map.get(pair));
-            } else {
-                map.put(pair, i);
             }
+            map.putIfAbsent(pair, i);
+            
         }
         return maxLength;
     }
