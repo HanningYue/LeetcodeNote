@@ -4,14 +4,15 @@ class Solution {
         int result = 0;
 
         while (left < right) {
-            int currentArea = (right - left) * Math.min(height[left], height[right]);
-            result = Math.max(result, currentArea);
-
+            int water = 0;
             if (height[left] < height[right]) {
+                water = (right - left) * height[left];
                 left++;
-            } else if (height[left] >= height[right]) {
+            } else {
+                water = (right - left) * height[right];
                 right--;
             }
+            result = Math.max(result, water);
         }
         return result;
     }
