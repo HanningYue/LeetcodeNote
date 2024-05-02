@@ -1,26 +1,34 @@
 class Solution {
-    Map<String, Integer> dpTable;
+    Integer[][] dpTable;
     public int findTargetSumWays(int[] nums, int target) {
-        dpTable = new HashMap<>();
-        return dfs(nums, 0, 0, target);
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (Math.abs(target) > Math.abs(sum)) {
+            return 0;
+        }
+
+        dpTable = new Integer[nums.length][2 * sum + 1];
+        return dp(nums, 0, 0, target, sum);
     }
-    private int dfs(int[] nums, int index, int currentSum, int target) {
+
+    private int dp(int[] nums, int index, int runningSum, int target, int sum) {
         if (index == nums.length) {
-            if (currentSum == target) {
+            if (runningSum == target) {
                 return 1;
             }
             return 0;
         }
         
-        String key = index + "," + currentSum;
-        if (dpTable.containsKey(key)) {
-            return dpTable.get(key);
+        if (dpTable[index][runningSum + sum] != null) {
+            return dpTable[index][runningSum + sum];
         }
         
-        int add = dfs(nums, index + 1, currentSum + nums[index], target);
-        int subtract = dfs(nums, index + 1, currentSum - nums[index], target);
+        int add = dp(nums, index + 1, runningSum + nums[index], target, sum);
+        int minus = dp(nums, index + 1, runningSum - nums[index], target, sum);
         
-        dpTable.put(key, add + subtract);
-        return dpTable.get(key);
+        dpTable[index][runningSum + sum] = add + minus;
+        return dpTable[index][runningSum + sum];
     }
 }
