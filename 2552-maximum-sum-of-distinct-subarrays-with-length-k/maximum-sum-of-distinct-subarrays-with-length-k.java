@@ -1,31 +1,25 @@
 class Solution {
     public long maximumSubarraySum(int[] nums, int k) {
-        long result = 0;
+        int slow = 0;
+        long maxSum = 0, runningSum = 0;
         Set<Integer> set = new HashSet<>();
-        int slow = 0, fast = 0;
-        long runningSum = 0;
 
-        while (fast < nums.length) {
-            if (set.add(nums[fast])) {
-                runningSum += nums[fast];
-                fast++;
-            } else if (!set.add(nums[fast])){
-                while (nums[slow] != nums[fast]) {
-                    runningSum -= nums[slow];
-                    set.remove(nums[slow]);
-                    slow++;
-                }
-                slow++;
-                fast++;
+        for (int fast = 0; fast < nums.length; fast++) {
+            // Remove elements until there are no duplicates and window size is within k
+            while (set.contains(nums[fast]) || fast - slow >= k) {
+                runningSum -= nums[slow];
+                set.remove(nums[slow++]);
             }
             
-            while (fast - slow >= k) {
-                result = Math.max(result, runningSum);    
-                runningSum -= nums[slow];
-                set.remove(nums[slow]);
-                slow++;
+            // Add current element to the running sum and set
+            runningSum += nums[fast];
+            set.add(nums[fast]);
+
+            // Check for maximum sum when the window size is exactly k
+            if (fast - slow + 1 == k) {
+                maxSum = Math.max(maxSum, runningSum);
             }
         }
-        return result;
+        return maxSum;
     }
 }
