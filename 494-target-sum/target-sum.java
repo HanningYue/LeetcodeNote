@@ -9,25 +9,23 @@ class Solution {
             return 0;
         }
 
-        dpTable = new Integer[nums.length][2 * sum + 1];
-        return dp(nums, 0, 0, target, sum);
+        dpTable = new Integer[nums.length][sum * 2 + 1];
+        return dp(nums, target, 0, 0, sum);
     }
-
-    private int dp(int[] nums, int index, int runningSum, int target, int sum) {
+    private int dp(int[] nums, int target, int runningSum, int index, int sum) {
         if (index == nums.length) {
             if (runningSum == target) {
                 return 1;
             }
             return 0;
         }
-        
+
         if (dpTable[index][runningSum + sum] != null) {
             return dpTable[index][runningSum + sum];
         }
-        
-        int add = dp(nums, index + 1, runningSum + nums[index], target, sum);
-        int minus = dp(nums, index + 1, runningSum - nums[index], target, sum);
-        
+
+        int add = dp(nums, target, runningSum + nums[index], index + 1, sum);
+        int minus = dp(nums, target, runningSum - nums[index], index + 1, sum);
         dpTable[index][runningSum + sum] = add + minus;
         return dpTable[index][runningSum + sum];
     }
