@@ -7,8 +7,8 @@ class Solution {
         int totalLength = nums1.length + nums2.length;
         int halfLength = (totalLength + 1) / 2;
         boolean even = totalLength % 2 == 0;
-
         int left = 0, right = nums1.length;
+
         while (true) {
             int pointerOne = left + (right - left) / 2;
             int pointerTwo = halfLength - pointerOne;
