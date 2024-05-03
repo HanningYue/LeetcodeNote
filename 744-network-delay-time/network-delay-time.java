@@ -31,7 +31,7 @@ class Solution {
                 }
             }
         }
-        
+
         int result = Integer.MIN_VALUE;
         for (int i = 1; i <= n; i++) {
             if (minCostToCurrent[i] == Integer.MAX_VALUE) {
