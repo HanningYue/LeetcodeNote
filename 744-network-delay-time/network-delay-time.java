@@ -16,30 +16,28 @@ class Solution {
             graph.get(from).add(new State(to, cost));
         }
 
-        int[] minTimeToCurrent = new int[n + 1];
-        Arrays.fill(minTimeToCurrent, Integer.MAX_VALUE);
-        minTimeToCurrent[k] = 0;
+        int[] minCostToCurrent = new int[n + 1];
+        Arrays.fill(minCostToCurrent, Integer.MAX_VALUE);
+        minCostToCurrent[k] = 0;
 
         PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
         heap.offer(new State(k, 0));
-
         while (!heap.isEmpty()) {
             State current = heap.poll();
-
             for (State neighbor : graph.get(current.vertex)) {
-                if (neighbor.cost + current.cost < minTimeToCurrent[neighbor.vertex]) {
+                if (neighbor.cost + current.cost < minCostToCurrent[neighbor.vertex]) {
+                    minCostToCurrent[neighbor.vertex] = neighbor.cost + current.cost;
                     heap.offer(new State(neighbor.vertex, neighbor.cost + current.cost));
-                    minTimeToCurrent[neighbor.vertex] = neighbor.cost + current.cost;
                 }
             }
         }
-
+        
         int result = Integer.MIN_VALUE;
-        for (int i = 1; i < minTimeToCurrent.length; i++) {
-            if (minTimeToCurrent[i] == Integer.MAX_VALUE) {
+        for (int i = 1; i <= n; i++) {
+            if (minCostToCurrent[i] == Integer.MAX_VALUE) {
                 return -1;
             }
-            result = Math.max(result, minTimeToCurrent[i]);
+            result = Math.max(result, minCostToCurrent[i]);
         }
         return result;
     }
