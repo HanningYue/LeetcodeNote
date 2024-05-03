@@ -7,38 +7,39 @@ class State {
 }
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
-        Map<Integer, Set<State>> graph = new HashMap<>();
+        Map<Integer, List<State>> graph = new HashMap<>();
         for (int i = 1; i <= n; i++) {
-            graph.put(i, new HashSet<>());
+            graph.put(i, new ArrayList<>());
         }
         for (int[] time : times) {
             int from = time[0], to = time[1], cost = time[2];
             graph.get(from).add(new State(to, cost));
         }
 
-        int[] minCostToCurrent = new int[n + 1];
-        Arrays.fill(minCostToCurrent, Integer.MAX_VALUE);
-        minCostToCurrent[k] = 0;
-        
-        PriorityQueue<State> heap = new PriorityQueue<State>((a, b) -> a.cost - b.cost);
+        int[] minTimeToCurrent = new int[n + 1];
+        Arrays.fill(minTimeToCurrent, Integer.MAX_VALUE);
+        minTimeToCurrent[k] = 0;
+
+        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
         heap.offer(new State(k, 0));
+
         while (!heap.isEmpty()) {
             State current = heap.poll();
 
             for (State neighbor : graph.get(current.vertex)) {
-                if (neighbor.cost + current.cost < minCostToCurrent[neighbor.vertex]) {
-                    minCostToCurrent[neighbor.vertex] = neighbor.cost + current.cost;
+                if (neighbor.cost + current.cost < minTimeToCurrent[neighbor.vertex]) {
                     heap.offer(new State(neighbor.vertex, neighbor.cost + current.cost));
+                    minTimeToCurrent[neighbor.vertex] = neighbor.cost + current.cost;
                 }
             }
         }
 
         int result = Integer.MIN_VALUE;
-        for (int i = 1; i < minCostToCurrent.length; i++) {
-            if (minCostToCurrent[i] == Integer.MAX_VALUE) {
+        for (int i = 1; i < minTimeToCurrent.length; i++) {
+            if (minTimeToCurrent[i] == Integer.MAX_VALUE) {
                 return -1;
             }
-            result = Math.max(result, minCostToCurrent[i]);
+            result = Math.max(result, minTimeToCurrent[i]);
         }
         return result;
     }
