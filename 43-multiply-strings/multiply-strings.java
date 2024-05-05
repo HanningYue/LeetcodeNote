@@ -3,23 +3,24 @@ class Solution {
         int[] result = new int[num1.length() + num2.length()];
         for (int i = num1.length() - 1; i >= 0; i--) {
             for (int j = num2.length() - 1; j >= 0; j--) {
-                int one = num1.charAt(i) - '0';
-                int two = num2.charAt(j) - '0';
+                int num1Last = num1.charAt(i) - '0';
+                int num2Last = num2.charAt(j) - '0';
 
-                int product = one * two;
+                int product = num1Last * num2Last;
                 int sum = product + result[i + j + 1];
                 result[i + j + 1] = sum % 10;
                 result[i + j] = result[i + j] + sum / 10;
             }
         }
-        int i = 0;
-        while (i < result.length && result[i] == 0) {
-            i++;
+        
+        int k = 0;
+        while (k < result.length && result[k] == 0) {
+            k++;
         }
         StringBuilder sb = new StringBuilder();
-        while (i < result.length) {
-            sb.append(result[i]);
-            i++;
+        while (k < result.length) {
+            sb.append(result[k]);
+            k++;
         }
         return sb.length() == 0 ? "0" : sb.toString();
     }
