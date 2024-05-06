@@ -15,8 +15,8 @@ class Solution {
         for (int length = 1; index + length <= s.length(); length++) {
             String prefix = s.substring(index, index + length);
             if (set.contains(prefix)) {
-                boolean sub = dp(s, index + length, set);
-                if (sub) {
+                boolean subProblem = dp(s, index + length, set);
+                if (subProblem) {
                     dpTable[index] = true;
                     return true;
                 }
