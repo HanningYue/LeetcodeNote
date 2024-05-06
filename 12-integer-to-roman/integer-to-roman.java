@@ -1,6 +1,5 @@
 class Solution {
     public String intToRoman(int num) {
-        int[] highToLow = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
         Map<Integer, String> map = new HashMap<>();
         map.put(1000, "M");
         map.put(900, "CM");
@@ -16,12 +15,15 @@ class Solution {
         map.put(4, "IV");
         map.put(1, "I");
 
+        int[] highToLow 
+        = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < highToLow.length; i++) {
             if (num / highToLow[i] != 0) {
-                int freq = num / highToLow[i];
-                String c = map.get(highToLow[i]);    
-                sb.append(c.repeat(freq));
+                int frequency = num / highToLow[i];
+                String current = map.get(highToLow[i]);
+                sb.append(current.repeat(frequency));
                 num = num % highToLow[i];
             }
         }
