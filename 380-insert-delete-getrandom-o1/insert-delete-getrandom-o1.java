@@ -21,10 +21,8 @@ class RandomizedSet {
 
             int currentLastValue = list.get(list.size() - 1);
             map.put(currentLastValue, originalIndex);
-            
-            int temp = list.get(originalIndex);
-            list.set(list.size() - 1, temp);
-            list.set(originalIndex, currentLastValue);
+
+            Collections.swap(list, originalIndex, list.size() - 1);
             
             list.remove(list.size() - 1);
             map.remove(val);
