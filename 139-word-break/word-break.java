@@ -1,26 +1,28 @@
 class Solution {
+    Boolean[] dpTable;
     public boolean wordBreak(String s, List<String> wordDict) {
+        dpTable = new Boolean[s.length()];
         Set<String> set = new HashSet<>(wordDict);
-        boolean[] visited = new boolean[s.length() + 1];
-
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(0);
-        while (!queue.isEmpty()) {
-            int currentIndex = queue.poll();
-            if (currentIndex == s.length()) {
-                return true;
-            }
-
-            for (int length = 1; length + currentIndex <= s.length(); length++) {
-                if (visited[currentIndex + length]) {
-                    continue;
-                }
-                if (set.contains(s.substring(currentIndex, currentIndex + length))) {
-                    visited[currentIndex + length] = true;
-                    queue.offer(currentIndex + length);
+        return dp(s, set, 0);
+    }
+    private boolean dp(String s, Set<String> set, int index) {
+        if (index == s.length()) {
+            return true;
+        }
+        if (dpTable[index] != null) {
+            return dpTable[index];
+        }
+        for (int length = 1; length + index <= s.length(); length++) {
+            String current = s.substring(index, index + length);
+            if (set.contains(current)) {
+                boolean subProblem = dp(s, set, index + length);
+                if (subProblem) {
+                    dpTable[index] = true;
+                    return true;
                 }
             }
         }
+        dpTable[index] = false;
         return false;
     }
 }
