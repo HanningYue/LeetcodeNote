@@ -4,31 +4,38 @@ class RandomizedSet {
     public RandomizedSet() {
         list = new ArrayList<>();
         map = new HashMap<>();
-    }   
+    }
+    
     public boolean insert(int val) {
-        if (map.containsKey(val)) {
-            return false;
-        }
-        map.put(val, list.size());
-        list.add(val);
-        return true;
-    }
-    public boolean remove(int val) {
         if (!map.containsKey(val)) {
-            return false;
+            list.add(val);
+            map.put(val, list.size() - 1);
+            return true;
         }
-        int originalIdx = map.get(val);
-        int currentValue = list.get(list.size() - 1);
-        map.put(currentValue, originalIdx);
-        
-        Collections.swap(list, originalIdx, list.size() - 1);
-        map.remove(val);
-        list.remove(list.size() - 1);
-        return true;
+        return false;
     }
+    
+    public boolean remove(int val) {
+        if (map.containsKey(val)) {
+            int originalIndex = map.get(val);
+
+            int currentLastValue = list.get(list.size() - 1);
+            map.put(currentLastValue, originalIndex);
+            
+            int temp = list.get(originalIndex);
+            list.set(list.size() - 1, temp);
+            list.set(originalIndex, currentLastValue);
+            
+            list.remove(list.size() - 1);
+            map.remove(val);
+            return true;
+        }
+        return false;
+    }
+    
     public int getRandom() {
         Random rand = new Random();
-        return list.get(rand.nextInt(0, list.size()));
+        return list.get(rand.nextInt(list.size()));
     }
 }
 
