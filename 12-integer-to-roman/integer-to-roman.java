@@ -14,14 +14,15 @@ class Solution {
         map.put(5, "V");
         map.put(4, "IV");
         map.put(1, "I");
-        int[] highToLow = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 
+        int[] highToLow = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < highToLow.length; i++) {
             if (num / highToLow[i] != 0) {
                 int frequency = num / highToLow[i];
-                String current = map.get(highToLow[i]);
-                sb.append(current.repeat(frequency));
+                String cor = map.get(highToLow[i]);
+                sb.append(cor.repeat(frequency));
                 num = num % highToLow[i];
             }
         }
