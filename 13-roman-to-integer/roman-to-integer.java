@@ -10,26 +10,24 @@ class Solution {
         map.put('I', 1);
 
         int result = 0;
-        int i = s.length() - 1;
-        while (i >= 0) {
+
+        for (int i = s.length() - 1; i >= 0; i--) {
             char currentChar = s.charAt(i);
-            int current = map.get(currentChar);
-            
-            if (i - 1 >= 0) {
+            int currentValue = map.get(currentChar);
+
+            if (i > 0) {
                 char prevChar = s.charAt(i - 1);
-                int prev = map.get(prevChar);
-                if (prev < current) {
-                    result += current - prev;
+                int preValue = map.get(prevChar);
+
+                if (currentValue > preValue) {
+                    result += currentValue - preValue;
                     i--;
                 } else {
-                    result += current;
+                    result += currentValue;
                 }
-            } 
-            else {
-                result += current;
+            } else {
+                result += currentValue;
             }
-            
-            i--;
         }
         return result;
     }
