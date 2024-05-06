@@ -1,7 +1,7 @@
 class Solution {
     public boolean mergeTriplets(int[][] triplets, int[] target) {
         boolean[] result = new boolean[3];
-        
+
         for (int[] triplet : triplets) {
             boolean greater = false;
             for (int i = 0; i < 3; i++) {
@@ -19,7 +19,8 @@ class Solution {
                     result[i] = true;
                 }
             }
-        }
+        }   
+
         for (boolean value : result) {
             if (!value) {
                 return false;
