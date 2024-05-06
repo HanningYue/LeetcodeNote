@@ -7,33 +7,32 @@ class RandomizedSet {
     }
     
     public boolean insert(int val) {
-        if (!map.containsKey(val)) {
-            list.add(val);
-            map.put(val, list.size() - 1);
-            return true;
+        if (map.containsKey(val)) {
+            return false;
         }
-        return false;
+        list.add(val);
+        map.put(val, list.size() - 1);
+        return true;
     }
     
     public boolean remove(int val) {
-        if (map.containsKey(val)) {
-            int originalIndex = map.get(val);
-
-            int currentLastValue = list.get(list.size() - 1);
-            map.put(currentLastValue, originalIndex);
-
-            Collections.swap(list, originalIndex, list.size() - 1);
-            
-            list.remove(list.size() - 1);
-            map.remove(val);
-            return true;
+        if (!map.containsKey(val)) {
+            return false;
         }
-        return false;
+        int originalIndex = map.get(val);
+        int currentLastValue = list.get(list.size() - 1);
+        
+        map.put(currentLastValue, originalIndex);
+        Collections.swap(list, originalIndex, list.size() - 1);
+
+        map.remove(val);
+        list.remove(list.size() - 1);
+        return true;
     }
     
     public int getRandom() {
         Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
+        return list.get(rand.nextInt(0, list.size()));
     }
 }
 
