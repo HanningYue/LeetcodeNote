@@ -1,59 +1,53 @@
-import java.util.*;
-
 class Solution {
+    Map<Integer, Integer> map;
     public int[] topKFrequent(int[] nums, int k) {
-        // Step 1: Build frequency map
-        Map<Integer, Integer> frequencyMap = new HashMap<>();
+        map = new HashMap<>();
         for (int num : nums) {
-            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
-        // Step 2: Create an array of unique numbers
-        int n = frequencyMap.size();
-        int[] unique = new int[n];
+        int[] tempArray = new int[map.size()];
         int index = 0;
-        for (int num : frequencyMap.keySet()) {
-            unique[index++] = num;
+        for (int num : map.keySet()) {
+            tempArray[index++] = num;
         }
 
-        // Step 3: Find the kth most frequent using quick select (transformed to find k largest)
-        int target = unique.length - k;
-        quickSelect(unique, frequencyMap, 0, unique.length - 1, target);
+        int topKIndex = tempArray.length - k;
+        quickSelect(tempArray, 0, tempArray.length - 1, topKIndex);
 
-        // Step 4: Prepare result
-        int[] result = Arrays.copyOfRange(unique, target, unique.length);
-        return result;
+        return Arrays.copyOfRange(tempArray, topKIndex, tempArray.length);
     }
 
-    private void quickSelect(int[] unique, Map<Integer, Integer> freq, int left, int right, int k) {
+    private void quickSelect(int[] tempArray, int left, int right, int k) {
         if (left < right) {
-            int pivotIndex = partition(unique, freq, left, right);
+            int pivotIndex = partition(tempArray, left, right);
             if (pivotIndex == k) {
                 return;
             } else if (pivotIndex < k) {
-                quickSelect(unique, freq, pivotIndex + 1, right, k);
+                quickSelect(tempArray, pivotIndex + 1, right, k);
             } else {
-                quickSelect(unique, freq, left, pivotIndex - 1, k);
+                quickSelect(tempArray, left, pivotIndex - 1, k);
             }
         }
     }
 
-    private int partition(int[] unique, Map<Integer, Integer> freq, int left, int right) {
-        int pivotFreq = freq.get(unique[right]);
-        int i = left;
-        for (int j = left; j <= right; j++) {
-            if (freq.get(unique[j]) < pivotFreq) {
-                swap(unique, i, j);
-                i++;
+    private int partition(int[] tempArray, int left, int right) {
+        int pivotFreq = map.get(tempArray[right]);
+        int leftP = left;
+        
+        for (int i = left; i <= right; i++) {
+            if (map.get(tempArray[i]) < pivotFreq) {
+                swap(tempArray, leftP, i);
+                leftP++;
             }
         }
-        swap(unique, i, right);
-        return i;
+        swap(tempArray, leftP, right);
+        return leftP;
     }
 
-    private void swap(int[] unique, int left, int right) {
-        int temp = unique[left];
-        unique[left] = unique[right];
-        unique[right] = temp;
+    private void swap(int[] tempArray, int left, int right) {
+        int temp = tempArray[left];
+        tempArray[left] = tempArray[right];
+        tempArray[right] = temp;
     }
 }
