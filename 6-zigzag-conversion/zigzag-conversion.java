@@ -1,7 +1,7 @@
 class Solution {
     public String convert(String s, int numRows) {
         StringBuilder[] sbArray = new StringBuilder[numRows];
-        for (int i = 0; i < numRows; i++) {
+        for (int i = 0; i < sbArray.length; i++) {
             sbArray[i] = new StringBuilder();
         }
 
@@ -10,17 +10,17 @@ class Solution {
             int currentRow = 0;
             while (currentRow < numRows && sIndex < s.length()) {
                 sbArray[currentRow].append(s.charAt(sIndex));
-                currentRow++;
                 sIndex++;
+                currentRow++;
             }
             currentRow = currentRow - 2;
             while (currentRow > 0 && sIndex < s.length()) {
                 sbArray[currentRow].append(s.charAt(sIndex));
-                currentRow--;
                 sIndex++;
+                currentRow--;
             }
         }
-        
+
         StringBuilder result = new StringBuilder();
         for (StringBuilder row : sbArray) {
             result.append(row.toString());
