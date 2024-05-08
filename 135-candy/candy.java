@@ -1,23 +1,25 @@
 class Solution {
     public int candy(int[] ratings) {
-        int[] children = new int[ratings.length];
-        Arrays.fill(children, 1);
+        int n = ratings.length;
+        int[] result = new int[n];
+        Arrays.fill(result, 1);
 
-        for (int i = 1; i < children.length; i++) {
-            if (ratings[i - 1] < ratings[i]) {
-                children[i] = children[i - 1] + 1;
-            }
-        }
-        for (int i = children.length - 2; i >= 0; i--) {
-            if (ratings[i] > ratings[i + 1] && children[i] <= children[i + 1]) {
-                children[i] = children[i + 1] + 1;
+        for (int i = 1; i < n; i++) {
+            if (ratings[i] > ratings[i - 1]) {
+                result[i] = result[i - 1] + 1;
             }
         }
 
-        int result = 0;
-        for (int candy : children) {
-            result += candy;
+        for (int i = n - 2; i >= 0; i--) {
+            if (ratings[i] > ratings[i + 1] && result[i] <= result[i + 1]) {
+                result[i] = result[i + 1] + 1;
+            }
         }
-        return result;
+
+        int candy = 0;
+        for (int i = 0; i < result.length; i++) {
+            candy += result[i];
+        }
+        return candy;
     }
 }
