@@ -17,7 +17,7 @@ class Solution {
 
         int[] result = new int[k];
         int index = 0;
-        for (int i = nums.length; i > 0; i--) {
+        for (int i = bucket.size() - 1; i >= 0; i--) {
             for (int number : bucket.get(i)) {
                 result[index++] = number;
                 if (index == k) {
