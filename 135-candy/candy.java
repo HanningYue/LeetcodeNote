@@ -1,23 +1,22 @@
 class Solution {
     public int candy(int[] ratings) {
-        int[] resultArr = new int[ratings.length];
-        Arrays.fill(resultArr, 1);
+        int[] children = new int[ratings.length];
+        Arrays.fill(children, 1);
 
-        for (int i = 1; i < ratings.length; i++) {
-            if (ratings[i] > ratings[i - 1]) {
-                resultArr[i] = resultArr[i - 1] + 1;
+        for (int i = 1; i < children.length; i++) {
+            if (ratings[i - 1] < ratings[i]) {
+                children[i] = children[i - 1] + 1;
             }
         }
-
-        for (int i = ratings.length - 2; i >= 0; i--) {
-            if (ratings[i] > ratings[i + 1]) {
-                resultArr[i] = Math.max(resultArr[i + 1] + 1, resultArr[i]);
+        for (int i = children.length - 2; i >= 0; i--) {
+            if (ratings[i] > ratings[i + 1] && children[i] <= children[i + 1]) {
+                children[i] = children[i + 1] + 1;
             }
         }
 
         int result = 0;
-        for (int num : resultArr) {
-            result += num;
+        for (int candy : children) {
+            result += candy;
         }
         return result;
     }
