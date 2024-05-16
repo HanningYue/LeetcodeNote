@@ -1,44 +1,51 @@
 class Solution {
+    Random rand = new Random();
+
     public int findKthLargest(int[] nums, int k) {
-        int left = 0, right = nums.length - 1;
-        while (true) {
-            int pivotIndex = findPivotIndex(nums, left, right);
-            if (pivotIndex + 1 == k) {
-                return nums[pivotIndex];
-            } else if (pivotIndex + 1 < k) {
-                left = pivotIndex + 1;
-            } else if (pivotIndex + 1 > k) {
-                right = pivotIndex - 1;
-            }
+        return quickSelect(nums, 0, nums.length - 1, nums.length - k);
+    }
+
+    private int quickSelect(int[] nums, int left, int right, int k_smallest) {
+        if (left == right) return nums[left];
+
+        // Randomly choose pivot. This is crucial for performance improvement.
+        int pivotIndex = left + rand.nextInt(right - left);
+
+        pivotIndex = partition(nums, left, right, pivotIndex);
+
+        // The pivot is in its final sorted position
+        if (k_smallest == pivotIndex) {
+            return nums[k_smallest];
+        } else if (k_smallest < pivotIndex) {
+            return quickSelect(nums, left, pivotIndex - 1, k_smallest);
+        } else {
+            return quickSelect(nums, pivotIndex + 1, right, k_smallest);
         }
     }
-    private void swap(int[] nums, int left, int right) {
-        int temp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = temp;
+
+    private int partition(int[] nums, int left, int right, int pivotIndex) {
+        int pivot = nums[pivotIndex];
+        // move pivot to end
+        swap(nums, pivotIndex, right);
+        int storeIndex = left;
+
+        // Move all smaller elements to the left
+        for (int i = left; i <= right; i++) {
+            if (nums[i] < pivot) {
+                swap(nums, storeIndex, i);
+                storeIndex++;
+            }
+        }
+
+        // Move pivot to its final place
+        swap(nums, storeIndex, right);
+
+        return storeIndex;
     }
-    private int findPivotIndex(int[] nums, int left, int right) {
-        if (left == right) {
-            return left;
-        }
-        
-        int pivot = nums[left];
-        
-        int leftP = left, rightP = right;
-        while (leftP <= rightP) {
-            if (nums[leftP] < pivot && nums[rightP] > pivot) {
-                swap(nums, leftP, rightP);
-                leftP++;
-                rightP--;
-            }
-            if (nums[leftP] >= pivot) {
-                leftP++;
-            }
-            if (nums[rightP] <= pivot) {
-                rightP--;
-            }
-        }
-        swap(nums, left, rightP);
-        return rightP;
+
+    private void swap(int[] nums, int a, int b) {
+        int tmp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = tmp;
     }
 }
