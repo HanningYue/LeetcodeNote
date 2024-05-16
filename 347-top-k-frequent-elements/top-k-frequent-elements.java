@@ -15,19 +15,14 @@ class Solution {
         quickSelect(temp, 0, temp.length - 1, temp.length - k);
         return Arrays.copyOfRange(temp, temp.length - k, temp.length);
     }
-    private void quickSelect(int[] temp, int left, int right, int targetK) {
-        if (left >= right) {
+    private void quickSelect(int[] temp, int left, int right, int targetK) {   
+        int pivotIndex = partition(temp, left, right);
+        if (pivotIndex == targetK) {
             return;
-        }
-        if (left < right) {
-            int pivotIndex = partition(temp, left, right);
-            if (pivotIndex == targetK) {
-                return;
-            } else if (pivotIndex > targetK) {
-                quickSelect(temp, left, pivotIndex - 1, targetK);
-            } else {
-                quickSelect(temp, pivotIndex + 1, right, targetK);
-            }
+        } else if (pivotIndex > targetK) {
+            quickSelect(temp, left, pivotIndex - 1, targetK);
+        } else {
+            quickSelect(temp, pivotIndex + 1, right, targetK);
         }
     }
     private int partition(int[] temp, int left, int right) {
