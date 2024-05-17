@@ -10,10 +10,9 @@ class Solution {
         }
         return true;
     }
-    
     private boolean helper(String s, int left, int right) {
         while (left < right) {
-            if(s.charAt(left) != s.charAt(right)) {
+            if (s.charAt(left) != s.charAt(right)) {
                 return false;
             }
             left++;
