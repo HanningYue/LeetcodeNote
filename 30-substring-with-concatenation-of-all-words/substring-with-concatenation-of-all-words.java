@@ -16,10 +16,12 @@ class Solution {
                 if (!map.containsKey(nextWord)) {
                     break;
                 }
+
                 localMap.put(nextWord, localMap.getOrDefault(nextWord, 0) + 1);
                 if (localMap.get(nextWord) > map.get(nextWord)) {
                     break;
                 }
+
                 if (j == wordCount - 1) {
                     result.add(i);
                 }
