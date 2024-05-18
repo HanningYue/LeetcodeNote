@@ -10,11 +10,11 @@ class Solution {
                 if (grid[row][col] == '1' && !visited[row][col]) {
                     Queue<int[]> queue = new LinkedList<>();
                     queue.offer(new int[]{row, col});
-                    visited[row][col] = true;
 
                     while (!queue.isEmpty()) {
                         int[] currentOne = queue.poll();
                         int currentRow = currentOne[0], currentCol = currentOne[1];
+                        visited[row][col] = true;
 
                         for (int[] dir : directions) {
                             int nextRow = currentRow + dir[0], nextCol = currentCol + dir[1];
