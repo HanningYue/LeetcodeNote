@@ -1,11 +1,9 @@
 class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
-        Map<Integer, Integer> map = new HashMap<>(); //value, index
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            int currentNum = nums[i];
-            if (map.containsKey(currentNum)) {
-                int prevIndex = map.get(currentNum);
-                if (i - prevIndex <= k) {
+            if (map.containsKey(nums[i])) {
+                if (i - map.get(nums[i]) <= k) {
                     return true;
                 }
             }
