@@ -14,7 +14,6 @@ class Solution {
                     while (!queue.isEmpty()) {
                         int[] currentOne = queue.poll();
                         int currentRow = currentOne[0], currentCol = currentOne[1];
-                        visited[row][col] = true;
 
                         for (int[] dir : directions) {
                             int nextRow = currentRow + dir[0], nextCol = currentCol + dir[1];
