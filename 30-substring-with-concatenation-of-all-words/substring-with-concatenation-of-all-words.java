@@ -6,9 +6,9 @@ class Solution {
             map.put(word, map.getOrDefault(word, 0) + 1);
         }
 
-        int wordCount = words.length, eachWordLength = words[0].length();
-        int totalPermutationLength = wordCount * eachWordLength;
-        for (int i = 0; i + totalPermutationLength <= s.length(); i++) {
+        int wordCount = words.length;
+        int eachWordLength = words[0].length(), totalLength = eachWordLength * wordCount;
+        for (int i = 0; i + totalLength <= s.length(); i++) {
             Map<String, Integer> localMap = new HashMap<>();
             for (int j = 0; j < wordCount; j++) {
                 int nextWordStart = i + j * eachWordLength;
@@ -21,7 +21,6 @@ class Solution {
                 if (localMap.get(nextWord) > map.get(nextWord)) {
                     break;
                 }
-
                 if (j == wordCount - 1) {
                     result.add(i);
                 }
