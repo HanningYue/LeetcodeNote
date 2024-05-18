@@ -7,12 +7,12 @@ class Solution {
         }
 
         int wordCount = words.length;
-        int eachWordLength = words[0].length(), totalLength = eachWordLength * wordCount;
+        int eachWordLength = words[0].length(), totalLength = wordCount * eachWordLength;
         for (int i = 0; i + totalLength <= s.length(); i++) {
             Map<String, Integer> localMap = new HashMap<>();
             for (int j = 0; j < wordCount; j++) {
-                int nextWordStart = i + j * eachWordLength;
-                String nextWord = s.substring(nextWordStart, nextWordStart + eachWordLength);
+                int startOfNextWord = i + j * eachWordLength;
+                String nextWord = s.substring(startOfNextWord, startOfNextWord + eachWordLength);
                 if (!map.containsKey(nextWord)) {
                     break;
                 }
@@ -21,6 +21,7 @@ class Solution {
                 if (localMap.get(nextWord) > map.get(nextWord)) {
                     break;
                 }
+
                 if (j == wordCount - 1) {
                     result.add(i);
                 }
