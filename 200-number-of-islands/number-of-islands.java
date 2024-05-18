@@ -10,7 +10,8 @@ class Solution {
                 if (grid[row][col] == '1' && !visited[row][col]) {
                     Queue<int[]> queue = new LinkedList<>();
                     queue.offer(new int[]{row, col});
-
+                    visited[row][col] = true;
+                    
                     while (!queue.isEmpty()) {
                         int[] currentOne = queue.poll();
                         int currentRow = currentOne[0], currentCol = currentOne[1];
