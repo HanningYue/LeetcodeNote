@@ -8,8 +8,9 @@ class Solution {
             remainder = (remainder + nums[i]) % k;
             if (map.containsKey(remainder) && i - map.get(remainder) >= 2) {
                 return true;
+            } else {
+                map.putIfAbsent(remainder, i);
             }
-            map.putIfAbsent(remainder, i);
         }
         return false;
     }
