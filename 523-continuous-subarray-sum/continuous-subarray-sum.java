@@ -6,10 +6,12 @@ class Solution {
         int remainder = 0;
         for (int i = 0; i < nums.length; i++) {
             remainder = (remainder + nums[i]) % k;
-            if (map.containsKey(remainder) && i - map.get(remainder) >= 2) {
-                return true;
+            if (map.containsKey(remainder)) {
+                if (i - map.get(remainder) >= 2) {
+                    return true;
+                }
             } else {
-                map.putIfAbsent(remainder, i);
+                map.put(remainder, i);
             }
         }
         return false;
