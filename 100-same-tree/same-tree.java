@@ -20,9 +20,14 @@ class Solution {
         } else if (p == null || q == null) {
             return false;
         }
-        boolean currentSame = p.val == q.val;
+
         boolean leftSame = isSameTree(p.left, q.left);
         boolean rightSame = isSameTree(p.right, q.right);
-        return currentSame && leftSame && rightSame;
+        boolean currentSame = p.val == q.val;
+
+        if (leftSame && rightSame && currentSame) {
+            return true;
+        }   
+        return false;
     }
 }
