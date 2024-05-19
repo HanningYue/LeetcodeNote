@@ -10,13 +10,12 @@
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         TreeNode result = LCA(root, p, q);
-        if (pTrue && qTrue) {
+        if (foundP && foundQ) {
             return result;
         }
         return null;
     }
-
-    boolean pTrue = false, qTrue = false;
+    boolean foundP = false, foundQ = false;
     private TreeNode LCA(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
             return null;
@@ -26,10 +25,10 @@ class Solution {
         TreeNode rightSub = LCA(root.right, p, q);
         if (root.val == p.val || root.val == q.val) {
             if (root.val == p.val) {
-                pTrue = true;
-            } 
+                foundP = true;
+            }
             if (root.val == q.val) {
-                qTrue = true;
+                foundQ = true;
             }
             return root;
         }
