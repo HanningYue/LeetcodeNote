@@ -10,20 +10,22 @@ class Node {
 
 class Solution {
     public Node lowestCommonAncestor(Node p, Node q) {
-        Node nodeOne = p, nodeTwo = q;
-        while (nodeOne != nodeTwo) {
-            if (nodeOne == null) {
-                nodeOne = q;
+        Node a = q, b = p;
+
+        while (a != b) {                
+            if (a == null) {
+                a = p;
             } else {
-                nodeOne = nodeOne.parent;
+                a = a.parent;
             }
 
-            if (nodeTwo == null) {
-                nodeTwo = p;
+            if (b == null) {
+                b = q;
             } else {
-                nodeTwo = nodeTwo.parent;
+                b = b.parent;
             }
         }
-        return nodeOne;
+        
+        return a;
     }
 }
