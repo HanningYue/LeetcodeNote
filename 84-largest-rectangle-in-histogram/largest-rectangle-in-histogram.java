@@ -7,16 +7,17 @@ class Pair {
 }
 class Solution {
     public int largestRectangleArea(int[] heights) {
-        int maxArea = 0;
         Stack<Pair> stack = new Stack<>();
+        int maxArea = 0;
+
         for (int i = 0; i < heights.length; i++) {
             int currentIndex = i, currentHeight = heights[i];
-
+        
             while (!stack.isEmpty() && stack.peek().height > currentHeight) {
                 Pair lastRec = stack.pop();
-                int lastArea = (i - lastRec.index) * lastRec.height;
-                maxArea = Math.max(maxArea, lastArea);
-                
+                int area = (i - lastRec.index) * lastRec.height;
+                maxArea = Math.max(maxArea, area);
+
                 currentIndex = lastRec.index;
             }
             stack.push(new Pair(currentIndex, currentHeight));
