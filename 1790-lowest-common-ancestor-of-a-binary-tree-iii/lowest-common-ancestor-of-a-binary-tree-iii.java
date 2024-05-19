@@ -11,21 +11,19 @@ class Node {
 class Solution {
     public Node lowestCommonAncestor(Node p, Node q) {
         Node a = q, b = p;
-
-        while (a != b) {                
-            if (a == null) {
-                a = p;
-            } else {
+        
+        while (a != b) {
+            if (a != null) {
                 a = a.parent;
-            }
-
-            if (b == null) {
-                b = q;
             } else {
+                a = p;
+            }
+            if (b != null) {
                 b = b.parent;
+            } else {
+                b = q;
             }
         }
-        
         return a;
     }
 }
