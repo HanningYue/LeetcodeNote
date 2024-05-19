@@ -8,14 +8,15 @@
  * }
  */
 class Solution {
-    boolean foundP = false, foundQ = false;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         TreeNode result = LCA(root, p, q);
-        if (foundP && foundQ) {
+        if (pTrue && qTrue) {
             return result;
         }
         return null;
     }
+
+    boolean pTrue = false, qTrue = false;
     private TreeNode LCA(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
             return null;
@@ -23,19 +24,22 @@ class Solution {
 
         TreeNode leftSub = LCA(root.left, p, q);
         TreeNode rightSub = LCA(root.right, p, q);
-        if (leftSub != null && rightSub != null) {
-            return root;    
-        }
         if (root.val == p.val || root.val == q.val) {
             if (root.val == p.val) {
-                foundP = true;
-            }
+                pTrue = true;
+            } 
             if (root.val == q.val) {
-                foundQ = true;
+                qTrue = true;
             }
             return root;
         }
-        
-        return leftSub == null ? rightSub : leftSub;
+
+        if (leftSub != null && rightSub != null) {
+            return root;
+        } else if (leftSub == null) {
+            return rightSub;
+        } else {
+            return leftSub;
+        }
     }
 }
