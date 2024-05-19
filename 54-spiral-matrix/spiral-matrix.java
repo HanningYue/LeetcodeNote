@@ -1,34 +1,35 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
         int m = matrix.length, n = matrix[0].length;
         int totalElements = m * n;
-        List<Integer> result = new ArrayList<>();
         
-        int top = 0, bottom = m - 1, left = 0, right = n - 1;
+        int topRow = 0, bottomRow = m - 1;
+        int leftCol = 0, rightCol = n - 1;
         while (result.size() < totalElements) {
-            if (top <= bottom) {
-                for (int col = left; col <= right; col++) {
-                    result.add(matrix[top][col]);
+            if (topRow <= bottomRow) {
+                for (int i = leftCol; i <= rightCol; i++) {
+                    result.add(matrix[topRow][i]);
                 }
-                top++;
+                topRow++;
             }
-            if (left <= right) {
-                for (int row = top; row <= bottom; row++) {
-                    result.add(matrix[row][right]);
+            if (leftCol <= rightCol) {
+                for (int i = topRow; i <= bottomRow; i++) {
+                    result.add(matrix[i][rightCol]);
                 }
-                right--;
+                rightCol--;
             }
-            if (top <= bottom) {
-                for (int col = right; col >= left; col--) {
-                    result.add(matrix[bottom][col]);
+            if (topRow <= bottomRow) {
+                for (int i = rightCol; i >= leftCol; i--) {
+                    result.add(matrix[bottomRow][i]);
                 }
-                bottom--;
+                bottomRow--;
             }
-            if (left <= right) {
-                for (int row = bottom; row >= top; row--) {
-                    result.add(matrix[row][left]);
+            if (leftCol <= rightCol) {
+                for (int i = bottomRow; i >= topRow; i--) {
+                    result.add(matrix[i][leftCol]);
                 }
-                left++;
+                leftCol++;
             }
         }
         return result;
