@@ -3,22 +3,19 @@ class Solution {
         Queue<String> queue = new LinkedList<>();
         queue.offer(beginWord);
         Set<String> set = new HashSet<>(wordList);
-        if (!set.contains(endWord)) {
-            return 0;
-        }
 
-        int result = 1;
+        int step = 1;
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
-                String current = queue.poll();
-                if (current.equals(endWord)) {
-                    return result;
+                String currentWord = queue.poll();
+                if (currentWord.equals(endWord)) {
+                    return step;
                 }
 
-                StringBuilder sb = new StringBuilder(current);
-                for (int j = 0; j < sb.length(); j++) {
-                    char oldChar = sb.charAt(j);
+                StringBuilder sb = new StringBuilder(currentWord);
+                for (int j = 0; j < currentWord.length(); j++) {
+                    char original = currentWord.charAt(j);
                     for (char c = 'a'; c <= 'z'; c++) {
                         sb.setCharAt(j, c);
                         if (set.contains(sb.toString())) {
@@ -26,10 +23,10 @@ class Solution {
                             queue.offer(sb.toString());
                         }
                     }
-                    sb.setCharAt(j, oldChar);
+                    sb.setCharAt(j, original);
                 }
             }
-            result++;
+            step++;
         }
         return 0;
     }
