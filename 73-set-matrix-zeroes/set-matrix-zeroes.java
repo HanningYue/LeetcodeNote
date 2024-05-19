@@ -1,22 +1,19 @@
 class Solution {
     public void setZeroes(int[][] matrix) {
         int m = matrix.length, n = matrix[0].length;
-        boolean firstRow = false, firstColumn = false;
 
+        boolean firstRow = false, firstCol = false;
         for (int row = 0; row < m; row++) {
             if (matrix[row][0] == 0) {
-                firstColumn = true;
-                break;   
+                firstCol = true;
             }
         }
-
         for (int col = 0; col < n; col++) {
             if (matrix[0][col] == 0) {
                 firstRow = true;
-                break;
             }
         }
-
+        
         for (int row = 1; row < m; row++) {
             for (int col = 1; col < n; col++) {
                 if (matrix[row][col] == 0) {
@@ -28,7 +25,7 @@ class Solution {
 
         for (int row = 1; row < m; row++) {
             for (int col = 1; col < n; col++) {
-                if (matrix[0][col] == 0 || matrix[row][0] == 0) {
+                if (matrix[row][0] == 0 || matrix[0][col] == 0) {
                     matrix[row][col] = 0;
                 }
             }
@@ -39,7 +36,7 @@ class Solution {
                 matrix[0][col] = 0;
             }
         }
-        if (firstColumn) {
+        if (firstCol) {
             for (int row = 0; row < m; row++) {
                 matrix[row][0] = 0;
             }
