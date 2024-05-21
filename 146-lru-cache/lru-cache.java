@@ -22,8 +22,8 @@ class LRUCache {
     
     public void put(int key, int value) {
         if (map.containsKey(key)) {
-            map.put(key, value);
             makeRecent(key);
+            map.put(key, value);
         } else {
             if (map.size() >= capacity) {
                 int lru = map.keySet().iterator().next();
