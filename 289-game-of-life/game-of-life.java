@@ -1,33 +1,35 @@
 class Solution {
     public void gameOfLife(int[][] board) {
-        int[][] directions = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {1, 0}, {1, -1}, {0, 1}, {1, 1}};
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                int count = 0;
+        int m = board.length, n = board[0].length;
+
+        int[][] directions = new int[][]{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+        for (int row = 0; row < m; row++) {
+            for (int col = 0; col < n; col++) {
+                int countLive = 0;
                 for (int[] dir : directions) {
-                    int newRow = dir[0] + i;
-                    int newCol = dir[1] + j;
-                    if (newRow >= 0 && newRow < board.length && newCol >= 0 && newCol < board[0].length
-                    && (board[newRow][newCol] == 1 || board[newRow][newCol] == 2))
-                    {
-                        count++;
+                    int newRow = row + dir[0], newCol = col + dir[1];
+                    if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n 
+                    || board[newRow][newCol] == 0 || board[newRow][newCol] == 3) {
+                        continue;
                     }
+                    countLive++;
                 }
-                if (board[i][j] == 1) {
-                    if (count < 2 || count > 3) {
-                        board[i][j] = 2;
+                
+                if (board[row][col] == 1) {
+                    if (countLive < 2 || countLive > 3) {
+                        board[row][col] = 2;
                     }
-                }
-                else if (board[i][j] == 0) {
-                    if (count == 3) {
-                        board[i][j] = 3;
+                } else if (board[row][col] == 0) {
+                    if (countLive == 3) {
+                        board[row][col] = 3;
                     }
                 }
             }
         }
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                board[i][j] = board[i][j] % 2;
+        
+        for (int row = 0; row < m; row++) {
+            for (int col = 0; col < n; col++) {
+                board[row][col] = board[row][col] % 2;
             }
         }
     }
