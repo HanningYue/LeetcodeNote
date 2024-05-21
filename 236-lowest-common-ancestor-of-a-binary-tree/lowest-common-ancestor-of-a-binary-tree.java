@@ -9,23 +9,33 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
-            return null;
-        }
-        
-        if (root.val == p.val || root.val == q.val) {
-            return root;
-        }
-        TreeNode leftSub = lowestCommonAncestor(root.left, p, q);
-        TreeNode rightSub = lowestCommonAncestor(root.right, p, q);
-        if (leftSub != null && rightSub != null) {
-            return root;
+        Map<TreeNode, TreeNode> map = new HashMap<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        map.put(root, null);
+
+        while (!map.containsKey(p) || !map.containsKey(q)) {
+            TreeNode current = stack.pop();
+
+            if (current.left != null) {
+                stack.push(current.left);
+                map.put(current.left, current);
+            }
+            if (current.right != null) {
+                stack.push(current.right);
+                map.put(current.right, current);
+            }
         }
 
-        if (leftSub == null) {
-            return rightSub;
-        } else {
-            return leftSub;
+        Set<TreeNode> ancestors = new HashSet<>();
+        while (p != null) {
+            ancestors.add(p);
+            p = map.get(p);
         }
+
+        while (!ancestors.contains(q)) {
+            q = map.get(q);
+        }
+        return q;
     }
 }
