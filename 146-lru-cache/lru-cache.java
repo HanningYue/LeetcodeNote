@@ -1,63 +1,35 @@
-class Node {
-    Node prev, next;
-    int key, value;
-    public Node(int key, int value) {
-        this.key = key;
-        this.value = value;
-    }
-}
 class LRUCache {
-    Node head, tail;
-    Map<Integer, Node> map;
     int capacity;
+    LinkedHashMap<Integer, Integer> map;
     public LRUCache(int capacity) {
+        map = new LinkedHashMap<>();
         this.capacity = capacity;
-        head = new Node(0, 0);
-        tail = new Node(0, 0);
-        map = new HashMap<>();
-        head.next = tail;
-        tail.prev = head;
     }
     
-    public void add(Node node) {
-        node.prev = head;
-        node.next = head.next;
-        head.next.prev = node;
-        head.next = node;
-    }
-
-    public void delete(Node node) {
-        node.next.prev = node.prev;
-        node.prev.next = node.next;
-    }
-
     public int get(int key) {
         if (map.containsKey(key)) {
-            Node node = map.get(key);
-            int value = node.value;
-            delete(node);
-            add(node);
-            return value;
+            makeRecent(key);
+            return map.get(key);
         }
         return -1;
+    }
+
+    public void makeRecent(int key) {
+        int value = map.get(key);
+        map.remove(key);
+        map.put(key, value);
     }
     
     public void put(int key, int value) {
         if (map.containsKey(key)) {
-            Node node = map.get(key);
-            node.value = value;
-            delete(node);
-            add(node);
-            return;
+            map.put(key, value);
+            makeRecent(key);
         } else {
             if (map.size() >= capacity) {
-                int leastRecentKey = tail.prev.key;
-                map.remove(leastRecentKey);
-                delete(tail.prev);
+                int lru = map.keySet().iterator().next();
+                map.remove(lru);
             }
-            Node newNode = new Node(key, value);
-            map.put(key, newNode);
-            add(newNode);
+            map.put(key, value);
         }
     }
 }
