@@ -56,8 +56,8 @@ class LRUCache {
                 int lruKey = tail.prev.key;
                 Node lruNode = tail.prev;
 
-                delete(lruNode);
                 map.remove(lruKey);
+                delete(lruNode);
             }
             Node newNode = new Node(key, value);
             add(newNode);
