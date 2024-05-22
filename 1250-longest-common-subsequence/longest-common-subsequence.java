@@ -9,12 +9,14 @@ class Solution {
         if (i == -1 || j == -1) {
             return 0;
         }
+
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
+
         if (text1.charAt(i) == text2.charAt(j)) {
-            int found = dp(text1, i - 1, text2, j - 1) + 1;
-            dpTable[i][j] = found;
+            int foundSame = dp(text1, i - 1, text2, j - 1) + 1;
+            dpTable[i][j] = foundSame;
         } else {
             int skipI = dp(text1, i - 1, text2, j);
             int skipJ = dp(text1, i, text2, j - 1);
