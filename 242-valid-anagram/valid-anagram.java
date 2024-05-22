@@ -4,17 +4,19 @@ class Solution {
             return false;
         }
 
-        int[] freqArray = new int[26];
+        Map<Character, Integer> map = new HashMap<>();
         for (char c : s.toCharArray()) {
-            freqArray[c - 'a']++;
+            map.put(c, map.getOrDefault(c, 0) + 1);
         }
-        
         for (char c : t.toCharArray()) {
-            freqArray[c - 'a']--;
+            if (!map.containsKey(c)) {
+                return false;
+            }
+            map.put(c, map.getOrDefault(c, 0) - 1);
         }
 
-        for (int freq : freqArray) {
-            if (freq != 0) {
+        for (int value : map.values()) {
+            if (value != 0) {
                 return false;
             }
         }
