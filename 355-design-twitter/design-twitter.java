@@ -1,8 +1,8 @@
 class Tweet {
-    int tweetId, userId;
-    public Tweet(int tweetId, int userId) {
-        this.tweetId = tweetId;
+    int userId, tweetId;
+    public Tweet(int userId, int tweetId) {
         this.userId = userId;
+        this.tweetId = tweetId;
     }
 }
 class User {
@@ -20,26 +20,25 @@ class Twitter {
         allTweet = new ArrayList<>();
         map = new HashMap<>();
     }
-    
+
     public User getUser(int userId) {
         map.putIfAbsent(userId, new User(userId));
         return map.get(userId);
     }
-
+    
     public void postTweet(int userId, int tweetId) {
-        Tweet tweet = new Tweet(tweetId, userId);
-        allTweet.add(tweet);
+        allTweet.add(new Tweet(userId, tweetId));
     }
     
     public List<Integer> getNewsFeed(int userId) {
         User user = getUser(userId);
-        
         List<Integer> pastTen = new ArrayList<>();
         int index = allTweet.size() - 1;
+
         while (index >= 0 && pastTen.size() < 10) {
             Tweet currentTweet = allTweet.get(index);
-            if (currentTweet.userId == userId 
-            || user.followList.contains(currentTweet.userId)) {
+            if (currentTweet.userId == userId
+            ||  user.followList.contains(currentTweet.userId)) {
                 pastTen.add(currentTweet.tweetId);
             }
             index--;
