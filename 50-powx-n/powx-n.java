@@ -11,9 +11,14 @@ class Solution {
             return recursion(1 / x, -n);
         }
 
-        double result = recursion(x * x, n / 2);
-        if (n % 2 == 1) {
-            result = result * x;
+        double result = 1;
+        while (n != 0) {
+            if (n % 2 == 1) {
+                result = result * x;
+                n--;
+            }
+            x = x * x;
+            n = n / 2;
         }
         return result;
     }
