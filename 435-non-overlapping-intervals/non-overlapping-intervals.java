@@ -1,9 +1,11 @@
 class Solution {
     public int eraseOverlapIntervals(int[][] intervals) {
-        return intervals.length - nonOverLap(intervals);
-    }
-    private int nonOverLap(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> a[1] - b[1]);
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            public int compare(int[] a, int[] b) {
+                return Integer.compare(a[1], b[1]);
+            }
+        });
+
         int count = 1;
         int[] previousInterval = intervals[0];
         for (int i = 1; i < intervals.length; i++) {
@@ -12,6 +14,6 @@ class Solution {
                 previousInterval = intervals[i];
             }
         }
-        return count;
+        return intervals.length - count;
     }
 }
