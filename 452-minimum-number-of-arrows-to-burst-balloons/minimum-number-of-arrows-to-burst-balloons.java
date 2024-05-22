@@ -1,10 +1,3 @@
-/**
-________
-    ______
-      ______
-________________
-            _____________
-*/
 class Solution {
     public int findMinArrowShots(int[][] points) {
         Arrays.sort(points, new Comparator<int[]>() {
@@ -13,14 +6,14 @@ class Solution {
             }
         });
         
-        int[] current = points[0];
-        int result = 1;
+        int count = 1;
+        int[] previousInterval = points[0];
         for (int i = 1; i < points.length; i++) {
-            if (points[i][0] > current[1]) {
-                result++;
-                current = points[i];
+            if (points[i][0] > previousInterval[1]) {
+                count++;
+                previousInterval = points[i];
             }
         }
-        return result;
+        return count;
     }
 }
