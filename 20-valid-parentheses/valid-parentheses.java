@@ -2,24 +2,20 @@ class Solution {
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
         for (char c : s.toCharArray()) {
-            if (c == '(' || c == '[' || c == '{') {
-                stack.push(c);
+            if (c == '(') {
+                stack.push(')');
+            } else if (c == '[') {
+                stack.push(']');
+            } else if (c == '{') {
+                stack.push('}');
             } else {
-                if (!stack.isEmpty() && leftOf(c) == stack.peek()) {
-                    stack.pop();
-                } else {
+                if (stack.isEmpty() || stack.peek() != c) {
                     return false;
+                } else {
+                    stack.pop();    
                 }
             }
         }
         return stack.isEmpty();
-    }
-    private char leftOf(char rightBracket) {
-        if (rightBracket == ')') {
-            return '(';
-        } else if (rightBracket == ']') {
-            return '[';
-        }
-        return '{';
     }
 }
