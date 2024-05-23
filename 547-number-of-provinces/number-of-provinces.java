@@ -1,47 +1,33 @@
 class Solution {
     public int findCircleNum(int[][] isConnected) {
         int n = isConnected.length;
-
-        UnionFind uf = new UnionFind(n);
+        boolean[] visited = new boolean[n];
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+            graph.put(i, new HashSet<>());
+            for (int j = 0; j < isConnected[i].length; j++) {
                 if (isConnected[i][j] == 1) {
-                    if (uf.connected(i, j)) {
-                        continue;
-                    }
-                    uf.union(i, j);
+                    graph.get(i).add(j);
                 }
             }
         }
-        return uf.count;
-    }
-}
-class UnionFind {
-    int[] parent;
-    int count;
-    public UnionFind(int n) {
-        parent = new int[n];
+
+        int count = 0;
         for (int i = 0; i < n; i++) {
-            parent[i] = i;
-            this.count = n;
+            if (!visited[i]) {
+                dfs(graph, visited, i);
+                count++;
+            }
         }
+        return count;
     }
-    public int find(int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent[vertex]);
-        }
-        return parent[vertex];
-    }
-    public void union(int one, int two) {
-        int parentOne = find(one);
-        int parentTwo = find(two);
-        if (parentOne == parentTwo) {
+    private void dfs(Map<Integer, Set<Integer>> graph, boolean[] visited, int vertex) {
+        if (visited[vertex]) {
             return;
         }
-        parent[parentOne] = parentTwo;
-        count--;
-    }
-    public boolean connected(int one, int two) {
-        return find(one) == find(two);
+        visited[vertex] = true;
+        for (int neighbor : graph.get(vertex)) {
+            dfs(graph, visited, neighbor);
+        }
     }
 }
