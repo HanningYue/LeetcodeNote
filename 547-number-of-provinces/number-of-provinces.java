@@ -27,7 +27,9 @@ class Solution {
         }
         visited[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
-            dfs(graph, visited, neighbor);
+            if (!visited[neighbor]) {
+                dfs(graph, visited, neighbor);
+            }
         }
     }
 }
