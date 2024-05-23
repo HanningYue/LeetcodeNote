@@ -33,9 +33,9 @@ class Solution {
 
         if (l1 != null && l2 != null) {
             return recursion(l1.next, l2.next, carry);
-        } else if (l1 != null && l2 == null) {
+        } else if (l1 != null) {
             return recursion(l1.next, null, carry);
-        } else if (l1 == null && l2 != null) {
+        } else if (l2 != null) {
             return recursion(null, l2.next, carry);
         } else {
             return recursion(null, null, carry);
