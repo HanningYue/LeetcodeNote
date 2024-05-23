@@ -5,13 +5,13 @@ class Solution {
                 return Integer.compare(a[1], b[1]);
             }
         });
-        
         int count = 1;
         int[] previousInterval = points[0];
         for (int i = 1; i < points.length; i++) {
-            if (points[i][0] > previousInterval[1]) {
+            int[] currentInterval = points[i];
+            if (currentInterval[0] > previousInterval[1]) {
+                previousInterval = currentInterval;
                 count++;
-                previousInterval = points[i];
             }
         }
         return count;
