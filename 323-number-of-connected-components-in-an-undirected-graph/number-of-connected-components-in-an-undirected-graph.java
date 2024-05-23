@@ -1,41 +1,35 @@
-class UnionFind {
-    int[] parent;
-    int count;
-    public UnionFind(int n) {
-        parent = new int[n];
-        for (int i = 0; i < n; i++) {
-            parent[i] = i;
-        }
-        this.count = n;
-    }
-    public int find(int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent[vertex]);
-        }
-        return parent[vertex];
-    }
-    public void union(int one, int two) {
-        int parentOne = find(one);
-        int parentTwo = find(two);
-        if (parentOne == parentTwo) {
-            return;
-        }
-        parent[parentOne] = parentTwo;
-        count--;
-    }
-    public boolean connected(int one, int two) {
-        return find(one) == find(two);
-    }
-}
 class Solution {
     public int countComponents(int n, int[][] edges) {
-        UnionFind uf = new UnionFind(n);
-        for (int[] edge : edges) {
-            if (uf.connected(edge[0], edge[1])) {
-                continue;
-            }
-            uf.union(edge[0], edge[1]);
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            graph.put(i, new HashSet<>());
         }
-        return uf.count;
+        for (int[] edge : edges) {
+            int vertexOne = edge[0], vertexTwo = edge[1];
+            graph.get(vertexOne).add(vertexTwo);
+            graph.get(vertexTwo).add(vertexOne);
+        }
+
+        int count = 0;
+        boolean[] visited = new boolean[n];
+        for (int vertex = 0; vertex < n; vertex++) {
+            if (!visited[vertex]) {
+                dfs(graph, vertex, visited);
+                count++;
+            }
+        }
+        return count;
+    }
+    private void dfs(Map<Integer, Set<Integer>> graph, int vertex, boolean[] visited) {
+        if (visited[vertex]) {
+            return;
+        }
+        visited[vertex] = true;
+
+        for (int neighbor : graph.get(vertex)) {
+            if (!visited[neighbor]) {
+                dfs(graph, neighbor, visited);
+            }
+        }
     }
 }
