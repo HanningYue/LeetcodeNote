@@ -1,32 +1,47 @@
-class Solution {
-    boolean[] visited, color;
-    boolean isBipartite;
-    public boolean isBipartite(int[][] graph) {
-        isBipartite = true;
-        int n = graph.length;
-        visited = new boolean[n];
-        color = new boolean[n];
-        for (int i = 0; i < n; i++) {
-            traverse(i, graph);
+class UF {
+    int count;
+    int[] parent;
+    public UF(int numberOfVertex) {
+        this.count = numberOfVertex;
+        parent = new int[numberOfVertex];
+        for (int i = 0; i < numberOfVertex; i++) {
+            parent[i] = i;
         }
-        return isBipartite;
     }
-    
-    private void traverse(int vertex, int[][] graph) {
-        if (!isBipartite) {
-            return;
+    public int find(int vertex) {
+        if (parent[vertex] != vertex) {
+            parent[vertex] = find(parent[vertex]);
         }
-        visited[vertex] = true;
-        for (int neighbor : graph[vertex]) {
-            if (!visited[neighbor]) {
-                color[neighbor] = !color[vertex];
-                traverse(neighbor, graph);
-            } else {
-                if (color[neighbor] == color[vertex]) {
-                    isBipartite = false;
-                    return;
+        return parent[vertex];
+    }
+    public void union(int vertexOne, int vertexTwo) {
+        int parentOne = find(vertexOne);
+        int parentTwo = find(vertexTwo);
+        if (parentOne != parentTwo) {
+            parent[parentOne] = parentTwo;
+            count--;
+        }
+    }
+    public boolean connected(int vertexOne, int vertexTwo) {
+        return find(vertexOne) == find(vertexTwo);
+    }
+    public int count() {
+        return count;
+    }
+}
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        UF uf = new UF(graph.length);
+        for (int i = 0; i < graph.length; i++) {
+            for (int j = 0; j < graph[i].length; j++) {
+                if (uf.connected(i, graph[i][j])) {
+                    return false;
+                }
+                if (graph[i].length > 0) {
+                    uf.union(graph[i][0], graph[i][j]);
                 }
             }
         }
+        return true;
     }
 }
