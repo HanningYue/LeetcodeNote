@@ -3,10 +3,10 @@ class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m = obstacleGrid.length, n = obstacleGrid[0].length;
         dpTable = new Integer[m][n];
-        return dp(obstacleGrid, m - 1, n - 1);
+        return dp(m - 1, n - 1, obstacleGrid);
     }
-    private int dp(int[][] grid, int row, int col) {
-        if (row < 0 || col < 0 || grid[row][col] == 1) {
+    private int dp(int row, int col, int[][] board) {
+        if (row < 0 || col < 0 || board[row][col] == 1) {
             return 0;
         }
         if (row == 0 && col == 0) {
@@ -15,9 +15,9 @@ class Solution {
         if (dpTable[row][col] != null) {
             return dpTable[row][col];
         }
-        int left = dp(grid, row, col - 1);
-        int up = dp(grid, row - 1, col);
-        dpTable[row][col] = left + up;
+        int moveUp = dp(row - 1, col, board);
+        int moveLeft = dp(row, col - 1, board);
+        dpTable[row][col] = moveUp + moveLeft;
         return dpTable[row][col];
     }
 }
