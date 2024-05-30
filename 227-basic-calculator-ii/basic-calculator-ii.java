@@ -5,34 +5,31 @@ class Solution {
             if (c != ' ') {
                 queue.offer(c);
             }
-        }
-        return helper(queue);
-    }
-    private int helper(Queue<Character> queue) {
-        Stack<Integer> stack = new Stack<>();
-        int num = 0;
-        char sign = '+';
+        }   
         
+        Stack<Integer> stack = new Stack<>();
+        char sign = '+';
+        int sum = 0;
         while (!queue.isEmpty()) {
-            char c = queue.poll();
-            if (Character.isDigit(c)) {
-                num = num * 10 + (c - '0');
+            char current = queue.poll();
+            if (Character.isDigit(current)) {
+                sum = sum * 10 + (current - '0');
             }
-
-            if (!Character.isDigit(c) || queue.isEmpty()) {
+            if (!Character.isDigit(current) || queue.isEmpty()) {
                 if (sign == '+') {
-                    stack.push(num);
+                    stack.push(sum);
                 } else if (sign == '-') {
-                    stack.push(-num);
+                    stack.push(-sum);
                 } else if (sign == '*') {
-                    stack.push(stack.pop() * num);
+                    stack.push(stack.pop() * sum);
                 } else if (sign == '/') {
-                    stack.push(stack.pop() / num);
+                    stack.push(stack.pop() / sum);
                 }
-                sign = c;
-                num = 0;
+                sign = current;
+                sum = 0;
             }
         }
+        
         int result = 0;
         while (!stack.isEmpty()) {
             result += stack.pop();
