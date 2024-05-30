@@ -14,9 +14,9 @@ class Solution {
         if (dpTable[row][col] != null) {
             return dpTable[row][col];
         }
-        int left = dp(row, col - 1);
-        int up = dp(row - 1, col);
-        dpTable[row][col] = left + up;
+        int moveLeft = dp(row, col - 1);
+        int moveUp = dp(row - 1, col);
+        dpTable[row][col] = moveLeft + moveUp;
         return dpTable[row][col];
     }
 }
