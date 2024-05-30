@@ -3,10 +3,10 @@ class Solution {
         String[] strs = path.split("/");
         Stack<String> stack = new Stack<>();
         for (String s : strs) {
-            if (!s.isEmpty() && !s.equals(".") && !s.equals("..")) {
-                stack.push(s);
-            } else if (!stack.isEmpty() && s.equals("..")) {
+            if (!stack.isEmpty() && s.equals("..")) {
                 stack.pop();
+            } else if (!s.equals("..") && !s.equals(".") && !s.isEmpty()) {
+                stack.push(s);
             }
         }
 
@@ -15,6 +15,6 @@ class Solution {
             sb.append("/");
             sb.append(s);
         }
-        return sb.isEmpty() ? "/" : sb.toString();
+        return sb.length() == 0 ? "/" : sb.toString();
     }
 }
