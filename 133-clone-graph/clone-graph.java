@@ -24,15 +24,17 @@ class Solution {
         if (node == null) {
             return null;
         }
+
         if (map.containsKey(node)) {
             return map.get(node);
         }
-        Node copyNode = new Node(node.val);
-        map.put(node, copyNode);
+
+        Node copy = new Node(node.val);
+        map.put(node, copy);
         for (Node neighbor : node.neighbors) {
-            Node neighborCopy = cloneGraph(neighbor);
-            copyNode.neighbors.add(neighborCopy);
+            Node copyNeighbor = cloneGraph(neighbor);
+            copy.neighbors.add(copyNeighbor);
         }
-        return copyNode;
+        return copy;
     }
 }
