@@ -1,35 +1,40 @@
 class Solution {
     public int calculate(String s) {
-        Queue<Character> queue = new LinkedList<>();
-        for (char c : s.toCharArray()) {
-            if (c != ' ') {
-                queue.offer(c);
-            }
-        }   
-        
         Stack<Integer> stack = new Stack<>();
-        char sign = '+';
+        
+        char previousSign = '+';
         int sum = 0;
-        while (!queue.isEmpty()) {
-            char current = queue.poll();
-            if (Character.isDigit(current)) {
-                sum = sum * 10 + (current - '0');
+        int lastIndexOfNumber = s.length() - 1;
+        while (lastIndexOfNumber >= 0 && s.charAt(lastIndexOfNumber) == ' ') {
+                lastIndexOfNumber--;
+            if (lastIndexOfNumber == -1) {
+                return 0;
             }
-            if (!Character.isDigit(current) || queue.isEmpty()) {
-                if (sign == '+') {
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == ' ') {
+                continue;
+            }
+            if (Character.isDigit(c)) {
+                sum = sum * 10 + c - '0';
+            }
+            if (!Character.isDigit(c) || i == lastIndexOfNumber) {
+                if (previousSign == '+') {
                     stack.push(sum);
-                } else if (sign == '-') {
+                } else if (previousSign == '-') {
                     stack.push(-sum);
-                } else if (sign == '*') {
+                } else if (previousSign == '*') {
                     stack.push(stack.pop() * sum);
-                } else if (sign == '/') {
+                } else if (previousSign == '/') {
                     stack.push(stack.pop() / sum);
                 }
-                sign = current;
+                previousSign = c;
                 sum = 0;
             }
         }
-        
+
         int result = 0;
         while (!stack.isEmpty()) {
             result += stack.pop();
