@@ -6,36 +6,35 @@ class Solution {
                 queue.offer(c);
             }
         }
-        return dfs(queue);
+        return recursion(queue);
     }
-    private int dfs(Queue<Character> queue) {
+    private int recursion(Queue<Character> queue) {
         Stack<Integer> stack = new Stack<>();
-        int num = 0;
-        char sign = '+';
+        int sum = 0;
+        char previousSign = '+';
 
         while (!queue.isEmpty()) {
-            char current = queue.poll();
-            if (Character.isDigit(current)) {
-                num = num * 10 + (current - '0');
+            char c = queue.poll();
+            if (Character.isDigit(c)) {
+                sum = sum * 10 + c - '0';
             }
-
-            if (current == '(') {
-                num = dfs(queue);
+            if (c == '(') {
+                sum = recursion(queue);
             }
-            if (!Character.isDigit(current) || queue.isEmpty()) {
-                if (sign == '+') {
-                    stack.push(num);
-                } else if (sign == '-') {
-                    stack.push(-num);
+            if (!Character.isDigit(c) || queue.isEmpty()) {
+                if (previousSign == '+') {
+                    stack.push(sum);
+                } else if (previousSign == '-') {
+                    stack.push(-sum);
                 }
-                sign = current;
-                num = 0;
+                previousSign = c;
+                sum = 0;
             }
-            if (current == ')') {
+            if (c == ')') {
                 break;
             }
         }
-        
+
         int result = 0;
         while (!stack.isEmpty()) {
             result += stack.pop();
