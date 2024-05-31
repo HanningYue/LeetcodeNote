@@ -32,8 +32,8 @@ class Solution {
         Node copy = new Node(node.val);
         map.put(node, copy);
         for (Node neighbor : node.neighbors) {
-            Node copyNeighbor = cloneGraph(neighbor);
-            copy.neighbors.add(copyNeighbor);
+            Node neighborCopy = cloneGraph(neighbor);
+            copy.neighbors.add(neighborCopy);
         }
         return copy;
     }
