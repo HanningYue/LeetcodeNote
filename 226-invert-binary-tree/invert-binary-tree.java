@@ -19,24 +19,12 @@ class Solution {
             return null;
         }
 
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode current = queue.poll();
-                TreeNode tempLeft = current.left;
-                current.left = current.right;
-                current.right = tempLeft;
-
-                if (current.left != null) {
-                    queue.offer(current.left);
-                }
-                if (current.right != null) {
-                    queue.offer(current.right);
-                }
-            }
-        }
+        TreeNode invertLeft = invertTree(root.left);
+        TreeNode invertRight = invertTree(root.right);
+        
+        TreeNode tempLeft = root.left;
+        root.left = root.right;
+        root.right = tempLeft;
         return root;
     }
 }
