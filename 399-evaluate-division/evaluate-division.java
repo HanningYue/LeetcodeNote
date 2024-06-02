@@ -6,9 +6,11 @@ class Node {
         this.value = value;
     }
 }
+
 class Solution {
     public double[] calcEquation(List<List<String>> equations, double[] values, 
-                                 List<List<String>> queries) {
+    List<List<String>> queries) {
+        double[] result = new double[queries.size()];
         Map<String, List<Node>> graph = new HashMap<>();
         for (int i = 0; i < equations.size(); i++) {
             List<String> equation = equations.get(i);
@@ -19,31 +21,28 @@ class Solution {
             graph.putIfAbsent(divisor, new ArrayList<>());
             graph.get(divisor).add(new Node(dividend, 1 / values[i]));
         }
-
-        double[] result = new double[queries.size()];
+        
         for (int i = 0; i < queries.size(); i++) {
             List<String> query = queries.get(i);
             String dividend = query.get(0), divisor = query.get(1);
             Set<String> visited = new HashSet<>();
-            result[i] = dfs(dividend, divisor, graph, 1, visited);
+            result[i] = dfs(graph, dividend, divisor, 1, visited);
         }
         return result;
     }
-
-    private double dfs(String dividend, String divisor, Map<String, List<Node>> graph, 
-    double value, Set<String> visited) {
+    private double dfs(Map<String, List<Node>> graph, String dividend, String divisor, 
+                       double value, Set<String> visited) {
         if (visited.contains(dividend) || !graph.containsKey(dividend)) {
             return -1.0;
         }
         if (dividend.equals(divisor)) {
             return value;
         }
-
         visited.add(dividend);
         for (Node neighbor : graph.get(dividend)) {
-            double subProblem = dfs(neighbor.key, divisor, graph, neighbor.value * value, visited);
-            if (subProblem != -1.0) {
-                return subProblem;
+            double sub = dfs(graph, neighbor.key, divisor, value * neighbor.value, visited);
+            if (sub != -1.0) {
+                return sub;
             }
         }
         visited.remove(dividend);
