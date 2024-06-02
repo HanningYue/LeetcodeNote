@@ -1,26 +1,27 @@
 class Solution {
-    boolean isBipartite = true;
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
+        boolean[] color = new boolean[n];
         boolean[] visited = new boolean[n];
-        boolean[] color = new boolean[n];        
-        for (int currentVertex = 0; currentVertex < graph.length; currentVertex++) {    
-            dfs(graph, visited, currentVertex, color);
+        for (int i = 0; i < n; i++) {
+            if (!dfs(i, graph, color, visited)) {
+                return false;
+            }
         }
-        return isBipartite;
+        return true;
     }
-    private void dfs(int[][] graph, boolean[] visited, int vertex, boolean[] color) {
+    private boolean dfs(int vertex, int[][] graph, boolean[] color, boolean[] visited) {
         visited[vertex] = true;
         for (int neighbor : graph[vertex]) {
             if (!visited[neighbor]) {
                 color[neighbor] = !color[vertex];
-                dfs(graph, visited, neighbor, color);
+                dfs(neighbor, graph, color, visited);
             } else {
                 if (color[neighbor] == color[vertex]) {
-                    isBipartite = false;
-                    return;
+                   return false; 
                 }
             }
         }
+        return true;
     }
 }
