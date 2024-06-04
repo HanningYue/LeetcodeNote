@@ -23,7 +23,6 @@ class Solution {
             previous = current;
             current = next;
         }
-
         if (tempPrevious == null) {
             head = previous;
         } else {
