@@ -19,21 +19,14 @@ class Solution {
         if (head == null) {
             return null;
         }
-
         if (map.containsKey(head)) {
             return map.get(head);
         }
-        
         Node copyHead = new Node(head.val);
         map.put(head, copyHead);
         
-        Node copyNext = copyRandomList(head.next);
-        copyHead.next = copyNext;
-        
-        Node copyRandom = copyRandomList(head.random);
-        copyHead.random = copyRandom;
-
+        copyHead.next = copyRandomList(head.next);
+        copyHead.random = copyRandomList(head.random);
         return copyHead;
-        
     }
 }
