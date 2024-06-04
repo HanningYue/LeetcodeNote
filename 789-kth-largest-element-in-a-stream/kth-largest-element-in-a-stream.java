@@ -1,9 +1,8 @@
 class KthLargest {
-    PriorityQueue<Integer> heap;
+    PriorityQueue<Integer> heap = new PriorityQueue<>();
     int k;
     public KthLargest(int k, int[] nums) {
         this.k = k;
-        heap = new PriorityQueue<>();
         for (int num : nums) {
             add(num);
         }
