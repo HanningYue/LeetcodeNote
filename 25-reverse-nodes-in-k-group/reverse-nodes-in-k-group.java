@@ -21,7 +21,7 @@ class Solution {
             }
 
             ListNode start = previous, end = current;
-            for (int i = 0; i < k; i++) {
+            for (int i = 0; i < k && current != null; i++) {
                 ListNode next = current.next;
                 current.next = previous;
                 previous = current;
