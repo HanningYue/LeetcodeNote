@@ -24,12 +24,13 @@ class WordDictionary {
     }
     
     public boolean search(String word) {
-        return searchHelp(word, root);
-    }
-    private boolean searchHelp(String word, TrieNode root) {
         TrieNode node = root;
+        return searchHelp(word, node);
+    }
+    private boolean searchHelp(String word, TrieNode node) {
         for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == '.') {
+            char c = word.charAt(i);
+            if (c == '.') {
                 for (TrieNode child : node.children) {
                     if (child != null && searchHelp(word.substring(i + 1), child)) {
                         return true;
@@ -37,9 +38,8 @@ class WordDictionary {
                 }
                 return false;
             } else {
-                char c = word.charAt(i);
                 if (node.children[c - 'a'] == null) {
-                    node.children[c - 'a'] = new TrieNode();
+                    return false;
                 }
                 node = node.children[c - 'a'];
             }
