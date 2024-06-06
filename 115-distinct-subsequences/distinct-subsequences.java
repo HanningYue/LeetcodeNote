@@ -14,13 +14,14 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
+
         if (s.charAt(i) == t.charAt(j)) {
-            int useCurrentS = dp(s, i + 1, t, j + 1);
-            int notUseCurrentS = dp(s, i + 1, t, j);
-            dpTable[i][j] = useCurrentS + notUseCurrentS;
+            int useCurrent = dp(s, i + 1, t, j + 1);
+            int notUseCurrent = dp(s, i + 1, t, j);
+            dpTable[i][j] = useCurrent + notUseCurrent;
         } else {
-            int skipS = dp(s, i + 1, t, j);
-            dpTable[i][j] = skipS;
+            int skipCurrent = dp(s, i + 1, t, j);
+            dpTable[i][j] = skipCurrent;
         }
         return dpTable[i][j];
     }
