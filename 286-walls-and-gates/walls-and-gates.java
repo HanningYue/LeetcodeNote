@@ -1,35 +1,33 @@
 class Solution {
     public void wallsAndGates(int[][] rooms) {
         int m = rooms.length, n = rooms[0].length;
+        boolean[][] visited = new boolean[m][n];
+        
         Queue<int[]> queue = new LinkedList<>();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (rooms[i][j] == 0) {
-                    queue.offer(new int[]{i, j});
+        for (int row = 0; row < m; row++) {
+            for (int col = 0; col < n; col++) {
+                if (rooms[row][col] == 0) {
+                    queue.offer(new int[]{row, col});
                 }
             }
         }
-        boolean[][] visited = new boolean[m][n];
 
-        int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int[][] directions = new int[][]{{1, 0}, {0, 1}, {0, -1}, {-1, 0}};
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
-                int[] gate = queue.poll();
-                int row = gate[0];
-                int col = gate[1];
-                visited[row][col] = true;
+                int[] currentGate = queue.poll();
+                int currentRow = currentGate[0], currentCol = currentGate[1];
+                visited[currentRow][currentCol] = true;
 
                 for (int[] dir : directions) {
-                    int newRow = row + dir[0];
-                    int newCol = col + dir[1];
-                    if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n || visited[newRow][newCol]
-                    || rooms[newRow][newCol] != Integer.MAX_VALUE) {
+                    int newRow = currentRow + dir[0], newCol = currentCol + dir[1];
+                    if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n 
+                    || rooms[newRow][newCol] != Integer.MAX_VALUE || visited[newRow][newCol]) {
                         continue;
                     }
-
+                    rooms[newRow][newCol] = rooms[currentRow][currentCol] + 1;
                     queue.offer(new int[]{newRow, newCol});
-                    rooms[newRow][newCol] = rooms[row][col] + 1;
                 }
             }
         }
