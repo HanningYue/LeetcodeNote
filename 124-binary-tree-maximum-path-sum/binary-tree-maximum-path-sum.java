@@ -14,28 +14,27 @@
  * }
  */
 class Solution {
-    int result = Integer.MIN_VALUE;
+    int globalMax = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
-        oneSideMax(root);
-        return result;
+        pathSum(root);
+        return globalMax;
     }
-    private int oneSideMax(TreeNode root) {
+    private int pathSum(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        int leftSideMax = oneSideMax(root.left);
-        if (leftSideMax < 0) {
-            leftSideMax = 0;
+        int leftSum = pathSum(root.left);
+        if (leftSum < 0) {
+            leftSum = 0;
         }
-        int rightSideMax = oneSideMax(root.right);
-        if (rightSideMax < 0) {
-            rightSideMax = 0;
-        }
-        int currentMaxSum = root.val + leftSideMax + rightSideMax;
-        result = Math.max(result, currentMaxSum);
-        
-        int currentOneSidePathSum = Math.max(leftSideMax, rightSideMax) + root.val;
-        return currentOneSidePathSum;
 
+        int rightSum = pathSum(root.right);
+        if (rightSum < 0) {
+            rightSum = 0;
+        }
+
+        int currentSum = Math.max(leftSum, rightSum) + root.val;
+        globalMax = Math.max(globalMax, root.val + leftSum + rightSum);
+        return currentSum;
     }
 }
