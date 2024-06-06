@@ -21,13 +21,9 @@ class Solution {
             return false;
         }
 
+        boolean currentSame = p.val == q.val;
         boolean leftSame = isSameTree(p.left, q.left);
         boolean rightSame = isSameTree(p.right, q.right);
-        boolean currentSame = p.val == q.val;
-
-        if (leftSame && rightSame && currentSame) {
-            return true;
-        }   
-        return false;
+        return leftSame && rightSame && currentSame;
     }
 }
