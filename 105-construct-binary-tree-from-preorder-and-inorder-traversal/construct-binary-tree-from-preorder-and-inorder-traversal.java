@@ -14,36 +14,39 @@
  * }
  */
 class Solution {
-    Map<Integer, Integer> inMap;
+    Map<Integer, Integer> map;
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        inMap = new HashMap<>();
+        map = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
-            inMap.put(inorder[i], i);
+            map.put(inorder[i], i);
         }
-        return build(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+        return recursion(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
     }
-    private TreeNode build(int[] preorder, int preleft, int preright, int[] inorder, int inleft, int inright) {
+
+    private TreeNode recursion(int[] preorder, int preleft, int preright, 
+    int[] inorder, int inleft, int inright)
+    {
         if (preleft > preright) {
             return null;
         }
 
-        int rootVal = preorder[preleft];
-        int rootIndex = inMap.get(rootVal);
-        int leftSubTreeSize = rootIndex - inleft;
-
-        TreeNode newRoot = new TreeNode(rootVal);
-        newRoot.left = build(preorder, preleft + 1, preleft + leftSubTreeSize, inorder, inleft, rootIndex - 1);
-        newRoot.right = build(preorder, preleft + leftSubTreeSize + 1, preright, inorder, rootIndex + 1, inright);
-        return newRoot;
+        int headValue = preorder[preleft];
+        int headIndex = map.get(headValue);
+        int leftSubtreeSize = headIndex - inleft;
+        
+        TreeNode root = new TreeNode(headValue);
+        
+        root.left = recursion(preorder, preleft + 1, preleft + leftSubtreeSize, 
+        inorder, inleft, headIndex - 1);
+        
+        root.right = recursion(preorder, preleft + leftSubtreeSize + 1, preright, 
+        inorder, headIndex + 1, inright);
+        
+        return root;
     }
 }
 /**
-        1
-    2       3
-4    5    6    7
-4 2 5 1 6 3 7
-1 2 4 5 3 6 7
-0 1 2 3 4 5 6
-3
-
+3 9 20 15 7
+9 3 15 20 7
+0 1  2  3 4
 */
