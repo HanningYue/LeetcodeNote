@@ -1,63 +1,37 @@
-class Node {
-    int key, value;
-    Node prev, next;
-    public Node(int key, int value) {
-        this.key = key;
-        this.value = value;
-    }
-}
 class LRUCache {
-    Map<Integer, Node> map;
+    LinkedHashMap<Integer, Integer> map;
     int capacity;
-    Node head, tail;
     public LRUCache(int capacity) {
-        map = new HashMap<>();
         this.capacity = capacity;
-        head = new Node(0, 0);
-        tail = new Node(0, 9);
-        head.next = tail;
-        tail.prev = head;
+        map = new LinkedHashMap<>();
     }
     
-    public void delete(Node node) {
-        node.next.prev = node.prev;
-        node.prev.next = node.next;
-    }
-    
-    public void add(Node node) {
-        node.prev = head;
-        node.next = head.next;
-        head.next.prev = node;
-        head.next = node;
+    public void makeRecent(int key) {
+        int value = map.get(key);
+        map.remove(key);
+        map.put(key, value);
     }
 
     public int get(int key) {
         if (!map.containsKey(key)) {
             return -1;
         }
-        Node node = map.get(key);
-        int value = node.value;
-        delete(node);
-        add(node);
+        int value = map.get(key);
+        makeRecent(key);
         return value;
     }
     
     public void put(int key, int value) {
         if (map.containsKey(key)) {
-            Node node = map.get(key);
-            delete(node);
-
-            node.value = value;
-            map.put(key, node);
-            add(node);
+            map.put(key, value);
+            makeRecent(key);
         } else {
             if (map.size() == capacity) {
-                map.remove(tail.prev.key);
-                delete(tail.prev);
+                int leastRecent = map.keySet().iterator().next();
+                map.remove(leastRecent);
             }
-            Node newNode = new Node(key, value);
-            map.put(key, newNode);
-            add(newNode);
+            map.put(key, value);
+            makeRecent(key);
         }
     }
 }
