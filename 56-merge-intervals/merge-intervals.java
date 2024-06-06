@@ -10,7 +10,6 @@ class Solution {
                 result.add(previousInterval);
                 previousInterval = currentInterval;
             } else {
-                previousInterval[0] = Math.min(previousInterval[0], currentInterval[0]);
                 previousInterval[1] = Math.max(previousInterval[1], currentInterval[1]);
             }
         }
