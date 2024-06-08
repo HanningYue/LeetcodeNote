@@ -22,6 +22,12 @@ class Solution {
             return root;
         }
         
-        return leftPath == null ? rightPath : leftPath;
+        if (leftPath == null) {
+            return rightPath;
+        } else if (rightPath == null) {
+            return leftPath;
+        } else {
+            return null;
+        }
     }
 }
