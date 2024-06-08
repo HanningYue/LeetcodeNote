@@ -15,21 +15,19 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        dfs(root, 0);
-        return total;
+        return pathSum(root, 0);
     }
-    private int total = 0;
-    private int dfs(TreeNode root, int runningSum) {
+    private int pathSum(TreeNode root, int runningSum) {
         if (root == null) {
             return 0;
         }
         
         runningSum = runningSum * 10 + root.val;
         if (root.left == null && root.right == null) {
-            total += runningSum;
+            return runningSum;
         }
-        dfs(root.left, runningSum);
-        dfs(root.right, runningSum);
-        return runningSum;
+        int leftPath = pathSum(root.left, runningSum);
+        int rightPath = pathSum(root.right, runningSum);
+        return leftPath + rightPath;
     }
 }
