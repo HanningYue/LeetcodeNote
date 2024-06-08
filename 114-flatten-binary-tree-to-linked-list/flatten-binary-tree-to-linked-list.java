@@ -20,15 +20,15 @@ class Solution {
         }
         flatten(root.left);
         flatten(root.right);
-        
+
         TreeNode originalRight = root.right;
         root.right = root.left;
         root.left = null;
-        
-        TreeNode head = root;
-        while (head.right != null) {
-            head = head.right;
+
+        TreeNode start = root;
+        while (start.right != null) {
+            start = start.right;
         }
-        head.right = originalRight;
+        start.right = originalRight;
     }
 }
