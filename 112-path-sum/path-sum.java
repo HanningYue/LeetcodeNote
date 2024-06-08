@@ -18,12 +18,20 @@ class Solution {
         if (root == null) {
             return false;
         }
+        return pathSum(root, targetSum, 0);
+    }
 
-        if (root.left == null && root.right == null && targetSum == root.val) {
+    private boolean pathSum(TreeNode root, int targetSum, int runningSum) {
+        if (root == null) {
+            return false;
+        }
+        
+        runningSum += root.val;
+        if (root.left == null && root.right == null && targetSum == runningSum) {
             return true;
         }
-        boolean leftTrue = hasPathSum(root.left, targetSum - root.val);
-        boolean rightTrue = hasPathSum(root.right, targetSum - root.val);
-        return leftTrue || rightTrue;
+        boolean leftPath = pathSum(root.left, targetSum, runningSum);
+        boolean rightPath = pathSum(root.right, targetSum, runningSum);
+        return leftPath || rightPath;
     }
 }
