@@ -23,19 +23,37 @@ class Node {
 
 class Solution {
     public Node connect(Node root) {
-        if (root == null) {
-            return null;
+        Node current = root;
+        
+        Node previous = null, headOfNextLevel = null;
+        while (current != null) {
+            while (current != null) {
+                if (current.left != null) {
+                    if (headOfNextLevel == null) {
+                        headOfNextLevel = current.left;
+                        previous = current.left;
+                    } else {
+                        previous.next = current.left;
+                        previous = previous.next;
+                    }
+                }
+
+                if (current.right != null) {
+                    if (headOfNextLevel == null) {
+                        headOfNextLevel = current.right;
+                        previous = current.right;
+                    } else {
+                        previous.next = current.right;
+                        previous = previous.next;
+                    }
+                }
+                current = current.next;
+            }
+
+            current = headOfNextLevel;
+            headOfNextLevel = null;
+            previous = null;
         }
-        dfs(root.left, root.right);
         return root;
-    }
-    private void dfs(Node p, Node q) {
-        if (p == null || q == null) {
-            return;
-        }
-        p.next = q;
-        dfs(p.left, p.right);
-        dfs(p.right, q.left);
-        dfs(q.left, q.right);
     }
 }
