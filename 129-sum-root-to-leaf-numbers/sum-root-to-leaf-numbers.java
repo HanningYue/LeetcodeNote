@@ -14,20 +14,21 @@
  * }
  */
 class Solution {
+    int totalSum = 0;
     public int sumNumbers(TreeNode root) {
-        return pathSum(root, 0);
+        dfs(root, 0);
+        return totalSum;
     }
-    private int pathSum(TreeNode root, int runningSum) {
+    private void dfs(TreeNode root, int runningSum) {
         if (root == null) {
-            return 0;
+            return;
         }
         
         runningSum = runningSum * 10 + root.val;
         if (root.left == null && root.right == null) {
-            return runningSum;
+            totalSum += runningSum;
         }
-        int leftPath = pathSum(root.left, runningSum);
-        int rightPath = pathSum(root.right, runningSum);
-        return leftPath + rightPath;
+        dfs(root.left, runningSum);
+        dfs(root.right, runningSum);
     }
 }
