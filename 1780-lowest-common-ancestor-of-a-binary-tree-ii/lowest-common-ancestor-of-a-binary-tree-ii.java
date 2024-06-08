@@ -15,6 +15,7 @@ class Solution {
         }
         return null;
     }
+
     boolean foundP = false, foundQ = false;
     private TreeNode LCA(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) {
@@ -35,10 +36,8 @@ class Solution {
 
         if (leftSub != null && rightSub != null) {
             return root;
-        } else if (leftSub == null) {
-            return rightSub;
-        } else {
-            return leftSub;
-        }
+        } 
+
+        return leftSub == null ? rightSub : leftSub;
     }
 }
