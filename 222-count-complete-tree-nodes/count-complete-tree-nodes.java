@@ -18,33 +18,30 @@ class Solution {
         if (root == null) {
             return 0;
         }
-        
-        int leftHeight = 1, rightHeight = 1;
-        TreeNode goLeft = root;
-        while (goLeft.left != null) {
-            goLeft = goLeft.left;
+
+        int leftHeight = 0, rightHeight = 0;
+        TreeNode currentLeft = root;
+        TreeNode currentRight = root;
+        while (currentLeft != null) {
+            currentLeft = currentLeft.left;
             leftHeight++;
         }
-
-        TreeNode goRight = root;
-        while (goRight.right != null) {
-            goRight = goRight.right;
+        while (currentRight != null) {
+            currentRight = currentRight.right;
             rightHeight++;
         }
-
         if (leftHeight == rightHeight) {
-            return (int)Math.pow(2, rightHeight) - 1;
+            return (int)Math.pow(2, leftHeight) - 1;
         }
-
-        return notPerfect(root);
+        return countNode(root);
     }
-    private int notPerfect(TreeNode root) {
+
+    private int countNode(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        int leftSub = notPerfect(root.left);
-        int rightSub = notPerfect(root.right);
-        int currentNum = leftSub + rightSub + 1;
-        return currentNum;
+        int leftSub = countNode(root.left);
+        int rightSub = countNode(root.right);
+        return leftSub + rightSub + 1;
     }
 }
