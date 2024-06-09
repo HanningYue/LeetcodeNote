@@ -23,13 +23,13 @@ class Solution {
         if (root == null) {
             return;
         }
-        if (result.size() == level) {
+        if (level == result.size()) {
             result.add(new ArrayList<>());
         }
+
         if (level % 2 == 0) {
             result.get(level).add(root.val);
-        }
-        else if (level % 2 == 1) {
+        } else {
             result.get(level).add(0, root.val);
         }
         dfs(root.left, result, level + 1);
