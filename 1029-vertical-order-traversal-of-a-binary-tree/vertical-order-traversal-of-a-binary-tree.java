@@ -19,9 +19,7 @@ class Solution {
             return new ArrayList<>();
         }
 
-        // TreeMap to store nodes by column index
         Map<Integer, List<Integer>> result = new TreeMap<>();
-        // Queue for BFS
         Queue<Pair> queue = new LinkedList<>();
         queue.offer(new Pair(root, 0));
         
@@ -47,9 +45,10 @@ class Solution {
             }
             
             for (int col : currentLevelMap.keySet()) {
-                Collections.sort(currentLevelMap.get(col));
+                List<Integer> currentLevelNodeValue = currentLevelMap.get(col);
+                Collections.sort(currentLevelNodeValue);
                 result.putIfAbsent(col, new ArrayList<>());
-                result.get(col).addAll(currentLevelMap.get(col));
+                result.get(col).addAll(currentLevelNodeValue);
             }
         }
         
