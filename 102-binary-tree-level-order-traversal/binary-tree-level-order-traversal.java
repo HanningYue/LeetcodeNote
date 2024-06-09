@@ -23,8 +23,7 @@ class Solution {
         if (root == null) {
             return;
         }
-
-        if (level == result.size()) {
+        if (result.size() == level) {
             result.add(new ArrayList<>());
         }
         result.get(level).add(root.val);
