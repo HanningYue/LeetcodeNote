@@ -21,21 +21,19 @@ class Solution {
         dfs(root.right, false, true);
         return result;
     }
-    private void dfs(TreeNode root, boolean leftBoundary, boolean rightBoundary) {
+    private void dfs(TreeNode root, boolean isLeft, boolean isRight) {
         if (root == null) {
             return;
         }
-        if (leftBoundary) {
+        if (isLeft) {
             result.add(root.val);
         }
-        if (isLeaf(root) && !leftBoundary) {
+        if (!isLeft && isLeaf(root)) {
             result.add(root.val);
         }
-        
-        dfs(root.left, leftBoundary && root.left != null, rightBoundary && root.right == null);
-        dfs(root.right, leftBoundary && root.left == null, rightBoundary && root.right != null);
-
-        if (rightBoundary && !leftBoundary && !isLeaf(root)) {
+        dfs(root.left, isLeft && root.left != null, isRight && root.right == null);
+        dfs(root.right, isLeft && root.left == null, isRight && root.right != null);
+        if (!isLeft && !isLeaf(root) && isRight) {
             result.add(root.val);
         }
     }
