@@ -15,51 +15,41 @@
  */
 class Solution {
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-        if (root == null) {
-            return new ArrayList<>();
-        }
+        Map<Integer, List<Integer>> treeMap = new TreeMap<>();
 
-        Map<Integer, List<Integer>> result = new TreeMap<>();
         Queue<Pair> queue = new LinkedList<>();
         queue.offer(new Pair(root, 0));
-        
         while (!queue.isEmpty()) {
             int size = queue.size();
-            Map<Integer, List<Integer>> currentLevelMap = new HashMap<>();
-            
+            Map<Integer, List<Integer>> map = new HashMap<>();
+
             for (int i = 0; i < size; i++) {
-                Pair currentPair = queue.poll();
-                TreeNode currentNode = currentPair.node;
-                int currentCol = currentPair.col;
-                
-                currentLevelMap.putIfAbsent(currentCol, new ArrayList<>());
-                currentLevelMap.get(currentCol).add(currentNode.val);
-                
-                if (currentNode.left != null) {
-                    queue.offer(new Pair(currentNode.left, currentCol - 1));
-                }
-                
-                if (currentNode.right != null) {
-                    queue.offer(new Pair(currentNode.right, currentCol + 1));
-                }
+                Pair current = queue.poll();
+                int currentCol = current.col;
+                TreeNode currentNode = current.node;
+
+                map.putIfAbsent(currentCol, new ArrayList<>());
+                map.get(currentCol).add(currentNode.val);
+
+                if (currentNode.left != null) queue.offer(new Pair(currentNode.left, currentCol - 1));
+                if (currentNode.right != null) queue.offer(new Pair(currentNode.right, currentCol + 1));
             }
-            
-            for (int col : currentLevelMap.keySet()) {
-                List<Integer> currentLevelNodeValue = currentLevelMap.get(col);
-                Collections.sort(currentLevelNodeValue);
-                result.putIfAbsent(col, new ArrayList<>());
-                result.get(col).addAll(currentLevelNodeValue);
+
+            for (int col : map.keySet()) {
+                List<Integer> columnNode = map.get(col);
+                Collections.sort(columnNode);
+                treeMap.putIfAbsent(col, new ArrayList<>());
+                treeMap.get(col).addAll(columnNode);
             }
         }
-        
-        return new ArrayList<>(result.values());
+        return new ArrayList<>(treeMap.values());
     }
 }
 class Pair {
     TreeNode node;
     int col;
     public Pair(TreeNode node, int col) {
-        this.node = node;
         this.col = col;
+        this.node = node;
     }
 }
