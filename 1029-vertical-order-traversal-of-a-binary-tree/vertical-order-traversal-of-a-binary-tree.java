@@ -13,6 +13,14 @@
  *     }
  * }
  */
+class Pair {
+    TreeNode node;
+    int col;
+    public Pair(TreeNode node, int col) {
+        this.node = node;
+        this.col = col;
+    }
+}
 class Solution {
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         Map<Integer, List<Integer>> treeMap = new TreeMap<>();
@@ -22,11 +30,10 @@ class Solution {
         while (!queue.isEmpty()) {
             int size = queue.size();
             Map<Integer, List<Integer>> map = new HashMap<>();
-
             for (int i = 0; i < size; i++) {
-                Pair current = queue.poll();
-                int currentCol = current.col;
-                TreeNode currentNode = current.node;
+                Pair currentPair = queue.poll();
+                TreeNode currentNode = currentPair.node;
+                int currentCol = currentPair.col;
 
                 map.putIfAbsent(currentCol, new ArrayList<>());
                 map.get(currentCol).add(currentNode.val);
@@ -36,20 +43,14 @@ class Solution {
             }
 
             for (int col : map.keySet()) {
-                List<Integer> columnNode = map.get(col);
-                Collections.sort(columnNode);
+                List<Integer> colNode = map.get(col);
+                Collections.sort(colNode);
                 treeMap.putIfAbsent(col, new ArrayList<>());
-                treeMap.get(col).addAll(columnNode);
+                for (int nodeValue : colNode) {
+                    treeMap.get(col).add(nodeValue);
+                }
             }
         }
         return new ArrayList<>(treeMap.values());
-    }
-}
-class Pair {
-    TreeNode node;
-    int col;
-    public Pair(TreeNode node, int col) {
-        this.col = col;
-        this.node = node;
     }
 }
