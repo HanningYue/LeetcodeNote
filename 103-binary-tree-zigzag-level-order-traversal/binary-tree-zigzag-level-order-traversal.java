@@ -19,28 +19,25 @@ class Solution {
         if (root == null) {
             return result;
         }
-        Deque<TreeNode> deque = new ArrayDeque<>();
-        deque.offerLast(root);
         boolean even = true;
-
-        while (!deque.isEmpty()) {
-            int size = deque.size();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
             List<Integer> currentLevel = new ArrayList<>();
             for (int i = 0; i < size; i++) {
-                if (even) {
-                    TreeNode current = deque.pollLast();
-                    if (current.left != null) deque.offerFirst(current.left);
-                    if (current.right != null) deque.offerFirst(current.right);
-                    currentLevel.add(current.val);
-                } else {
-                    TreeNode current = deque.pollFirst();
-                    if (current.right != null) deque.offerLast(current.right);
-                    if (current.left != null) deque.offerLast(current.left);
-                    currentLevel.add(current.val);
-                }
+                TreeNode current = queue.poll();
+                currentLevel.add(current.val);
+                if (current.left != null) queue.offer(current.left);
+                if (current.right != null) queue.offer(current.right);
+            }
+            if (even) {
+                result.add(currentLevel);
+            } else {
+                Collections.reverse(currentLevel);
+                result.add(currentLevel);
             }
             even = !even;
-            result.add(currentLevel);
         }
         return result;
     }
