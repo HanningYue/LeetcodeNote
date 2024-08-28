@@ -1,20 +1,25 @@
 class Solution {
     Integer[][] dpTable;
     public int minimumTotal(List<List<Integer>> triangle) {
-        int n = triangle.size();
-        dpTable = new Integer[n][n];
+        int m = triangle.size(), n = triangle.get(triangle.size() - 1).size();
+        dpTable = new Integer[m][n];
         return dp(triangle, 0, 0);
     }
-    private int dp(List<List<Integer>> triangle, int row, int col) {
-        if (row == triangle.size()) {
+
+    private int dp(List<List<Integer>> triangle, int currentRow, int currentCol) {
+        if (currentRow == triangle.size()) {
             return 0;
         }
-        if (dpTable[row][col] != null) {
-            return dpTable[row][col];
+        if (dpTable[currentRow][currentCol] != null) {
+            return dpTable[currentRow][currentCol];
         }
-        int down = dp(triangle, row + 1, col);
-        int downRight = dp(triangle, row + 1, col + 1);
-        dpTable[row][col] = Math.min(down, downRight) + triangle.get(row).get(col);
-        return dpTable[row][col];
+
+        int goDown = dp(triangle, currentRow + 1, currentCol);
+        int goDownRight = dp(triangle, currentRow + 1, currentCol + 1);
+        
+        dpTable[currentRow][currentCol] 
+        = Math.min(goDown, goDownRight) + triangle.get(currentRow).get(currentCol);
+        
+        return dpTable[currentRow][currentCol];
     }
 }
