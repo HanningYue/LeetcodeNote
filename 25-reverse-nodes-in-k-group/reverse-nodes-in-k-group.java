@@ -11,7 +11,6 @@
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode previous = null, current = head;
-
         while (current != null) {
             ListNode kth = current;
             for (int i = 0; i < k; i++) {
