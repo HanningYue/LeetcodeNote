@@ -1,43 +1,46 @@
 class Pair {
-    int frequency, time;
+    int frequency;
+    int time;
     public Pair(int frequency, int time) {
         this.frequency = frequency;
         this.time = time;
     }
 }
-
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-        PriorityQueue<Integer> heap = new PriorityQueue<>((a, b) -> b - a);
-        
-        int[] freqArray = new int[26];
+        PriorityQueue<Integer> heap = new PriorityQueue<>(new Comparator<Integer>() {
+            public int compare(Integer a, Integer b) {
+                return b - a;
+            }
+        });        
+
+        int[] frequencyArray = new int[26];
         for (char task : tasks) {
-            freqArray[task - 'A']++;
+            frequencyArray[task - 'A']++;
         }
-        for (int freq : freqArray) {
+        for (int freq : frequencyArray) {
             if (freq > 0) {
                 heap.offer(freq);
             }
         }
 
-        int minimumIntervals = 0;
+        int result = 0;
         Queue<Pair> queue = new LinkedList<>();
-        while (!queue.isEmpty() || !heap.isEmpty()) {
-            minimumIntervals++;
+        while (!heap.isEmpty() || !queue.isEmpty()) {
+            result++;
+
             if (!heap.isEmpty()) {
-                int currentMax = heap.poll();
-                currentMax--;
-                if (currentMax > 0) {
-                    queue.offer(new Pair(currentMax, minimumIntervals + n));
+                int currentMaxFrequency = heap.poll();
+                currentMaxFrequency--;
+                if (currentMaxFrequency > 0) {
+                    queue.offer(new Pair(currentMaxFrequency, result + n));                   
                 }
             }
 
-            if (!queue.isEmpty()) {
-                if (queue.peek().time == minimumIntervals) {
-                    heap.offer(queue.poll().frequency);
-                }
+            if (!queue.isEmpty() && result == queue.peek().time) {
+                heap.offer(queue.poll().frequency);
             }
         }
-        return minimumIntervals;
+        return result;
     }
 }
