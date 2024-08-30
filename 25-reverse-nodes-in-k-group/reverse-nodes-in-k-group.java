@@ -11,14 +11,14 @@
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode previous = null, current = head;
-        
+
         while (current != null) {
-            ListNode check = current;
+            ListNode kth = current;
             for (int i = 0; i < k; i++) {
-                if (check == null) {
+                if (kth == null) {
                     return head;
                 }
-                check = check.next;
+                kth = kth.next;
             }
 
             ListNode tempPrevious = previous, tempCurrent = current;
@@ -30,7 +30,7 @@ class Solution {
             }
 
             if (tempPrevious == null) {
-                head = previous;               
+                head = previous;
             } else {
                 tempPrevious.next = previous;
             }
