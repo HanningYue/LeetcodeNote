@@ -1,11 +1,11 @@
 class Pair {
-    int maxFreq;
-    int time;
-    public Pair(int maxFreq, int time) {
-        this.maxFreq = maxFreq;
+    int frequency, time;
+    public Pair(int frequency, int time) {
+        this.frequency = frequency;
         this.time = time;
     }
 }
+
 class Solution {
     public int leastInterval(char[] tasks, int n) {
         PriorityQueue<Integer> heap = new PriorityQueue<>((a, b) -> b - a);
@@ -20,23 +20,24 @@ class Solution {
             }
         }
 
-        int currentTime = 0;
+        int minimumIntervals = 0;
         Queue<Pair> queue = new LinkedList<>();
-        while (!heap.isEmpty() || !queue.isEmpty()) {
-            currentTime++;
+        while (!queue.isEmpty() || !heap.isEmpty()) {
+            minimumIntervals++;
             if (!heap.isEmpty()) {
-                int maxFreq = heap.poll();
-                maxFreq--;
-                if (maxFreq > 0) {
-                    queue.offer(new Pair(maxFreq, currentTime + n));
+                int currentMax = heap.poll();
+                currentMax--;
+                if (currentMax > 0) {
+                    queue.offer(new Pair(currentMax, minimumIntervals + n));
                 }
             }
+
             if (!queue.isEmpty()) {
-                if (queue.peek().time == currentTime) {
-                    heap.offer(queue.poll().maxFreq);
+                if (queue.peek().time == minimumIntervals) {
+                    heap.offer(queue.poll().frequency);
                 }
             }
         }
-        return currentTime;
+        return minimumIntervals;
     }
 }
