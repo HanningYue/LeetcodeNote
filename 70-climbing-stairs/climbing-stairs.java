@@ -1,15 +1,22 @@
 class Solution {
+    Integer[] dpTable;
     public int climbStairs(int n) {
-        if (n <= 2) {
-            return n;
+        dpTable = new Integer[n + 1];
+        return dp(n);
+    }
+    private int dp(int n) {
+        if (n < 0) {
+            return 0;
         }
-        int[] dp = new int[n + 1];
-        dp[0] = 0;
-        dp[1] = 1;
-        dp[2] = 2;
-        for (int i = 3; i <= n; i++) {
-            dp[i] = dp[i - 1] + dp[i - 2];
+        if (n == 0) {
+            return 1;
         }
-        return dp[n];
+        if (dpTable[n] != null) {
+            return dpTable[n];
+        }
+        int oneStep = dp(n - 1);
+        int twoStep = dp(n - 2);
+        dpTable[n] = oneStep + twoStep;
+        return dpTable[n];
     }
 }
