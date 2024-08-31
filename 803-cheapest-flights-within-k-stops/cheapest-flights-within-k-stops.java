@@ -19,20 +19,22 @@ class Solution {
 
         int[] minStopToCurrent = new int[n];
         Arrays.fill(minStopToCurrent, Integer.MAX_VALUE);
+        minStopToCurrent[src] = 0;
         
         k = k + 1;
         PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
         heap.offer(new State(src, 0, 0));
+        
         while (!heap.isEmpty()) {
             State current = heap.poll();
-            if (current.stop > minStopToCurrent[current.vertex] || current.stop > k) {
+            if (minStopToCurrent[current.vertex] < current.stop || current.stop > k) {
                 continue;
             }
 
-            minStopToCurrent[current.vertex] = current.stop;
             if (current.vertex == dst) {
                 return current.cost;
             }
+            minStopToCurrent[current.vertex] = current.stop;
 
             for (State neighbor : graph.get(current.vertex)) {
                 heap.offer(new State(neighbor.vertex, neighbor.cost + current.cost, current.stop + 1));
