@@ -16,17 +16,17 @@ class Solution {
             graph.get(from).add(new State(to, cost));
         }
 
-        int[] minCostToCurrent = new int[n + 1];
-        Arrays.fill(minCostToCurrent, Integer.MAX_VALUE);
-        minCostToCurrent[k] = 0;
+        int[] resultArray = new int[n + 1];
+        Arrays.fill(resultArray, Integer.MAX_VALUE);
+        resultArray[k] = 0;
 
         PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
         heap.offer(new State(k, 0));
         while (!heap.isEmpty()) {
             State current = heap.poll();
             for (State neighbor : graph.get(current.vertex)) {
-                if (neighbor.cost + current.cost < minCostToCurrent[neighbor.vertex]) {
-                    minCostToCurrent[neighbor.vertex] = neighbor.cost + current.cost;
+                if (neighbor.cost + current.cost < resultArray[neighbor.vertex]) {
+                    resultArray[neighbor.vertex] = neighbor.cost + current.cost;
                     heap.offer(new State(neighbor.vertex, neighbor.cost + current.cost));
                 }
             }
@@ -34,10 +34,10 @@ class Solution {
 
         int result = Integer.MIN_VALUE;
         for (int i = 1; i <= n; i++) {
-            if (minCostToCurrent[i] == Integer.MAX_VALUE) {
+            if (resultArray[i] == Integer.MAX_VALUE) {
                 return -1;
             }
-            result = Math.max(result, minCostToCurrent[i]);
+            result = Math.max(result, resultArray[i]);
         }
         return result;
     }
