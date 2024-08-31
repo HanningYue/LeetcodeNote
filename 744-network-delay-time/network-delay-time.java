@@ -5,6 +5,7 @@ class State {
         this.cost = cost;
     }
 }
+
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
         Map<Integer, List<State>> graph = new HashMap<>();
@@ -16,29 +17,34 @@ class Solution {
             graph.get(from).add(new State(to, cost));
         }
 
-        int[] resultArray = new int[n + 1];
-        Arrays.fill(resultArray, Integer.MAX_VALUE);
-        resultArray[k] = 0;
-
-        PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.cost - b.cost);
+        int[] minCostToEach = new int[n + 1];
+        Arrays.fill(minCostToEach, Integer.MAX_VALUE);
+        minCostToEach[k] = 0;
+        
+        PriorityQueue<State> heap = new PriorityQueue<>(new Comparator<State>() {
+            public int compare(State a, State b) {
+                return a.cost - b.cost;
+            }
+        });
         heap.offer(new State(k, 0));
+        
         while (!heap.isEmpty()) {
             State current = heap.poll();
             for (State neighbor : graph.get(current.vertex)) {
-                if (neighbor.cost + current.cost < resultArray[neighbor.vertex]) {
-                    resultArray[neighbor.vertex] = neighbor.cost + current.cost;
-                    heap.offer(new State(neighbor.vertex, neighbor.cost + current.cost));
+                if (current.cost + neighbor.cost < minCostToEach[neighbor.vertex]) {
+                    minCostToEach[neighbor.vertex] = current.cost + neighbor.cost;
+                    heap.offer(new State(neighbor.vertex, current.cost + neighbor.cost));
                 }
             }
         }
 
-        int result = Integer.MIN_VALUE;
+        int result = 0;
         for (int i = 1; i <= n; i++) {
-            if (resultArray[i] == Integer.MAX_VALUE) {
+            if (minCostToEach[i] == Integer.MAX_VALUE) {
                 return -1;
             }
-            result = Math.max(result, resultArray[i]);
-        }
+            result = Math.max(result, minCostToEach[i]);
+        }       
         return result;
     }
 }
