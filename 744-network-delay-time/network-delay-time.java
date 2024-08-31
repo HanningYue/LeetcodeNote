@@ -30,6 +30,11 @@ class Solution {
         
         while (!heap.isEmpty()) {
             State current = heap.poll();
+
+            if (current.cost > minCostToEach[current.vertex]) {
+                continue;
+            }
+
             for (State neighbor : graph.get(current.vertex)) {
                 if (current.cost + neighbor.cost < minCostToEach[neighbor.vertex]) {
                     minCostToEach[neighbor.vertex] = current.cost + neighbor.cost;
