@@ -1,34 +1,37 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        if (nums1.length > nums2.length) {
-            return findMedianSortedArrays(nums2, nums1);
+        int[] mergedArray = merge(nums1, nums2);
+        return findMedian(mergedArray);
+    }
+    
+    private int[] merge(int[] nums1, int[] nums2) {
+        int n = nums1.length, m = nums2.length;
+        int[] result = new int[n + m];
+
+        int pointerOne = 0, pointerTwo = 0, pointerThree = 0;
+        while (pointerOne < n && pointerTwo < m) {
+            if (nums1[pointerOne] < nums2[pointerTwo]) {
+                result[pointerThree++] = nums1[pointerOne++];
+            } else {
+                result[pointerThree++] = nums2[pointerTwo++];
+            }
+        }
+        while (pointerOne < n) {
+            result[pointerThree++] = nums1[pointerOne++];
+        }
+        while (pointerTwo < m) {
+            result[pointerThree++] = nums2[pointerTwo++];
         }
 
-        int totalLength = nums1.length + nums2.length;
-        int halfLength = (totalLength + 1) / 2;
-        boolean even = totalLength % 2 == 0;
+        return result;
+    }
 
-        int left = 0, right = nums1.length;
-        while (true) {
-            int pointerOne = left + (right - left) / 2;
-            int pointerTwo = halfLength - pointerOne;
-
-            int leftOne = pointerOne > 0 ? nums1[pointerOne - 1] : Integer.MIN_VALUE;
-            int rightOne = pointerOne < nums1.length ? nums1[pointerOne] : Integer.MAX_VALUE;
-            int leftTwo = pointerTwo > 0 ? nums2[pointerTwo - 1] : Integer.MIN_VALUE;
-            int rightTwo = pointerTwo < nums2.length ? nums2[pointerTwo] : Integer.MAX_VALUE;
-
-            if (leftOne <= rightTwo && leftTwo <= rightOne) {
-                if (even) {
-                    return (double)(Math.max(leftOne, leftTwo) + Math.min(rightOne, rightTwo)) / 2.0;
-                } else {
-                    return Math.max(leftOne, leftTwo);
-                }
-            } else if (leftOne > rightTwo) {
-                right = pointerOne - 1;
-            } else if (leftTwo > rightOne) {
-                left = pointerOne + 1;
-            }
-        } 
+    private double findMedian(int[] arr) {
+        int middleIndex = arr.length / 2;
+        if (arr.length % 2 == 0) {
+            return (arr[middleIndex - 1] + arr[middleIndex]) / 2.0;
+        } else {
+            return arr[middleIndex];
+        }
     }
 }
