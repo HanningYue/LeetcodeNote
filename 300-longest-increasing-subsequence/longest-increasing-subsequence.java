@@ -1,20 +1,20 @@
 class Solution {
-    Integer[] dpTable;
+    Integer[] currentLIS;
     public int lengthOfLIS(int[] nums) {
-        dpTable = new Integer[nums.length];
-        Arrays.fill(dpTable, 1);
+        currentLIS = new Integer[nums.length];
+        Arrays.fill(currentLIS, 1);
 
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
-                    dpTable[i] = Math.max(dpTable[i], dpTable[j] + 1);
+                    currentLIS[i] = Math.max(currentLIS[i], currentLIS[j] + 1);
                 }
             }
         }
 
         int result = Integer.MIN_VALUE;
-        for (int i = 0; i < dpTable.length; i++) {
-            result = Math.max(result, dpTable[i]);
+        for (int i = 0; i < currentLIS.length; i++) {
+            result = Math.max(result, currentLIS[i]);
         }
         return result;
     }
