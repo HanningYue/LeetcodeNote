@@ -1,34 +1,35 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[] array = mergeSort(nums1, nums2);
-        return median(array);
-    }
-    private int[] mergeSort(int[] nums1, int[] nums2) {
-        int m = nums1.length, n = nums2.length;
-        int[] result = new int[m + n];
+        if (nums1.length > nums2.length) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
 
-        int i = 0, j = 0, k = 0;
-        while (i < m && j < n) {
-            if (nums1[i] < nums2[j]) {
-                result[k++] = nums1[i++];
-            } else {
-                result[k++] = nums2[j++];
+        int totalLength = nums1.length + nums2.length;
+        int halfLength = (totalLength + 1) / 2;
+        boolean even = totalLength % 2 == 0;
+
+        int left = 0, right = nums1.length;
+        while (left <= right) {
+            int pointerOne = left + (right - left) / 2;
+            int pointerTwo = halfLength - pointerOne;
+
+            int leftOne = pointerOne > 0 ? nums1[pointerOne - 1] : Integer.MIN_VALUE;
+            int rightOne = pointerOne < nums1.length ? nums1[pointerOne] : Integer.MAX_VALUE;
+            int leftTwo = pointerTwo > 0 ? nums2[pointerTwo - 1] : Integer.MIN_VALUE;
+            int rightTwo = pointerTwo < nums2.length ? nums2[pointerTwo] : Integer.MAX_VALUE;
+
+            if (leftOne <= rightTwo && leftTwo <= rightOne) {
+                if (even) {
+                    return (Math.max(leftOne, leftTwo) + Math.min(rightOne, rightTwo)) / 2.0;
+                } else {
+                    return Math.max(leftOne, leftTwo);
+                }
+            } else if (leftOne > rightTwo) {
+                right = pointerOne - 1;
+            } else if (leftTwo > rightOne) {
+                left = pointerOne + 1;
             }
         }
-        while (i < m) {
-            result[k++] = nums1[i++];
-        }
-        while (j < n) {
-            result[k++] = nums2[j++];
-        }
-        return result;
-    }
-    private double median(int[] nums) {
-        int middleIndex = nums.length / 2;
-        if (nums.length % 2 == 0) {
-            return (nums[middleIndex - 1] + nums[middleIndex]) / 2.0;
-        } else {
-            return nums[middleIndex];
-        }
+        return -1;
     }
 }
