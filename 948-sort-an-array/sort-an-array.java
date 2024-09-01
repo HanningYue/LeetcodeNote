@@ -15,8 +15,7 @@ class Solution {
         merge(nums, left, right, mid);
     }
     private void merge(int[] nums, int left, int right, int mid) {
-        int tempP = left;
-        int leftP = left, rightP = mid + 1;
+        int tempP = left, leftP = left, rightP = mid + 1;
 
         while (leftP <= mid && rightP <= right) {
             if (nums[leftP] < nums[rightP]) {
@@ -27,12 +26,12 @@ class Solution {
         }
         while (leftP <= mid) {
             tempArr[tempP++] = nums[leftP++];
-        }
+        }   
         while (rightP <= right) {
             tempArr[tempP++] = nums[rightP++];
         }
         for (int i = left; i <= right; i++) {
-            nums[i] = tempArr[i];
+            nums[i] = tempArr[i];           
         }
     }
 }
