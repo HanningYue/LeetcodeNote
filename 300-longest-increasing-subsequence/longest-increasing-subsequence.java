@@ -1,26 +1,21 @@
 class Solution {
+    Integer[] dpTable;
     public int lengthOfLIS(int[] nums) {
-        if (nums.length == 0) {
-            return 0;
-        }
+        dpTable = new Integer[nums.length];
+        Arrays.fill(dpTable, 1);
 
-        List<Integer> tails = new ArrayList<>();
-        for (int num : nums) {
-            if (tails.isEmpty() || num > tails.get(tails.size() -  1)) {
-                tails.add(num);
-            } else {
-                int left = 0, right = tails.size() - 1;
-                while (left < right) {
-                    int mid = left + (right - left) / 2;
-                    if (tails.get(mid) < num) {
-                        left = mid + 1;
-                    } else if (tails.get(mid) >= num) {
-                        right = mid;
-                    }
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    dpTable[i] = Math.max(dpTable[i], dpTable[j] + 1);
                 }
-                tails.set(right, num);
             }
         }
-        return tails.size();
+
+        int result = Integer.MIN_VALUE;
+        for (int i = 0; i < dpTable.length; i++) {
+            result = Math.max(result, dpTable[i]);
+        }
+        return result;
     }
 }
