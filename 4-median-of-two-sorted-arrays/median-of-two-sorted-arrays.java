@@ -9,7 +9,7 @@ class Solution {
         boolean even = totalLength % 2 == 0;
 
         int left = 0, right = nums1.length;
-        while (left <= right) {
+        while (true) {
             int pointerOne = left + (right - left) / 2;
             int pointerTwo = halfLength - pointerOne;
 
@@ -20,7 +20,7 @@ class Solution {
 
             if (leftOne <= rightTwo && leftTwo <= rightOne) {
                 if (even) {
-                    return (Math.max(leftOne, leftTwo) + Math.min(rightOne, rightTwo)) / 2.0;
+                    return (double)(Math.max(leftOne, leftTwo) + Math.min(rightOne, rightTwo)) / 2.0;
                 } else {
                     return Math.max(leftOne, leftTwo);
                 }
@@ -29,7 +29,6 @@ class Solution {
             } else if (leftTwo > rightOne) {
                 left = pointerOne + 1;
             }
-        }
-        return -1;
+        } 
     }
 }
