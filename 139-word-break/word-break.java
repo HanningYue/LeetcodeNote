@@ -20,7 +20,7 @@ class Solution {
                 boolean subProblem = dp(s, index + length, set);
         
                 if (subProblem) {
-                    dpTable[index] = true;
+                    // dpTable[index] = true;
                     return true;
                 }
             }
