@@ -4,9 +4,10 @@ class Solution {
         List<List<Integer>> result = new ArrayList<>();
 
         for (int k = 0; k < nums.length - 2; k++) {
-            if (k > 0 && nums[k] == nums[k - 1]) {
+            if (k - 1 >= 0 && nums[k - 1] == nums[k]) {
                 continue;
             }
+
             int i = k + 1, j = nums.length - 1;
             while (i < j) {
                 int sum = nums[i] + nums[j] + nums[k];
