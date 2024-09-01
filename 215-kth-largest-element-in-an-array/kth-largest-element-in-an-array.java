@@ -1,36 +1,39 @@
 class Solution {
-    Random rand = new Random();
     public int findKthLargest(int[] nums, int k) {
-        return quickSelect(nums, 0, nums.length - 1, nums.length - k);
-    }
-    private int quickSelect(int[] nums, int left, int right, int targetK) {
-        if (left == right) {
-            return nums[left];
-        }
-
-        int pivotIndex = partition(nums, left, right);
-        if (pivotIndex == targetK) {
-            return nums[pivotIndex];
-        } else if (pivotIndex > targetK) {
-            return quickSelect(nums, left, pivotIndex - 1, targetK);
-        } else {
-            return quickSelect(nums, pivotIndex + 1, right, targetK);
-        }
-    }
-    private int partition(int[] nums, int left, int right) {
-        int pivotIndex = left + rand.nextInt(right - left);
-        int pivotValue = nums[pivotIndex];
-        swap(nums, pivotIndex, right);
-
-        int leftP = left;
-        for (int i = left; i < right; i++) {
-            if (nums[i] < pivotValue) {
-                swap(nums, leftP, i);
-                leftP++;
+        int left = 0, right = nums.length - 1;
+        while (true) {
+            int pivotIndex = quickSelect(nums, left, right);
+            if (pivotIndex + 1 == k) {
+                return nums[pivotIndex];
+            } else if (pivotIndex + 1 < k) {
+                left = pivotIndex + 1;
+            } else if (pivotIndex + 1 > k) {
+                right = pivotIndex - 1;
             }
         }
-        swap(nums, leftP, right);
-        return leftP;
+    }
+    private int quickSelect(int[] nums, int left, int right) {
+        if (left == right) {
+            return left;
+        }
+
+        int pivot = nums[left];
+        int leftP = left, rightP = right;
+        while (leftP <= rightP) {
+            if (nums[leftP] < pivot && nums[rightP] > pivot) {
+                swap(nums, leftP, rightP);
+                leftP++;
+                rightP--;
+            }
+            if (nums[leftP] >= pivot) {
+                leftP++;
+            }
+            if (nums[rightP] <= pivot) {
+                rightP--;
+            }
+        }
+        swap(nums, left, rightP);
+        return rightP;
     }
     private void swap(int[] nums, int left, int right) {
         int temp = nums[left];
