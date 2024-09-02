@@ -7,10 +7,15 @@ class Solution {
                 return nums[pivotIndex];
             } else if (pivotIndex + 1 < k) {
                 left = pivotIndex + 1;
-            } else if (pivotIndex + 1 > k) {
+            } else {
                 right = pivotIndex - 1;
             }
         }
+    }
+    private void swap(int[] nums, int left, int right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
     }
     private int quickSelect(int[] nums, int left, int right) {
         if (left == right) {
@@ -34,10 +39,5 @@ class Solution {
         }
         swap(nums, left, rightP);
         return rightP;
-    }
-    private void swap(int[] nums, int left, int right) {
-        int temp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = temp;
     }
 }
