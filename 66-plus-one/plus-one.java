@@ -12,11 +12,8 @@ class Solution {
             }
         }
 
-        int[] result = new int[n + 1];
-        result[0] = 1;
-        for (int i = 1; i < n; i++) {
-            result[i] = digits[i];
-        }
-        return result;
+        digits = new int[n + 1];
+        digits[0] = 1;
+        return digits;
     }
 }
