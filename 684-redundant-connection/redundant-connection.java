@@ -1,44 +1,44 @@
-class UnionFind {
-    int count;
+class Solution {
+    UF unionFind;
+    public int[] findRedundantConnection(int[][] edges) {
+        unionFind = new UF(edges.length + 1);
+        for (int[] edge : edges) {
+            if (unionFind.connected(edge[0], edge[1])) {
+                return edge;
+            }
+            unionFind.union(edge[0], edge[1]);
+        }
+        return new int[]{};
+    }
+}
+class UF {
     int[] parent;
-    public UnionFind(int n) {
+    int count;
+    public UF(int n) {
         this.count = n;
         parent = new int[n];
         for (int i = 0; i < n; i++) {
             parent[i] = i;
         }
     }
-    public int find(int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent[vertex]);
-        }
-        return parent[vertex];
-    }
-    public void union(int one, int two) {
-        int parentOne = find(one);
-        int parentTwo = find(two);
-        if (parentOne == parentTwo) {
+    public void union(int p, int q) {
+        if (find(p) == find(q)) {
             return;
         }
-        parent[parentOne] = parentTwo;
+        int parentP = find(p);
+        int parentQ = find(q);
+        parent[parentP] = parentQ;
         count--;
     }
-    public boolean connected(int one, int two) {
-        return find(one) == find(two);
-    }
-}
-class Solution {
-    public int[] findRedundantConnection(int[][] edges) {
-        int n = edges.length + 1;
-        UnionFind uf = new UnionFind(n);
-        for (int[] edge : edges) {
-            int one = edge[0];
-            int two = edge[1];
-            if (uf.connected(one, two)) {
-                return edge;
-            }
-            uf.union(one, two);
+    public int find(int p) {
+        if (parent[p] != p) {
+            parent[p] = find(parent[p]);
         }
-        return new int[]{};
+        return parent[p];
+    }
+    public boolean connected(int p, int q) {
+        int parentP = find(p);
+        int parentQ = find(q);
+        return parentP == parentQ;
     }
 }
