@@ -1,20 +1,20 @@
 class Solution {
-    UF unionFind;
+    UnionFind uf;
     public int[] findRedundantConnection(int[][] edges) {
-        unionFind = new UF(edges.length + 1);
+        uf = new UnionFind(edges.length + 1);
         for (int[] edge : edges) {
-            if (unionFind.connected(edge[0], edge[1])) {
+            if (uf.connected(edge[0], edge[1])) {
                 return edge;
             }
-            unionFind.union(edge[0], edge[1]);
+            uf.union(edge[0], edge[1]);
         }
         return new int[]{};
     }
 }
-class UF {
+class UnionFind {
     int[] parent;
     int count;
-    public UF(int n) {
+    public UnionFind(int n) {
         this.count = n;
         parent = new int[n];
         for (int i = 0; i < n; i++) {
@@ -22,11 +22,11 @@ class UF {
         }
     }
     public void union(int p, int q) {
-        if (find(p) == find(q)) {
-            return;
-        }
         int parentP = find(p);
         int parentQ = find(q);
+        if (parentP == parentQ) {
+            return;
+        }
         parent[parentP] = parentQ;
         count--;
     }
@@ -37,8 +37,6 @@ class UF {
         return parent[p];
     }
     public boolean connected(int p, int q) {
-        int parentP = find(p);
-        int parentQ = find(q);
-        return parentP == parentQ;
+        return find(p) == find(q);
     }
 }
