@@ -1,12 +1,8 @@
-/**
-dp[i][0] represents at current ith day, not holding any stock
-dp[i][1] represents at current ith day, holding one stock
-*/
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
         int[][] dp = new int[n][2];
-        for (int i = 0; i < prices.length; i++) {
+        for (int i = 0; i < n; i++) {
             if (i - 1 == -1) {
                 dp[i][0] = 0;
                 dp[i][1] = 0 - prices[i];
