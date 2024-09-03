@@ -1,16 +1,14 @@
 class Solution {
     Integer[] dpTable;
     public int numDecodings(String s) {
-        int n = s.length();
-        dpTable = new Integer[n];
+        dpTable = new Integer[s.length()];
         return dp(s, 0);
     }
-    
     private int dp(String s, int index) {
         if (index == s.length()) {
             return 1;
         }
-        if (s.charAt(index) == '0') {
+        if (s.charAt(index) - '0' == 0) {
             return 0;
         }
         if (dpTable[index] != null) {
@@ -18,6 +16,9 @@ class Solution {
         }
 
         int total = 0;
+
+        int countUsingOne = dp(s, index + 1);
+        total += countUsingOne;
         if (index + 1 < s.length()) {
             int twoDigits = Integer.parseInt(s.substring(index, index + 2));
             if (twoDigits <= 26) {
@@ -25,10 +26,8 @@ class Solution {
                 total += countUsingTwo;
             }
         }
-        int countUsingOne = dp(s, index + 1);
-        total += countUsingOne;
-        
+
         dpTable[index] = total;
-        return dpTable[index];
+        return dpTable[index];       
     }
 }
