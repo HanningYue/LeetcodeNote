@@ -5,16 +5,15 @@ class Solution {
             graph.put(i, new HashSet<>());
         }
         for (int[] edge : edges) {
-            int vertexOne = edge[0], vertexTwo = edge[1];
-            graph.get(vertexOne).add(vertexTwo);
-            graph.get(vertexTwo).add(vertexOne);
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
         }
 
-        int count = 0;
         boolean[] visited = new boolean[n];
-        for (int vertex = 0; vertex < n; vertex++) {
-            if (!visited[vertex]) {
-                dfs(graph, vertex, visited);
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                dfs(graph, i, visited);
                 count++;
             }
         }
@@ -24,12 +23,10 @@ class Solution {
         if (visited[vertex]) {
             return;
         }
+        
         visited[vertex] = true;
-
         for (int neighbor : graph.get(vertex)) {
-            if (!visited[neighbor]) {
-                dfs(graph, neighbor, visited);
-            }
+            dfs(graph, neighbor, visited);
         }
     }
 }
