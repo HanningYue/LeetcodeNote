@@ -15,31 +15,30 @@
  */
 class Solution {
     public boolean isBalanced(TreeNode root) {
-        if (maxDepth(root) == -1) {
-            return false;
+        int maxDepth = height(root);
+        if (maxDepth != -1) {
+            return true;
         }
-        return true;
+        return false;
     }
-    private int maxDepth(TreeNode root) {
+    
+    private int height(TreeNode root) {
         if (root == null) {
             return 0;
         }
-
-        int leftDepth = maxDepth(root.left);
-        if (leftDepth == -1) {
+        int leftHeight = height(root.left);
+        if (leftHeight == -1) {
             return -1;
         }
 
-        int rightDepth = maxDepth(root.right);
-        if (rightDepth == -1) {
-            return -1;
+        int rightHeight = height(root.right);
+        if (rightHeight == -1) {
+            return rightHeight;
         }
 
-        if (Math.abs(leftDepth - rightDepth) > 1) {
+        if (Math.abs(leftHeight - rightHeight) > 1) {
             return -1;
         }
-        
-        int currentMaxDepth = Math.max(leftDepth, rightDepth) + 1;
-        return currentMaxDepth;
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 }
