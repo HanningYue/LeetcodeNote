@@ -1,4 +1,3 @@
-// 1 & 1 = 1, 0 & 1 = 0, 0 & 0 = 0
 class Solution {
     public int rangeBitwiseAnd(int left, int right) {
         int pointer = 0;
@@ -7,7 +6,7 @@ class Solution {
             right = right >> 1;
             pointer++;
         }
-        int shiftBack = left << pointer;
-        return shiftBack;
+        int result = right << pointer;
+        return result;
     }
 }
