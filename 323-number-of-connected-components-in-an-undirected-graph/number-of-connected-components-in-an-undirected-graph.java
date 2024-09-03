@@ -1,32 +1,40 @@
 class Solution {
+    UnionFind uf;
     public int countComponents(int n, int[][] edges) {
-        Map<Integer, Set<Integer>> graph = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            graph.put(i, new HashSet<>());
-        }
-        for (int[] edge : edges) {
-            graph.get(edge[0]).add(edge[1]);
-            graph.get(edge[1]).add(edge[0]);
-        }
-
-        boolean[] visited = new boolean[n];
         int count = 0;
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                dfs(graph, i, visited);
-                count++;
-            }
+        uf = new UnionFind(n);
+        for (int[] edge : edges) {
+            uf.union(edge[0], edge[1]);
         }
-        return count;
+        return uf.count;
     }
-    private void dfs(Map<Integer, Set<Integer>> graph, int vertex, boolean[] visited) {
-        if (visited[vertex]) {
+}
+class UnionFind {
+    int count;
+    int[] parent;
+    public UnionFind (int n) {
+        parent = new int[n];
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+        this.count = n;
+    }
+    public void union(int p, int q) {
+        int parentP = find(p);
+        int parentQ = find(q);
+        if (parentQ == parentP) {
             return;
         }
-        
-        visited[vertex] = true;
-        for (int neighbor : graph.get(vertex)) {
-            dfs(graph, neighbor, visited);
+        parent[parentP] = parentQ;
+        count--;
+    }
+    public int find(int p) {
+        if (parent[p] != p) {
+            parent[p] = find(parent[p]);
         }
+        return parent[p];
+    }
+    public boolean isConnected(int p, int q) {
+        return find(p) == find(q);
     }
 }
