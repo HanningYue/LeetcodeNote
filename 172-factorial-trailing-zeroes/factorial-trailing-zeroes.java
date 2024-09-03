@@ -1,13 +1,13 @@
 class Solution {
     public int trailingZeroes(int n) {
-        int result = 0;
-        long divisor = 5;
+        int factor = 5;
+        int numberOfFactor = 0;
 
-        while (divisor <= n) {
-            long numberOfDivisor = n / divisor;
-            result += numberOfDivisor;
-            divisor = divisor * 5;
+        while (factor <= n) {
+            int currentNumberOfFactor = n / factor;
+            numberOfFactor += currentNumberOfFactor;
+            factor = factor * 5;
         }
-        return result;        
+        return numberOfFactor;
     }
 }
