@@ -18,9 +18,16 @@ class Solution {
         if (root == null) {
             return 0;
         }
-        int leftMax = maxDepth(root.left);
-        int rightMax = maxDepth(root.right);
-        int currentMax = Math.max(leftMax, rightMax) + 1;
-        return currentMax;
+        int leftSub = height(root.left);
+        int rightSub = height(root.right);
+        return Math.max(leftSub, rightSub) + 1;
+    }
+    private int height(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 }
