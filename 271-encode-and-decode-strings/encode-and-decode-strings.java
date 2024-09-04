@@ -12,17 +12,14 @@ public class Codec {
     // Decodes a single string to a list of strings.
     public List<String> decode(String s) {
         List<String> result = new ArrayList<>();
-
         int index = 0;
         while (index < s.length()) {
             int slashIndex = s.indexOf("/", index);
             int length = Integer.parseInt(s.substring(index, slashIndex));
             String originalString = s.substring(slashIndex + 1, slashIndex + 1 + length);
-            index = slashIndex + length + 1;
-
             result.add(originalString);
+            index = slashIndex + 1 + length;
         }
-
         return result;
     }
 }
