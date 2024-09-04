@@ -1,33 +1,34 @@
 class Solution {
     public boolean checkValidString(String s) {
-        Stack<Integer> openBrackets = new Stack < > ();
-        Stack<Integer> asterisks = new Stack < > ();
-
+        Stack<Integer> star = new Stack<>();
+        Stack<Integer> left = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-
-            if (ch == '(') {
-                openBrackets.push(i);
-            }
-            else if (ch == '*') {
-                asterisks.push(i);
-            } else if (ch == ')') {
-                if (!openBrackets.empty()) {
-                    openBrackets.pop();
-                } else if (!asterisks.isEmpty()) {
-                    asterisks.pop();
-                } else if (asterisks.isEmpty() && openBrackets.isEmpty()){
+            char current = s.charAt(i);
+            if (current == '(') {
+                left.add(i);
+            } else if (current == '*') {
+                star.add(i);
+            } else if (current == ')') {
+                if (left.isEmpty() && star.isEmpty()) {
                     return false;
+                } else if (!left.isEmpty()) {
+                    left.pop();
+                } else if (!star.isEmpty()) {
+                    star.pop();
                 }
             }
         }
 
-        while (!openBrackets.isEmpty() && !asterisks.isEmpty()) {
-            if (openBrackets.pop() > asterisks.pop()) {
+        while (!left.isEmpty() && !star.isEmpty()) {
+            if (left.pop() > star.pop()) {
                 return false;
             }
         }
 
-        return openBrackets.isEmpty();
+        if (!left.isEmpty()) {
+            return false;
+        }
+        
+        return true;
     }
 }
