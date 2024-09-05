@@ -2,6 +2,7 @@ class Solution {
     public String addBinary(String a, String b) {
         int pointerA = a.length() - 1, pointerB = b.length() - 1;
         StringBuilder sb = new StringBuilder();
+        
         int carry = 0;
         while (pointerA >= 0 || pointerB >= 0) {
             int numA = pointerA >= 0 ? a.charAt(pointerA) - '0' : 0;
