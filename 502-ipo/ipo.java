@@ -1,22 +1,31 @@
+class Pair {
+    int cap;
+    int profit;
+    public Pair (int cap, int profit) {
+        this.cap = cap;
+        this.profit = profit;
+    }
+}
+
 class Solution {
-    public int findMaximizedCapital(int tasks, int initial, int[] profits, int[] capital) {
-        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        PriorityQueue<int[]> maxHeap = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+    public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        PriorityQueue<Pair> descendingProfit = new PriorityQueue<>((a, b) -> b.profit - a.profit);
+        PriorityQueue<Pair> aescendingCapital = new PriorityQueue<>((a, b) -> a.cap - b.cap);
+        
         for (int i = 0; i < capital.length; i++) {
-            minHeap.offer(new int[]{capital[i], profits[i]});
+            aescendingCapital.offer(new Pair(capital[i], profits[i]));
         }
 
-        for (int i = 0; i < tasks; i++) {
-            while (!minHeap.isEmpty() && minHeap.peek()[0] <= initial) {
-                int[] minCapital = minHeap.poll();
-                maxHeap.offer(minCapital);
+        for (int i = 0; i < k; i++) {
+            while (!aescendingCapital.isEmpty() && aescendingCapital.peek().cap <= w) {
+                descendingProfit.offer(aescendingCapital.poll());
             }
-            if (maxHeap.isEmpty()) {
-                return initial;
+            if (descendingProfit.isEmpty()) {
+                return w;
             }
-            int[] maxProfit = maxHeap.poll();
-            initial += maxProfit[1];
+            Pair currentMaxProfit = descendingProfit.poll();
+            w += currentMaxProfit.profit;
         }
-        return initial;
+        return w;
     }
 }
