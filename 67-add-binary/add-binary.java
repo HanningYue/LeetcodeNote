@@ -16,7 +16,7 @@ class Solution {
         }
 
         if (carry != 0) {
-            sb.insert(0, carry);
+            sb.insert(0, 1);
         }
         return sb.toString();
     }
