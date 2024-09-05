@@ -5,6 +5,7 @@ class Solution {
         dpTable = new Boolean[n][m];
         return dp(s, 0, p, 0);
     }
+
     private boolean dp(String s, int i, String p, int j) {
         if (j == p.length()) {
             return i == s.length();
@@ -21,10 +22,11 @@ class Solution {
             }
             return true;
         }
+
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
-        
+
         boolean result = false;
         if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.') {
             if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
@@ -32,7 +34,7 @@ class Solution {
             } else {
                 result = dp(s, i + 1, p, j + 1);
             }
-        } else {
+        } else if (s.charAt(i) != p.charAt(j) || p.charAt(j) != '.') {
             if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
                 result = dp(s, i, p, j + 2);
             } else {
