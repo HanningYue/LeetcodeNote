@@ -11,6 +11,9 @@ class Solution {
                 left = mid + 1;
             }
         }
-        return left;
+        if (left < nums.length) {
+            return left;
+        }
+        return nums.length;
     }
 }
