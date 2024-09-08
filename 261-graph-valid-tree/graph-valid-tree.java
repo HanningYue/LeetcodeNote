@@ -1,41 +1,31 @@
 class Solution {
     public boolean validTree(int n, int[][] edges) {
-        UnionFind uf = new UnionFind(n);
+        if (edges.length != n - 1) {
+            return false;
+        }
+        
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            graph.put(i, new HashSet<>());
+        }
         for (int[] edge : edges) {
-            int vertexOne = edge[0], vertexTwo = edge[1];
-            if (uf.connected(vertexOne, vertexTwo)) {
-                return false;
-            }
-            uf.union(vertexOne, vertexTwo);
-        }        
-        return uf.count == 1;
-    }
-}
-class UnionFind {
-    int[] parent;
-    int count;
-    public UnionFind(int numberOfVertex) {
-        parent = new int[numberOfVertex];
-        this.count = numberOfVertex;
-        for (int i = 0; i < numberOfVertex; i++) {
-            parent[i] = i;
+            int from = edge[0], to = edge[1];
+            graph.get(from).add(to);
+            graph.get(to).add(from);
         }
+
+        Set<Integer> visited = new HashSet<>();
+        dfs(0, graph, visited);
+        return visited.size() == n;
     }
-    public int find(int vertex) {
-        if (parent[vertex] != vertex) {
-            parent[vertex] = find(parent[vertex]);
-        }
-        return parent[vertex];
-    }
-    public void union(int vertexOne, int vertexTwo) {
-        int parentOne = find(vertexOne), parentTwo = find(vertexTwo);
-        if (parentOne == parentTwo) {
+
+    private void dfs(int vertex, Map<Integer, Set<Integer>> graph, Set<Integer> visited) {
+        if (visited.contains(vertex)) {
             return;
         }
-        parent[parentOne] = parentTwo;
-        count--;
-    }
-    public boolean connected(int vertexOne, int vertexTwo) {
-        return find(vertexOne) == find(vertexTwo);
+        visited.add(vertex);
+        for (int neighbor : graph.get(vertex)) {
+            dfs(neighbor, graph, visited);
+        }
     }
 }
