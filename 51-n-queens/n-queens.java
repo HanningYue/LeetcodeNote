@@ -2,15 +2,15 @@ class Solution {
     List<String> board;
     List<List<String>> result;
     public List<List<String>> solveNQueens(int n) {
-        result = new ArrayList<>();
         board = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            StringBuilder row = new StringBuilder();
-            for (int j = 0; j < n; j++) {
-                row.append('.');
+        for (int row = 0; row < n; row++) {
+            StringBuilder sb = new StringBuilder();
+            for (int col = 0; col < n; col++) {
+                sb.append(".");
             }
-            board.add(row.toString());
+            board.add(sb.toString());
         }
+        result = new ArrayList<>();
         backTrack(0);
         return result;
     }
@@ -19,19 +19,20 @@ class Solution {
             result.add(new ArrayList<>(board));
             return;
         }
-        for (int col = 0; col < board.get(row).length(); col++) {
-            StringBuilder currentRow = new StringBuilder(board.get(row));
-            if (isValid(row, col)) {
-                currentRow.setCharAt(col, 'Q');
-                board.set(row, currentRow.toString());
+
+        StringBuilder sb = new StringBuilder(board.get(row));
+        for (int col = 0; col < board.size(); col++) {
+            if (valid(row, col)) {
+                sb.setCharAt(col, 'Q');
+                board.set(row, sb.toString());
                 backTrack(row + 1);
-                currentRow.setCharAt(col, '.');
-                board.set(row, currentRow.toString());
+                sb.setCharAt(col, '.');
+                board.set(row, sb.toString());
             }
         }
     }
-    private boolean isValid(int row, int col) {
-        for (int i = row - 1; i >= 0; i--) {
+    private boolean valid(int row, int col) {
+        for (int i = 0; i < row; i++) {
             if (board.get(i).charAt(col) == 'Q') {
                 return false;
             }
