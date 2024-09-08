@@ -28,11 +28,12 @@ class Solution {
         boolean result = false;
         if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.') {
             if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
-                result = dp(s, i + 1, p, j) || dp(s, i, p, j + 2);
+                result = dp(s, i, p, j + 2) || dp(s, i + 1, p, j);
             } else {
                 result = dp(s, i + 1, p, j + 1);
             }
-        } else {
+        }
+        else {
             if (j + 1 < p.length() && p.charAt(j + 1) == '*') {
                 result = dp(s, i, p, j + 2);
             } else {
