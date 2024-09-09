@@ -3,12 +3,11 @@ class Solution {
         Arrays.sort(candidates);
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        backTrack(candidates, result, list, target, 0, 0);
+        backTrack(result, list, candidates, target, 0, 0);
         return result;
     }
-    private void backTrack(int[] candidates, List<List<Integer>> result, List<Integer> list, int target,
-                           int runningSum, int index)
-    {
+    private void backTrack(List<List<Integer>> result, List<Integer> list, int[] candidates, int target, int index, 
+    int runningSum) {
         if (runningSum == target) {
             result.add(new ArrayList<>(list));
             return;
@@ -16,13 +15,14 @@ class Solution {
         if (runningSum > target) {
             return;
         }
-        
         for (int i = index; i < candidates.length; i++) {
-            if (i > index && candidates[i] == candidates[i - 1]) {
+            if (i > index && candidates[i - 1] == candidates[i]) {
                 continue;
             }
+            runningSum += candidates[i];
             list.add(candidates[i]);
-            backTrack(candidates, result, list, target, runningSum + candidates[i], i + 1);
+            backTrack(result, list, candidates, target, i + 1, runningSum);
+            runningSum -= candidates[i];
             list.remove(list.size() - 1);
         }
     }
