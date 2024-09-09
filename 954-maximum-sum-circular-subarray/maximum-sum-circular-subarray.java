@@ -1,21 +1,23 @@
-//A subarray may only include each element of the fixed buffer nums at most once.
 class Solution {
     public int maxSubarraySumCircular(int[] nums) {
-        int maxSum = Integer.MIN_VALUE, minSum = Integer.MAX_VALUE;
-        int currentMax = 0, currentMin = 0;
+        int minimum = Integer.MAX_VALUE;
+        int maximum = Integer.MIN_VALUE;
         int totalSum = 0;
-        for (int num : nums) {
-            currentMax = Math.max(num, num + currentMax);
-            maxSum = Math.max(maxSum, currentMax);
+        int runningMax = 0, runningMin = 0;
 
-            currentMin = Math.min(num, num + currentMin);
-            minSum = Math.min(minSum, currentMin);
+        for (int i = 0; i < nums.length; i++) {
+            runningMax = Math.max(runningMax + nums[i], nums[i]);
+            maximum = Math.max(maximum, runningMax);
 
-            totalSum += num;
+            runningMin = Math.min(runningMin + nums[i], nums[i]);
+            minimum = Math.min(minimum, runningMin);
+
+            totalSum += nums[i];
         }
-        if (maxSum < 0) {
-            return maxSum;
+        if (maximum < 0) {
+            return maximum;
         }
-        return Math.max(totalSum - minSum, maxSum);
+        int result = Math.max(maximum, totalSum - minimum);
+        return result;
     }
 }
