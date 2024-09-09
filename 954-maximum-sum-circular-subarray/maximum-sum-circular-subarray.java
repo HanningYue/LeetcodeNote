@@ -13,7 +13,7 @@ class Solution {
             
             totalSum += nums[i];
         }
-        if (globalMax < 0) {
+        if (globalMax <= 0) {
             return globalMax;
         }
         return Math.max(totalSum - globalMin, globalMax);
