@@ -14,16 +14,16 @@ class DetectSquares {
     
     public int count(int[] point) {
         int count = 0;
-        int x = point[0], y = point[1];
-        for (int[] diagonalPoint : allPoints) {
-            int diagonalX = diagonalPoint[0];
-            int diagonalY = diagonalPoint[1];
-            if (Math.abs(diagonalX - x) == 0 || Math.abs(diagonalY - y) == 0 
-            || Math.abs(diagonalX - x) != Math.abs(diagonalY - y)) {
+        int currentX = point[0], currentY = point[1];
+        for (int[] p : allPoints) {
+            int diagX = p[0], diagY = p[1];
+            int xDiff = Math.abs(currentX - diagX);
+            int yDiff = Math.abs(currentY - diagY);
+            if (xDiff == 0 ||  yDiff == 0 || xDiff != yDiff) {
                 continue;
             }
-    
-            count += pointFreq[diagonalX][y] * pointFreq[x][diagonalY];
+
+            count += pointFreq[diagX][currentY] * pointFreq[currentX][diagY];
         }
         return count;
     }
