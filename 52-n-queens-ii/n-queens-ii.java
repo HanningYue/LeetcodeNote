@@ -2,14 +2,13 @@ class Solution {
     List<String> board;
     int result;
     public int totalNQueens(int n) {
-        result = 0;
         board = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            StringBuilder row = new StringBuilder();
-            for (int j = 0; j < n; j++) {
-                row.append('.');
+        for (int row = 0; row < n; row++) {
+            StringBuilder sb = new StringBuilder();
+            for (int col = 0; col < n; col++) {
+                sb.append('.');
             }
-            board.add(row.toString());
+            board.add(sb.toString());
         }
         backTrack(0);
         return result;
@@ -19,14 +18,14 @@ class Solution {
             result++;
             return;
         }
-        StringBuilder currentRow = new StringBuilder(board.get(row));
-        for (int col = 0; col < currentRow.length(); col++) {
+        StringBuilder sb = new StringBuilder(board.get(row));
+        for (int col = 0; col < board.size(); col++) {
             if (valid(row, col)) {
-                currentRow.setCharAt(col, 'Q');
-                board.set(row, currentRow.toString());
+                sb.setCharAt(col, 'Q');
+                board.set(row, sb.toString());
                 backTrack(row + 1);
-                currentRow.setCharAt(col, '.');
-                board.set(row, currentRow.toString());
+                sb.setCharAt(col, '.');
+                board.set(row, sb.toString());
             }
         }
     }
