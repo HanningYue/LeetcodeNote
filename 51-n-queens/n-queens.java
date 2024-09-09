@@ -3,6 +3,7 @@ class Solution {
     List<List<String>> result;
     public List<List<String>> solveNQueens(int n) {
         board = new ArrayList<>();
+        result = new ArrayList<>();
         for (int row = 0; row < n; row++) {
             StringBuilder sb = new StringBuilder();
             for (int col = 0; col < n; col++) {
@@ -10,7 +11,6 @@ class Solution {
             }
             board.add(sb.toString());
         }
-        result = new ArrayList<>();
         backTrack(0);
         return result;
     }
@@ -19,7 +19,6 @@ class Solution {
             result.add(new ArrayList<>(board));
             return;
         }
-
         StringBuilder sb = new StringBuilder(board.get(row));
         for (int col = 0; col < board.size(); col++) {
             if (valid(row, col)) {
