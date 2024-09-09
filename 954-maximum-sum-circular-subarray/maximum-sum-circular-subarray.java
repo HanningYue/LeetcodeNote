@@ -5,15 +5,15 @@ class Solution {
         int globalMin = Integer.MAX_VALUE, globalMax = Integer.MIN_VALUE;
         
         for (int i = 0; i < nums.length; i++) {
-            runningMax = Math.max(runningMax + nums[i], nums[i]);
+            runningMax = Math.max(runningMax, 0) + nums[i];
             globalMax = Math.max(globalMax, runningMax);
 
-            runningMin = Math.min(runningMin + nums[i], nums[i]);
+            runningMin = Math.min(runningMin, 0) + nums[i];
             globalMin = Math.min(globalMin, runningMin);
             
             totalSum += nums[i];
         }
-        if (globalMax <= 0) {
+        if (totalSum == globalMin) {
             return globalMax;
         }
         return Math.max(totalSum - globalMin, globalMax);
