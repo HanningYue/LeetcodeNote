@@ -3,9 +3,9 @@ class Solution {
         int left = 0, right = arr.length - 1;
         while (left < right) {
             int mid = left + (right - left) / 2;
-            if (arr[mid] > arr[mid + 1]) {
+            if (arr[mid + 1] < arr[mid]) {
                 right = mid;
-            } else if (arr[mid] < arr[mid + 1]) {
+            } else if (arr[mid + 1] >= arr[mid]) {
                 left = mid + 1;
             }
         }
