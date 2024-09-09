@@ -1,7 +1,8 @@
 class Solution {
     public String alienOrder(String[] words) {
         Map<Character, Set<Character>> graph = new HashMap<>();
-        for (String word : words) {
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
             for (char c : word.toCharArray()) {
                 graph.putIfAbsent(c, new HashSet<>());
             }
@@ -28,31 +29,29 @@ class Solution {
         Set<Character> visited = new HashSet<>();
         StringBuilder sb = new StringBuilder();
         for (char c : graph.keySet()) {
-            if (!dfs(graph, visiting, visited, sb, c)) {
+            if (!dfs(c, visiting, visited, graph, sb)) {
                 return "";
             }
         }
         return sb.toString();
     }
-
-    private boolean dfs(Map<Character, Set<Character>> graph, Set<Character> visiting, Set<Character> visited,
-                        StringBuilder sb, char c)
-    {
+    private boolean dfs(char c, Set<Character> visiting, Set<Character> visited, 
+    Map<Character, Set<Character>> graph, StringBuilder sb) {
         if (visiting.contains(c)) {
             return false;
-        }
+        }   
         if (visited.contains(c)) {
             return true;
-        }
+        }   
         visiting.add(c);
         for (char neighbor : graph.get(c)) {
-            if (!dfs(graph, visiting, visited, sb, neighbor)) {
+            if (!dfs(neighbor, visiting, visited, graph, sb)) {
                 return false;
             }
-        }
+        } 
         visited.add(c);
         visiting.remove(c);
         sb.append(c);
         return true;
-    }
+    }  
 }
