@@ -9,21 +9,21 @@
  * }
  */
 class Solution {
+    ListNode dummy = new ListNode(0);
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
-        ListNode middle = getMiddle(head);
-        ListNode secondHalfStart = middle.next;
+        ListNode middle = divide(head);
+        ListNode secondHalf = middle.next;
         middle.next = null;
 
         ListNode leftPart = sortList(head);
-        ListNode rightPart = sortList(secondHalfStart);
-        return mergeTwoList(leftPart, rightPart);
+        ListNode rightPart = sortList(secondHalf);
+        return merge(leftPart, rightPart);
     }
-    private ListNode getMiddle(ListNode head) {
-        ListNode slow = head;
-        ListNode fast = head;
+    private ListNode divide(ListNode head) {
+        ListNode slow = head, fast = head;
         ListNode prev = null;
         while (fast != null && fast.next != null) {
             prev = slow;
@@ -32,7 +32,7 @@ class Solution {
         }
         return prev;
     }
-    private ListNode mergeTwoList(ListNode p, ListNode q) {
+    private ListNode merge(ListNode p, ListNode q) {
         ListNode dummy = new ListNode(0);
         ListNode current = dummy;
         while (p != null && q != null) {
