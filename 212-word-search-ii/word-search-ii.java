@@ -22,8 +22,8 @@ class Solution {
             for (int j = 0; j < board[0].length; j++) {
                 char c = board[i][j];
                 if (root.children[c - 'a'] != null) {
-                    TrieNode node = root;
-                    backTrack(board, i, j, node, result, visited);
+                    // TrieNode node = root;
+                    backTrack(board, i, j, root, result, visited);
                 }
             }
         }   
