@@ -1,45 +1,47 @@
 class State {
-    int price, stop, vertex;
-    public State(int price, int stop, int vertex) {
+    int vertex;
+    int price;
+    int stop;
+    public State(int vertex, int price, int stop) {
+        this.vertex = vertex;
         this.price = price;
         this.stop = stop;
-        this.vertex = vertex;
     }
 }
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        k = k + 1;
         Map<Integer, List<State>> graph = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            graph.put(i, new ArrayList<>());
+            graph.putIfAbsent(i, new ArrayList<>());
         }
         for (int[] flight : flights) {
             int from = flight[0], to = flight[1], price = flight[2];
-            graph.get(from).add(new State(price, 0, to));
+            graph.get(from).add(new State(to, price, 0));
         }
-
         PriorityQueue<State> heap = new PriorityQueue<>((a, b) -> a.price - b.price);
+        heap.offer(new State(src, 0, 0));
 
-        int[] minimumStopToCurrent = new int[n];
-        Arrays.fill(minimumStopToCurrent, Integer.MAX_VALUE);
-        minimumStopToCurrent[src] = 0;
-
-        heap.offer(new State(0, 0, src));
+        int[] minStopToCurrent = new int[n];
+        Arrays.fill(minStopToCurrent, Integer.MAX_VALUE);
+        minStopToCurrent[src] = 0;
+        k = k + 1;
         while (!heap.isEmpty()) {
             State current = heap.poll();
-            if (current.stop > minimumStopToCurrent[current.vertex] || current.stop > k) {
+            int currentVertex = current.vertex;
+            int currentStop = current.stop;
+            int currentPrice = current.price;
+            
+            if (currentStop > k || minStopToCurrent[currentVertex] < currentStop) {
                 continue;
             }
+            minStopToCurrent[currentVertex] = currentStop;
 
-            minimumStopToCurrent[current.vertex] = current.stop;
-            if (current.vertex == dst) {
-                return current.price;
+            if (currentVertex == dst) {
+                return currentPrice;
             }
-
-            for (State neighbor : graph.get(current.vertex)) {
-                heap.offer(
-                    new State(current.price + neighbor.price, current.stop + 1, neighbor.vertex)
-                );
+            
+            for (State neighbor : graph.get(currentVertex)) {
+                heap.offer(new State(neighbor.vertex, currentPrice + neighbor.price, current.stop + 1));
             }
         }
         return -1;
