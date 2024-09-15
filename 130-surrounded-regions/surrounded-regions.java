@@ -7,6 +7,7 @@ class Solution {
             dfs(board, row, 0, visited);
             dfs(board, row, n - 1, visited);
         }
+
         for (int col = 0; col < n; col++) {
             dfs(board, 0, col, visited);
             dfs(board, m - 1, col, visited);
@@ -23,18 +24,22 @@ class Solution {
             }
         }
     }
-
-    int[][] directions = new int[][]{{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+    
+    int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     private void dfs(char[][] board, int row, int col, boolean[][] visited) {
-        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col]
-        || board[row][col] != 'O') {
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col]) {
             return;
-        } 
+        }
+
+        if (board[row][col] == 'O') {
+            board[row][col] = '#';
+        } else {
+            return;
+        }
+
         visited[row][col] = true;
-        board[row][col] = '#';
-        
         for (int[] dir : directions) {
-            dfs(board, row + dir[0], col + dir[1], visited);
+            dfs(board, dir[0] + row, dir[1] + col, visited);
         }
     }
 }
