@@ -11,10 +11,10 @@ class Solution {
         if (dpTable[index] != null) {
             return dpTable[index];
         }
-
-        int notRobCurrent = dp(nums, index + 1);
+        
         int robCurrent = dp(nums, index + 2) + nums[index];
-        dpTable[index] = Math.max(notRobCurrent, robCurrent);
+        int notRobCurrent = dp(nums, index + 1);
+        dpTable[index] = Math.max(robCurrent, notRobCurrent);
         return dpTable[index];
     }
 }
