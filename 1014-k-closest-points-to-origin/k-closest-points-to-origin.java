@@ -2,13 +2,18 @@ class Solution {
     public int[][] kClosest(int[][] points, int k) {
         PriorityQueue<int[]> heap = new PriorityQueue<>((new Comparator<int[]>() {
             public int compare(int[] a, int[] b) {
-                return distance(a) - distance(b);
+                int distanceA = distance(a);
+                int distanceB = distance(b);
+                return distanceB - distanceA;
             }
         }));
 
 
         for (int[] point : points) {
             heap.offer(point);
+            if (heap.size() > k) {
+                heap.poll();
+            }
         }
 
         int[][] result = new int[k][2];
