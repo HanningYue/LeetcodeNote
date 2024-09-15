@@ -39,15 +39,16 @@ class Solution {
         if (node.children[c - 'a'] == null) {
             return;
         }
-        
-        if (node.children[c - 'a'].isWord) {
-            result.add(node.children[c - 'a'].word);
-            node.children[c - 'a'].isWord = false;
+
+        node = node.children[c - 'a'];
+        if (node.isWord) {
+            result.add(node.word);
+            node.isWord = false;
         }
 
         visited[row][col] = true;
         for (int[] dir : directions) {
-            backTrack(board, words, node.children[c - 'a'], row + dir[0], col + dir[1], visited, result);
+            backTrack(board, words, node, row + dir[0], col + dir[1], visited, result);
         }
         visited[row][col] = false;
     }
