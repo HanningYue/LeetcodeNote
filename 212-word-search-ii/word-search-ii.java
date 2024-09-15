@@ -1,36 +1,37 @@
 class TrieNode {
-    boolean isWord;
     String word;
+    boolean isWord;
     TrieNode[] children;
     public TrieNode() {
         children = new TrieNode[26];
-        isWord = false;
         word = "";
+        isWord = false;
     }
 }
 class Solution {
     public List<String> findWords(char[][] board, String[] words) {
-        TrieNode root = new TrieNode();
         List<String> result = new ArrayList<>();
+        
+        TrieNode root = new TrieNode();
         for (String word : words) {
             addWord(word, root);
         }
 
         boolean[][] visited = new boolean[board.length][board[0].length];
-        for (int row = 0; row < board.length; row++) {
-            for (int col = 0; col < board[0].length; col++) {
-                char c = board[row][col];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                char c = board[i][j];
                 if (root.children[c - 'a'] != null) {
-                    backTrack(board, words, root, row, col, visited, result);
+                    TrieNode node = root;
+                    backTrack(board, i, j, node, result, visited);
                 }
             }
-        }
+        }   
         return result;
     }
 
     int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    private void backTrack(char[][] board, String[] words, TrieNode node, int row, int col, 
-    boolean[][] visited, List<String >result) {
+    private void backTrack(char[][] board, int row, int col, TrieNode node, List<String> result, boolean[][] visited) {
         if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col]) {
             return;
         }
@@ -42,17 +43,16 @@ class Solution {
 
         node = node.children[c - 'a'];
         if (node.isWord) {
-            result.add(node.word);
             node.isWord = false;
+            result.add(node.word);
         }
 
         visited[row][col] = true;
         for (int[] dir : directions) {
-            backTrack(board, words, node, row + dir[0], col + dir[1], visited, result);
+            backTrack(board, row + dir[0], col + dir[1], node, result, visited);
         }
         visited[row][col] = false;
     }
-
     private void addWord(String word, TrieNode root) {
         for (char c : word.toCharArray()) {
             if (root.children[c - 'a'] == null) {
