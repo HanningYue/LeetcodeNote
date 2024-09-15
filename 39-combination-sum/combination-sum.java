@@ -2,23 +2,20 @@ class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
-        backTrack(result, list, candidates, target, 0, 0);
+        backTrack(candidates, 0, target, result, list);
         return result;
     }
-    private void backTrack(List<List<Integer>> result, List<Integer> list, int[] candidates, int target, 
-    int runningSum, int index) {
-        if (runningSum == target) {
+    private void backTrack(int[] candidates, int index, int target, List<List<Integer>> result, List<Integer> list) {
+        if (target < 0) {
+            return;
+        }
+        if (target == 0) {
             result.add(new ArrayList<>(list));
             return;
         }
-        if (runningSum > target) {
-            return;
-        }
         for (int i = index; i < candidates.length; i++) {
-            runningSum += candidates[i];
             list.add(candidates[i]);
-            backTrack(result, list, candidates, target, runningSum, i);
-            runningSum -= candidates[i];
+            backTrack(candidates, i, target - candidates[i], result, list);
             list.remove(list.size() - 1);
         }
     }
