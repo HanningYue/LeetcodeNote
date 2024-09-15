@@ -41,6 +41,9 @@ class Solution {
             }
             
             for (State neighbor : graph.get(currentVertex)) {
+                if (currentStop + 1 > k) {
+                    continue;
+                }
                 heap.offer(new State(neighbor.vertex, currentPrice + neighbor.price, current.stop + 1));
             }
         }
