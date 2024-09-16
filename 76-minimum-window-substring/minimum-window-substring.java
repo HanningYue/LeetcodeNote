@@ -17,22 +17,22 @@ class Solution {
                 if (map.get(current) >= 0) {
                     match++;
                 }
+            }
 
-                while (match == t.length()) {
-                    if (fast - slow < length) {
-                        length = fast - slow + 1;
-                        result = s.substring(slow, slow + length);
-                    }
-
-                    current = s.charAt(slow);
-                    if (map.containsKey(current)) {
-                        map.put(current, map.get(current) + 1);
-                        if (map.get(current) > 0) {
-                            match--;
-                        }
-                    }
-                    slow++;
+            while (match == t.length()) {
+                if (fast - slow < length) {
+                    length = fast - slow + 1;
+                    result = s.substring(slow, slow + length);
                 }
+
+                current = s.charAt(slow);
+                if (map.containsKey(current)) {
+                    map.put(current, map.get(current) + 1);
+                    if (map.get(current) > 0) {
+                        match--;
+                    }
+                }
+                slow++;
             }
             fast++;
         }
