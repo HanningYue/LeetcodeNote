@@ -8,8 +8,8 @@ class Solution {
 
         while (b != 0) {
             int carryToLeft = a & b;
-            int addWithoutCarry = a ^ b;
-            a = addWithoutCarry;
+            int sumUp = a ^ b;
+            a = sumUp;
             b = carryToLeft << 1;
         }
         return a;
