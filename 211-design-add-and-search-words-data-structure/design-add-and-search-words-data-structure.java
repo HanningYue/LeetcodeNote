@@ -1,9 +1,11 @@
 class TrieNode {
     TrieNode[] children;
-    boolean isEnd;
+    boolean isWord;
+    String word;
     public TrieNode() {
         children = new TrieNode[26];
-        isEnd = false;
+        word = "";
+        isWord = false;
     }
 }
 class WordDictionary {
@@ -20,19 +22,21 @@ class WordDictionary {
             }
             node = node.children[c - 'a'];
         }
-        node.isEnd = true;
+        node.isWord = true;
+        node.word = word;
     }
     
     public boolean search(String word) {
         TrieNode node = root;
-        return searchHelp(word, node);
+        return searchRecursion(word, node);
     }
-    private boolean searchHelp(String word, TrieNode node) {
+    
+    private boolean searchRecursion(String word, TrieNode node) {
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             if (c == '.') {
                 for (TrieNode child : node.children) {
-                    if (child != null && searchHelp(word.substring(i + 1), child)) {
+                    if (child != null && searchRecursion(word.substring(i + 1), child)) {
                         return true;
                     }
                 }
@@ -44,7 +48,7 @@ class WordDictionary {
                 node = node.children[c - 'a'];
             }
         }
-        return node.isEnd;
+        return node.isWord;
     }
 }
 
