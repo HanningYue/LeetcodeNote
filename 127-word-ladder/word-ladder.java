@@ -26,8 +26,8 @@ class Solution {
                             queue.offer(sb.toString());
                             set.remove(sb.toString());
                         }
+                        sb.setCharAt(j, original);
                     }
-                    sb.setCharAt(j, original);
                 }
             }
             step++;
