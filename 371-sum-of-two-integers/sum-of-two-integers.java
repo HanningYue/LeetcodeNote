@@ -1,7 +1,8 @@
 class Solution {
     public int getSum(int a, int b) {
         int x = Math.abs(a), y = Math.abs(b);
-        if (x < y) {
+
+        if (y > x) {
             return getSum(b, a);
         }
 
@@ -9,19 +10,20 @@ class Solution {
         
         if (a * b >= 0) {
             while (y != 0) {
-                int carryToLeft = (x & y) << 1;
                 int sum = x ^ y;
+                int carryToLeft = (x & y) << 1;
                 x = sum;
                 y = carryToLeft;
             }
         } else if (a * b < 0) {
             while (y != 0) {
-                int carryToLeft = ((~x) & y) << 1;
                 int sum = x ^ y;
+                int carryToLeft = ((~x) & y) << 1;
                 x = sum;
                 y = carryToLeft;
             }
         }
+
         return x * sign;
     }
 }
