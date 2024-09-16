@@ -1,20 +1,20 @@
 class Solution {
     public String reverseWords(String s) {
         StringBuilder sb = build(s);
-        reverseStringBuilder(sb, 0, sb.length() - 1);
-        reverseEachWord(sb);
+        reverseSb(sb, 0, sb.length() - 1);
+        reverseEachString(sb);
         return sb.toString();
     }
     private StringBuilder build(String s) {
+        StringBuilder sb = new StringBuilder();
         int left = 0, right = s.length() - 1;
-        while (left <= right && s.charAt(left) == ' ') {
+        while (s.charAt(left) == ' ') {
             left++;
         }
-        while (left <= right && s.charAt(right) == ' ') {
-            right--;
+        while (s.charAt(right) == ' ') {
+            right--; 
         }
 
-        StringBuilder sb = new StringBuilder();
         while (left <= right) {
             char c = s.charAt(left);
             if (c != ' ') {
@@ -26,22 +26,22 @@ class Solution {
         }
         return sb;
     }
-    private void reverseStringBuilder(StringBuilder sb, int left, int right) {
-        while (left < right) {
-            char temp = sb.charAt(left);
+    private void reverseSb(StringBuilder sb, int left, int right) {
+        while (left <= right) {
+            char c = sb.charAt(left);
             sb.setCharAt(left, sb.charAt(right));
-            sb.setCharAt(right, temp);
+            sb.setCharAt(right, c);
             left++;
             right--;
         }
     }
-    private void reverseEachWord(StringBuilder sb) {
+    private void reverseEachString(StringBuilder sb) {
         int wordStart = 0, wordEnd = 0;
         while (wordEnd < sb.length()) {
             while (wordEnd < sb.length() && sb.charAt(wordEnd) != ' ') {
                 wordEnd++;
             }
-            reverseStringBuilder(sb, wordStart, wordEnd - 1);
+            reverseSb(sb, wordStart, wordEnd - 1);
             wordStart = wordEnd + 1;
             wordEnd++;
         }
