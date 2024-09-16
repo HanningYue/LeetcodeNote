@@ -4,10 +4,10 @@ class Solution {
         if (!set.contains(endWord)) {
             return 0;
         }
-        
+
+        int step = 1;
         Queue<String> queue = new ArrayDeque<>();
         queue.offer(beginWord);
-        int step = 1;
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
@@ -21,11 +21,11 @@ class Solution {
                     char original = sb.charAt(j);
                     for (char c = 'a'; c <= 'z'; c++) {
                         sb.setCharAt(j, c);
-
                         if (set.contains(sb.toString())) {
                             queue.offer(sb.toString());
                             set.remove(sb.toString());
                         }
+
                         sb.setCharAt(j, original);
                     }
                 }
