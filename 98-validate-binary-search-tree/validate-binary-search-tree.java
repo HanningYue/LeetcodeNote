@@ -15,17 +15,19 @@
  */
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        return recursion(root, null, null);
+        return validate(root, null, null);
     }
-    private boolean recursion(TreeNode root, TreeNode leftMax, TreeNode rightMin) {
+    private boolean validate(TreeNode root, TreeNode leftNode, TreeNode rightNode) {
         if (root == null) {
             return true;
         }
-        boolean leftTrue = recursion(root.left, leftMax, root);
-        boolean rightTrue = recursion(root.right, root, rightMin);
-        if (leftMax != null && root.val <= leftMax.val || rightMin != null && root.val >= rightMin.val) {
+        if (leftNode != null && leftNode.val >= root.val
+        || rightNode != null && rightNode.val <= root.val) {
             return false;
         }
-        return leftTrue && rightTrue;
+
+        boolean leftSub = validate(root.left, leftNode, root);
+        boolean rightSub = validate(root.right, root, rightNode);
+        return leftSub && rightSub;
     }
 }
