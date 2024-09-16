@@ -1,46 +1,46 @@
-class Node {
-    String key;
+class State {
+    String dividend;
     double value;
-    public Node(String key, double value) {
-        this.key = key;
+    public State(String dividend, double value) {
+        this.dividend = dividend;
         this.value = value;
     }
 }
-
 class Solution {
-    public double[] calcEquation(List<List<String>> equations, double[] values, 
-    List<List<String>> queries) {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        Map<String, List<State>> graph = new HashMap<>();
         double[] result = new double[queries.size()];
-        Map<String, List<Node>> graph = new HashMap<>();
         for (int i = 0; i < equations.size(); i++) {
             List<String> equation = equations.get(i);
-            String dividend = equation.get(0), divisor = equation.get(1);
+            String dividend = equation.get(0);
+            String divisor = equation.get(1);
+            
             graph.putIfAbsent(dividend, new ArrayList<>());
-            graph.get(dividend).add(new Node(divisor, values[i]));
+            graph.get(dividend).add(new State(divisor, values[i]));
 
             graph.putIfAbsent(divisor, new ArrayList<>());
-            graph.get(divisor).add(new Node(dividend, 1 / values[i]));
-        }
-        
+            graph.get(divisor).add(new State(dividend, 1 / values[i]));
+        }   
+
         for (int i = 0; i < queries.size(); i++) {
             List<String> query = queries.get(i);
-            String dividend = query.get(0), divisor = query.get(1);
+            String dividend = query.get(0);
+            String divisor = query.get(1);
             Set<String> visited = new HashSet<>();
-            result[i] = dfs(graph, dividend, divisor, 1, visited);
+            result[i] = dfs(dividend, divisor, graph, 1, visited);
         }
         return result;
     }
-    private double dfs(Map<String, List<Node>> graph, String dividend, String divisor, 
-                       double value, Set<String> visited) {
-        if (visited.contains(dividend) || !graph.containsKey(dividend)) {
+    private double dfs(String dividend, String divisor, Map<String, List<State>> graph, double value, Set<String> visited) {
+        if (!graph.containsKey(dividend) || visited.contains(dividend)) {
             return -1.0;
         }
         if (dividend.equals(divisor)) {
             return value;
         }
         visited.add(dividend);
-        for (Node neighbor : graph.get(dividend)) {
-            double sub = dfs(graph, neighbor.key, divisor, value * neighbor.value, visited);
+        for (State neighbor : graph.get(dividend)) {
+            double sub = dfs(neighbor.dividend, divisor, graph, value * neighbor.value, visited);
             if (sub != -1.0) {
                 return sub;
             }
