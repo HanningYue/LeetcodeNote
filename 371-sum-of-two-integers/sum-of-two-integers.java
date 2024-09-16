@@ -1,17 +1,27 @@
 class Solution {
     public int getSum(int a, int b) {
-        if (a == 0) {
-            return b;
-        } else if (b == 0) {
-            return a;
+        int x = Math.abs(a), y = Math.abs(b);
+        if (x < y) {
+            return getSum(b, a);
         }
 
-        while (b != 0) {
-            int carryToLeft = a & b;
-            int sumUp = a ^ b;
-            a = sumUp;
-            b = carryToLeft << 1;
+        int sign = a > 0 ? 1 : -1;
+        
+        if (a * b >= 0) {
+            while (y != 0) {
+                int carryToLeft = (x & y) << 1;
+                int sum = x ^ y;
+                x = sum;
+                y = carryToLeft;
+            }
+        } else if (a * b < 0) {
+            while (y != 0) {
+                int carryToLeft = ((~x) & y) << 1;
+                int sum = x ^ y;
+                x = sum;
+                y = carryToLeft;
+            }
         }
-        return a;
+        return x * sign;
     }
 }
