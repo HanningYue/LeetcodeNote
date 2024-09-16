@@ -1,9 +1,12 @@
 class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         Set<String> set = new HashSet<>(wordList);
-        Queue<String> queue = new LinkedList<>();
+        if (!set.contains(endWord)) {
+            return 0;
+        }
+        
+        Queue<String> queue = new ArrayDeque<>();
         queue.offer(beginWord);
-
         int step = 1;
         while (!queue.isEmpty()) {
             int size = queue.size();
@@ -18,9 +21,10 @@ class Solution {
                     char original = sb.charAt(j);
                     for (char c = 'a'; c <= 'z'; c++) {
                         sb.setCharAt(j, c);
+
                         if (set.contains(sb.toString())) {
-                            set.remove(sb.toString());
                             queue.offer(sb.toString());
+                            set.remove(sb.toString());
                         }
                     }
                     sb.setCharAt(j, original);
