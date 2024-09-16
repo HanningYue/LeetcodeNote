@@ -1,9 +1,11 @@
 class TrieNode {
     TrieNode[] children;
-    boolean isEnd;
+    boolean isWord;
+    String word;
     public TrieNode() {
+        isWord = false;
+        word = "";
         children = new TrieNode[26];
-        isEnd = false;
     }
 }
 class Trie {
@@ -20,7 +22,8 @@ class Trie {
             }
             node = node.children[c - 'a'];
         }
-        node.isEnd = true;
+        node.isWord = true;
+        node.word = word;
     }
     
     public boolean search(String word) {
@@ -31,7 +34,7 @@ class Trie {
             }
             node = node.children[c - 'a'];
         }
-        return node.isEnd;
+        return node.isWord;
     }
     
     public boolean startsWith(String prefix) {
@@ -41,7 +44,7 @@ class Trie {
                 return false;
             }
             node = node.children[c - 'a'];
-        }
+        }    
         return true;
     }
 }
