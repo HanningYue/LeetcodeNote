@@ -20,8 +20,8 @@ class Solution {
 
                 while (match == t.length()) {
                     if (fast - slow < length) {
-                        length = fast - slow;
-                        result = s.substring(slow, slow + length + 1);
+                        length = fast - slow + 1;
+                        result = s.substring(slow, slow + length);
                     }
 
                     current = s.charAt(slow);
