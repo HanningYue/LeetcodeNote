@@ -1,43 +1,48 @@
-class Pair {
-    int maxElevation;
-    int row, col;
-    public Pair(int row, int col, int maxElevation) {
+class State {
+    int row;
+    int col;
+    int maxHeight;
+    public State(int row, int col, int maxHeight) {
         this.row = row;
         this.col = col;
-        this.maxElevation = maxElevation;
+        this.maxHeight = maxHeight;
     }
 }
 class Solution {
     public int swimInWater(int[][] grid) {
-        PriorityQueue<Pair> heap = new PriorityQueue<>(new Comparator<Pair>() {
-            public int compare(Pair a, Pair b) {
-                return a.maxElevation - b.maxElevation;
+        int n = grid.length;
+        boolean[][] visited = new boolean[n][n];
+
+        PriorityQueue<State> heap = new PriorityQueue<>(new Comparator<State>() {
+            public int compare(State a, State b) {
+                return a.maxHeight - b.maxHeight;
             }
         });
-        heap.offer(new Pair(0, 0, grid[0][0]));
-        
-        int m = grid.length, n = grid[0].length;
-        boolean[][] visited = new boolean[m][n];
+        heap.offer(new State(0, 0, grid[0][0]));
+
         int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-
         while (!heap.isEmpty()) {
-            Pair current = heap.poll();
-            int currentRow = current.row;
-            int currentCol = current.col;
-            int currentmaxElevation = current.maxElevation;
-            if (currentRow == m - 1 && currentCol == n - 1) {
-                return currentmaxElevation;
-            }
+            int size = heap.size();
+            for (int i = 0; i < size; i++) {
+                State current = heap.poll();
 
-            visited[currentRow][currentCol] = true;
-            for (int[] dir : directions) {
-                int newRow = currentRow + dir[0];
-                int newCol = currentCol + dir[1];
-                if (newRow < 0 || newRow >= m || newCol < 0 || newCol >= n || visited[newRow][newCol]) {
-                    continue;
+                if (current.row == n - 1 && current.col == n - 1) {
+                    return current.maxHeight;
                 }
-                int newMaxElevation = Math.max(grid[newRow][newCol], currentmaxElevation);
-                heap.offer(new Pair(newRow, newCol, newMaxElevation));
+
+                for (int[] dir : directions) {
+                    int newRow = dir[0] + current.row;
+                    int newCol = dir[1] + current.col;
+                    if (newRow < 0 || newRow >= n || newCol < 0 || newCol >= n) {
+                        continue;
+                    }
+                    if (visited[newRow][newCol]) {
+                        continue;
+                    }
+                    visited[newRow][newCol] = true;
+                    int newHeight = grid[newRow][newCol];
+                    heap.offer(new State(newRow, newCol, Math.max(current.maxHeight, newHeight)));
+                }
             }
         }
         return -1;
