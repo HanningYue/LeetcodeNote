@@ -28,19 +28,19 @@ public class Codec {
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         String[] tree = data.split(",");
-        return de(tree);
+        return de(tree, new int[]{0});
     }
-    int index = 0;
-    private TreeNode de(String[] tree) {
-        if (tree[index].equals("#")) {
-            index++;
+    private TreeNode de(String[] tree, int[] index) {
+        if (tree[index[0]].equals("#")) {
+            index[0]++;
             return null;
         }
         
-        int nodeValue = Integer.parseInt(tree[index++]);
+        int nodeValue = Integer.parseInt(tree[index[0]]);
         TreeNode node = new TreeNode(nodeValue);
-        node.left = de(tree);
-        node.right = de(tree);
+        index[0]++;
+        node.left = de(tree, index);
+        node.right = de(tree, index);
         return node;
     }
 }
