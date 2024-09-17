@@ -29,6 +29,7 @@ class Solution {
                 if (current.row == n - 1 && current.col == n - 1) {
                     return current.maxHeight;
                 }
+                visited[current.row][current.col] = true;
 
                 for (int[] dir : directions) {
                     int newRow = dir[0] + current.row;
@@ -39,7 +40,6 @@ class Solution {
                     if (visited[newRow][newCol]) {
                         continue;
                     }
-                    visited[newRow][newCol] = true;
                     int newHeight = grid[newRow][newCol];
                     heap.offer(new State(newRow, newCol, Math.max(current.maxHeight, newHeight)));
                 }
