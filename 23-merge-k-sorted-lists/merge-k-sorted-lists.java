@@ -16,6 +16,9 @@ class Solution {
         return divide(lists, 0, lists.length - 1);
     }
     private ListNode divide(ListNode[] lists, int left, int right) {
+        if (left > right) {
+            return null;
+        }
         if (left == right) {
             return lists[left];
         }
