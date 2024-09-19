@@ -6,19 +6,18 @@ class Solution {
         if (left > right) {
             return nums[0];
         }
-
         if (left == right) {
             return nums[left];
         }
         int mid = left + (right - left) / 2;
-        int leftNum = divide(nums, left, mid);
-        int rightNum = divide(nums, mid + 1, right);
+        int leftNumber = divide(nums, left, mid);
+        int rightNumber = divide(nums, mid + 1, right);
         
-        int leftMajority = find(nums, leftNum, left, right);
-        int rightMajority = find(nums, rightNum, left, right);
-        return leftMajority > rightMajority ? leftNum : rightNum;
+        int leftCount = count(nums, leftNumber, left, right);
+        int rightCount = count(nums, rightNumber, left, right);
+        return leftCount > rightCount ? leftNumber: rightNumber;
     }
-    private int find(int[] nums, int target, int left, int right) {
+    private int count(int[] nums, int target, int left, int right) {
         int count = 0;
         for (int i = left; i <= right; i++) {
             if (nums[i] == target) {
