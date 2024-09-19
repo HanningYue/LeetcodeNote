@@ -14,23 +14,20 @@ class Node {
 */
 
 class Solution {
+    Map<Node, Node> graph = new HashMap<>();
     public Node copyRandomList(Node head) {
-        Map<Node, Node> map = new HashMap<>();
-        Node current = head;
-
-        while (current != null) {
-            Node copy = new Node(current.val);
-            map.put(current, copy);
-            current = current.next;
+        if (head == null) {
+            return null;
         }
 
-        current = head;
-        while (current != null) {
-            Node copy = map.get(current);
-            copy.next = map.get(current.next);
-            copy.random = map.get(current.random);
-            current = current.next;
+        if (graph.containsKey(head)) {
+            return graph.get(head);
         }
-        return map.get(head);
+        
+        Node copy = new Node(head.val);
+        graph.put(head, copy);
+        copy.next = copyRandomList(head.next);
+        copy.random = copyRandomList(head.random);
+        return copy;
     }
 }
