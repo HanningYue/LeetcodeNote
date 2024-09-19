@@ -1,50 +1,50 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int n = numCourses;
-        int[] result = new int[n];
-        boolean[] visited = new boolean[n];
-        boolean[] visiting = new boolean[n];
+        List<Integer> list = new ArrayList<>();
+        boolean[] visiting = new boolean[numCourses];
+        boolean[] visited = new boolean[numCourses];
         
-        Map<Integer, Set<Integer>> graph = new HashMap<>();
+        Map<Integer, List<Integer>> graph = new HashMap<>();
         for (int[] pre : prerequisites) {
-            int to = pre[0], from = pre[1];
-            graph.putIfAbsent(to, new HashSet<>());
+            int from = pre[1];
+            int to = pre[0];
+            graph.putIfAbsent(to, new ArrayList<>());
             graph.get(to).add(from);
         }
-        
-        List<Integer> order = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            if (!dfs(graph, visited, visiting, i, order)) {
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(i, graph, visiting, visited, list)) {
                 return new int[]{};
             }
         }
-        for (int i = 0; i < order.size(); i++) {
-            result[i] = order.get(i);
+
+        int[] result = new int[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            result[i] = list.get(i);
         }
         return result;
     }
-    private boolean dfs(Map<Integer, Set<Integer>> graph, boolean[] visited, boolean[] visiting,
-    int vertex, List<Integer> order) {
-        if (visiting[vertex]) {
-            return false;
-        }
+    private boolean dfs(int vertex, Map<Integer, List<Integer>> graph, boolean[] visiting,
+    boolean[] visited, List<Integer> list) {
         if (visited[vertex]) {
             return true;
         }
         if (!graph.containsKey(vertex)) {
-            order.add(vertex);
+            list.add(vertex);
             visited[vertex] = true;
             return true;
         }
+        if (visiting[vertex]) {
+            return false;
+        }
         visiting[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
-            if (!dfs(graph, visited, visiting, neighbor, order)) {
+            if (!dfs(neighbor, graph, visiting, visited, list)) {
                 return false;
             }
         }
-        visited[vertex] = true;
+        list.add(vertex);
         visiting[vertex] = false;
-        order.add(vertex);
+        visited[vertex] = true;
         return true;
     }
 }
