@@ -1,9 +1,11 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
+        for (int i = 0; i < numCourses; i++) {
+            graph.put(i, new ArrayList<>());
+        }
         for (int[] pre : prerequisites) {
             int from = pre[1], to = pre[0];
-            graph.putIfAbsent(from, new ArrayList<>());
             graph.get(from).add(to);
         }
 
@@ -18,11 +20,11 @@ class Solution {
     }
     private boolean dfs(int vertex, Map<Integer, List<Integer>> graph, boolean[] visited, 
     boolean[] visiting) {
-        if (!graph.containsKey(vertex) || visited[vertex]) {
-            return true;
-        }
         if (visiting[vertex]) {
             return false;
+        }
+        if (visited[vertex]) {
+            return true;
         }
         visiting[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
