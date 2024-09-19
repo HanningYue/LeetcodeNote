@@ -16,7 +16,7 @@ class Solution {
             if (visited[i]) {
                 continue;
             }
-            if (i > 0 && nums[i - 1] == nums[i] && !visited[i - 1]) {
+            if (i > 0 && nums[i - 1] == nums[i] && visited[i - 1]) {
                 continue;
             }
             visited[i] = true;
