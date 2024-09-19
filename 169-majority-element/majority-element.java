@@ -3,9 +3,9 @@ class Solution {
         return divide(nums, 0, nums.length - 1);
     }
     private int divide(int[] nums, int left, int right) {
-        if (left > right) {
-            return nums[0];
-        }
+        // if (left > right) {
+        //     return nums[0];
+        // }
         if (left == right) {
             return nums[left];
         }
