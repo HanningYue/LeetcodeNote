@@ -3,10 +3,10 @@ class Solution {
         List<String> result = new ArrayList<>();
         Map<String, PriorityQueue<String>> graph = new HashMap<>();
         for (List<String> ticket : tickets) {
-            String depart = ticket.get(0);
-            String arrive = ticket.get(1);
-            graph.putIfAbsent(depart, new PriorityQueue<String>());
-            graph.get(depart).add(arrive);
+            String from = ticket.get(0);
+            String to = ticket.get(1);
+            graph.putIfAbsent(from, new PriorityQueue<>());
+            graph.get(from).add(to);
         }
 
         Stack<String> stack = new Stack<>();
@@ -14,11 +14,12 @@ class Solution {
         while (!stack.isEmpty()) {
             String lastCity = stack.peek();
             if (!graph.containsKey(lastCity) || graph.get(lastCity).isEmpty()) {
-                result.add(0, stack.pop());
+                result.add(stack.pop());
             } else {
                 stack.push(graph.get(lastCity).poll());
             }
         }
+        Collections.reverse(result);
         return result;
     }
 }
