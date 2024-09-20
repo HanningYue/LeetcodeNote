@@ -1,20 +1,24 @@
 class Solution {
     public boolean isNStraightHand(int[] hand, int groupSize) {
+        if (hand.length % groupSize != 0) {
+            return false;
+        }
+
         Arrays.sort(hand);
         Map<Integer, Integer> map = new HashMap<>();
-        for (int card : hand) {
-            map.put(card, map.getOrDefault(card, 0) + 1);
+        for (int num : hand) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
 
         for (int i = 0; i < hand.length; i++) {
-            int currentCard = hand[i];
-            if (map.get(currentCard) == 0) {
+            int currentHand = hand[i];
+            if (map.get(currentHand) == 0) {
                 continue;
             }
-
+            
             for (int j = 0; j < groupSize; j++) {
-                int nextCard = currentCard + j;
-                if (map.getOrDefault(nextCard, 0) == 0) {
+                int nextCard = currentHand + j;
+                if (!map.containsKey(nextCard) || map.get(nextCard) == 0) {
                     return false;
                 }
                 map.put(nextCard, map.get(nextCard) - 1);
