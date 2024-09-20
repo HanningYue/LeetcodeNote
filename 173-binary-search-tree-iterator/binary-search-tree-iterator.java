@@ -15,28 +15,28 @@
  */
 class BSTIterator {
     Stack<TreeNode> stack;
-    TreeNode current;
     public BSTIterator(TreeNode root) {
         stack = new Stack<>();
-        current = root;
+        pushLeft(root);
+    }
+
+    private void pushLeft(TreeNode node) {
+        while (node != null) {
+            stack.push(node);
+            node = node.left;
+        }
     }
     
     public int next() {
-        while (current != null) {
-            stack.push(current);
-            current = current.left;
+        TreeNode node = stack.pop();
+        if (node.right != null) {
+            pushLeft(node.right);
         }
-        current = stack.pop();
-        int value = current.val;
-        current = current.right;
-        return value;
+        return node.val;
     }
     
     public boolean hasNext() {
-        if (current != null || !stack.isEmpty()) {
-            return true;
-        }
-        return false;
+        return !stack.isEmpty();
     }
 }
 
