@@ -17,10 +17,10 @@ class BSTIterator {
     Stack<TreeNode> stack;
     public BSTIterator(TreeNode root) {
         stack = new Stack<>();
-        pushLeft(root);
+        getLeft(root);
     }
 
-    private void pushLeft(TreeNode node) {
+    private void getLeft(TreeNode node) {
         while (node != null) {
             stack.push(node);
             node = node.left;
@@ -29,10 +29,10 @@ class BSTIterator {
     
     public int next() {
         TreeNode node = stack.pop();
-        if (node.right != null) {
-            pushLeft(node.right);
-        }
-        return node.val;
+        int value = node.val;
+        node = node.right;
+        getLeft(node);
+        return value;
     }
     
     public boolean hasNext() {
