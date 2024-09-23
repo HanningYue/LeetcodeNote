@@ -16,18 +16,18 @@
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
-        traverse(root, result, 0);
+        dfs(result, 0, root);
         return result;
     }
-    private void traverse(TreeNode root, List<List<Integer>> result, int level) {
+    private void dfs(List<List<Integer>> result, int level, TreeNode root) {
         if (root == null) {
             return;
         }
-        if (level == result.size()) {
+        if (result.size() == level) {
             result.add(new ArrayList<>());
         }
         result.get(level).add(root.val);
-        traverse(root.left, result, level + 1);
-        traverse(root.right, result, level + 1);
+        dfs(result, level + 1, root.left);
+        dfs(result, level + 1, root.right);
     }
 }
