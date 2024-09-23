@@ -22,7 +22,7 @@ class Solution {
         flatten(root.left);
         flatten(root.right);
         TreeNode originalRight = root.right;
-        
+
         TreeNode originalLeft = root.left;
         root.left = null;
         root.right = originalLeft;
