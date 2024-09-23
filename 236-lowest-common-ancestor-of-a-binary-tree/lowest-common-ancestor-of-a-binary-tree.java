@@ -20,6 +20,7 @@ class Solution {
         if (leftSub != null && rightSub != null) {
             return root;
         }
+
         return leftSub == null ? rightSub : leftSub;
     }    
 }
