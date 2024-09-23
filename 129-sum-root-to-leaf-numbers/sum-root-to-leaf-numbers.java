@@ -15,9 +15,6 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
         return pathSum(root, 0);
     }
     private int pathSum(TreeNode root, int currentPathSum) {
