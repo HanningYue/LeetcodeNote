@@ -14,26 +14,26 @@
  * }
  */
 class Solution {
-    List<Integer> result = new ArrayList<>();
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
         result.add(root.val);
-        dfs(root.left, true, false);
-        dfs(root.right, false, true);
+        dfs(root.left, true, false, result);
+        dfs(root.right, false, true, result);
         return result;
     }
-    private void dfs(TreeNode root, boolean isLeft, boolean isRight) {
+    private void dfs(TreeNode root, boolean onLeftBoundary, boolean onRightBoundary, List<Integer> result) {
         if (root == null) {
             return;
         }
-        if (isLeft) {
+        if (onLeftBoundary) {
             result.add(root.val);
         }
-        if (!isLeft && isLeaf(root)) {
+        if (!onLeftBoundary && isLeaf(root)) {
             result.add(root.val);
         }
-        dfs(root.left, isLeft && root.left != null, isRight && root.right == null);
-        dfs(root.right, isLeft && root.left == null, isRight && root.right != null);
-        if (!isLeft && !isLeaf(root) && isRight) {
+        dfs(root.left, onLeftBoundary && root.left != null, onRightBoundary && root.right == null, result);
+        dfs(root.right, onLeftBoundary && root.left == null, onRightBoundary && root.right != null, result);
+        if (!onLeftBoundary && !isLeaf(root) && onRightBoundary) {
             result.add(root.val);
         }
     }
