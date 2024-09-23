@@ -18,19 +18,18 @@ class Solution {
         if (root == null) {
             return false;
         }
-        return pathSum(root, 0, targetSum);
+        return recursion(root, targetSum);
     }
-    private boolean pathSum(TreeNode root, int runningSum, int targetSum) {
+
+    private boolean recursion(TreeNode root, int target) {
         if (root == null) {
             return false;
         }
-
-        runningSum += root.val;
-        if (root.left == null && root.right == null && runningSum == targetSum) {
+        if (root.left == null && root.right == null && target == root.val) {
             return true;
         }
-        boolean leftPath = pathSum(root.left, runningSum, targetSum);
-        boolean rightPath = pathSum(root.right, runningSum, targetSum);
-        return leftPath || rightPath;
+        boolean leftSub = recursion(root.left, target - root.val);
+        boolean rightSub = recursion(root.right, target - root.val);
+        return leftSub || rightSub;
     }
 }
