@@ -1,33 +1,25 @@
-class Pair {
-    int index, height;
-    public Pair(int index, int height) {
-        this.index = index;
-        this.height = height;
-    }
-}
-
-public class Solution {
+class Solution {
     public int trap(int[] height) {
-        Stack<Pair> stack = new Stack<>();
-        int waterTrapped = 0;
-
-        for (int i = 0; i < height.length; i++) {
-            int currentIndex = i, currentHeight = height[i];
-
-            while (!stack.isEmpty() && stack.peek().height < currentHeight) {
-                Pair top = stack.pop();
-                if (stack.isEmpty()) {
-                    break;
-                }
-                Pair left = stack.peek();
-                int distance = currentIndex - left.index - 1;
-                int boundedHeight = Math.min(left.height, currentHeight) - top.height;
-                waterTrapped += distance * boundedHeight;
-            }
-
-            stack.push(new Pair(currentIndex, currentHeight));
+        int n = height.length;
+        int[] leftMax = new int[n];
+        int[] rightMax = new int[n];
+        
+        int result = 0;        
+        int leftRunningMax = 0;
+        int rightRunningMax = 0;
+        for (int i = 0; i < n; i++) {
+            leftRunningMax = Math.max(leftRunningMax, height[i]);
+            leftMax[i] = leftRunningMax;
+        }
+        for (int j = n - 1; j >= 0; j--) {
+            rightRunningMax = Math.max(rightRunningMax, height[j]);
+            rightMax[j] = rightRunningMax;
         }
 
-        return waterTrapped;
+        for (int k = 0; k < n; k++) {
+            int smaller = Math.min(leftMax[k], rightMax[k]);
+            result += smaller - height[k];
+        }
+        return result;
     }
 }
