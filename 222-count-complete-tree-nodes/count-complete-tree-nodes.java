@@ -15,14 +15,17 @@
  */
 class Solution {
     public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
         int depth = findDepth(root);
-        int lastLevel = countNode(root, depth); // Pass depth to countNode
-        return (int)Math.pow(2, depth) - 1 + lastLevel; // Correct total node count calculation
+        int lastLevel = countNode(root, depth);
+        return (int)Math.pow(2, depth) - 1 + lastLevel;
     }
 
     private int findDepth(TreeNode root) {
         int depth = 0;
-        while (root != null && root.left != null) { // Ensure root is not null
+        while (root.left != null) {
             root = root.left;
             depth++;
         }
