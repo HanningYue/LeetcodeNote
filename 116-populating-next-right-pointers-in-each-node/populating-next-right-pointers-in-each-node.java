@@ -25,12 +25,13 @@ class Solution {
     public Node connect(Node root) {
         Node current = root;
         
-        Node previous = null, headOfNextLevel = null;
+        Node nextLevelStart = null, previous = null;
         while (current != null) {
+            
             while (current != null) {
                 if (current.left != null) {
-                    if (headOfNextLevel == null) {
-                        headOfNextLevel = current.left;
+                    if (nextLevelStart == null) {
+                        nextLevelStart = current.left;
                         previous = current.left;
                     } else {
                         previous.next = current.left;
@@ -39,20 +40,21 @@ class Solution {
                 }
 
                 if (current.right != null) {
-                    if (headOfNextLevel == null) {
-                        headOfNextLevel = current.right;
+                    if (nextLevelStart == null) {
+                        nextLevelStart = current.right;
                         previous = current.right;
                     } else {
                         previous.next = current.right;
                         previous = previous.next;
                     }
                 }
+
                 current = current.next;
             }
 
-            current = headOfNextLevel;
-            headOfNextLevel = null;
+            current = nextLevelStart;
             previous = null;
+            nextLevelStart = null;
         }
         return root;
     }
