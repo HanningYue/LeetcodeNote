@@ -13,41 +13,45 @@
  *     }
  * }
  */
-class Pair {
+class State {
+    int column;
     TreeNode node;
-    int col;
-    public Pair(TreeNode node, int col) {
+    public State(int column, TreeNode node) {
+        this.column = column;
         this.node = node;
-        this.col = col;
     }
 }
 class Solution {
     public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
         Map<Integer, List<Integer>> treeMap = new TreeMap<>();
-
-        Queue<Pair> queue = new LinkedList<>();
-        queue.offer(new Pair(root, 0));
+        Queue<State> queue = new ArrayDeque<>();
+        queue.offer(new State(0, root));
         while (!queue.isEmpty()) {
             int size = queue.size();
-            Map<Integer, List<Integer>> map = new HashMap<>();
+            Map<Integer, List<Integer>> levelMap = new HashMap<>();
             for (int i = 0; i < size; i++) {
-                Pair currentPair = queue.poll();
-                TreeNode currentNode = currentPair.node;
-                int currentCol = currentPair.col;
+                State current = queue.poll();
+                int currentCol = current.column;
+                TreeNode currentNode = current.node;
 
-                map.putIfAbsent(currentCol, new ArrayList<>());
-                map.get(currentCol).add(currentNode.val);
+                if (currentNode.left != null) {
+                    queue.offer(new State(currentCol - 1, currentNode.left));
+                }
+                if (currentNode.right != null) {
+                    queue.offer(new State(currentCol + 1, currentNode.right));
+                }
 
-                if (currentNode.left != null) queue.offer(new Pair(currentNode.left, currentCol - 1));
-                if (currentNode.right != null) queue.offer(new Pair(currentNode.right, currentCol + 1));
+                levelMap.putIfAbsent(currentCol, new ArrayList<>());
+                levelMap.get(currentCol).add(currentNode.val);
             }
 
-            for (int col : map.keySet()) {
-                List<Integer> colNode = map.get(col);
-                Collections.sort(colNode);
-                treeMap.putIfAbsent(col, new ArrayList<>());
-                for (int nodeValue : colNode) {
-                    treeMap.get(col).add(nodeValue);
+            for (int column : levelMap.keySet()) {
+                treeMap.putIfAbsent(column, new ArrayList<>());
+                List<Integer> values = levelMap.get(column);
+                Collections.sort(values);
+                for (int value : values) {
+                    treeMap.get(column).add(value);
                 }
             }
         }
