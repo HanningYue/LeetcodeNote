@@ -32,11 +32,11 @@ class Solution {
         return depth;
     }
 
-    private boolean binarySearch(TreeNode root, int index, int depth) { // Pass depth as an argument
+    private boolean binarySearch(TreeNode root, int index, int depth) {
         int left = 0, right = (int)Math.pow(2, depth) - 1;
-        for (int i = 0; i < depth; i++) { // Loop for the number of levels (depth)
+        for (int i = 0; i < depth; i++) {
             int mid = left + (right - left) / 2;
-            if (index <= mid) {
+            if (mid >= index) {
                 root = root.left;
                 right = mid;
             } else {
@@ -44,14 +44,10 @@ class Solution {
                 left = mid + 1;
             }
         }
-        return root != null; // Check if the node exists
+        return root == null ? false : true;
     }
 
     private int countNode(TreeNode root, int depth) {
-        if (depth == 0) {
-            return root == null ? 0 : 1;
-        }
-
         int left = 0, right = (int)Math.pow(2, depth) - 1; // Adjust left bound to 0
         while (left <= right) {
             int mid = left + (right - left) / 2;
