@@ -18,10 +18,7 @@ class Solution {
         for (int row = 0; row < m; row++) {
             for (int col = 0; col < n; col++) {
                 if (pacific[row][col] && atlantic[row][col]) {
-                    List<Integer> current = new ArrayList<>();
-                    current.add(row);
-                    current.add(col);
-                    result.add(current);
+                    result.add(Arrays.asList(row, col));
                 }
             }
         }
