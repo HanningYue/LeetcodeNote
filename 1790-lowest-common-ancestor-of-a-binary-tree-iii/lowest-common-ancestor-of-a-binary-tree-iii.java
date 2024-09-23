@@ -14,14 +14,14 @@ class Solution {
         while (a != b) {
             if (a == null) {
                 a = q;
-                continue;
+            } else {
+                a = a.parent;
             }
             if (b == null) {
                 b = p;
-                continue;
+            } else {
+                b = b.parent;
             }
-            a = a.parent;
-            b = b.parent;
         }
         return a;
     }
