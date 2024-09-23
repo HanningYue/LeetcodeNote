@@ -18,17 +18,19 @@ class Solution {
         if (root == null) {
             return;
         }
+
         flatten(root.left);
         flatten(root.right);
-
         TreeNode originalRight = root.right;
-        root.right = root.left;
+        
+        TreeNode originalLeft = root.left;
         root.left = null;
+        root.right = originalLeft;
 
-        TreeNode start = root;
-        while (start.right != null) {
-            start = start.right;
+        TreeNode current = root;
+        while (current.right != null) {
+            current = current.right;
         }
-        start.right = originalRight;
+        current.right = originalRight;
     }
 }
