@@ -5,21 +5,20 @@ class Solution {
             graph.put(i, new ArrayList<>());
         }
         for (int[] pre : prerequisites) {
-            int from = pre[1], to = pre[0];
+            int from = pre[1];
+            int to = pre[0];
             graph.get(from).add(to);
         }
-
-        boolean[] visited = new boolean[numCourses];
         boolean[] visiting = new boolean[numCourses];
+        boolean[] visited = new boolean[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            if (!dfs(i, graph, visited, visiting)) {
+            if (!dfs(i, visiting, visited, graph)) {
                 return false;
             }
         }
         return true;
     }
-    private boolean dfs(int vertex, Map<Integer, List<Integer>> graph, boolean[] visited, 
-    boolean[] visiting) {
+    private boolean dfs(int vertex, boolean[] visiting, boolean[] visited, Map<Integer, List<Integer>> graph) {
         if (visiting[vertex]) {
             return false;
         }
@@ -28,12 +27,12 @@ class Solution {
         }
         visiting[vertex] = true;
         for (int neighbor : graph.get(vertex)) {
-            if (!dfs(neighbor, graph, visited, visiting)) {
+            if (!dfs(neighbor, visiting, visited, graph)) {
                 return false;
             }
         }
-        visiting[vertex] = false;;
         visited[vertex] = true;
+        visiting[vertex] = false;
         return true;
     }
 }
