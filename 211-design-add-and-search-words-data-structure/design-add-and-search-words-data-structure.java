@@ -1,11 +1,11 @@
 class TrieNode {
-    TrieNode[] children;
-    boolean isWord;
     String word;
+    boolean isWord;
+    TrieNode[] children;
     public TrieNode() {
         children = new TrieNode[26];
-        word = "";
         isWord = false;
+        word = "";
     }
 }
 class WordDictionary {
@@ -13,11 +13,10 @@ class WordDictionary {
     public WordDictionary() {
         root = new TrieNode();
     }
-    
     public void addWord(String word) {
         TrieNode node = root;
         for (char c : word.toCharArray()) {
-            if (node.children[c - 'a'] == null) {
+            if(node.children[c - 'a'] == null) {
                 node.children[c - 'a'] = new TrieNode();
             }
             node = node.children[c - 'a'];
@@ -25,30 +24,27 @@ class WordDictionary {
         node.isWord = true;
         node.word = word;
     }
-    
     public boolean search(String word) {
-        TrieNode node = root;
-        return searchRecursion(word, node);
+        return recursionSearch(word, root);
     }
-    
-    private boolean searchRecursion(String word, TrieNode node) {
+    private boolean recursionSearch(String word, TrieNode root) {
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
             if (c == '.') {
-                for (TrieNode child : node.children) {
-                    if (child != null && searchRecursion(word.substring(i + 1), child)) {
+                for (TrieNode child : root.children) {
+                    if (child != null && recursionSearch(word.substring(i + 1), child)) {
                         return true;
                     }
                 }
                 return false;
             } else {
-                if (node.children[c - 'a'] == null) {
+                if (root.children[c - 'a'] == null) {
                     return false;
                 }
-                node = node.children[c - 'a'];
+                root = root.children[c - 'a'];
             }
         }
-        return node.isWord;
+        return root.isWord;
     }
 }
 
