@@ -9,24 +9,23 @@ class Solution {
             return false;
         }
 
-        int halfSum = sum / 2;
-        dpTable = new Boolean[halfSum + 1][nums.length];
-        return dp(nums, halfSum, nums.length - 1);
+        dpTable = new Boolean[nums.length][sum / 2 + 1];
+        return dp(nums, nums.length - 1, sum / 2);
     }
-    private boolean dp(int[] nums, int halfSum, int index) {
-        if (halfSum == 0) {
+    private boolean dp(int[] nums, int index, int runningSum) {
+        if (runningSum == 0) {
             return true;
         }
-        if (index < 0 || halfSum < 0) {
+        if (index < 0 || runningSum < 0) {
             return false;
         }
-        if (dpTable[halfSum][index] != null) {
-            return dpTable[halfSum][index];
+        if (dpTable[index][runningSum] != null) {
+            return dpTable[index][runningSum];
         }
-
-        boolean useCurrent = dp(nums, halfSum - nums[index], index - 1);
-        boolean notUseCurrent = dp(nums, halfSum, index - 1);
-        dpTable[halfSum][index] = useCurrent || notUseCurrent;
-        return dpTable[halfSum][index];
+ 
+        boolean useCurrent = dp(nums, index - 1, runningSum - nums[index]);
+        boolean notUseCurrent = dp(nums, index - 1, runningSum);
+        dpTable[index][runningSum] = useCurrent || notUseCurrent;
+        return dpTable[index][runningSum];
     }
 }
