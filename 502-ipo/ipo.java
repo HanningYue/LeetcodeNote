@@ -1,20 +1,20 @@
 class Solution {
     public int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
-        PriorityQueue<int[]> ascendingCapital = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        PriorityQueue<int[]> descendingProfit = new PriorityQueue<>((a, b) -> b[1] - a[1]);
-
+        PriorityQueue<Integer> maxProfit = new PriorityQueue<>((a, b) -> profits[b] - profits[a]);
+        PriorityQueue<Integer> minCapital = new PriorityQueue<>((a, b) -> capital[a] - capital[b]);
         for (int i = 0; i < capital.length; i++) {
-            ascendingCapital.offer(new int[]{capital[i], profits[i]});
+            minCapital.add(i);
         }
 
+        int result = 0;
         for (int i = 0; i < k; i++) {
-            while (!ascendingCapital.isEmpty() && ascendingCapital.peek()[0] <= w) {
-                descendingProfit.offer(ascendingCapital.poll());
+            while (!minCapital.isEmpty() && capital[minCapital.peek()] <= w) {
+                maxProfit.offer(minCapital.poll());
             }
-            if (descendingProfit.isEmpty()) {
+            if (maxProfit.isEmpty()) {
                 return w;
             }
-            w += descendingProfit.poll()[1];
+            w += profits[maxProfit.poll()];
         }
         return w;
     }
