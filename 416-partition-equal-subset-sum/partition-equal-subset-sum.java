@@ -8,23 +8,21 @@ class Solution {
         if (sum % 2 != 0) {
             return false;
         }
-
         dpTable = new Boolean[nums.length][sum / 2 + 1];
-        return dp(nums, nums.length - 1, sum / 2);
+        return dp(nums, 0, 0, sum / 2);
     }
-    private boolean dp(int[] nums, int index, int runningSum) {
-        if (runningSum == 0) {
+    private boolean dp(int[] nums, int runningSum, int index, int targetSum) {
+        if (runningSum == targetSum) {
             return true;
         }
-        if (index < 0 || runningSum < 0) {
+        if (index >= nums.length || runningSum > targetSum) {
             return false;
         }
         if (dpTable[index][runningSum] != null) {
             return dpTable[index][runningSum];
         }
- 
-        boolean useCurrent = dp(nums, index - 1, runningSum - nums[index]);
-        boolean notUseCurrent = dp(nums, index - 1, runningSum);
+        boolean useCurrent = dp(nums, runningSum + nums[index], index + 1, targetSum);
+        boolean notUseCurrent = dp(nums, runningSum, index + 1, targetSum);
         dpTable[index][runningSum] = useCurrent || notUseCurrent;
         return dpTable[index][runningSum];
     }
