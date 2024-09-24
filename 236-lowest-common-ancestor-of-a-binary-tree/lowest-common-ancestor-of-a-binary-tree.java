@@ -10,27 +10,31 @@
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+        parentMap.put(root, null);
         Queue<TreeNode> queue = new ArrayDeque<>();
         queue.offer(root);
-        parentMap.put(root, null);
         while (!parentMap.containsKey(p) || !parentMap.containsKey(q)) {
-            TreeNode current = queue.poll();
-            if (current.left != null) {
-                parentMap.put(current.left, current);
-                queue.offer(current.left);
-            }
-            if (current.right != null) {
-                parentMap.put(current.right, current);
-                queue.offer(current.right);
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode current = queue.poll();
+                if (current.left != null) {
+                    queue.offer(current.left);
+                    parentMap.put(current.left, current);
+                }
+                if (current.right != null) {
+                    queue.offer(current.right);
+                    parentMap.put(current.right, current);
+                }
             }
         }
-        
-        Set<TreeNode> parents = new HashSet<>();
+
+        Set<TreeNode> set = new HashSet<>();
         while (p != null) {
-            parents.add(p);
+            set.add(p);
             p = parentMap.get(p);
         }
-        while (!parents.contains(q)) {
+
+        while (!set.contains(q)) {
             q = parentMap.get(q);
         }
         return q;
