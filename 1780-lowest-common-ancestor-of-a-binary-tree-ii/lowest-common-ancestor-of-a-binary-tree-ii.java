@@ -9,33 +9,46 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        TreeNode result = LCA(root, p, q);
-        if (pExist && qExist) {
-            return result;
+        boolean pExist = false;
+        boolean qExist = false;
+        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+        parentMap.put(root, null);
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode current = queue.poll();
+                if (current == p) {
+                    pExist = true;
+                }
+                if (current == q) {
+                    qExist = true;
+                }
+                if (qExist && pExist) {
+                    break;
+                }
+                if (current.left != null) {
+                    queue.offer(current.left);
+                    parentMap.put(current.left, current);
+                }
+                if (current.right != null) {
+                    queue.offer(current.right);
+                    parentMap.put(current.right, current);
+                }
+            }
         }
-        return null;
-    }
-    boolean pExist = false;
-    boolean qExist = false;
-    private TreeNode LCA(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
+        if (!pExist || !qExist) {
             return null;
         }
-
-        TreeNode leftSub = LCA(root.left, p, q);
-        TreeNode rightSub = LCA(root.right, p, q);
-        if (root.val == p.val || root.val == q.val) {
-            if (root.val == p.val) {
-                pExist = true;
-            }
-            if (root.val == q.val) {
-                qExist = true;
-            }
-            return root;
+        Set<TreeNode> parent = new HashSet<>();
+        while (p != null) {
+            parent.add(p);
+            p = parentMap.get(p);
         }
-        if (leftSub != null && rightSub != null) {
-            return root;
+        while (!parent.contains(q)) {
+            q = parentMap.get(q);
         }
-        return leftSub == null ? rightSub : leftSub;
+        return q;
     }
 }
