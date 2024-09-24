@@ -26,19 +26,13 @@ class Solution {
         if (preleft > preright) {
             return null;
         }
-        
-        int headNode = preorder[preleft];
-        int headIndex = map.get(headNode);
+        int headValue = preorder[preleft];
+        int headIndex = map.get(headValue);
         int leftSubSize = headIndex - inleft;
-        
-        TreeNode head = new TreeNode(headNode);
+
+        TreeNode head = new TreeNode(headValue);
         head.left = recursion(preorder, preleft + 1, preleft + leftSubSize, inorder, inleft, headIndex - 1);
         head.right = recursion(preorder, preleft + leftSubSize + 1, preright, inorder, headIndex + 1, inright);
         return head;
     }
 }
-
-// 3 9 20 15 7
-// 9 3 15 20 7
-// hi
-// 0
