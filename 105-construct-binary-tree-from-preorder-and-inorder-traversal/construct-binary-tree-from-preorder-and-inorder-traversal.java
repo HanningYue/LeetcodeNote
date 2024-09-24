@@ -28,11 +28,11 @@ class Solution {
         }
         int headValue = preorder[preleft];
         int headIndex = map.get(headValue);
-        int leftSubSize = headIndex - inleft;
+        int leftSubSize = headIndex - inleft - 1;
 
         TreeNode head = new TreeNode(headValue);
-        head.left = recursion(preorder, preleft + 1, preleft + leftSubSize, inorder, inleft, headIndex - 1);
-        head.right = recursion(preorder, preleft + leftSubSize + 1, preright, inorder, headIndex + 1, inright);
+        head.left = recursion(preorder, preleft + 1, preleft + 1 + leftSubSize, inorder, inleft, headIndex - 1);
+        head.right = recursion(preorder, preleft + 1 + leftSubSize + 1, preright, inorder, headIndex + 1, inright);
         return head;
     }
 }
