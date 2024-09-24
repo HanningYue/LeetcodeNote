@@ -1,29 +1,30 @@
 class Solution {
     Boolean[][] dpTable;
     public boolean canPartition(int[] nums) {
-        int sum = 0;
+        int n = nums.length, sum = 0;
         for (int num : nums) {
             sum += num;
         }
         if (sum % 2 != 0) {
             return false;
         }
-        dpTable = new Boolean[nums.length][sum / 2 + 1];
-        return dp(nums, 0, 0, sum / 2);
+        sum = sum / 2;
+        dpTable = new Boolean[n][sum + 1];
+        return dp(nums, n - 1, sum);
     }
-    private boolean dp(int[] nums, int runningSum, int index, int targetSum) {
-        if (runningSum == targetSum) {
+    private boolean dp(int[] nums, int index, int target) {
+        if (target == 0) {
             return true;
         }
-        if (index >= nums.length || runningSum > targetSum) {
+        if (index < 0 || target < 0) {
             return false;
         }
-        if (dpTable[index][runningSum] != null) {
-            return dpTable[index][runningSum];
+        if (dpTable[index][target] != null) {
+            return dpTable[index][target];
         }
-        boolean useCurrent = dp(nums, runningSum + nums[index], index + 1, targetSum);
-        boolean notUseCurrent = dp(nums, runningSum, index + 1, targetSum);
-        dpTable[index][runningSum] = useCurrent || notUseCurrent;
-        return dpTable[index][runningSum];
+        boolean includeCurrent = dp(nums, index - 1, target - nums[index]);
+        boolean excludeCurrent = dp(nums, index - 1, target);
+        dpTable[index][target] = includeCurrent || excludeCurrent;
+        return dpTable[index][target];
     }
 }
