@@ -15,11 +15,6 @@ class Solution {
         }
         result.add(previous);
         
-        int[][] answer = new int[result.size()][2];
-        for (int i = 0; i < result.size(); i++) {
-            answer[i][0] = result.get(i)[0];
-            answer[i][1] = result.get(i)[1];
-        }
-        return answer;
+        return result.toArray(new int[result.size()][]);
     }
 }
