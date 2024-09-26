@@ -16,19 +16,19 @@ class Solution {
             current = current.next;
         }
 
-        ListNode tempPrevious = previous, tempCurrent = current;
+        ListNode previousEnd = previous, startOfCurrent = current;
         for (int i = left; i <= right; i++) {
             ListNode next = current.next;
             current.next = previous;
             previous = current;
             current = next;
         }
-        if (tempPrevious == null) {
+        if (previousEnd == null) {
             head = previous;
         } else {
-            tempPrevious.next = previous;
+            previousEnd.next = previous;
         }
-        tempCurrent.next = current;
+        startOfCurrent.next = current;
         return head;
     }
 }
