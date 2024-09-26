@@ -25,8 +25,8 @@ class Solution {
 
         Node copy = new Node(head.val);
         map.put(head, copy);
-        copy.random = copyRandomList(head.random);
         copy.next = copyRandomList(head.next);
+        copy.random = copyRandomList(head.random);
         return copy;
-    }
+    }   
 }
