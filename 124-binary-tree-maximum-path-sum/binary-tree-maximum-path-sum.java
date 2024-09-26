@@ -16,21 +16,23 @@
 class Solution {
     int globalMax = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {
-        pathSum(root);
-        return globalMax;
+        maxSum(root);
+        return globalMax;       
     }
-    private int pathSum(TreeNode root) {
+    private int maxSum(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        int leftPath = pathSum(root.left);
+
+        int leftPath = maxSum(root.left);
         leftPath = Math.max(leftPath, 0);
 
-        int rightPath = pathSum(root.right);
+        int rightPath = maxSum(root.right);
         rightPath = Math.max(rightPath, 0);
 
         globalMax = Math.max(globalMax, leftPath + rightPath + root.val);
-        int currentMax = Math.max(leftPath, rightPath) + root.val;
-        return currentMax;
+
+        int currentMaxPath = Math.max(leftPath, rightPath) + root.val;
+        return currentMaxPath;
     }
 }
