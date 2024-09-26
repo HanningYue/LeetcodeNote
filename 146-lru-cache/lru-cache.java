@@ -54,8 +54,8 @@ class LRUCache {
         } else {
             if (map.size() >= capacity) {
                 int lru = tail.prev.key;
-                map.remove(lru);
                 delete(tail.prev);
+                map.remove(lru);
             }
             Node newNode = new Node(key, value);
             map.put(key, newNode);
