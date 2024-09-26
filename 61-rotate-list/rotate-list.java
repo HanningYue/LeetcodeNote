@@ -13,25 +13,24 @@ class Solution {
         if (head == null || head.next == null) {
             return head;
         }
-
-        ListNode lastNode = head, previous = null;
-        int length = 0;
-        while (lastNode != null) {
-            previous = lastNode;
+        
+        ListNode lastNode = head;
+        int length = 1;
+        while (lastNode.next != null) {
             lastNode = lastNode.next;
             length++;
-        }
-        previous.next = head;
+        }    
+        lastNode.next = head;
 
         k = k % length;
         k = length - k;
-        ListNode newHead = head;
-        previous = null;
+        ListNode newStart = head;
+        ListNode previous = null;
         for (int i = 0; i < k; i++) {
-            previous = newHead;
-            newHead = newHead.next;
+            previous = newStart;
+            newStart = newStart.next;
         }
         previous.next = null;
-        return newHead;
+        return newStart;
     }
 }
