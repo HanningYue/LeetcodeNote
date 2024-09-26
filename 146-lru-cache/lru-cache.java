@@ -50,10 +50,11 @@ class LRUCache {
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             Node node = map.get(key);
-            node.value = value;
-            map.put(key, node);
             delete(node);
-            add(node);
+
+            Node newNode = new Node(key, value);
+            add(newNode);
+            map.put(key, newNode);
         } else {
             if (map.size() >= capacity) {
                 map.remove(tail.prev.key);
