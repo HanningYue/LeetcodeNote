@@ -26,18 +26,21 @@ class Solution {
             step++;
             for (int i = 0; i < size; i++) {
                 State current = queue.poll();
+                if(visited[current.x][current.y]) {
+                    continue;
+                }
+                visited[current.x][current.y] = true;
                 
                 for (int[] dir : directions) {
                     int newX = dir[0] + current.x;
                     int newY = dir[1] + current.y;
-                    if (newX < 0 || newX >= m || newY < 0 || newY >= n || visited[newX][newY]) {
+                    if (newX < 0 || newX >= m || newY < 0 || newY >= n) {
                         continue;
                     }
                     if (rooms[newX][newY] != Integer.MAX_VALUE) {
                         continue;
                     }
                     rooms[newX][newY] = step;
-                    visited[newX][newY] = true;
                     queue.offer(new State(newX, newY));
                 }
             }
