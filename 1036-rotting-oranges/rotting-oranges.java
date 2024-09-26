@@ -19,14 +19,13 @@ class Solution {
                 }
                 if (grid[row][col] == 2) {
                     queue.offer(new State(row, col));
-                    // visited[row][col] = true;
                 }
             }
         }
 
         int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         int time = 0;
-        while (!queue.isEmpty() && countOfFresh != 0) {
+        while (!queue.isEmpty() && countOfFresh > 0) {
             int size = queue.size();
             time++;
             for (int i = 0; i < size; i++) {
