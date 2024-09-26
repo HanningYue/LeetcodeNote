@@ -20,30 +20,29 @@ class Solution {
             return null;
         }
 
-        Node copy = new Node(head.val);
-        map.put(head, copy);
-        
         Node current = head;
+        Node copy = new Node(current.val, null, null);
+        map.put(current, copy);
+
         while (current != null) {
             copy.random = createCopy(current.random);
             copy.next = createCopy(current.next);
 
-            current = current.next;
             copy = copy.next;
+            current = current.next;
         }
         return map.get(head);
     }
 
     private Node createCopy(Node node) {
-        if (node != null) {
-            if (map.containsKey(node)) {
-                return map.get(node);
-            } else {
-                Node copy = new Node(node.val, null, null);
-                map.put(node, copy);
-                return copy;
-            }
+        if (node == null) {
+            return null;
         }
-        return null;
+        if (map.containsKey(node)) {
+            return map.get(node);
+        }
+        Node copy = new Node(node.val, null, null);
+        map.put(node, copy);
+        return map.get(node);
     }
 }
