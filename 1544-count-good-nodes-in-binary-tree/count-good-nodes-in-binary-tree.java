@@ -16,18 +16,18 @@
 class Solution {
     int count = 0;
     public int goodNodes(TreeNode root) {
-        recursion(root, root.val);
+        dfs(root, Integer.MIN_VALUE);
         return count;
     }
-    private void recursion(TreeNode root, int prevMax) {
+    private void dfs(TreeNode root, int prevMax) {
         if (root == null) {
             return;
         }
-
-        if (root.val >= prevMax) {
+        if (prevMax <= root.val) {
+            prevMax = root.val;
             count++;
         }
-        recursion(root.left, root.val >= prevMax ? root.val : prevMax);
-        recursion(root.right, root.val >= prevMax ? root.val : prevMax);
+        dfs(root.left, prevMax);
+        dfs(root.right, prevMax);
     }
 }
