@@ -19,14 +19,31 @@ class Solution {
         if (head == null) {
             return null;
         }
-        if (map.containsKey(head)) {
-            return map.get(head);
-        }
 
         Node copy = new Node(head.val);
         map.put(head, copy);
-        copy.next = copyRandomList(head.next);
-        copy.random = copyRandomList(head.random);
-        return copy;
-    }   
+        
+        Node current = head;
+        while (current != null) {
+            copy.random = createCopy(current.random);
+            copy.next = createCopy(current.next);
+
+            current = current.next;
+            copy = copy.next;
+        }
+        return map.get(head);
+    }
+
+    private Node createCopy(Node node) {
+        if (node != null) {
+            if (map.containsKey(node)) {
+                return map.get(node);
+            } else {
+                Node copy = new Node(node.val, null, null);
+                map.put(node, copy);
+                return copy;
+            }
+        }
+        return null;
+    }
 }
