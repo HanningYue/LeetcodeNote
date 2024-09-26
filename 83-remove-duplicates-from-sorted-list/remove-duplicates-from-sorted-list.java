@@ -20,12 +20,11 @@ class Solution {
                     head = head.next;
                 }
                 current.next = head;
-                current = current.next;
             }
             else {
                 current.next = head;
-                current = current.next;
             }
+            current = current.next;
             head = head.next;
         }
         return dummy.next;
