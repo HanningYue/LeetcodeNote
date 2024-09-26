@@ -1,36 +1,66 @@
+class Node {
+    Node prev, next;
+    int key, value;
+    public Node(int key, int value) {
+        this.key = key;
+        this.value = value;
+    }
+}
 class LRUCache {
+    Node head, tail;
     int capacity;
-    LinkedHashMap<Integer, Integer> map;
+    Map<Integer, Node> map;
     public LRUCache(int capacity) {
-        map = new LinkedHashMap<>();
+        map = new HashMap<>();
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
+        head.next = tail;
+        tail.prev = head;
         this.capacity = capacity;
     }
     
-    private void makeRecent(int key) {
-        int value = map.get(key);
-        map.remove(key);
-        map.put(key, value);
+    private void add(Node node) {
+        node.prev = head;
+        node.next = head.next;
+
+        head.next.prev = node;
+        head.next = node;
+    }
+
+    private void delete(Node node) {
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
     }
 
     public int get(int key) {
         if (map.containsKey(key)) {
-            makeRecent(key);
-            return map.get(key);
+            Node node = map.get(key);
+            int value = node.value;
+            delete(node);
+            add(node);
+            return value;
         }
         return -1;
     }
     
     public void put(int key, int value) {
         if (map.containsKey(key)) {
-            map.put(key, value);
-            makeRecent(key);
+            Node oldNode = map.get(key);
+            delete(oldNode);
+
+            Node newNode = new Node(key, value);
+            map.put(key, newNode);
+            add(newNode);
         } else {
             if (map.size() >= capacity) {
-                int lru = map.keySet().iterator().next();
+                int lru = tail.prev.key;
                 map.remove(lru);
+                delete(tail.prev);
             }
-            map.put(key, value);
-        }  
+            Node newNode = new Node(key, value);
+            map.put(key, newNode);
+            add(newNode);
+        }
     }
 }
 
