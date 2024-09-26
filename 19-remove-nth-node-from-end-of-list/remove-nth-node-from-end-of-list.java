@@ -21,6 +21,7 @@ class Solution {
                 return head.next;
             }
         }
+        
         while (fast.next != null) {
             slow = slow.next;
             fast = fast.next;
