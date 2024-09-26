@@ -23,10 +23,9 @@ class Solution {
             if (l2 != null) {
                 l2 = l2.next;
             }
-            int currentNodeValue = l1Val + l2Val + carry;
-            carry = currentNodeValue / 10;
-            
-            ListNode currentNode = new ListNode(currentNodeValue % 10);
+            int currentSum = (l1Val + l2Val + carry);
+            carry = currentSum / 10;
+            ListNode currentNode = new ListNode(currentSum % 10);
             current.next = currentNode;
             current = current.next;
         }
