@@ -13,15 +13,13 @@ class Solution {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
         ListNode current = dummy;
-
         while (head != null) {
-            if (head.next != null && head.val == head.next.val) {
-                while (head.next != null && head.val == head.next.val) {
+            if (head.next != null && head.next.val == head.val) {
+                while (head.next != null && head.next.val == head.val) {
                     head = head.next;
                 }
                 current.next = head.next;
-            } 
-            else {
+            } else {
                 current = current.next;
             }
             head = head.next;
