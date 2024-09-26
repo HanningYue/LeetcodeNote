@@ -1,17 +1,17 @@
 class LRUCache {
-    LinkedHashMap<Integer, Integer> map;
     int capacity;
+    LinkedHashMap<Integer, Integer> map;
     public LRUCache(int capacity) {
-        this.capacity = capacity;
         map = new LinkedHashMap<>();
+        this.capacity = capacity;
     }
-
+    
     private void makeRecent(int key) {
         int value = map.get(key);
         map.remove(key);
         map.put(key, value);
     }
-    
+
     public int get(int key) {
         if (map.containsKey(key)) {
             makeRecent(key);
@@ -30,7 +30,7 @@ class LRUCache {
                 map.remove(lru);
             }
             map.put(key, value);
-        }
+        }  
     }
 }
 
