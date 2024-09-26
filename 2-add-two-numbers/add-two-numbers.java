@@ -1,22 +1,35 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        return addTwoNumbersHelper(l1, l2, 0);
-    }
-
-    private ListNode addTwoNumbersHelper(ListNode l1, ListNode l2, int carry) {
-        if (l1 == null && l2 == null && carry == 0) {
-            return null;
+        ListNode dummy = new ListNode(-1);
+        ListNode current = dummy;
+        
+        int carry = 0;
+        while (l1 != null || l2 != null || carry != 0) {
+            int l1Val = l1 == null ? 0 : l1.val;
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            int l2Val = l2 == null ? 0 : l2.val;
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+            int currentNodeValue = l1Val + l2Val + carry;
+            carry = currentNodeValue / 10;
+            
+            ListNode currentNode = new ListNode(currentNodeValue % 10);
+            current.next = currentNode;
+            current = current.next;
         }
-
-        int l1Val = (l1 != null) ? l1.val : 0;
-        int l2Val = (l2 != null) ? l2.val : 0;
-        int sum = l1Val + l2Val + carry;
-        carry = sum / 10;
-
-        ListNode currentNode = new ListNode(sum % 10);
-        currentNode.next = addTwoNumbersHelper((l1 != null) ? l1.next : null, 
-                                                (l2 != null) ? l2.next : null, carry);
-
-        return currentNode;
+        return dummy.next;
     }
 }
