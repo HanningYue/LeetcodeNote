@@ -7,7 +7,7 @@ class Solution {
             if (!s.isEmpty() && !s.equals("..") && !s.equals(".")) {
                 stack.push(s);
             }
-            else if (!stack.isEmpty() && s.equals("..")) {
+            if (!stack.isEmpty() && s.equals("..")) {
                 stack.pop();
             }
         }
