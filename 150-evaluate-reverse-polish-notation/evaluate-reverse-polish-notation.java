@@ -5,15 +5,15 @@ class Solution {
             if (token.equals("+")) {
                 stack.push(stack.pop() + stack.pop());
             } else if (token.equals("-")) {
-                int secondNumber = stack.pop();
-                int firstNumber = stack.pop();
-                stack.push(firstNumber - secondNumber);
+                int secondNum = stack.pop();
+                int firstNum = stack.pop();
+                stack.push(firstNum - secondNum);
             } else if (token.equals("*")) {
                 stack.push(stack.pop() * stack.pop());
             } else if (token.equals("/")) {
-                int divisor = stack.pop();
-                int dividend = stack.pop();
-                stack.push(dividend/ divisor);
+                int secondNum = stack.pop();
+                int firstNum = stack.pop();
+                stack.push(firstNum / secondNum);
             } else {
                 stack.push(Integer.parseInt(token));
             }
