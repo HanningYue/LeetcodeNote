@@ -9,27 +9,28 @@ class Solution {
         return recursion(queue);
     }
     private int recursion(Queue<Character> queue) {
-        int previousSign = '+';
-        int previousSum = 0;
         Stack<Integer> stack = new Stack<>();
+        int sum = 0;
+        char sign = '+';
 
         while (!queue.isEmpty()) {
             char current = queue.poll();
             if (Character.isDigit(current)) {
-                previousSum = previousSum * 10 + current - '0';
+                sum = sum * 10 + current - '0';
             }
+
             if (!Character.isDigit(current) || queue.isEmpty()) {
-                if (previousSign == '+') {
-                    stack.push(previousSum);
-                } else if (previousSign == '-') {
-                    stack.push(-previousSum);
-                } else if (previousSign == '*') {
-                    stack.push(stack.pop() * previousSum);
-                } else if (previousSign == '/') {
-                    stack.push(stack.pop() / previousSum);
+                if (sign == '+') {
+                    stack.push(sum);
+                } else if (sign == '-') {
+                    stack.push(-sum);
+                } else if (sign == '*') {
+                    stack.push(stack.pop() * sum);
+                } else if (sign == '/') {
+                    stack.push(stack.pop() / sum);
                 }
-                previousSign = current;
-                previousSum = 0;
+                sign = current;
+                sum = 0;
             }
         }
 
