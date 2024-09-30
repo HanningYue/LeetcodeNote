@@ -14,8 +14,7 @@ public class Solution {
         if (head == null || head.next == null) {
             return false;
         }
-        ListNode slow = head;
-        ListNode fast = head;
+        ListNode slow = head, fast = head;
         do {
             slow = slow.next;
             fast = fast.next.next;
