@@ -4,10 +4,11 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         String[] paths = path.split("/");
         for (String s : paths) {
-            if (!stack.isEmpty() && s.equals("..")) {
-                stack.pop();
-            } else if (!s.isEmpty() && !s.equals("..") && !s.equals(".")) {
+            if (!s.isEmpty() && !s.equals("..") && !s.equals(".")) {
                 stack.push(s);
+            }
+            else if (!stack.isEmpty() && s.equals("..")) {
+                stack.pop();
             }
         }
         
