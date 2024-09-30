@@ -1,6 +1,6 @@
 class Solution {
     public int calculate(String s) {
-        Queue<Character> queue = new LinkedList<>();
+        Queue<Character> queue = new ArrayDeque<>();
         for (char c : s.toCharArray()) {
             if (c != ' ') {
                 queue.offer(c);
@@ -10,9 +10,9 @@ class Solution {
     }
     private int recursion(Queue<Character> queue) {
         Stack<Integer> stack = new Stack<>();
-        
-        char sign = '+';
+        int sign = '+';
         int sum = 0;
+
         while (!queue.isEmpty()) {
             char current = queue.poll();
             if (Character.isDigit(current)) {
@@ -21,6 +21,7 @@ class Solution {
             if (current == '(') {
                 sum = recursion(queue);
             }
+
             if (!Character.isDigit(current) || queue.isEmpty()) {
                 if (sign == '+') {
                     stack.push(sum);
@@ -34,6 +35,7 @@ class Solution {
                 sign = current;
                 sum = 0;
             }
+
             if (current == ')') {
                 break;
             }
