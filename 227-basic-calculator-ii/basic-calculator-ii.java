@@ -1,37 +1,35 @@
 class Solution {
     public int calculate(String s) {
-        Stack<Integer> stack = new Stack<>();
-        
-        char previousSign = '+';
-        int sum = 0;
-        int lastIndexOfNumber = s.length() - 1;
-        while (lastIndexOfNumber >= 0 && s.charAt(lastIndexOfNumber) == ' ') {
-                lastIndexOfNumber--;
-            if (lastIndexOfNumber == -1) {
-                return 0;
+        Queue<Character> queue = new ArrayDeque<>();
+        for (char c : s.toCharArray()) {
+            if (c != ' ') {
+                queue.offer(c);
             }
         }
+        return recursion(queue);
+    }
+    private int recursion(Queue<Character> queue) {
+        int previousSign = '+';
+        int previousSum = 0;
+        Stack<Integer> stack = new Stack<>();
 
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == ' ') {
-                continue;
+        while (!queue.isEmpty()) {
+            char current = queue.poll();
+            if (Character.isDigit(current)) {
+                previousSum = previousSum * 10 + current - '0';
             }
-            if (Character.isDigit(c)) {
-                sum = sum * 10 + c - '0';
-            }
-            if (!Character.isDigit(c) || i == lastIndexOfNumber) {
+            if (!Character.isDigit(current) || queue.isEmpty()) {
                 if (previousSign == '+') {
-                    stack.push(sum);
+                    stack.push(previousSum);
                 } else if (previousSign == '-') {
-                    stack.push(-sum);
+                    stack.push(-previousSum);
                 } else if (previousSign == '*') {
-                    stack.push(stack.pop() * sum);
+                    stack.push(stack.pop() * previousSum);
                 } else if (previousSign == '/') {
-                    stack.push(stack.pop() / sum);
+                    stack.push(stack.pop() / previousSum);
                 }
-                previousSign = c;
-                sum = 0;
+                previousSign = current;
+                previousSum = 0;
             }
         }
 
