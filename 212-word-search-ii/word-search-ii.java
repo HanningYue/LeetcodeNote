@@ -9,10 +9,9 @@ class TrieNode {
     }
 }
 class Solution {
-    TrieNode root;
     int[][] directions = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     public List<String> findWords(char[][] board, String[] words) {
-        root = new TrieNode();
+        TrieNode root = new TrieNode();
         List<String> result = new ArrayList<>();
         for (String word : words) {
             insert(word, root);
@@ -29,6 +28,7 @@ class Solution {
         }
         return result;
     }
+
     private void dfs(char[][] board, int row, int col, TrieNode root, List<String> result, boolean[][] visited) {
         if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || visited[row][col]) {
             return;
@@ -50,6 +50,7 @@ class Solution {
         }
         visited[row][col] = false;
     }
+
     private void insert(String word, TrieNode root) {
         for (char c : word.toCharArray()) {
             if (root.children[c - 'a'] == null) {
