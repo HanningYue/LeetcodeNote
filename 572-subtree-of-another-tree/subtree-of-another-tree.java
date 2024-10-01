@@ -20,24 +20,21 @@ class Solution {
         } else if (root == null || subRoot == null) {
             return false;
         }
-        
-        if (isSameTree(root, subRoot)) {
-            return true;
-        }
+
         boolean leftSub = isSubtree(root.left, subRoot);
         boolean rightSub = isSubtree(root.right, subRoot);
-        return leftSub || rightSub;
+        return leftSub || rightSub || isSame(root, subRoot);
     }
-    private boolean isSameTree(TreeNode p, TreeNode q) {
+    private boolean isSame(TreeNode p, TreeNode q) {
         if (p == null && q == null) {
             return true;
         } else if (p == null || q == null) {
             return false;
         }
-        boolean leftSame = isSameTree(p.left, q.left);
-        boolean rightSame = isSameTree(p.right, q.right);
+
         boolean currentSame = p.val == q.val;
-        
-        return leftSame && rightSame && currentSame;
+        boolean leftSame = isSame(p.left, q.left);
+        boolean rightSame = isSame(p.right, q.right);
+        return currentSame && leftSame && rightSame;
     }
 }
