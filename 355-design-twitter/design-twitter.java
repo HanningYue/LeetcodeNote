@@ -1,59 +1,77 @@
 class Tweet {
-    int userId, tweetId;
-    public Tweet(int userId, int tweetId) {
-        this.userId = userId;
+    int tweetId;
+    int userId;
+    public Tweet(int tweetId, int userId) {
         this.tweetId = tweetId;
+        this.userId = userId;
     }
 }
 class User {
     int userId;
-    Set<Integer> followList;
+    Set<Integer> followerList;
+    Set<Integer> followingList;
     public User(int userId) {
+        followingList = new HashSet<>();
+        followerList = new HashSet<>();
         this.userId = userId;
-        followList = new HashSet<>();
     }
 }
 class Twitter {
+    List<Tweet> tweetList;
     Map<Integer, User> map;
-    List<Tweet> allTweet;
     public Twitter() {
-        allTweet = new ArrayList<>();
         map = new HashMap<>();
+        tweetList = new ArrayList<>();
     }
 
-    public User getUser(int userId) {
-        map.putIfAbsent(userId, new User(userId));
-        return map.get(userId);
+    private User createUser(int userId) {
+        if (map.containsKey(userId)) {
+            return map.get(userId);
+        }
+        User user = new User(userId);
+        map.put(userId, user);
+        return user;
     }
     
     public void postTweet(int userId, int tweetId) {
-        allTweet.add(new Tweet(userId, tweetId));
+        User user = createUser(userId);
+        Tweet tweet = new Tweet(tweetId, userId);
+        tweetList.add(tweet);
     }
     
     public List<Integer> getNewsFeed(int userId) {
-        User user = getUser(userId);
-        List<Integer> pastTen = new ArrayList<>();
-        int index = allTweet.size() - 1;
+        User user = createUser(userId);
+        List<Integer> lastTen = new ArrayList<>();
 
-        while (index >= 0 && pastTen.size() < 10) {
-            Tweet currentTweet = allTweet.get(index);
-            if (currentTweet.userId == userId
-            ||  user.followList.contains(currentTweet.userId)) {
-                pastTen.add(currentTweet.tweetId);
+        int index = tweetList.size() - 1;
+        while (index >= 0 && lastTen.size() < 10) {
+            Tweet mostRecentTweet = tweetList.get(index);
+            int tweetId = mostRecentTweet.tweetId;
+            int tweetUserId = mostRecentTweet.userId;
+            
+            if (user.followingList.contains(tweetUserId) || user.userId == tweetUserId) {
+                lastTen.add(tweetId);
             }
             index--;
         }
-        return pastTen;
+
+        return lastTen;
     }
     
     public void follow(int followerId, int followeeId) {
-        User user = getUser(followerId);
-        user.followList.add(followeeId);
+        User follower = createUser(followerId);
+        User followee = createUser(followeeId);
+
+        follower.followingList.add(followeeId);
+        followee.followerList.add(followerId);
     }
     
     public void unfollow(int followerId, int followeeId) {
-        User user = getUser(followerId);
-        user.followList.remove(followeeId);
+        User follower = createUser(followerId);
+        User followee = createUser(followeeId);
+
+        follower.followingList.remove(followeeId);
+        followee.followerList.remove(followerId);
     }
 }
 
