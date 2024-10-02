@@ -4,17 +4,15 @@ class Solution {
             return false;
         }
 
-        int[] result = new int[26];
+        int[] array = new int[26];
         for (int i = 0; i < s.length(); i++) {
             char sChar = s.charAt(i);
-            result[sChar - 'a']++;
-            
             char tChar = t.charAt(i);
-            result[tChar - 'a']--;
+            array[sChar - 'a']++;
+            array[tChar - 'a']--;
         }
-        
-        for (int value : result) {
-            if (value != 0) {
+        for (int num : array) {
+            if (num != 0) {
                 return false;
             }
         }
