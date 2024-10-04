@@ -1,60 +1,18 @@
 class Solution {
     public String longestCommonPrefix(String[] strs) {
-        Trie trie = new Trie();
-        for (String s : strs) {
-            if (s.isEmpty()) {
-                return "";
-            }
-            trie.insert(s);
+        if (strs == null || strs.length == 0) {
+            return "";
         }
-        return trie.longestPrefix();
-    }
-}
-class TrieNode {
-    TrieNode[] children;
-    boolean isEnd;
-    public TrieNode() {
-        children = new TrieNode[26];
-        isEnd = false;
-    }
-}
-class Trie {
-    TrieNode root;
-    public Trie() {
-        root = new TrieNode();
-    }
-    public void insert(String s) {
-        TrieNode node = root;
-        for (char c : s.toCharArray()) {
-            if (node.children[c - 'a'] == null) {
-                node.children[c - 'a'] = new TrieNode();
-            }
-            node = node.children[c - 'a'];
-        }
-        node.isEnd = true;
-    }
-    public String longestPrefix() {
-        StringBuilder prefix = new StringBuilder();
-
-        TrieNode node = root;
-        while (countChildren(node) == 1 && !node.isEnd) {
-            for (int i = 0; i < 26; i++) {
-                if (node.children[i] != null) {
-                    prefix.append((char)('a' + i));
-                    node = node.children[i];
-                    break;
+        String firstString = strs[0];
+        for (int i = 0; i < firstString.length(); i++) {
+            char current = firstString.charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                String secondString = strs[j];
+                if (i >= secondString.length() || current != secondString.charAt(i)) {
+                    return firstString.substring(0, i);
                 }
             }
         }
-        return prefix.toString();
-    }
-    public int countChildren(TrieNode node) {
-        int count = 0;
-        for (TrieNode child : node.children) {
-            if (child != null) {
-                count++;
-            }
-        }
-        return count;
+        return firstString;
     }
 }
