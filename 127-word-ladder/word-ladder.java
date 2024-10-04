@@ -5,9 +5,10 @@ class Solution {
             return 0;
         }
 
-        int step = 1;
         Queue<String> queue = new ArrayDeque<>();
         queue.offer(beginWord);
+        
+        int step = 1;
         while (!queue.isEmpty()) {
             int size = queue.size();
             for (int i = 0; i < size; i++) {
@@ -18,15 +19,14 @@ class Solution {
 
                 StringBuilder sb = new StringBuilder(current);
                 for (int j = 0; j < sb.length(); j++) {
-                    char original = sb.charAt(j);
+                    char originalChar = sb.charAt(j);
                     for (char c = 'a'; c <= 'z'; c++) {
                         sb.setCharAt(j, c);
                         if (set.contains(sb.toString())) {
-                            queue.offer(sb.toString());
                             set.remove(sb.toString());
+                            queue.offer(sb.toString());
                         }
-
-                        sb.setCharAt(j, original);
+                        sb.setCharAt(j, originalChar);
                     }
                 }
             }
