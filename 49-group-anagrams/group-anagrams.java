@@ -9,11 +9,9 @@ class Solution {
         return new ArrayList<>(map.values());
     }
     private String encode(String s) {
-        int[] charArray = new int[26];
-        for (char c : s.toCharArray()) {
-            charArray[c - 'a']++;
-        }
-        String encoded = Arrays.toString(charArray);
+        char[] charArray = s.toCharArray();
+        Arrays.sort(charArray);
+        String encoded = new String(charArray);
         return encoded;
     }
 }
