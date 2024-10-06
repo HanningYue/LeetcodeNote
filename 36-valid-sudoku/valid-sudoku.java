@@ -16,19 +16,18 @@ class Solution {
 
         for (int row = 0; row < m; row += 3) {
             for (int col = 0; col < n; col += 3) {
-                Set<Character> visited = new HashSet<>();
-                if (!valid(board, row, col, visited)) {
+                Set<Character> set = new HashSet<>();
+                if (!valid(board, row, col, set)) {
                     return false;
                 }
             }
         }
         return true;
     }
-
-    private boolean valid(char[][] board, int row, int col, Set<Character> visited) {
+    private boolean valid(char[][] board, int row, int col, Set<Character> set) {
         for (int i = row; i < row + 3; i++) {
             for (int j = col; j < col + 3; j++) {
-                if (board[i][j] != '.' && !visited.add(board[i][j])) {
+                if (board[i][j] != '.' && !set.add(board[i][j])) {
                     return false;
                 }
             }
