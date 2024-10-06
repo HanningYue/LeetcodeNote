@@ -1,14 +1,19 @@
 class Solution {
     public int lengthOfLastWord(String s) {
-        int lastIndex = s.length() - 1;
-        while (lastIndex >= 0 && s.charAt(lastIndex) == ' ') {
-            lastIndex--;
+        if (s.length() == 0 || s.isEmpty()) {
+            return 0;
         }
-        int length = 0;
-        while (lastIndex >= 0 && s.charAt(lastIndex) != ' ') {
-            length++;
-            lastIndex--;
+
+        int wordEnd = s.length() - 1;
+        while (s.charAt(wordEnd) == ' ') {
+            wordEnd--;
         }
-        return length;
+
+        int wordEndCopy = wordEnd;
+        while (wordEnd >= 0 && s.charAt(wordEnd) != ' ') {
+            wordEnd--;
+        }
+
+        return wordEndCopy - wordEnd;
     }
 }
