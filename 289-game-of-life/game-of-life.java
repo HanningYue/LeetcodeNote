@@ -18,11 +18,15 @@ class Solution {
                 if (board[row][col] == 0) {
                     if (count == 3) {
                         board[row][col] = 3;
+                    } else {
+                        board[row][col] = 0;
                     }
                 }
-                
+
                 if (board[row][col] == 1) {
-                    if (count != 2 && count != 3) {
+                    if (count == 2 || count == 3) {
+                        board[row][col] = 1;
+                    } else {
                         board[row][col] = 2;
                     }
                 }
