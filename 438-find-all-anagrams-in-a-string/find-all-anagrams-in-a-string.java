@@ -5,7 +5,9 @@ class Solution {
         for (char c : p.toCharArray()) {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
-        int match = 0, slow = 0, fast = 0;
+
+        int match = 0;
+        int slow = 0, fast = 0;
         while (fast < s.length()) {
             char fastChar = s.charAt(fast);
             if (map.containsKey(fastChar)) {
@@ -14,10 +16,12 @@ class Solution {
                     match++;
                 }
             }
-            while (fast - slow + 1 >= p.length()) {
+
+            if (fast - slow + 1 == p.length()) {
                 if (match == p.length()) {
                     result.add(slow);
                 }
+
                 char slowChar = s.charAt(slow);
                 if (map.containsKey(slowChar)) {
                     map.put(slowChar, map.get(slowChar) + 1);
@@ -27,6 +31,7 @@ class Solution {
                 }
                 slow++;
             }
+
             fast++;
         }
         return result;
