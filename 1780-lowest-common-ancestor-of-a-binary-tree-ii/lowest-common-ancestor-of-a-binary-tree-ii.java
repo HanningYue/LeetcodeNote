@@ -9,10 +9,11 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        boolean pExist = false;
-        boolean qExist = false;
         Map<TreeNode, TreeNode> parentMap = new HashMap<>();
         parentMap.put(root, null);
+
+        boolean qExist = false;
+        boolean pExist = false;
         Queue<TreeNode> queue = new ArrayDeque<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
@@ -41,6 +42,7 @@ class Solution {
         if (!pExist || !qExist) {
             return null;
         }
+        
         Set<TreeNode> parent = new HashSet<>();
         while (p != null) {
             parent.add(p);
