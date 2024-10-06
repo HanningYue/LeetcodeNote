@@ -25,8 +25,8 @@ class Solution {
         }
 
         String current = map.get(digits.charAt(index));
-        for (int i = 0; i < current.length(); i++) {
-            sb.append(current.charAt(i));
+        for (char c : current.toCharArray()) {
+            sb.append(c);
             backTrack(digits, map, index + 1, sb, result);
             sb.deleteCharAt(sb.length() - 1);
         }
