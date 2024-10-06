@@ -17,7 +17,7 @@ class Solution {
                 }
             }
 
-            if (fast - slow + 1 == p.length()) {
+            while (fast - slow + 1 >= p.length()) {
                 if (match == p.length()) {
                     result.add(slow);
                 }
