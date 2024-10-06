@@ -1,20 +1,29 @@
 class Solution {
+    Integer[] dpMin;
+    Integer[] dpMax;
     public int maxProduct(int[] nums) {
-        int leftRunning = 1;
-        int rightRunning = 1;
-        int maxProduct = Integer.MIN_VALUE;
-        for (int i = 0; i < nums.length; i++) {
-            leftRunning = leftRunning * nums[i];
-            rightRunning = rightRunning * nums[nums.length - 1 - i];
-            maxProduct = Math.max(Math.max(leftRunning, rightRunning), maxProduct);
+        int n = nums.length;
+        dpMin = new Integer[n];
+        dpMin[0] = nums[0];
+        dpMax = new Integer[n];
+        dpMax[0] = nums[0];
 
-            if (leftRunning == 0) {
-                leftRunning = 1;
-            }
-            if (rightRunning == 0) {
-                rightRunning = 1;
-            }
+        for (int i = 1; i < n; i++) {
+            dpMin[i] = min(nums[i], dpMin[i - 1] * nums[i], dpMax[i - 1] * nums[i]);
+            dpMax[i] = max(nums[i], dpMin[i - 1] * nums[i], dpMax[i - 1] * nums[i]);
         }
-        return maxProduct;
+
+        int globalMax = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            globalMax = Math.max(globalMax, dpMax[i]);
+        }
+        return globalMax;
+    }
+
+    private int max(int a, int b, int c) {
+        return Math.max(Math.max(a, b), c);
+    }
+    private int min(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
     }
 }
