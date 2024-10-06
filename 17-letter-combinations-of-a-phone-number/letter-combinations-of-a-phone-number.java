@@ -1,11 +1,10 @@
 class Solution {
-    Map<Character, String> map;
     public List<String> letterCombinations(String digits) {
         List<String> result = new ArrayList<>();
-        if (digits.isEmpty()) {
+        if (digits.isEmpty() || digits.length() == 0) {
             return result;
         }
-        map = new HashMap<>();
+        Map<Character, String> map = new HashMap<>();
         map.put('2', "abc");
         map.put('3', "def");
         map.put('4', "ghi");
@@ -15,10 +14,11 @@ class Solution {
         map.put('8', "tuv");
         map.put('9', "wxyz");
 
-        backTrack(digits, 0, result, new StringBuilder());
+        backTrack(digits, map, 0, new StringBuilder(), result);
         return result;
     }
-    private void backTrack(String digits, int index, List<String> result, StringBuilder sb) {
+
+    private void backTrack(String digits, Map<Character, String> map, int index, StringBuilder sb, List<String> result) {
         if (index == digits.length()) {
             result.add(sb.toString());
             return;
@@ -27,7 +27,7 @@ class Solution {
         String current = map.get(digits.charAt(index));
         for (int i = 0; i < current.length(); i++) {
             sb.append(current.charAt(i));
-            backTrack(digits, index + 1, result, sb);
+            backTrack(digits, map, index + 1, sb, result);
             sb.deleteCharAt(sb.length() - 1);
         }
     }
