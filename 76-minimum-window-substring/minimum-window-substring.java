@@ -5,30 +5,28 @@ class Solution {
             map.put(c, map.getOrDefault(c, 0) + 1);
         }
 
-        String result = "";
-        int length = Integer.MAX_VALUE;
-        int slow = 0, fast = 0;
-        int match = 0;
 
+        int slow = 0, fast = 0;
+        int match = 0, length = Integer.MAX_VALUE;
+        String result = "";
         while (fast < s.length()) {
-            char current = s.charAt(fast);
-            if (map.containsKey(current)) {
-                map.put(current, map.get(current) - 1);
-                if (map.get(current) >= 0) {
+            char fastChar = s.charAt(fast);
+            if (map.containsKey(fastChar)) {
+                map.put(fastChar, map.get(fastChar) - 1);
+                if (map.get(fastChar) >= 0) {
                     match++;
                 }
             }
 
             while (match == t.length()) {
-                if (fast - slow < length) {
+                if (fast - slow + 1 < length) {
                     length = fast - slow + 1;
-                    result = s.substring(slow, slow + length);
+                    result = s.substring(slow, fast + 1);
                 }
-
-                current = s.charAt(slow);
-                if (map.containsKey(current)) {
-                    map.put(current, map.get(current) + 1);
-                    if (map.get(current) > 0) {
+                char slowChar = s.charAt(slow);
+                if (map.containsKey(slowChar)) {
+                    map.put(slowChar, map.get(slowChar) + 1);
+                    if (map.get(slowChar) > 0) {
                         match--;
                     }
                 }
