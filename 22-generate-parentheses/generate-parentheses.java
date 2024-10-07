@@ -1,19 +1,19 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
-        dfs(result, n, n, "");
+        backTrack(n, n, "", result);
         return result;
     }
-    private void dfs(List<String> result, int rightBracket, int leftBracket, String s) {
-        if (rightBracket == 0 && leftBracket == 0) {
-            result.add(s);
+    private void backTrack(int leftBracket, int rightBracket, String currentPath, List<String> result) {
+        if (leftBracket == 0 && rightBracket == 0) {
+            result.add(currentPath);
             return;
         }
         if (leftBracket > 0) {
-            dfs(result, rightBracket, leftBracket - 1, s + "(");
+            backTrack(leftBracket - 1, rightBracket, currentPath + "(", result);
         }
-        if (leftBracket < rightBracket) {
-            dfs(result, rightBracket - 1, leftBracket, s + ")");
+        if (rightBracket > leftBracket) {
+            backTrack(leftBracket, rightBracket - 1, currentPath + ")", result);
         }
     }
 }
