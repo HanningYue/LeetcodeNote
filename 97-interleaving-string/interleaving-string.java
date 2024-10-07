@@ -1,8 +1,8 @@
 class Solution {
     Boolean[][] dpTable;
     public boolean isInterleave(String s1, String s2, String s3) {
-        int m = s1.length(), n = s2.length();
-        if (m + n != s3.length()) {
+        int m = s1.length(), n = s2.length(), l = s3.length();
+        if (m + n != l) {
             return false;
         }
 
@@ -13,27 +13,28 @@ class Solution {
         if (k == s3.length()) {
             return true;
         }
+        if (s3.length() - k > (s1.length() - i + s2.length() - j)) {
+            return false;
+        }
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
 
-        if (j < s2.length() && s3.charAt(k) == s2.charAt(j)) {
-            boolean skipI = dp(s1, i, s2, j + 1, s3, k + 1);
+        if (i < s1.length() && s1.charAt(i) == s3.charAt(k)) {
+            boolean skipI = dp(s1, i + 1, s2, j, s3, k + 1);
             dpTable[i][j] = skipI;
-            if (dpTable[i][j]) {
+            if (skipI) {
                 return true;
             }
         } 
- 
-        if (i < s1.length() && s3.charAt(k) == s1.charAt(i)) {
-            boolean skipJ = dp(s1, i + 1, s2, j, s3, k + 1);
+        if (j < s2.length() && s2.charAt(j) == s3.charAt(k)) {
+            boolean skipJ = dp(s1, i, s2, j + 1, s3, k + 1);
             dpTable[i][j] = skipJ;
-            if (dpTable[i][j]) {
+            if (skipJ) {
                 return true;
             }
-        }
-
+        } 
         dpTable[i][j] = false;
-        return false;
+        return dpTable[i][j];
     }
 }
