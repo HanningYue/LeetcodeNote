@@ -19,22 +19,21 @@ class Solution {
         if (dpTable[i][j] != null) {
             return dpTable[i][j];
         }
-
-        if (i < s1.length() && s1.charAt(i) == s3.charAt(k)) {
+        
+        if (i < s1.length() && s1.charAt(i) == s3.charAt(k) && j < s2.length() && s2.charAt(j) == s3.charAt(k)) {
+            boolean skipI = dp(s1, i + 1, s2, j, s3, k + 1);
+            boolean skipJ = dp(s1, i, s2, j + 1, s3, k + 1);
+            dpTable[i][j] = skipI || skipJ;
+        } else if (i < s1.length() && s1.charAt(i) == s3.charAt(k)) {
             boolean skipI = dp(s1, i + 1, s2, j, s3, k + 1);
             dpTable[i][j] = skipI;
-            if (skipI) {
-                return true;
-            }
-        } 
-        if (j < s2.length() && s2.charAt(j) == s3.charAt(k)) {
+        } else if (j < s2.length() && s2.charAt(j) == s3.charAt(k)) {
             boolean skipJ = dp(s1, i, s2, j + 1, s3, k + 1);
             dpTable[i][j] = skipJ;
-            if (skipJ) {
-                return true;
-            }
-        } 
-        dpTable[i][j] = false;
+        } else {
+            dpTable[i][j] = false;
+        }
+
         return dpTable[i][j];
     }
 }
