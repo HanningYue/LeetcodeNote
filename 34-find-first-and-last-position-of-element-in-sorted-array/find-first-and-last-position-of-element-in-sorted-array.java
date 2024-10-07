@@ -4,6 +4,7 @@ class Solution {
         int rightIndex = findRightIndex(nums, target);
         return new int[]{leftIndex, rightIndex};
     }
+
     private int findLeftIndex(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
         while (left <= right) {
@@ -16,11 +17,12 @@ class Solution {
                 left = mid + 1;
             }
         }
-        if (left >= 0 && left < nums.length && nums[left] == target) {
+        if (left < nums.length && nums[left] == target) {
             return left;
         }
         return -1;
     }
+    
     private int findRightIndex(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
         while (left <= right) {
@@ -33,7 +35,7 @@ class Solution {
                 left = mid + 1;
             }
         }
-        if (right >= 0 && right < nums.length && nums[right] == target) {
+        if (right >= 0 && nums[right] == target) {
             return right;
         }
         return -1;
