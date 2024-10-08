@@ -1,6 +1,6 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        k = k - 1;
+        k = nums.length - k;
         int left = 0, right = nums.length - 1;
         while (left <= right) {
             int pivotIndex = quickSelect(nums, left, right);
@@ -23,15 +23,15 @@ class Solution {
         int pivotValue = nums[left];
         int leftP = left, rightP = right;
         while (leftP <= rightP) {
-            if (nums[leftP] < pivotValue && nums[rightP] > pivotValue) {
-                swap(nums, leftP, rightP);
+            while (leftP <= rightP && nums[leftP] <= pivotValue) {
                 leftP++;
+            }
+            while (leftP <= rightP && nums[rightP] > pivotValue) {
                 rightP--;
             }
-            if (nums[leftP] >= pivotValue) {
+            if (leftP < rightP) {
+                swap(nums, leftP, rightP);
                 leftP++;
-            }
-            if (nums[rightP] <= pivotValue) {
                 rightP--;
             }
         }
