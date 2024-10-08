@@ -1,24 +1,22 @@
 class Solution {
     public int hIndex(int[] citations) {
-        int maxH = citations.length;
-        Map<Integer, Integer> map = new HashMap<>();
+        int n = citations.length;
+        int[] count = new int[n + 1];
         for (int citation : citations) {
-            if (citation >= maxH) {
-                map.put(maxH, map.getOrDefault(maxH, 0) + 1);
+            if (citation >= n) {
+                count[n]++;
             } else {
-                map.put(citation, map.getOrDefault(citation, 0) + 1);
+                count[citation]++;
             }
         }
 
-        int maxCited = 0;
-        for (int i = maxH; i >= 0; i--) {
-            if (map.containsKey(i)) {
-                maxCited += map.get(i);
-            }
-            if (maxCited >= i) {
+        int totalPaper = 0;
+        for (int i = n; i >= 0; i--) {
+            totalPaper += count[i];
+            if (totalPaper >= i) {
                 return i;
             }
         }
-        return -1;
+        return 0;
     }
 }
