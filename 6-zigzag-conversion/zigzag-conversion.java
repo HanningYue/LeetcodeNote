@@ -1,30 +1,32 @@
+//down: 0 to numRows - 1
+//up: numRows - 2 to 1
 class Solution {
     public String convert(String s, int numRows) {
-        StringBuilder[] sbArray = new StringBuilder[numRows];
-        for (int i = 0; i < sbArray.length; i++) {
-            sbArray[i] = new StringBuilder();
+        if (numRows == 1 || numRows >= s.length()) {
+            return s;
+        }
+        StringBuilder[] sb = new StringBuilder[numRows];
+        for (int i = 0; i < sb.length; i++) {
+            sb[i] = new StringBuilder();
         }
 
-        int sIndex = 0;
-        while (sIndex < s.length()) {
-            int currentRow = 0;
-            while (currentRow < numRows && sIndex < s.length()) {
-                sbArray[currentRow].append(s.charAt(sIndex));
-                sIndex++;
-                currentRow++;
+        boolean movingDown = true;
+        int currentRow = 0;
+        for (char c : s.toCharArray()) {
+            sb[currentRow].append(c);
+            if (currentRow == 0) {
+                movingDown = true;
             }
-            currentRow = currentRow - 2;
-            while (currentRow > 0 && sIndex < s.length()) {
-                sbArray[currentRow].append(s.charAt(sIndex));
-                sIndex++;
-                currentRow--;
+            if (currentRow == numRows - 1) {
+                movingDown = false;
             }
+            currentRow += movingDown ? 1 : -1;
         }
 
-        StringBuilder result = new StringBuilder();
-        for (StringBuilder row : sbArray) {
-            result.append(row.toString());
+        String result = "";
+        for (StringBuilder S : sb) {
+            result += S;
         }
-        return result.toString();
+        return result;
     }
 }
