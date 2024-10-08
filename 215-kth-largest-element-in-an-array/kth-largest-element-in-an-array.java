@@ -2,17 +2,17 @@ class Solution {
     public int findKthLargest(int[] nums, int k) {
         k = k - 1;
         int left = 0, right = nums.length - 1;
-        
-        while (true) {
+        while (left <= right) {
             int pivotIndex = quickSelect(nums, left, right);
             if (pivotIndex == k) {
                 return nums[pivotIndex];
             } else if (pivotIndex > k) {
                 right = pivotIndex - 1;
-            } else {
+            } else if (pivotIndex < k) {
                 left = pivotIndex + 1;
             }
         }
+        return -1;
     }
     private int quickSelect(int[] nums, int left, int right) {
         if (left == right) {
@@ -35,7 +35,7 @@ class Solution {
                 rightP--;
             }
         }
-        swap(nums, left, rightP);
+        swap(nums, pivotIndex, rightP);
         return rightP;
     }
     private void swap(int[] nums, int left, int right) {
