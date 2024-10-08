@@ -2,7 +2,7 @@
 //up: numRows - 2 to 1
 class Solution {
     public String convert(String s, int numRows) {
-        if (numRows == 1 || numRows >= s.length()) {
+        if (numRows == 1) {
             return s;
         }
         StringBuilder[] sb = new StringBuilder[numRows];
