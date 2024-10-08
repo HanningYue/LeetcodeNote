@@ -1,5 +1,8 @@
 class Solution {
     public int findKthLargest(int[] nums, int k) {
+        if (nums.length == 0) {
+            return 0;
+        }
         k = k - 1;
         int left = 0, right = nums.length - 1;
         while (left <= right) {
