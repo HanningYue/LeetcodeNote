@@ -14,9 +14,9 @@ class Solution {
         if (dpTable[n] != null) {
             return dpTable[n];
         }
-        int oneStep = dp(n - 1);
-        int twoStep = dp(n - 2);
-        dpTable[n] = oneStep + twoStep;
+        int climbOne = dp(n - 1);
+        int climbTwo = dp(n - 2);
+        dpTable[n] = climbOne + climbTwo;
         return dpTable[n];
     }
 }
