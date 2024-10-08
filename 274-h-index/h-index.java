@@ -11,7 +11,7 @@ class Solution {
         }
 
         int totalPaper = 0;
-        for (int i = n; i >= 0; i--) {
+        for (int i = count.length - 1; i >= 0; i--) {
             totalPaper += count[i];
             if (totalPaper >= i) {
                 return i;
