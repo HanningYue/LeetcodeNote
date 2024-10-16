@@ -2,17 +2,17 @@ class RandomizedSet {
     Map<Integer, Integer> map;
     List<Integer> list;
     public RandomizedSet() {
-        list = new ArrayList<>();
         map = new HashMap<>();
+        list = new ArrayList<>();
     }
     
     public boolean insert(int val) {
-        if (map.containsKey(val)) {
-            return false;
+        if (!map.containsKey(val)) {
+            map.put(val, list.size());
+            list.add(val);
+            return true;
         }
-        list.add(val);
-        map.put(val, list.size() - 1);
-        return true;
+        return false;
     }
     
     public boolean remove(int val) {
@@ -20,14 +20,22 @@ class RandomizedSet {
             return false;
         }
         int originalIndex = map.get(val);
-        int currentLastValue = list.get(list.size() - 1);
+        int lastIndex = list.size() - 1;
+        int lastValue = list.get(lastIndex);
         
-        map.put(currentLastValue, originalIndex);
-        Collections.swap(list, originalIndex, list.size() - 1);
-
+        map.put(lastValue, originalIndex);
+        map.put(val, lastIndex);
         map.remove(val);
+        
+        swap(list, originalIndex, lastIndex);
         list.remove(list.size() - 1);
         return true;
+    }
+    private void swap(List<Integer> list, int left, int right) {
+        int leftValue = list.get(left);
+        int rightValue = list.get(right);
+        list.set(right, leftValue);
+        list.set(left, rightValue);
     }
     
     public int getRandom() {
