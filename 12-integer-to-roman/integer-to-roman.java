@@ -17,10 +17,7 @@ class Solution {
         
         int[] array = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
         String result = "";
-        for (int i = 0; i < array.length; i++) {
-            if (num == 0) {
-                return result;
-            }
+        for (int i = 0; i < array.length && num != 0; i++) {
             int currentNum = array[i];
             int currentFreq = num / currentNum;
             String currentString = map.get(currentNum);
