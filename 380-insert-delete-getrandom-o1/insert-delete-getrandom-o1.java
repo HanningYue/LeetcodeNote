@@ -19,23 +19,19 @@ class RandomizedSet {
         if (!map.containsKey(val)) {
             return false;
         }
+        int originalValue = val;
         int originalIndex = map.get(val);
         int lastIndex = list.size() - 1;
         int lastValue = list.get(lastIndex);
         
         map.put(lastValue, originalIndex);
-        map.put(val, lastIndex);
-        map.remove(val);
-        
-        swap(list, originalIndex, lastIndex);
-        list.remove(list.size() - 1);
+        map.put(originalValue, lastIndex);
+        map.remove(originalValue);
+
+        list.set(originalIndex, lastValue);
+        list.set(lastIndex, originalValue);
+        list.remove(lastIndex);
         return true;
-    }
-    private void swap(List<Integer> list, int left, int right) {
-        int leftValue = list.get(left);
-        int rightValue = list.get(right);
-        list.set(right, leftValue);
-        list.set(left, rightValue);
     }
     
     public int getRandom() {
