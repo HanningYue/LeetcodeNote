@@ -8,8 +8,8 @@ class RandomizedSet {
     
     public boolean insert(int val) {
         if (!map.containsKey(val)) {
-            map.put(val, list.size());
             list.add(val);
+            map.put(val, list.size() - 1);
             return true;
         }
         return false;
@@ -19,18 +19,21 @@ class RandomizedSet {
         if (!map.containsKey(val)) {
             return false;
         }
+
         int originalValue = val;
         int originalIndex = map.get(val);
+
         int lastIndex = list.size() - 1;
-        int lastValue = list.get(lastIndex);
-        
-        map.put(lastValue, originalIndex);
-        map.put(originalValue, lastIndex);
-        map.remove(originalValue);
+        int lastValue = list.get(list.size() - 1);
 
         list.set(originalIndex, lastValue);
         list.set(lastIndex, originalValue);
-        list.remove(lastIndex);
+        list.remove(list.size() - 1);
+
+        map.put(originalValue, lastIndex);
+        map.put(lastValue, originalIndex);
+        map.remove(val);
+
         return true;
     }
     
