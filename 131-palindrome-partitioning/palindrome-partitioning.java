@@ -1,8 +1,3 @@
-/**
-        abcde
-    bcde
-cde
-*/
 class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> result = new ArrayList<>();
@@ -17,7 +12,6 @@ class Solution {
         }
         for (int i = index; i < s.length(); i++) {
             String current = s.substring(index, i + 1);
-
             if (isPalindrome(current)) {
                 list.add(current);
                 backTrack(s, result, list, i + 1);
@@ -27,8 +21,10 @@ class Solution {
     }
     private boolean isPalindrome(String s) {
         int left = 0, right = s.length() - 1;
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right)) {
+        while (left <= right) {
+            char leftChar = s.charAt(left);
+            char rightChar = s.charAt(right);
+            if (leftChar != rightChar) {
                 return false;
             }
             left++;
