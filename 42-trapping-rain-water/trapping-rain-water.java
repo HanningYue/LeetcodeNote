@@ -4,17 +4,14 @@ class Solution {
         int left = 0, right = height.length - 1;
         int leftMax = Integer.MIN_VALUE, rightMax = Integer.MIN_VALUE;
         while (left <= right) {
-            int leftHeight = height[left];
-            leftMax = Math.max(leftMax, leftHeight);
+            leftMax = Math.max(leftMax, height[left]);
+            rightMax = Math.max(rightMax, height[right]);
 
-            int rightHeight = height[right];
-            rightMax = Math.max(rightMax, rightHeight);
-
-            if (leftHeight < rightHeight) {
-                result += Math.min(leftMax, rightMax) - leftHeight;
+            if (leftMax < rightMax) {
+                result += leftMax - height[left];
                 left++;
             } else {
-                result += Math.min(leftMax, rightMax) - rightHeight;
+                result += rightMax - height[right];
                 right--;
             }
         }
