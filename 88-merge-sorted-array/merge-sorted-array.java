@@ -1,18 +1,23 @@
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int lastIndexOfOne = m - 1;
-        int lastIndexOfTwo = n - 1;
-        int totalLength = m + n - 1;
-
-        while (lastIndexOfOne >= 0 && lastIndexOfTwo >= 0) {
-            if (nums1[lastIndexOfOne] < nums2[lastIndexOfTwo]) {
-                nums1[totalLength--] = nums2[lastIndexOfTwo--];
+        int indexOne = m - 1, indexTwo = n - 1;
+        int indexThree = m + n - 1;
+        
+        while (indexOne >= 0 && indexTwo >= 0) {
+            if (nums2[indexTwo] >= nums1[indexOne]) {
+                nums1[indexThree] = nums2[indexTwo];
+                indexTwo--;
             } else {
-                nums1[totalLength--] = nums1[lastIndexOfOne--];
+                nums1[indexThree] = nums1[indexOne];
+                indexOne--;
             }
+            indexThree--;
         }
-        while (lastIndexOfTwo >= 0) {
-            nums1[totalLength--] = nums2[lastIndexOfTwo--];
+
+        while (indexTwo >= 0) {
+            nums1[indexThree] = nums2[indexTwo];
+            indexTwo--;
+            indexThree--;
         }
     }
 }
