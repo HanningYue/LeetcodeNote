@@ -5,6 +5,7 @@ class Solution {
         Set<String> set = new HashSet<>(wordDict);
         return dp(s, set, 0);
     }
+
     private List<String> dp(String s, Set<String> set, int index) {
         List<String> result = new ArrayList<>();
         if (index == s.length()) {
@@ -20,7 +21,7 @@ class Solution {
             if (set.contains(current)) {
                 List<String> subList = dp(s, set, index + length);
                 for (String sub : subList) {
-                    if (sub.length() == 0) {
+                    if (sub.equals("")) {
                         result.add(current);
                     } else {
                         result.add(current + " " + sub);
