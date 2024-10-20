@@ -1,10 +1,10 @@
 class Solution {
     public boolean mergeTriplets(int[][] triplets, int[] target) {
-        boolean[] result = new boolean[3];
+        boolean[] mark = new boolean[target.length];
 
         for (int[] triplet : triplets) {
             boolean greater = false;
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < triplet.length; i++) {
                 if (triplet[i] > target[i]) {
                     greater = true;
                     break;
@@ -14,15 +14,15 @@ class Solution {
                 continue;
             }
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < triplet.length; i++) {
                 if (triplet[i] == target[i]) {
-                    result[i] = true;
+                    mark[i] = true;
                 }
             }
-        }   
+        }
 
-        for (boolean value : result) {
-            if (!value) {
+        for (boolean val : mark) {
+            if (!val) {
                 return false;
             }
         }
