@@ -2,17 +2,16 @@ class Solution {
     public boolean isHappy(int n) {
         int slow = n, fast = n;
         do {
-            slow = findSum(slow);
-            fast = findSum(findSum(fast));
+            slow = process(slow);
+            fast = process(process(fast));
         } while (slow != fast);
-
-        return slow == 1;
+        return slow == 1 ? true : false;
     }
-    private int findSum(int num) {
+    private int process(int num) {
         int sum = 0;
         while (num != 0) {
             int lastDigit = num % 10;
-            sum += lastDigit * lastDigit;
+            sum = sum + lastDigit * lastDigit;
             num = num / 10;
         }
         return sum;
