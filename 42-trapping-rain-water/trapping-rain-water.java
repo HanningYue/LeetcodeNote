@@ -1,19 +1,21 @@
 class Solution {
     public int trap(int[] height) {
-        int result = 0;
-        int left = 0, right = height.length - 1;
-        int leftMax = Integer.MIN_VALUE, rightMax = Integer.MIN_VALUE;
-        while (left <= right) {
-            leftMax = Math.max(leftMax, height[left]);
-            rightMax = Math.max(rightMax, height[right]);
+        int n = height.length;
+        int[] leftArray = new int[n];
+        leftArray[0] = height[0];
+        for (int i = 1; i < n; i++) {
+            leftArray[i] = Math.max(leftArray[i - 1], height[i]);
+        }
 
-            if (leftMax < rightMax) {
-                result += leftMax - height[left];
-                left++;
-            } else {
-                result += rightMax - height[right];
-                right--;
-            }
+        int[] rightArray = new int[n];
+        rightArray[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            rightArray[i] = Math.max(rightArray[i + 1], height[i]);
+        }
+
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            result += Math.min(leftArray[i], rightArray[i]) - height[i];
         }
         return result;
     }
