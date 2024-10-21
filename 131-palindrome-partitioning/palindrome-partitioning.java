@@ -2,10 +2,10 @@ class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> result = new ArrayList<>();
         List<String> list = new ArrayList<>();
-        backTrack(s, result, list, 0);
+        backTrack(result, list, 0, s);
         return result;
     }
-    private void backTrack(String s, List<List<String>> result, List<String> list, int index) {
+    private void backTrack(List<List<String>> result, List<String> list, int index, String s) {
         if (index == s.length()) {
             result.add(new ArrayList<>(list));
             return;
@@ -14,7 +14,7 @@ class Solution {
             String current = s.substring(index, i + 1);
             if (isPalindrome(current)) {
                 list.add(current);
-                backTrack(s, result, list, i + 1);
+                backTrack(result, list, i + 1, s);
                 list.remove(list.size() - 1);
             }
         }
