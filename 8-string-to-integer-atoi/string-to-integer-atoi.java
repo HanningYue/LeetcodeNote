@@ -1,13 +1,14 @@
 class Solution {
     public int myAtoi(String s) {
         int i = 0;
+        int n = s.length();
         int sign = 1;
         long result = 0;
 
-        while (i < s.length() && s.charAt(i) == ' ') {
+        while (i < n && s.charAt(i) == ' ') {
             i++;
         }
-        if (i == s.length()) {
+        if (i == n) {
             return 0;
         }
 
@@ -18,11 +19,7 @@ class Solution {
             i++;
         }
 
-        if (i == s.length()) {
-            return 0;
-        }
-
-        while (i < s.length() && s.charAt(i) >= '0' && s.charAt(i) <= '9') {
+        while (i < n && s.charAt(i) >= '0' && s.charAt(i) <= '9') {
             result = result * 10 + s.charAt(i) - '0';
             if (result > Integer.MAX_VALUE) {
                 break;
@@ -35,6 +32,5 @@ class Solution {
         }
         
         return (int) result * sign;
-
     }
 }
